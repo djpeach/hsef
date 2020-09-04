@@ -2,6 +2,24 @@
 
 Web App for Hoosier Science and Engineering State Fair
 
+# Git process
+
+### **No pushing to master**
+
+**Branch pattern:**
+
+master <- dev <- feature_work
+
+Feature Work branch naming convention:
+
+\<username>-<ticket #>-[brief title]
+
+eg: djpeach-24-judgeRegistrationPage
+
+**PR Process:**
+
+Push branch, PR to dev, get at least 1 approval.
+
 # Local Development
 
 To develop the server locally, you will need PHP >= 5.4, Composer, and Slim.
@@ -16,7 +34,7 @@ To develop the server locally, you will need PHP >= 5.4, Composer, and Slim.
 
 Now to run the app, navigate to the directory with `index.php` and run:
 
-```bash 
+```bash
 php -S locahost:8080
 ```
 
