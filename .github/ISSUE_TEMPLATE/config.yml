@@ -2,4 +2,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Feature Request
     about: Request a new feature
-    url: https://github.com/djpeach/hsef/issues/new?template=feature-request.md&projects=djpeach%2Fhsef%2F2&labels=enhancement
+    url: https://github.com/djpeach/hsef/issues/new?template=feature_request.md&projects=djpeach%2Fhsef%2F2&labels=enhancement
