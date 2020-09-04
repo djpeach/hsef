@@ -20,7 +20,7 @@ eg: djpeach-24-judgeRegistrationPage
 
 Push branch, PR to dev, get at least 1 approval.
 
-# Local Development
+# Local Server Development
 
 To develop the server locally, you will need PHP >= 5.4, Composer, and Slim.
 
