@@ -5,8 +5,8 @@ require 'server/vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
-$app->get('/', function() use ($app) {
-  $app->response->write('Hello World!');
+$app->get('/ping', function() use ($app) {
+  $app->response->write('pong');
 });
 
 $app->run();
