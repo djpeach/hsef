@@ -54,12 +54,12 @@ To develop the server locally, you will need PHP >= 5.4, Composer, and Slim.
 Now to run the app: navigate to the root directory and run:
 
 ```bash
-php -S locahost:8080
+php -S locahost:9000
 ```
 
 > Note that you do not need to do this on corsair as it is already a running server.
 
-Test it worked with Postman or your browser at http://localhost:8080/ping.
+Test it worked with Postman or your browser at http://localhost:9000/ping.
 
 You should see "pong"
 
