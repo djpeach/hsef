@@ -1,4 +1,4 @@
 <?php
 
-# here we just pull in the server's index.php with the $app
+# here we serve up the built vue app's dist/ folder
 require 'client/dist/index.html';
