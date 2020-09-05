@@ -83,3 +83,14 @@ Now the app should be running in a development server. To build and serve the ap
 - run the server
 - go to the root of the server.
   > It will serve up the built client app from it's `/dist` folder.
+
+## Deployment
+
+- ssh into your apache server.
+- verify PHP version >= 5.3
+- install composer for php
+- navigate into `htdocs/` and clone project with `git clone https://github.com/djpeach/hsef.git .`
+- navigate into api and run `composer install`
+- navigate into client and run `npm install`
+- in client also run `npm run build`
+- check your corsair link to verify deployment worked
