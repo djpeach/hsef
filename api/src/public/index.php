@@ -1,7 +1,7 @@
 <?php
 
 # this is relative to the root index.php
-require 'server/vendor/autoload.php';
+require 'api/vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
