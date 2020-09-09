@@ -1,0 +1,6 @@
+// Set font family for everything except for font-awesome icons
+:not(.fa),
+:not(.far),
+:not(.fas) {
+  font-family: "Montserrat", sans-serif;
+}

@@ -1,0 +1,18 @@
+.floating-label-group {
+  position: relative;
+  label {
+    position: absolute;
+    top: 1.2rem;
+    left: 0;
+    color: map_get($colors, darkgreen);
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all .1s ease-in-out;
+    opacity: 0;
+  }
+
+  input:not(:placeholder-shown) ~ label {
+    opacity: 1;
+    top: 0;
+  }
+}
