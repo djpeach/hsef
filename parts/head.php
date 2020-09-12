@@ -1,3 +1,16 @@
+<?php
+
+  // Global Helpers
+
+  require 'helpers/Session.php';
+  require 'helpers/Post.php';
+  $session = new Session();
+  $post = new Post();
+
+  require 'helpers/Errors.php';
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>

@@ -102,9 +102,25 @@ body {
   opacity: 1;
   top: 0;
 }
-
-form {
-  margin-top: 45px;
+.floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox {
+  margin-top: 1rem;
+}
+.floating-label-group--radio .group-label, .floating-label-group--select .group-label, .floating-label-group--checkbox .group-label {
+  color: #184d47;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input {
+  margin-left: 16px;
+}
+.floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select {
+  margin-left: 16px;
+}
+.floating-label-group .form-error {
+  margin: 0.8rem 0 0 0;
+  color: #f2304d;
+  font-size: 1.6rem;
+  padding: 0 0 0 0.8rem;
 }
 
 header {
@@ -144,14 +160,42 @@ article .article-header {
   margin-bottom: 30px;
 }
 
-input {
+form {
+  margin-top: 45px;
+}
+form button {
   border: none;
-  padding: 2rem;
-  font-size: 4rem;
+  background-color: #184d47;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.4rem;
+  color: white;
+  font-weight: 600;
+  margin-left: auto;
+  margin-top: 20px;
+  font-size: 1.6rem;
+}
+
+input:not([type=radio]):not([type=checkbox]) {
+  border: none;
+  padding: 2.5rem 1.5rem 1.5rem;
   font-weight: 400;
   border-bottom: 1px solid lightslategrey;
   width: 100%;
   outline: none;
+  font-size: 1.8rem;
+}
+input:not([type=radio]):not([type=checkbox])[type=password]:not(:placeholder-shown) {
+  font-weight: 900;
+  letter-spacing: 0.3rem;
+}
+
+select {
+  border: none;
+  padding: 1.5rem;
+  font-weight: 400;
+  border-bottom: 1px solid lightslategrey;
+  outline: none;
+  width: 100%;
 }
 
 footer {
@@ -201,6 +245,8 @@ footer p {
   --green: #96bb7c;
   --lightgreen: #d6efc7;
   --white: #ffffff;
+  --border: lightslategrey;
+  --error: #f2304d;
   --primary: #007bff;
   --secondary: #6c757d;
   --success: #28a745;
