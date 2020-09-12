@@ -17,6 +17,7 @@
       $errors->email = 'Value set is not a valid email';
     }
 
+    // TODO:
     // if no errors, fetch user from db and compare password
     // if passwords match, set session data and send to auth'd page
   }
