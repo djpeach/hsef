@@ -1,13 +1,13 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
+ini_set('session.cookie_lifetime', 86400);
+ini_set('session.name', 'hsef');
+
 class Session {
 
   public function __construct() {
-    session_start([
-      "cookie_lifetime" => 86400,
-      "name" => "hsef",
-    ]);
+    session_start();
   }
 
   public function __set($name, $value) {

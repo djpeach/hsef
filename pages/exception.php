@@ -7,7 +7,7 @@
         <?php echo $session->exceptionMessage; ?>
       </p>
       <hr>
-      <a href="/" class="alert-link">Go back to Home Page</a>
+      <a href="/hsef/" class="alert-link">Go back to Home Page</a>
     </div>
   </article>
 </main>

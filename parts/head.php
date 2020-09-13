@@ -1,8 +1,5 @@
-<?php if ($_SERVER['REQUEST_URI'] === '/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
+<?php if ($_SERVER['REQUEST_URI'] === '/hsef/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
-
-  ini_set('session.cookie_lifetime', 86400);
-  ini_set('session.name', 'hsef');
 
   // if this var is set, the page was loaded correctly. fallback.php used this to determine if someone is trying to do direct access.
   $directAccessAttack = false;
