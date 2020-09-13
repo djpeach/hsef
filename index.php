@@ -1,5 +1,5 @@
 <?php require 'parts/head.php'; ?>
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 
 <div class="lab1">
   <header>

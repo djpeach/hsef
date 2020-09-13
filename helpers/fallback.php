@@ -1,13 +1,13 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/Session.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/Session.php';
 
 set_exception_handler(function ($e) {
   $session = new Session();
   $session->page = 'exception';
   $session->exceptionMessage = $e->getMessage();
-  echo "<script> location.href = '/'; </script>";
+  echo "<script> location.href = '/hsef/'; </script>";
 });
 
 if (!isset($directAccessAttack)) {

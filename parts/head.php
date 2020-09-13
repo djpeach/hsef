@@ -1,5 +1,8 @@
-<?php if ($_SERVER['REQUEST_URI'] === '/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php if ($_SERVER['REQUEST_URI'] === '/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
+
+  ini_set('session.cookie_lifetime', 86400);
+  ini_set('session.name', 'hsef');
 
   // if this var is set, the page was loaded correctly. fallback.php used this to determine if someone is trying to do direct access.
   $directAccessAttack = false;
@@ -16,7 +19,7 @@
   require_once 'helpers/utils.php';
 
   // use this for href attributes. eg <a href="/?page=dashboard">Dashboard</a>
-  if ($_GET['page']) {
+  if (isset($_GET['page'])) {
     // set page var, then remove it from url with javascript
     // using javascript to do this prevent double page load.
     $session->page = $_GET['page'];
@@ -28,10 +31,10 @@
   $db = null;
 
   try {
-    $host = '127.0.0.1';
-    $db   = 'hsef';
-    $user = 'root';
-    $pass = 'qwerty';
+    $host = 'localhost';
+    $db   = 'djpeach_db';
+    $user = 'djpeach';
+    $pass = 'djpeach';
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -44,7 +47,8 @@
     $db = new PDO($dsn, $user, $pass, $options);
   } catch (\PDOException $e) {
     // TODO: list admin email, or auto-send email.
-    print "Error connecting to database. Contact a admin ASAP!";
+    print $e;
+//    print "Error connecting to database. Contact a admin ASAP!";
     die();
   }
 

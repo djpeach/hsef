@@ -1,4 +1,4 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php if (!$authAccount->isAuthenticated()) { redirect('login'); } ?>
 
 <h1>Another Authenticated Page</h1>

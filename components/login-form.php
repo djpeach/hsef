@@ -1,4 +1,4 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php if ($errors->authError) : ?>
   <div class="alert alert-danger limit-width-sm">
     <?php echo $errors->authError; ?>

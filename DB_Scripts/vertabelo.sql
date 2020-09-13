@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-12 23:49:10.486
+-- Last modification date: 2020-09-13 16:29:38.742
 
 -- tables
 -- Table: AuthAccount
@@ -8,10 +8,6 @@ CREATE TABLE AuthAccount (
     Username char(128) NOT NULL,
     PasswordHash varchar(255) NOT NULL,
     Active bool NOT NULL DEFAULT true,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     CONSTRAINT AuthAccount_pk PRIMARY KEY (AuthAccountId)
 );
 
@@ -20,7 +16,7 @@ CREATE TABLE AuthSession (
     AuthSessionId int unsigned NOT NULL AUTO_INCREMENT,
     SessionId varchar(255) NOT NULL,
     AuthAccountId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    StartTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT AuthSession_pk PRIMARY KEY (AuthSessionId)
 );
 
@@ -29,10 +25,6 @@ CREATE TABLE Booth (
     BoothId int unsigned NOT NULL AUTO_INCREMENT,
     Number smallint NOT NULL,
     Active bool NOT NULL DEFAULT true,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate int NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_Booth_Number (Number),
     CONSTRAINT Booth_pk PRIMARY KEY (BoothId)
 );
@@ -42,10 +34,6 @@ CREATE TABLE Category (
     CategoryId int unsigned NOT NULL AUTO_INCREMENT,
     Name char(64) NOT NULL,
     Active bool NOT NULL DEFAULT true,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_Category_Name (Name),
     CONSTRAINT Category_pk PRIMARY KEY (CategoryId)
 );
@@ -54,10 +42,6 @@ CREATE TABLE Category (
 CREATE TABLE County (
     CountyId int unsigned NOT NULL AUTO_INCREMENT,
     Name char(64) NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_County_Name (Name),
     CONSTRAINT County_pk PRIMARY KEY (CountyId)
 );
@@ -66,10 +50,6 @@ CREATE TABLE County (
 CREATE TABLE Entitlement (
     EntitlementId int unsigned NOT NULL AUTO_INCREMENT,
     Name char(64) NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_Entitlement_Name (Name),
     CONSTRAINT Entitlement_pk PRIMARY KEY (EntitlementId)
 );
@@ -79,10 +59,6 @@ CREATE TABLE GradeLevel (
     GradeLevelId int unsigned NOT NULL AUTO_INCREMENT,
     Name char(64) NOT NULL,
     Active bool NOT NULL DEFAULT true,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_GradeLevel_Name (Name),
     CONSTRAINT GradeLevel_pk PRIMARY KEY (GradeLevelId)
 );
@@ -94,10 +70,6 @@ CREATE TABLE JudgingSession (
     TimeSlotId int unsigned NOT NULL,
     ProjectId int unsigned NOT NULL,
     OperatorId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_JudgingSession_OperatorId_TimeSlotId (OperatorId,TimeSlotId),
     UNIQUE INDEX ak_JudgingSession_OperatorId_ProjectId (OperatorId,ProjectId),
     UNIQUE INDEX ak_JudgingSession_TimeSlotId_ProjectId (TimeSlotId,ProjectId),
@@ -110,8 +82,6 @@ CREATE TABLE OneTimeToken (
     Token varchar(255) NOT NULL,
     AuthAccountId int unsigned NOT NULL,
     IsValid bool NOT NULL,
-    CreateDate datetime NOT NULL,
-    CreateBy int unsigned NULL,
     CONSTRAINT OneTimeToken_pk PRIMARY KEY (OneTimeTokenId)
 );
 
@@ -119,10 +89,6 @@ CREATE TABLE OneTimeToken (
 CREATE TABLE Operator (
     OperatorId int unsigned NOT NULL AUTO_INCREMENT,
     UserId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX fak_Operator_User_UserId (UserId),
     CONSTRAINT Operator_pk PRIMARY KEY (OperatorId)
 );
@@ -132,10 +98,6 @@ CREATE TABLE OperatorCategory (
     OperatorCategoryId int unsigned NOT NULL AUTO_INCREMENT,
     OperatorId int unsigned NOT NULL,
     CategoryId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX fak_OperatorId_CategoryId (OperatorId,CategoryId),
     CONSTRAINT OperatorCategory_pk PRIMARY KEY (OperatorCategoryId)
 );
@@ -145,10 +107,6 @@ CREATE TABLE OperatorEntitlement (
     OperatorEntitlementId int unsigned NOT NULL AUTO_INCREMENT,
     OperatorId int unsigned NOT NULL,
     EntitlementId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_OperatorId_EntitlementId (OperatorId,EntitlementId),
     CONSTRAINT OperatorEntitlement_pk PRIMARY KEY (OperatorEntitlementId)
 );
@@ -158,10 +116,6 @@ CREATE TABLE OperatorGradeLevel (
     OperatorGradeLevelId int unsigned NOT NULL AUTO_INCREMENT,
     GradeLevelId int unsigned NOT NULL,
     OperatorId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_GradeLevelId_OperatorId (GradeLevelId,OperatorId),
     CONSTRAINT OperatorGradeLevel_pk PRIMARY KEY (OperatorGradeLevelId)
 );
@@ -176,10 +130,6 @@ CREATE TABLE Project (
     BoothId int unsigned NULL,
     CourseNetworkingId int unsigned NULL,
     CategoryId int unsigned NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     CONSTRAINT Project_pk PRIMARY KEY (ProjectId)
 );
 
@@ -188,10 +138,6 @@ CREATE TABLE Ranking (
     RankingId int unsigned NOT NULL AUTO_INCREMENT,
     ProjectId int unsigned NOT NULL,
     AverageRank decimal(5,2) NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX fak_Ranking_Project_ProjectId (ProjectId),
     CONSTRAINT Ranking_pk PRIMARY KEY (RankingId)
 );
@@ -201,10 +147,6 @@ CREATE TABLE School (
     SchoolId int unsigned NOT NULL AUTO_INCREMENT,
     Name char(128) NOT NULL,
     CountyId int unsigned NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX ak_School_Name (Name),
     CONSTRAINT School_pk PRIMARY KEY (SchoolId)
 );
@@ -216,10 +158,6 @@ CREATE TABLE Student (
     UserId int unsigned NOT NULL,
     ProjectId int unsigned NOT NULL,
     GradeLevelId int unsigned NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     UNIQUE INDEX fak_Student_UserId (UserId),
     CONSTRAINT Student_pk PRIMARY KEY (StudentId)
 );
@@ -229,10 +167,6 @@ CREATE TABLE TimeSlot (
     TimeSlotId int unsigned NOT NULL AUTO_INCREMENT,
     StartTime time NOT NULL,
     EndTime time NOT NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
     CONSTRAINT TimeSlot_pk PRIMARY KEY (TimeSlotId)
 );
 
@@ -248,10 +182,7 @@ CREATE TABLE User (
     AuthAccountId int unsigned NULL,
     CheckedIn bool NULL DEFAULT false,
     Email char(128) NULL,
-    CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CreateBy int unsigned NULL,
-    UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdateBy int unsigned NULL,
+    DateCreated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE INDEX fak_AuthAccount_User_AuthAccountId (AuthAccountId),
     CONSTRAINT User_pk PRIMARY KEY (UserId)
 );

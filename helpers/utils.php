@@ -1,4 +1,4 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
 function strtocamel($str) {
@@ -22,5 +22,5 @@ function cameltostr($camel) {
 function redirect($page) {
   global $session;
   $session->page = $page;
-  echo "<script> location.href = '/'; </script>";
+  echo "<script> location.href = '/hsef/'; </script>";
 }
