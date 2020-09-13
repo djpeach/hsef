@@ -7,22 +7,31 @@
  */
 class AuthAccount {
   private $authenticated;
+  private $entitlements;
 
   public function __construct() {
     $this->authenticated = false;
+    $this->entitlements = [];
+  }
+
+  public function isAuthenticated() {
+    return $this->authenticated;
+  }
+
+  public function getEntitlements() {
+    return $this->entitlements;
   }
 
   /**
    * @return bool return whether or not account is authenticated.
    */
-  public function isAuthenticated() {
+  public function authenticate() {
     global $session;
-    if ($this->authenticated) return true;
     try {
       $this->authenticateWithSession();
     } catch (Exception $e) {
       $session->flashMessage = $e->getMessage();
-      return false;
+      return $this->authenticated;
     }
     return $this->authenticated;
   }
@@ -35,12 +44,14 @@ class AuthAccount {
    */
   public function authenticateWithEmailPassword($email, $password) {
     global $db;
-    $sql = $db->prepare(Queries::GET_AUTHID_BY_EMAIL);
+    $sql = $db->prepare(Queries::GET_ACTIVE_AUTHID_BY_EMAIL);
     $sql->execute([$email]);
-    if ($authId = $sql->fetchColumn()) {
+    $authId = $sql->fetchColumn();
+    if ($authId) {
       $sql = $db->prepare(Queries::GET_PASSWORD_BY_AUTHID);
       $sql->execute([$authId]);
-      if ($pwdHash = $sql->fetchColumn()) {
+      $pwdHash = $sql->fetchColumn();
+      if ($pwdHash) {
         if (password_verify($password, $pwdHash)) {
           $sql = $db->prepare(Queries::REPLACE_SESSION);
           $sql->execute([session_id(), $authId]);
@@ -61,7 +72,7 @@ class AuthAccount {
    * @throws Exception
    */
   public function authenticateWithSession() {
-    global $db;
+    global $db, $user;
 
     // check session table for sessionId
     $sql = $db->prepare(Queries::GET_SESSION_BY_ID);
@@ -81,6 +92,10 @@ class AuthAccount {
       $sql->execute([$authId]);
       if ($isActive = $sql->fetchColumn()) {
         $this->authenticated = $isActive;
+        if ($this->authenticated) {
+          $this->loadUser($authId);
+          $this->loadEntitlements();
+        }
         return;
       } else {
         $this->authenticated = false;
@@ -92,12 +107,47 @@ class AuthAccount {
     }
   }
 
+  /**
+   * Loads the user
+   *
+   * @param $authId
+   * @throws Exception
+   */
+  private function loadUser($authId) {
+    global $db, $user;
+
+    $sql = $db->prepare(Queries::GET_USER_BY_AUTHID);
+    $sql->execute([$authId]);
+    if (!($user = $sql->fetchObject('User'))) {
+      throw new Exception('Could not find user with that AuthAccountId in the database');
+    }
+
+    // add OperatorId to User Profile
+    $sql = $db->prepare(Queries::GET_OPID_BY_USERID);
+    $sql->execute([$user->UserId]);
+    $opid = $sql->fetchColumn();
+    if ($opid) {
+      $user->OperatorId = $opid;
+    } else {
+      throw new Exception('Could not find operator with that UserId in the database');
+    }
+  }
+
+  private function loadEntitlements() {
+    global $db, $user;
+
+    $sql = $db->prepare(Queries::GET_ENTITLEMENTS_BY_OPID);
+    $sql->execute([$user->OperatorId]);
+    $this->entitlements = $sql->fetchAll(PDO::FETCH_COLUMN);
+  }
+
   public function logout() {
     global $db;
 
     $this->authenticated = false;
     $sql = $db->prepare(Queries::DELETE_SESSION_BY_ID);
     $sql->execute([session_id()]);
+    redirect('login');
   }
 
 

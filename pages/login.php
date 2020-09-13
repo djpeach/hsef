@@ -1,5 +1,5 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
-<?php if ($authAccount->isAuthenticated()) redirect('dashboard'); ?>
+<?php if ($authAccount->isAuthenticated()) { redirect('dashboard'); die(); } ?>
 <?php
 // initialize errors, set to empty unless request_method is POST
 $errors = new Errors($_SERVER['REQUEST_METHOD'] === 'POST');
@@ -7,7 +7,7 @@ $errors = new Errors($_SERVER['REQUEST_METHOD'] === 'POST');
 $requiredFields = ['email', 'password'];
 
 // if request is POST, check all required fields
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['LOGIN'])) {
   foreach ($requiredFields as $field) {
     if (!$post->{$field}) {
       $errors->{$field} = "You must provide a {$field}";
@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($errors->isEmpty()) {
     try {
-      if ($authAccount->authenticateWithEmailPassword($post->email, $post->password)) {
+      $authAccount->authenticateWithEmailPassword($post->email, $post->password);
+      if ($authAccount->isAuthenticated()) {
         redirect('dashboard');
       }
     } catch (Exception $e) {

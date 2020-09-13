@@ -2,16 +2,32 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 
 <div class="lab1">
-  <header>
-    <h1>HSEF System</h1>
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $authAccount->logout();
-      redirect('login');
-    } ?>
-    <form method="POST">
-      <button>Logout</button>
-    </form>
-  </header>
+  <nav class="navbar navbar-expand-xl navbar-dark navbar-custom bg-dark">
+    <a href="/hsef/?page=dashboard" class="navbar-brand">HSEF System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainMenu">
+      <div class="navbar-nav">
+        <span class="navbar-text d-xl-none">Owner Tools</span>
+        <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
+        <span class="navbar-text d-xl-none">Admin Tools</span>
+        <a href="/hsef/?page=judgeManagement" class="nav-item nav-link">Judge Management</a>
+        <a href="/hsef/?page=studentManagement" class="nav-item nav-link">Student Management</a>
+        <a href="/hsef/?page=projectManagement" class="nav-item nav-link">Project Management</a>
+        <a href="/hsef/?page=scoreManagement" class="nav-item nav-link">Score Management</a>
+        <?php if (isset($_POST['LOGOUT'])) {
+          $authAccount->logout();
+          redirect('login');
+        } ?>
+        <?php if ($authAccount->isAuthenticated()) : ?>
+        <form method="POST" class="form-inline">
+          <button class="btn btn-lg btn-warning" type="submit" name="LOGOUT">Logout</button>
+        </form>
+        <?php endif; ?>
+      </div>
+    </div>
+  </nav>
 
   <?php if (isset($session->flashMessage)) : ?>
     <article class="limit-width-sm">

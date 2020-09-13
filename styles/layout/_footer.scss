@@ -2,7 +2,7 @@ footer {
   width: 100vw;
   background-color: map_get($colors, darkgreen);
   padding: 30px;
-  color: white;
+  color: map_get($colors, yellow);
   flex: 0 0 auto;
 
   margin-top: auto;

@@ -14,6 +14,7 @@
 
   require_once 'helpers/Post.php';
   require_once 'helpers/AuthAccount.php';
+  require_once 'helpers/User.php';
   require_once 'helpers/Errors.php';
   require_once 'helpers/Queries.php';
   require_once 'helpers/utils.php';
@@ -29,6 +30,7 @@
 
   $post = new Post(); // $_POST variables class
   $authAccount = new AuthAccount();
+  $user = new User();
 
   /**
    * Database Connection
@@ -63,6 +65,8 @@
     $session->page = 'login';
   }
   $page = $session->page;
+
+  $authAccount->authenticate();
 
 ?>
 

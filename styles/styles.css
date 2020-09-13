@@ -10026,6 +10026,31 @@ body {
   margin-left: auto;
 }
 
+.navbar-custom {
+  background-color: #184d47 !important;
+}
+.navbar-custom .navbar-brand {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #eebb4d;
+}
+.navbar-custom .navbar-toggler {
+  border: 0.25rem solid lightslategrey;
+}
+.navbar-custom .navbar-toggler-icon {
+  font-size: 2rem;
+}
+.navbar-custom .navbar-nav .navbar-text {
+  border-bottom: 1px solid lightslategrey;
+  max-width: 400px;
+}
+.navbar-custom .navbar-nav .nav-link {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #eebb4d;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -10101,7 +10126,7 @@ footer {
   width: 100vw;
   background-color: #184d47;
   padding: 30px;
-  color: white;
+  color: #eebb4d;
   flex: 0 0 auto;
   margin-top: auto;
 }
