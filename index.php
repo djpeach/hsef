@@ -4,6 +4,13 @@
 <div class="lab1">
   <header>
     <h1>HSEF System</h1>
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $authAccount->logout();
+      redirect('login');
+    } ?>
+    <form method="POST">
+      <button>Logout</button>
+    </form>
   </header>
 
   <?php if (isset($session->flashMessage)) : ?>

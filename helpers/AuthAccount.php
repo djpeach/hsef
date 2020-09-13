@@ -46,29 +46,35 @@ class AuthAccount {
           $sql->execute([session_id(), $authId]);
           $this->authenticated = true;
           return true;
+        } else {
+          throw new Exception('Password was incorrect. Please try again, or reset your password');
         }
-        throw new Exception('Password was incorrect. Please try again, or reset your password');
+      } else {
+        throw new Exception('No authorized account found with the corresponding id, please contact an admin');
       }
-      throw new Exception('No authorized account found with the corresponding id, please contact an admin');
+    } else {
+      throw new Exception('Could not find a user with that email address');
     }
-    throw new Exception('Could not find a user with that email address');
   }
 
   /**
    * @throws Exception
    */
   public function authenticateWithSession() {
-    global $session, $db;
+    global $db;
 
     // check session table for sessionId
-    $sql = $db->prepare(Queries::GET_SESSION_BY_SESSIONID);
+    $sql = $db->prepare(Queries::GET_SESSION_BY_ID);
     $sql->execute([session_id()]);
     if ($authSession = $sql->fetch()) {
-      $authId = $authSession->AuthSessionId;
+      $authId = $authSession->AuthAccountId;
       $startTime = $authSession->StartTime;
       $timeElapsed = strtotime(date('Y-m-d h:i:sa')) - strtotime($startTime);
-      // check if session was created in last 24 hours.
+      // check if session was created in last 24 hours. (24 * 60 * 60 = 86,400 seconds)
       if ($timeElapsed > 86400) {
+        $this->authenticated = false;
+        $sql = $db->prepare(Queries::DELETE_SESSION_BY_ID);
+        $sql->execute([session_id()]);
         throw new Exception('This session has timed out, please log in again');
       }
       $sql = $db->prepare(Queries::GET_ISACTIVE_BY_AUTHID);
@@ -76,10 +82,22 @@ class AuthAccount {
       if ($isActive = $sql->fetchColumn()) {
         $this->authenticated = $isActive;
         return;
+      } else {
+        $this->authenticated = false;
+        throw new Exception('No account associated with this id');
       }
-      throw new Exception('No account associated with this id');
+    } else {
+      $this->authenticated = false;
+      return;
     }
-    throw new Exception('No account associated with this session');
+  }
+
+  public function logout() {
+    global $db;
+
+    $this->authenticated = false;
+    $sql = $db->prepare(Queries::DELETE_SESSION_BY_ID);
+    $sql->execute([session_id()]);
   }
 
 

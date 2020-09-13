@@ -1,225 +1,4 @@
 @charset "UTF-8";
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-}
-
-html {
-  font-size: 62.5%;
-  margin: 0;
-}
-
-body {
-  box-sizing: border-box;
-  border: none;
-  margin: 0;
-  background-color: white;
-}
-
-:not(.fa),
-:not(.far),
-:not(.fas) {
-  font-family: "Montserrat", sans-serif;
-}
-
-.limit-width-xs {
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.limit-width-sm {
-  max-width: 576px;
-  margin: 0 auto;
-}
-
-.limit-width-md {
-  max-width: 768px;
-  margin: 0 auto;
-}
-
-.limit-width-lg {
-  max-width: 992px;
-  margin: 0 auto;
-}
-
-.limit-width-xl {
-  max-width: 1224px;
-  margin: 0 auto;
-}
-
-.limit-width-xl2 {
-  max-width: 1424px;
-  margin: 0 auto;
-}
-
-.limit-width-xl3 {
-  max-width: 1824px;
-  margin: 0 auto;
-}
-
-.custom-divider {
-  margin: 1.25rem 0 1.5rem;
-  width: 100%;
-  height: 3.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.custom-divider__line {
-  width: 100%;
-  max-width: 12rem;
-  height: 0.4rem;
-  background-color: #184d47;
-  border-radius: 1rem;
-  border-color: #184d47 !important;
-}
-.custom-divider__icon {
-  color: #184d47 !important;
-  font-size: 3.2rem;
-  margin: -0.2rem 1.5rem 0;
-}
-
-.floating-label-group {
-  position: relative;
-}
-.floating-label-group label {
-  position: absolute;
-  top: 1.2rem;
-  left: 0;
-  color: #184d47;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: all 0.1s ease-in-out;
-  opacity: 0;
-}
-.floating-label-group input:not(:placeholder-shown) ~ label {
-  opacity: 1;
-  top: 0;
-}
-.floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox {
-  margin-top: 1rem;
-}
-.floating-label-group--radio .group-label, .floating-label-group--select .group-label, .floating-label-group--checkbox .group-label {
-  color: #184d47;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-.floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input {
-  margin-left: 16px;
-}
-.floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select {
-  margin-left: 16px;
-}
-.floating-label-group .form-error {
-  margin: 0.8rem 0 0 0;
-  color: #f2304d;
-  font-size: 1.6rem;
-  padding: 0 0 0 0.8rem;
-}
-
-header {
-  width: 100vw;
-  background-color: #184d47;
-  padding: 30px;
-  color: white;
-  flex: 0 0 auto;
-}
-header h1 {
-  font-weight: 700;
-  text-transform: uppercase;
-}
-@media (min-width: 768px) {
-  header {
-    padding: 30px 10vw;
-  }
-}
-
-main {
-  flex: 1 0 auto;
-  background-color: #ffffff;
-}
-
-article {
-  background-color: white;
-  border-radius: 8px;
-  padding: 30px;
-  color: #184d47;
-}
-article .article-header {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 3.2rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-}
-
-form {
-  margin-top: 45px;
-}
-form button {
-  border: none;
-  background-color: #184d47;
-  padding: 0.8rem 1.8rem;
-  border-radius: 0.4rem;
-  color: white;
-  font-weight: 600;
-  margin-left: auto;
-  margin-top: 20px;
-  font-size: 1.6rem;
-}
-
-input:not([type=radio]):not([type=checkbox]) {
-  border: none;
-  padding: 2.5rem 1.5rem 1.5rem;
-  font-weight: 400;
-  border-bottom: 1px solid lightslategrey;
-  width: 100%;
-  outline: none;
-  font-size: 1.8rem;
-}
-input:not([type=radio]):not([type=checkbox])[type=password]:not(:placeholder-shown) {
-  font-weight: 900;
-  letter-spacing: 0.3rem;
-}
-
-select {
-  border: none;
-  padding: 1.5rem;
-  font-weight: 400;
-  border-bottom: 1px solid lightslategrey;
-  outline: none;
-  width: 100%;
-}
-
-footer {
-  width: 100vw;
-  background-color: #184d47;
-  padding: 30px;
-  color: white;
-  flex: 0 0 auto;
-  margin-top: auto;
-}
-footer p {
-  margin-left: auto;
-}
-
-.lab1 {
-  font-size: 1.4rem;
-  min-height: 100vh;
-  display: flex;
-  flex-flow: column nowrap;
-}
-.lab1 main article h2 {
-  text-align: center;
-}
-
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -240,13 +19,6 @@ footer p {
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --yellow: #eebb4d;
-  --darkgreen: #184d47;
-  --green: #96bb7c;
-  --lightgreen: #d6efc7;
-  --white: #ffffff;
-  --border: lightslategrey;
-  --error: #f2304d;
   --primary: #007bff;
   --secondary: #6c757d;
   --success: #28a745;
@@ -10120,6 +9892,231 @@ h3 {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  margin: 0;
+}
+
+body {
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  background-color: white;
+}
+
+:not(.fa),
+:not(.far),
+:not(.fas) {
+  font-family: "Montserrat", sans-serif;
+}
+
+.limit-width-xs {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.limit-width-sm {
+  max-width: 576px;
+  margin: 0 auto;
+}
+
+.limit-width-md {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.limit-width-lg {
+  max-width: 992px;
+  margin: 0 auto;
+}
+
+.limit-width-xl {
+  max-width: 1224px;
+  margin: 0 auto;
+}
+
+.limit-width-xl2 {
+  max-width: 1424px;
+  margin: 0 auto;
+}
+
+.limit-width-xl3 {
+  max-width: 1824px;
+  margin: 0 auto;
+}
+
+.custom-divider {
+  margin: 1.25rem 0 1.5rem;
+  width: 100%;
+  height: 3.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-divider__line {
+  width: 100%;
+  max-width: 12rem;
+  height: 0.4rem;
+  background-color: #184d47;
+  border-radius: 1rem;
+  border-color: #184d47 !important;
+}
+.custom-divider__icon {
+  color: #184d47 !important;
+  font-size: 3.2rem;
+  margin: -0.2rem 1.5rem 0;
+}
+
+.floating-label-group {
+  position: relative;
+}
+.floating-label-group label {
+  position: absolute;
+  top: 1.2rem;
+  left: 0;
+  color: #184d47;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.1s ease-in-out;
+  opacity: 0;
+}
+.floating-label-group input:not(:placeholder-shown) ~ label {
+  opacity: 1;
+  top: 0;
+}
+.floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox {
+  margin-top: 1rem;
+}
+.floating-label-group--radio .group-label, .floating-label-group--select .group-label, .floating-label-group--checkbox .group-label {
+  color: #184d47;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input {
+  margin-left: 16px;
+}
+.floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select {
+  margin-left: 16px;
+}
+.floating-label-group .form-error {
+  margin: 0.8rem 0 0 0;
+  color: #f2304d;
+  font-size: 1.6rem;
+  padding: 0 0 0 0.8rem;
+}
+
+.login-form {
+  margin-top: 45px;
+}
+.login-form button {
+  margin-top: 20px;
+  margin-left: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  background-color: #184d47;
+  padding: 30px;
+  color: white;
+  flex: 0 0 auto;
+}
+header h1 {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  header {
+    padding: 30px 10vw;
+  }
+}
+
+main {
+  flex: 1 0 auto;
+  background-color: #ffffff;
+}
+
+article {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  color: #184d47;
+}
+article .article-header {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+form button {
+  border: none;
+  background-color: #184d47;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.4rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+input:not([type=radio]):not([type=checkbox]) {
+  border: none;
+  padding: 2.5rem 1.5rem 1.5rem;
+  font-weight: 400;
+  border-bottom: 1px solid lightslategrey;
+  width: 100%;
+  outline: none;
+  font-size: 1.8rem;
+}
+input:not([type=radio]):not([type=checkbox])[type=password]:not(:placeholder-shown) {
+  font-weight: 900;
+  letter-spacing: 0.3rem;
+}
+
+select {
+  border: none;
+  padding: 1.5rem;
+  font-weight: 400;
+  border-bottom: 1px solid lightslategrey;
+  outline: none;
+  width: 100%;
+}
+
+footer {
+  width: 100vw;
+  background-color: #184d47;
+  padding: 30px;
+  color: white;
+  flex: 0 0 auto;
+  margin-top: auto;
+}
+footer p {
+  margin-left: auto;
+}
+
+.lab1 {
+  font-size: 1.4rem;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.lab1 main article h2 {
+  text-align: center;
 }
 
 /*# sourceMappingURL=styles.css.map */
