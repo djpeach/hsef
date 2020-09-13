@@ -4,6 +4,10 @@
 ini_set('session.cookie_lifetime', 86400);
 ini_set('session.name', 'hsef');
 
+/**
+ * Class Session
+ * A class to make using $_SESSION unified and familiar
+ */
 class Session {
 
   public function __construct() {

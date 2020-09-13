@@ -1,6 +1,10 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
+/**
+ * Class Post
+ * A custom class to hold AuthenticationAccount details, and to help with authenticating
+ */
 class AuthAccount {
   private $authenticated;
 
@@ -8,18 +12,25 @@ class AuthAccount {
     $this->authenticated = false;
   }
 
+  /**
+   * @return bool return whether or not account is authenticated.
+   */
   public function isAuthenticated() {
+    global $session;
     if ($this->authenticated) return true;
     try {
       $this->authenticateWithSession();
     } catch (Exception $e) {
-      // TODO: Log this exception bc something went wrong trying to authenticate with session.
+      $session->flashMessage = $e->getMessage();
       return false;
     }
     return $this->authenticated;
   }
 
   /**
+   * @param string $email Email to authenticate with
+   * @param string $password Password to authenticate with. (Unhashed)
+   * @return bool Return true if authenticated.
    * @throws Exception
    */
   public function authenticateWithEmailPassword($email, $password) {
@@ -50,9 +61,16 @@ class AuthAccount {
     global $session, $db;
 
     // check session table for sessionId
-    $sql = $db->prepare(Queries::GET_AUTHID_BY_SESSIONID);
+    $sql = $db->prepare(Queries::GET_SESSION_BY_SESSIONID);
     $sql->execute([session_id()]);
-    if ($authId = $sql->fetchColumn()) {
+    if ($authSession = $sql->fetch()) {
+      $authId = $authSession->AuthSessionId;
+      $startTime = $authSession->StartTime;
+      $timeElapsed = strtotime(date('Y-m-d h:i:sa')) - strtotime($startTime);
+      // check if session was created in last 24 hours.
+      if ($timeElapsed > 86400) {
+        throw new Exception('This session has timed out, please log in again');
+      }
       $sql = $db->prepare(Queries::GET_ISACTIVE_BY_AUTHID);
       $sql->execute([$authId]);
       if ($isActive = $sql->fetchColumn()) {
@@ -62,8 +80,6 @@ class AuthAccount {
       throw new Exception('No account associated with this id');
     }
     throw new Exception('No account associated with this session');
-    // check auth account with authaccountid is active
-    // set authenticated to true
   }
 
 

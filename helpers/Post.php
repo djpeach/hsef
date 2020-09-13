@@ -1,5 +1,10 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
+
+/**
+ * Class Post
+ * A class to make using $_POST unified and familiar
+ */
 class Post {
   public function __construct() {
     foreach ($_POST as $key => $postProp) {

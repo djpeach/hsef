@@ -1,11 +1,14 @@
 <?php if ($_SERVER['REQUEST_URI'] === '/hsef/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
-  // if this var is set, the page was loaded correctly. fallback.php used this to determine if someone is trying to do direct access.
+  /**
+   * Used by fallback.php to determine if a page was directly accessed.
+   */
   $directAccessAttack = false;
 
-  // Global Helpers
-
+  /**
+   * Global Helpers and Variables
+   */
   require_once 'helpers/Session.php';
   $session = new Session();
 
@@ -15,18 +18,22 @@
   require_once 'helpers/Queries.php';
   require_once 'helpers/utils.php';
 
-  // use this for href attributes. eg <a href="/hsef/?page=dashboard">Dashboard</a>
+  /**
+   * Use this for href attributes.
+   * eg <a href="/hsef/?page=dashboard">Dashboard</a>
+   */
   if (isset($_GET['page'])) {
-    // set page var, then remove it from url with javascript
-    // using javascript to do this prevent double page load.
     $session->page = $_GET['page'];
     echo "<script>history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&]page=[^&]+/, '').replace(/^&/, '?'));</script>";
   }
 
-  $post = new Post();
+  $post = new Post(); // $_POST variables class
   $authAccount = new AuthAccount();
-  $db = null;
 
+  /**
+   * Database Connection
+   */
+  $db = null;
   try {
     $host = 'localhost';
     $db   = 'djpeach_db';
@@ -45,10 +52,13 @@
   } catch (\PDOException $e) {
     // TODO: list admin email, or auto-send email.
     print $e;
-//    print "Error connecting to database. Contact a admin ASAP!";
+    print "Error connecting to database. Contact a admin ASAP!";
     die();
   }
 
+  /**
+   * Initialize page variable
+   */
   if (!isset($session->page)) {
     $session->page = 'login';
   }

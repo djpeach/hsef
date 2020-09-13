@@ -1,5 +1,12 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
+
+  /**
+   * Class Post
+   * A custom Error collection class. Fill and use as needed.
+   *
+   * No global var.
+   */
   class Errors {
     private $isEmpty;
 

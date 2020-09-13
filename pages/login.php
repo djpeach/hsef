@@ -1,5 +1,5 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
-<?php if ($authAccount->isAuthenticated()) { redirect('dashboard'); } ?>
+<?php if ($authAccount->isAuthenticated()) redirect('dashboard'); ?>
 <?php
 // initialize errors, set to empty unless request_method is POST
 $errors = new Errors($_SERVER['REQUEST_METHOD'] === 'POST');

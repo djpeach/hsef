@@ -1,6 +1,10 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
+/**
+ * @param string $str a string in PHP_VAR format
+ * @return string a string in camelCaseFormat
+ */
 function strtocamel($str) {
   $res = strtolower($str);
   preg_match_all('/_[a-z]/', $res, $_UppercasePairs);
@@ -10,6 +14,10 @@ function strtocamel($str) {
   return $res;
 }
 
+/**
+ * @param string $camel a camelCase string to turn to legible string
+ * @return string a string meant for display, all words capitalized
+ */
 function cameltostr($camel) {
   $res = $camel;
   preg_match_all('/[A-Z]/', $res, $UppercaseLetters);
@@ -19,6 +27,9 @@ function cameltostr($camel) {
   return ucfirst($res);
 }
 
+/**
+ * @param string $page name of the file in /pages to load
+ */
 function redirect($page) {
   global $session;
   $session->page = $page;

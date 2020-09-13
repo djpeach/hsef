@@ -2,7 +2,7 @@
 <main>
   <article class="limit-width-sm">
     <div class="alert alert-danger">
-      <h4 class="alert-heading">Direct Access not allowed!</h4>
+      <h4 class="alert-heading">Error!</h4>
       <p>
         <?php echo $session->exceptionMessage; ?>
       </p>

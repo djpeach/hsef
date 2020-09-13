@@ -6,6 +6,17 @@
     <h1>HSEF System</h1>
   </header>
 
+  <?php if (isset($session->flashMessage)) : ?>
+    <article class="limit-width-sm">
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">Alert: </h4>
+        <p>
+          <?php echo $session->flashMessage; ?>
+        </p>
+      </div>
+    </article>
+  <?php unset($session->flashMessage); endif; ?>
+
   <?php require "pages/$page.php"; ?>
 
   <footer>
