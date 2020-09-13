@@ -3,5 +3,4 @@
 
 <h1>The Dashboard (Authenticated)</h1>
 
-<!-- only use the query method if you must, it is not the most efficient, as it does a double page load -->
-<h3><a href="/?page=anotherAuthPage">Another Authenticated Page</a></h3>
+<h3><a href="/hsef/?page=anotherAuthPage">Another Authenticated Page</a></h3>

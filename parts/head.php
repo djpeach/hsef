@@ -18,7 +18,7 @@
   require_once 'helpers/Queries.php';
   require_once 'helpers/utils.php';
 
-  // use this for href attributes. eg <a href="/?page=dashboard">Dashboard</a>
+  // use this for href attributes. eg <a href="/hsef/?page=dashboard">Dashboard</a>
   if (isset($_GET['page'])) {
     // set page var, then remove it from url with javascript
     // using javascript to do this prevent double page load.

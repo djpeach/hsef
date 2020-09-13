@@ -3,5 +3,4 @@
 
 <h1>Another Authenticated Page</h1>
 
-<!-- only use the query method if you must, it is not the most efficient, as it does a double page load -->
-<h3><a href="/?page=dashboard">Dashboard</a></h3>
+<h3><a href="/hsef/?page=dashboard">Dashboard</a></h3>
