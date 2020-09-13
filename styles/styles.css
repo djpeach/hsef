@@ -67,6 +67,7 @@ body {
 .custom-divider {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
+  height: 3.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -149,7 +150,6 @@ article {
   background-color: white;
   border-radius: 8px;
   padding: 30px;
-  margin: 60px;
   color: #184d47;
 }
 article .article-header {

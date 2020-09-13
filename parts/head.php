@@ -1,13 +1,57 @@
+<?php if ($_SERVER['REQUEST_URI'] === '/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
 <?php
+
+  // if this var is set, the page was loaded correctly. fallback.php used this to determine if someone is trying to do direct access.
+  $directAccessAttack = false;
 
   // Global Helpers
 
-  require 'helpers/Session.php';
-  require 'helpers/Post.php';
+  require_once 'helpers/Session.php';
   $session = new Session();
-  $post = new Post();
 
-  require 'helpers/Errors.php';
+  require_once 'helpers/Post.php';
+  require_once 'helpers/AuthAccount.php';
+  require_once 'helpers/Errors.php';
+  require_once 'helpers/Queries.php';
+  require_once 'helpers/utils.php';
+
+  // use this for href attributes. eg <a href="/?page=dashboard">Dashboard</a>
+  if ($_GET['page']) {
+    // set page var, then remove it from url with javascript
+    // using javascript to do this prevent double page load.
+    $session->page = $_GET['page'];
+    echo "<script>history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&]page=[^&]+/, '').replace(/^&/, '?'));</script>";
+  }
+
+  $post = new Post();
+  $authAccount = new AuthAccount();
+  $db = null;
+
+  try {
+    $host = '127.0.0.1';
+    $db   = 'hsef';
+    $user = 'root';
+    $pass = 'qwerty';
+    $charset = 'utf8mb4';
+
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $options = [
+      PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+      PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+
+    $db = new PDO($dsn, $user, $pass, $options);
+  } catch (\PDOException $e) {
+    // TODO: list admin email, or auto-send email.
+    print "Error connecting to database. Contact a admin ASAP!";
+    die();
+  }
+
+  if (!isset($session->page)) {
+    $session->page = 'login';
+  }
+  $page = $session->page;
 
 ?>
 

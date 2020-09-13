@@ -1,9 +1,13 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/helpers/fallback.php'; ?>
 <?php
 
 class Session {
 
   public function __construct() {
-    session_start();
+    session_start([
+      "cookie_lifetime" => 86400,
+      "name" => "hsef",
+    ]);
   }
 
   public function __set($name, $value) {
@@ -24,10 +28,5 @@ class Session {
 
   public function __unset($name) {
     unset($_SESSION[$name]);
-  }
-
-  public function __destruct() {
-    session_destroy();
-    unset($_SESSION);
   }
 }

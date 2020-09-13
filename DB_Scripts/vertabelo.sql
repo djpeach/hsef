@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-12 17:40:37.8
+-- Last modification date: 2020-09-12 23:49:10.486
 
 -- tables
 -- Table: AuthAccount
@@ -7,7 +7,6 @@ CREATE TABLE AuthAccount (
     AuthAccountId int unsigned NOT NULL AUTO_INCREMENT,
     Username char(128) NOT NULL,
     PasswordHash varchar(255) NOT NULL,
-    PasswordSalt varchar(255) NOT NULL,
     Active bool NOT NULL DEFAULT true,
     CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CreateBy int unsigned NULL,
@@ -120,13 +119,11 @@ CREATE TABLE OneTimeToken (
 CREATE TABLE Operator (
     OperatorId int unsigned NOT NULL AUTO_INCREMENT,
     UserId int unsigned NOT NULL,
-    AuthAccountId int unsigned NOT NULL,
     CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CreateBy int unsigned NULL,
     UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UpdateBy int unsigned NULL,
     UNIQUE INDEX fak_Operator_User_UserId (UserId),
-    UNIQUE INDEX fak_Operator_AuthAccount_AuthAccountId (AuthAccountId),
     CONSTRAINT Operator_pk PRIMARY KEY (OperatorId)
 );
 
@@ -248,12 +245,14 @@ CREATE TABLE User (
     Suffix char(64) NULL,
     Gender enum('male', 'female', 'other') NULL,
     Status enum('active', 'archived', 'pending') NOT NULL,
+    AuthAccountId int unsigned NULL,
     CheckedIn bool NULL DEFAULT false,
     Email char(128) NULL,
     CreateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CreateBy int unsigned NULL,
     UpdateDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UpdateBy int unsigned NULL,
+    UNIQUE INDEX fak_AuthAccount_User_AuthAccountId (AuthAccountId),
     CONSTRAINT User_pk PRIMARY KEY (UserId)
 );
 
@@ -277,6 +276,10 @@ ALTER TABLE JudgingSession ADD CONSTRAINT JudgingSession_TimeSlot FOREIGN KEY Ju
 -- Reference: Ranking_Project (table: Ranking)
 ALTER TABLE Ranking ADD CONSTRAINT Ranking_Project FOREIGN KEY Ranking_Project (ProjectId)
     REFERENCES Project (ProjectId);
+
+-- Reference: User_AuthAccount (table: User)
+ALTER TABLE User ADD CONSTRAINT User_AuthAccount FOREIGN KEY User_AuthAccount (AuthAccountId)
+    REFERENCES AuthAccount (AuthAccountId);
 
 -- Reference: fk_AuthSession_AuthAccount_AuthAccountId (table: AuthSession)
 ALTER TABLE AuthSession ADD CONSTRAINT fk_AuthSession_AuthAccount_AuthAccountId FOREIGN KEY fk_AuthSession_AuthAccount_AuthAccountId (AuthAccountId)
@@ -309,10 +312,6 @@ ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_GradeLevel_G
 -- Reference: fk_OperatorGradeLevel_Operator_OperatorId (table: OperatorGradeLevel)
 ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_Operator_OperatorId FOREIGN KEY fk_OperatorGradeLevel_Operator_OperatorId (OperatorId)
     REFERENCES Operator (OperatorId);
-
--- Reference: fk_Operator_AuthAccount_AuthAccountId (table: Operator)
-ALTER TABLE Operator ADD CONSTRAINT fk_Operator_AuthAccount_AuthAccountId FOREIGN KEY fk_Operator_AuthAccount_AuthAccountId (AuthAccountId)
-    REFERENCES AuthAccount (AuthAccountId);
 
 -- Reference: fk_Operator_User_UserId (table: Operator)
 ALTER TABLE Operator ADD CONSTRAINT fk_Operator_User_UserId FOREIGN KEY fk_Operator_User_UserId (UserId)
