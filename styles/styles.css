@@ -10054,7 +10054,6 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  width: 100vw;
   background-color: #184d47;
   padding: 30px;
   color: white;
@@ -10123,7 +10122,6 @@ select {
 }
 
 footer {
-  width: 100vw;
   background-color: #184d47;
   padding: 30px;
   color: #eebb4d;

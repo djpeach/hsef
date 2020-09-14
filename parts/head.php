@@ -1,10 +1,4 @@
-<?php if ($_SERVER['REQUEST_URI'] === '/hsef/index.php') require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
-
-  /**
-   * Used by fallback.php to determine if a page was directly accessed.
-   */
-  $directAccessAttack = false;
 
   /**
    * Global Helpers and Variables

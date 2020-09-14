@@ -1,4 +1,3 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php if (!$authAccount->isAuthenticated()) { redirect('login'); die(); } ?>
 
 <article class="limit-width-md bg-light mt-5 rounded">

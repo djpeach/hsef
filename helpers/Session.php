@@ -1,4 +1,3 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <?php
 
 ini_set('session.cookie_lifetime', 86400);

@@ -1,4 +1,3 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 <div class="custom-divider">
   <div class="custom-divider__line"></div>
   <div class="custom-divider__icon">
