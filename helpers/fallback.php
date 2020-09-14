@@ -12,6 +12,6 @@ set_exception_handler(function ($e) {
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
   $session = new Session();
   $session->page = 'exception';
-  $session->exceptionMessage = $errstr;
+  $session->exceptionMessage = "Error #$errno in $errfile, on line $errline. </br> $errstr";
   echo "<script> location.href = '/hsef/'; </script>";
 });
