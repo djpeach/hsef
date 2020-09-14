@@ -36,6 +36,46 @@ class AuthAccount {
   }
 
   /**
+   * Check if the user has the required entitlement
+   *
+   * @param $entitlement
+   * @return bool
+   */
+  public function hasReqEntitlement($entitlement) {
+    return in_array(strtolower($entitlement), $this->entitlements);
+  }
+
+  /**
+   * Check if the user has the all the required entitlements
+   *
+   * @param $entitlements
+   * @return bool
+   */
+  public function hasAllReqEntitlements($entitlements) {
+    foreach ($entitlements as $entitlement) {
+      if (!in_array(strtolower($entitlement), $this->entitlements)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Check if the user has at least one required entitlement
+   *
+   * @param $entitlements
+   * @return bool
+   */
+  public function hasOneOfReqEntitlement($entitlements) {
+    foreach ($entitlements as $entitlement) {
+      if (in_array(strtolower($entitlement), $this->entitlements)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * @param string $email Email to authenticate with
    * @param string $password Password to authenticate with. (Unhashed)
    * @return bool Return true if authenticated.
@@ -132,12 +172,15 @@ class AuthAccount {
     }
   }
 
+  /**
+   * Fetch entitlements by opid from db, store on authUser
+   */
   private function loadEntitlements() {
     global $db, $user;
 
     $sql = $db->prepare(Queries::GET_ENTITLEMENTS_BY_OPID);
     $sql->execute([$user->OperatorId]);
-    $this->entitlements = $sql->fetchAll(PDO::FETCH_COLUMN);
+    $this->entitlements = array_map('strtolower', $sql->fetchAll(PDO::FETCH_COLUMN));
   }
 
   public function logout() {

@@ -9,13 +9,26 @@
       </button>
       <div class="collapse navbar-collapse" id="mainMenu">
         <div class="navbar-nav">
-          <span class="navbar-text">Owner Tools</span>
-          <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
-          <span class="navbar-text">Admin Tools</span>
-          <a href="/hsef/?page=judgeManagement" class="nav-item nav-link">Judge Management</a>
-          <a href="/hsef/?page=studentManagement" class="nav-item nav-link">Student Management</a>
-          <a href="/hsef/?page=projectManagement" class="nav-item nav-link">Project Management</a>
-          <a href="/hsef/?page=scoreManagement" class="nav-item nav-link">Score Management</a>
+          <?php if ($authAccount->hasReqEntitlement('owner')) : ?>
+            <span class="navbar-text">Owner Tools</span>
+            <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
+          <?php endif; ?>
+          <?php if ($authAccount->hasReqEntitlement('moderator')) : ?>
+            <span class="navbar-text">Moderator Tools</span>
+          <?php endif; ?>
+          <?php if ($authAccount->hasReqEntitlement('admin')) : ?>
+            <span class="navbar-text">Admin Tools</span>
+            <a href="/hsef/?page=judgeManagement" class="nav-item nav-link">Judge Management</a>
+            <a href="/hsef/?page=studentManagement" class="nav-item nav-link">Student Management</a>
+            <a href="/hsef/?page=projectManagement" class="nav-item nav-link">Project Management</a>
+            <a href="/hsef/?page=scoreManagement" class="nav-item nav-link">Score Management</a>
+          <?php endif; ?>
+          <?php if ($authAccount->hasReqEntitlement('judge')) : ?>
+            <span class="navbar-text">Judge Tools</span>
+          <?php endif; ?>
+          <?php if ($authAccount->hasReqEntitlement('viewer')) : ?>
+            <span class="navbar-text">Other Tools</span>
+          <?php endif; ?>
           <?php if (isset(Post::get()->LOGOUT)) {
             $authAccount->logout();
             redirect('login');
