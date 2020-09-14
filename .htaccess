@@ -1,20 +1,14 @@
-#Order Deny,Allow
-#Deny from all
+Order Deny,Allow
+Deny from all
 
-#ErrorDocument 403 /hsef/403.html
-#
-#<FilesMatch ^(index\.php)?$>
-#  Order Allow,Deny
-#  Allow from all
-#</FilesMatch>
-#
-#<FilesMatch ^.*\.(css|js|map.css|html)$>
-#  Order Allow,Deny
-#  Allow from all
-#</FilesMatch>
+ErrorDocument 403 /hsef/403.html
 
-RewriteEngine On
+<FilesMatch ^(index\.php)?$>
+  Order Allow,Deny
+  Allow from all
+</FilesMatch>
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
+<FilesMatch ^.*\.(css|js|map.css|html)$>
+  Order Allow,Deny
+  Allow from all
+</FilesMatch>

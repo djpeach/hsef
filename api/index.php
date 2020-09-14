@@ -11,3 +11,7 @@ $app->get('/', function($req, $res) {
 $app->get('/ping', function($req, $res) {
   $res->send('pong');
 });
+
+$app->get('/another/test', function($req, $res) {
+  $res->send('success');
+});
