@@ -11,10 +11,11 @@
         <div class="navbar-nav">
           <?php if ($authAccount->hasReqEntitlement('owner')) : ?>
             <span class="navbar-text">Owner Tools</span>
-            <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
+            <a href="/hsef/?page=accessManagement" class="nav-item nav-link">Global Access Management</a>
           <?php endif; ?>
           <?php if ($authAccount->hasReqEntitlement('moderator')) : ?>
             <span class="navbar-text">Moderator Tools</span>
+            <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
           <?php endif; ?>
           <?php if ($authAccount->hasReqEntitlement('admin')) : ?>
             <span class="navbar-text">Admin Tools</span>
@@ -25,16 +26,19 @@
           <?php endif; ?>
           <?php if ($authAccount->hasReqEntitlement('judge')) : ?>
             <span class="navbar-text">Judge Tools</span>
+            <a href="/hsef/?page=judgeSchedule" class="nav-item nav-link">Judge Schedule</a>
+            <a href="/hsef/?page=judgingForm" class="nav-item nav-link">Judging Form</a>
           <?php endif; ?>
           <?php if ($authAccount->hasReqEntitlement('viewer')) : ?>
             <span class="navbar-text">Other Tools</span>
+            <a href="/hsef/?page=finalScores" class="nav-item nav-link">Final Scores</a>
           <?php endif; ?>
           <?php if (isset(Post::get()->LOGOUT)) {
             $authAccount->logout();
             redirect('login');
           } ?>
           <form method="POST" class="form-inline">
-            <button class="btn btn-lg btn-warning" type="submit" name="LOGOUT">Logout</button>
+            <button class="btn btn-lg btn-warning my-4" type="submit" name="LOGOUT">Logout</button>
           </form>
         </div>
       </div>

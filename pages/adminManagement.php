@@ -1,3 +1,5 @@
-<?php
-
-// TODO: check if you are allowed to view this page according to entitlements
+<?php if (!$authAccount->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+  redirect('exception', 'You do not have permission to view this page');
+  die();
+} ?>
+<h1>Admin Management</h1>

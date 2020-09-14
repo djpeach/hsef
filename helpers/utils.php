@@ -29,8 +29,15 @@ function cameltostr($camel) {
 /**
  * @param string $page name of the file in /pages to load
  */
-function redirect($page) {
+function redirect($page, $message=null) {
   global $session;
   $session->page = $page;
+  if ($message) {
+    if ($page === 'exception') {
+      $session->exceptionMessage = $message;
+    } else {
+      $session->flashMessage = $message;
+    }
+  }
   echo "<script> location.href = '/hsef/'; </script>";
 }
