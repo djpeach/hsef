@@ -59,6 +59,10 @@
   }
   $page = $session->page;
 
+  /**
+   * Initialize authentication
+   * Auth strategy: reach out to db and look for valid session with this session_id()
+   */
   $authAccount->authenticate();
 
 ?>
