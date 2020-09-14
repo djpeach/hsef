@@ -2,21 +2,21 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'].'/hsef/helpers/fallback.php'; ?>
 
 <div class="lab1">
-  <nav class="navbar navbar-expand-xl navbar-dark navbar-custom bg-dark">
+  <nav class="navbar navbar-dark navbar-custom bg-dark">
     <a href="/hsef/?page=dashboard" class="navbar-brand">HSEF System</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainMenu">
       <div class="navbar-nav">
-        <span class="navbar-text d-xl-none">Owner Tools</span>
+        <span class="navbar-text">Owner Tools</span>
         <a href="/hsef/?page=adminManagement" class="nav-item nav-link">Admin Management</a>
-        <span class="navbar-text d-xl-none">Admin Tools</span>
+        <span class="navbar-text">Admin Tools</span>
         <a href="/hsef/?page=judgeManagement" class="nav-item nav-link">Judge Management</a>
         <a href="/hsef/?page=studentManagement" class="nav-item nav-link">Student Management</a>
         <a href="/hsef/?page=projectManagement" class="nav-item nav-link">Project Management</a>
         <a href="/hsef/?page=scoreManagement" class="nav-item nav-link">Score Management</a>
-        <?php if (isset($_POST['LOGOUT'])) {
+        <?php if (isset(Post::get()->LOGOUT)) {
           $authAccount->logout();
           redirect('login');
         } ?>

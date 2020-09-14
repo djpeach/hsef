@@ -7,19 +7,20 @@ $errors = new Errors($_SERVER['REQUEST_METHOD'] === 'POST');
 $requiredFields = ['email', 'password'];
 
 // if request is POST, check all required fields
-if (isset($_POST['LOGIN'])) {
+if (isset(Post::get()->LOGIN)) {
   foreach ($requiredFields as $field) {
-    if (!$post->{$field}) {
+    if (!Post::get()->{$field}) {
       $errors->{$field} = "You must provide a {$field}";
     }
   }
 
   // additionally check that email format is valid
-  if (!$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
+  if (!$errors->email && !filter_var(Post::get()->email, FILTER_VALIDATE_EMAIL)) {
     $errors->email = 'Value set is not a valid email';
   }
 
   if ($errors->isEmpty()) {
+    $post = Post::get();
     try {
       $authAccount->authenticateWithEmailPassword($post->email, $post->password);
       if ($authAccount->isAuthenticated()) {

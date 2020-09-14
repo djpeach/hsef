@@ -6,10 +6,20 @@
  * A class to make using $_POST unified and familiar
  */
 class Post {
+
+  public static $instance;
+
   public function __construct() {
     foreach ($_POST as $key => $postProp) {
       $this->{$key} = $postProp;
     }
+  }
+
+  public static function get() {
+    if (!isset(Post::$instance)) {
+      Post::$instance = new Post();
+    }
+    return Post::$instance;
   }
 
   public function __set($name, $value) {

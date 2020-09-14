@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col">
         <div class="floating-label-group">
-          <input type="text" placeholder="Email" id="email" name="email" value="<?php echo $post->email ?>">
+          <input type="text" placeholder="Email" id="email" name="email" value="<?php echo Post::get()->email ?>">
           <label for="email">Email</label>
           <p class="form-error"><?php echo $errors->email; ?></p>
         </div>

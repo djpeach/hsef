@@ -28,7 +28,6 @@
     echo "<script>history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&]page=[^&]+/, '').replace(/^&/, '?'));</script>";
   }
 
-  $post = new Post(); // $_POST variables class
   $authAccount = new AuthAccount();
   $user = new User();
 
