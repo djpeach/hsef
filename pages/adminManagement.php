@@ -30,7 +30,7 @@
           <div class="col-4">
             <p><?php echo User::fullName($admin); ?></p>
           </div>
-          <div class="col-5 col-md-4">
+          <div class="col-5">
             <p><?php echo $admin->Email; ?></p>
           </div>
           <div class="col-2 d-md-none">
@@ -38,7 +38,7 @@
               <i class="fas fa-ellipsis-v text-darkgreen"></i>
             </span>
           </div>
-          <div class="col-6 col-sm-3 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
+          <div class="col-6 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
             <div class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </div>

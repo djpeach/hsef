@@ -5,7 +5,7 @@
  * A class with static consts to centralize the most used queries
  */
 class Queries {
-  const GET_CURRENT_USERID_BY_EMAIL = 'SELECT UserId FROM User WHERE Email = ? AND DateCreated >= DATE_SUB(NOW(), INTERVAL 1 YEAR)';
+  const GET_CURRENT_USERID_BY_EMAIL = "SELECT UserId FROM User WHERE Email = ? AND Status = 'active'";
   const GET_AUTHID_BY_USERID = 'SELECT AuthAccountId FROM AuthAccount WHERE UserId = ?';
   const GET_AUTHACCOUNT_BY_ID = 'SELECT * FROM AuthAccount WHERE AuthAccountId = ?';
   const GET_SESSION_BY_ID = 'SELECT * FROM AuthSession WHERE SessionId = ?';
