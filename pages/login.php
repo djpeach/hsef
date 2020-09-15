@@ -22,7 +22,7 @@ if (isset(Post::get()->LOGIN)) {
     try {
       AuthAccount::get()->authenticateWithEmailPassword($post->email, $post->password);
       if (AuthAccount::get()->isAuthenticated()) {
-        redirect('dashboard');
+        redirect(isset($_GET['page']) ? $_GET['page'] : 'dashboard');
       } else {
         throw new AuthException('Could not authenticate for unknown reason');
       }

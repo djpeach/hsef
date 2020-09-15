@@ -18,7 +18,7 @@
    * Use this for href attributes.
    * eg <a href="/hsef/?page=dashboard">Dashboard</a>
    */
-  if (isset($_GET['page'])) {
+  if (isset($_GET['page']) && AuthAccount::get()->isAuthenticated()) {
     Session::get()->page = $_GET['page'];
     echo "<script>history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&]page=[^&]+/, '').replace(/^&/, '?'));</script>";
   }
