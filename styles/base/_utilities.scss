@@ -33,6 +33,13 @@
   flex-wrap: nowrap;
   overflow-x: hidden;
 
+  .slide-tray {
+    display: flex;
+    align-self: stretch;
+    min-width: fit-content !important;
+    padding: 0;
+  }
+
   .tool-icon {
     cursor: pointer;
     padding: 1rem;
@@ -41,6 +48,7 @@
     border: none;
     flex: 1 0 auto;
     display: flex;
+    align-items: center;
     justify-content: center;
 
     &:first-child {

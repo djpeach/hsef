@@ -92,6 +92,12 @@ body {
   flex-wrap: nowrap;
   overflow-x: hidden;
 }
+.row.row-sliding .slide-tray {
+  display: flex;
+  align-self: stretch;
+  min-width: fit-content !important;
+  padding: 0;
+}
 .row.row-sliding .tool-icon {
   cursor: pointer;
   padding: 1rem;
@@ -100,6 +106,7 @@ body {
   border: none;
   flex: 1 0 auto;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 .row.row-sliding .tool-icon:first-child {
