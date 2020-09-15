@@ -19,7 +19,7 @@ class Queries {
 
   const GET_ALL_ADMINS =
     "SELECT 
-       DISTINCT O.OperatorId, 
+       O.OperatorId, 
        U.FirstName, 
        U.MiddleName, 
        U.LastName, 
@@ -29,7 +29,35 @@ class Queries {
 FROM Operator O 
     JOIN OperatorEntitlement OE 
         on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E 
+        on OE.EntitlementId = E.EntitlementId
     JOIN User U 
-        on O.UserId = U.UserId;";
+        on O.UserId = U.UserId
+WHERE E.Name = 'Admin' 
+GROUP BY O.OperatorId;";
+
+  const GET_USERS_TO_PROMOTE_TO_ADMIN =
+    "SELECT 
+       O.OperatorId, 
+       U.FirstName, 
+       U.MiddleName, 
+       U.LastName, 
+       U.Suffix, 
+       U.Email, 
+       U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE 
+        on (O.OperatorId = OE.OperatorId AND O.OperatorId NOT in (
+            SELECT OperatorId FROM OperatorEntitlement 
+                JOIN Entitlement E 
+                    on OperatorEntitlement.EntitlementId = E.EntitlementId
+            WHERE E.Name = 'Admin'
+        ))
+    JOIN User U 
+        on O.UserId = U.UserId
+    JOIN Entitlement E2 
+        on OE.EntitlementId = E2.EntitlementId
+WHERE E2.Name in ('Judge', 'Viewer')
+GROUP BY O.OperatorId;";
 
 }
