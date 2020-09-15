@@ -238,6 +238,16 @@ body {
 .data-table .row div {
   transition: all 0.4s ease;
 }
+.data-table .row div[class^=col-], .data-table .row div[class*=" col-"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.data-table .row div[class^=col-] *, .data-table .row div[class*=" col-"] * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .data-table .row:not(:first-child) {
   border-radius: 0.4rem;
 }

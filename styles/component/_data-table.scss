@@ -7,6 +7,19 @@
 
     div {
       transition: all 0.4s ease;
+
+      &[class^="col-"],
+      &[class*=" col-"] {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        * {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     &:not(:first-child) {

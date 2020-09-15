@@ -7,7 +7,7 @@
     <h2 class="article-header">Admin Management</h2>
     <?php include 'components/divider.php' ?>
     <div class="container-sm data-table">
-      <div class="row border-bottom border-darkgreen mb-3 no-gutters">
+      <div class="row border-bottom border-darkgreen mb-3 no-gutters pl-2">
         <div class="col-1">
           <p class="font-weight-bold">Id</p>
         </div>
@@ -23,7 +23,7 @@
       </div>
       <?php $admins = DB::get()->query(Queries::GET_ALL_ADMINS)->fetchAll(); ?>
       <?php foreach ($admins as $admin) : ?>
-        <div class="row row-sliding">
+        <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
             <p><?php echo $admin->OperatorId; ?></p>
           </div>
