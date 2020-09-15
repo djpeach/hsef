@@ -47,10 +47,13 @@ GROUP BY O.OperatorId;";
        U.CheckedIn 
 FROM Operator O 
     JOIN OperatorEntitlement OE 
-        on (O.OperatorId = OE.OperatorId AND O.OperatorId NOT in (
-            SELECT OperatorId FROM OperatorEntitlement 
+        on (
+            O.OperatorId = OE.OperatorId 
+                AND O.OperatorId NOT in (
+            SELECT OperatorId 
+            FROM OperatorEntitlement O2
                 JOIN Entitlement E 
-                    on OperatorEntitlement.EntitlementId = E.EntitlementId
+                    on O2.EntitlementId = E.EntitlementId
             WHERE E.Name = 'Admin'
         ))
     JOIN User U 
