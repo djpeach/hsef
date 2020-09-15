@@ -8,7 +8,7 @@ class DB {
       $host = 'localhost';
       $db   = 'djpeach_db';
       $user = 'djpeach';
-      $pass = 'djpeach';
+      $pass = 'qwerty';
       $charset = 'utf8mb4';
 
       $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

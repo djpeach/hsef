@@ -21,7 +21,7 @@ body {
   border: none;
   margin: 0;
   background-color: white;
-  margin-top: 5rem !important;
+  margin-top: 3rem !important;
 }
 
 :not(.fa),
@@ -63,6 +63,29 @@ body {
 .limit-width-xl3 {
   max-width: 1824px;
   margin: 0 auto;
+}
+
+.row.no-gutters-r {
+  margin-right: 0;
+}
+.row.no-gutters-r > [class^=col-], .row.no-gutters-r > [class*=" col-"] {
+  padding-right: 0;
+}
+
+.row.no-gutters-l {
+  margin-left: 0;
+}
+.row.no-gutters-l > [class^=col-], .row.no-gutters-l > [class*=" col-"] {
+  padding-left: 0;
+}
+
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row.no-gutters > [class^=col-], .row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .btn.btn-gold {
@@ -177,10 +200,42 @@ body {
 .data-table {
   margin-bottom: 1.2rem;
 }
-.data-table tbody td i {
-  font-size: 1.6rem;
-  margin: 0 0.4rem;
+.data-table .row {
+  align-items: center;
+  margin: 0.4rem 0;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+.data-table .row div {
+  transition: all 0.4s ease;
+}
+.data-table .row:not(:first-child) {
+  border-radius: 0.4rem;
+}
+.data-table .row p {
+  margin: 0;
+}
+.data-table .row .tool-icon {
   cursor: pointer;
+  padding: 1rem;
+  font-size: 1.8rem;
+  background-color: transparent;
+  border: none;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.data-table .row .tool-icon:first-child {
+  border-radius: 0.4rem 0 0 0.4rem;
+}
+.data-table .row .tool-icon:last-child {
+  border-radius: 0 0.4rem 0.4rem 0;
+}
+.data-table .row .tool-icon:focus, .data-table .row .tool-icon:active {
+  outline: 0;
+}
+.data-table .row:nth-child(even):not(:last-child) {
+  background-color: rgba(24, 77, 71, 0.2);
 }
 
 header {
@@ -209,7 +264,6 @@ main {
 article {
   background-color: white;
   border-radius: 8px;
-  padding: 30px;
   color: #184d47;
 }
 article .article-header {
@@ -266,7 +320,7 @@ footer p {
 
 .hsef {
   font-size: 1.4rem;
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 3rem);
   display: flex;
   flex-flow: column nowrap;
 }

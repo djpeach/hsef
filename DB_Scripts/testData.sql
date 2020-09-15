@@ -56,13 +56,25 @@ VALUES (1, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (2, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (3, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (4, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (5, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (6, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 4);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 5);
 
 # ----- Downs ----- #
-# DELETE FROM OperatorEntitlement WHERE OperatorId in (1, 2, 3, 4, 5, 6);
-# DELETE FROM Entitlement WHERE EntitlementId in (1, 2, 3, 4, 5);
-# DELETE FROM Operator WHERE OperatorId in (1, 2, 3, 4, 5, 6);
-# DELETE FROM User WHERE UserId in (1, 2, 3, 4, 5, 6);
-# DELETE FROM AuthAccount WHERE AuthAccountId in (1, 2, 3, 4, 5, 6);
+SET FOREIGN_KEY_CHECKS = 0;
+DELETE FROM OperatorEntitlement WHERE OperatorId in (1, 2, 3, 4, 5, 6);
+DELETE FROM Entitlement WHERE EntitlementId in (1, 2, 3, 4, 5);
+DELETE FROM Operator WHERE OperatorId in (1, 2, 3, 4, 5, 6);
+DELETE FROM User WHERE UserId in (1, 2, 3, 4, 5, 6);
+DELETE FROM AuthAccount WHERE AuthAccountId in (1, 2, 3, 4, 5, 6);
+SET FOREIGN_KEY_CHECKS = 1;

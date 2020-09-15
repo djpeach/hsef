@@ -15,3 +15,8 @@ $app->get('/ping', function($req, $res) {
 $app->get('/another/test', function($req, $res) {
   $res->send('success');
 });
+
+$app->delete('/admin/:id', function($req, $res) {
+  // run db delete
+  $res->send('success');
+});
