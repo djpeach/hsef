@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="row mt-3">
-      <button type="submit" name="LOGIN">Log In</button>
+      <button type="submit" name="LOGIN" class="btn btn-gold">Log In</button>
     </div>
   </fieldset>
 </form>

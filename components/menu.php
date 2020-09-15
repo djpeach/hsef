@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark navbar-custom bg-darkgreen fixed-top">
-  <a href="/hsef/?page=dashboard" class="navbar-brand">HSEF System</a>
+  <a href="/hsef/?page=dashboard" class="navbar-brand text-gold">HSEF System</a>
   <?php if ($authAccount->isAuthenticated()) : $operator = Operator::get(); ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu">
       <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
           redirect('login');
         } ?>
         <form method="POST" class="form-inline">
-          <button class="btn btn-lg btn-warning my-4 font-weight-bolder" type="submit" name="LOGOUT">Logout</button>
+          <button class="btn btn-lg btn-gold my-4 font-weight-bolder ml-0" type="submit" name="LOGOUT">Logout</button>
         </form>
       </div>
     </div>
