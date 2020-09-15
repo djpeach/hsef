@@ -18,7 +18,7 @@
     }
 
     &:nth-child(even):not(:last-child) {
-      background-color: transparentize(map_get($colors, darkgreen), .8);
+      background-color: transparentize(map_get($theme-colors, darkgreen), .8);
     }
   }
 }

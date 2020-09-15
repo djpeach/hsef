@@ -2,7 +2,7 @@ form {
 
   button {
     border: none;
-    background-color: map_get($colors, darkgreen);
+    background-color: map_get($theme-colors, darkgreen);
     padding: .8rem 1.8rem;
     border-radius: .4rem;
     color: white;

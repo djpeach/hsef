@@ -2,7 +2,7 @@ input:not([type='radio']):not([type='checkbox']) {
   border: none;
   padding: 2.5rem 1.5rem 1.5rem;
   font-weight: 400;
-  border-bottom: 1px solid map_get($colors, border);
+  border-bottom: 1px solid map_get($theme-colors, border);
   width: 100%;
   outline: none;
   font-size: 1.8rem;
@@ -17,7 +17,7 @@ select {
   border: none;
   padding: 1.5rem;
   font-weight: 400;
-  border-bottom: 1px solid map_get($colors, border);
+  border-bottom: 1px solid map_get($theme-colors, border);
   outline: none;
   width: 100%;
 }

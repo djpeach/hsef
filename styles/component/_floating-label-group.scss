@@ -5,7 +5,7 @@
     position: absolute;
     top: 1.2rem;
     left: 0;
-    color: map_get($colors, darkgreen);
+    color: map_get($theme-colors, darkgreen);
     font-size: 1.2rem;
     font-weight: 600;
     transition: all .1s ease-in-out;
@@ -21,7 +21,7 @@
     margin-top: 1rem;
 
     .group-label {
-      color: map_get($colors, darkgreen);
+      color: map_get($theme-colors, darkgreen);
       font-size: 1.2rem;
       font-weight: 600;
     }
@@ -41,7 +41,7 @@
 
   .form-error {
     margin: .8rem 0 0 0;
-    color: map_get($colors, error);
+    color: map_get($theme-colors, error);
     font-size: 1.6rem;
     padding: 0 0 0 .8rem;
   }

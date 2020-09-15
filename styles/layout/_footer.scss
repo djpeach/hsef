@@ -1,7 +1,7 @@
 footer {
-  background-color: map_get($colors, darkgreen);
+  background-color: map_get($theme-colors, darkgreen);
   padding: 30px;
-  color: map_get($colors, yellow);
+  color: map_get($theme-colors, yellow);
   flex: 0 0 auto;
 
   margin-top: auto;

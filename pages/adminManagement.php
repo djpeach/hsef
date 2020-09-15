@@ -30,22 +30,22 @@
           <div class="col-4">
             <p><?php echo User::fullName($admin); ?></p>
           </div>
-          <div class="col-5">
+          <div class="col-5 col-md-4">
             <p><?php echo $admin->Email; ?></p>
           </div>
-          <div class="col-2">
+          <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $admin->OperatorId; ?>">
               <i class="fas fa-ellipsis-v text-darkgreen"></i>
             </span>
           </div>
-          <div class="col-6 col-sm-3 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
-            <div class="col-4 tool-icon bg-primary">
+          <div class="col-6 col-sm-3 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
+            <div class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </div>
-            <div class="col-4 tool-icon bg-warning">
+            <div class="col-4 tool-icon bg-gold">
               <i class="fas fa-key text-white"></i>
             </div>
-            <div class="col-4 tool-icon bg-danger">
+            <div class="col-4 tool-icon bg-red">
               <i class="fas fa-trash text-white"></i>
             </div>
           </div>

@@ -1,15 +1,15 @@
 .navbar-custom {
-  background-color: map_get($colors, darkgreen) !important;
+  background-color: map_get($theme-colors, darkgreen) !important;
 
   .navbar-brand {
     font-size: 2.4rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: map_get($colors, yellow);
+    color: map_get($theme-colors, yellow);
   }
 
   .navbar-toggler {
-    border: .25rem solid map_get($colors, border);
+    border: .25rem solid map_get($theme-colors, border);
 
     &-icon {
       font-size: 2rem;
@@ -19,14 +19,14 @@
   .navbar-nav {
 
     .navbar-text {
-      border-bottom: 1px solid map_get($colors, border);
+      border-bottom: 1px solid map_get($theme-colors, border);
       max-width: 400px;
     }
 
     .nav-link {
       font-size: 1.8rem;
       font-weight: 600;
-      color: map_get($colors, yellow);
+      color: map_get($theme-colors, yellow);
     }
   }
 }

@@ -1,7 +1,7 @@
 article {
   background-color: white;
   border-radius: 8px;
-  color: map_get($colors, darkgreen);
+  color: map_get($theme-colors, darkgreen);
 
   .article-header {
     text-align: center;

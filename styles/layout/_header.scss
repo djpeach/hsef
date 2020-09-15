@@ -1,7 +1,7 @@
 header {
   display: flex;
   justify-content: space-between;
-  background-color: map_get($colors, darkgreen);
+  background-color: map_get($theme-colors, darkgreen);
   padding: 30px;
   color: white;
   flex: 0 0 auto;
