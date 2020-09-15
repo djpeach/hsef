@@ -5,191 +5,139 @@
  * A custom class to hold AuthenticationAccount details, and to help with authenticating
  */
 class AuthAccount {
-  private $authenticated;
-  private $entitlements;
+  private static $instance;
 
-  public function __construct() {
-    $this->authenticated = false;
-    $this->entitlements = [];
+  private $authenticated = false;
+
+  // Database Fields
+  public $AuthAccountId;
+  public $UserId;
+  public $Active;
+  public $PasswordHash;
+
+  private function __construct() {}
+
+  public static function get() {
+    if (!isset(self::$instance)) {
+      self::$instance = new AuthAccount();
+    }
+    return self::$instance;
   }
 
   public function isAuthenticated() {
     return $this->authenticated;
   }
 
-  public function getEntitlements() {
-    return $this->entitlements;
-  }
-
   /**
-   * @return bool return whether or not account is authenticated.
+   * Authenticate the user via internal strategies
+   *
+   * @return void
    */
   public function authenticate() {
-    global $session;
     try {
       $this->authenticateWithSession();
     } catch (Exception $e) {
-      $session->flashMessage = $e->getMessage();
-      return $this->authenticated;
+      Session::get()->flashMessage = $e->getMessage();
     }
-    return $this->authenticated;
   }
 
   /**
-   * Check if the user has the required entitlement
+   * Authenticate user, and create auth session for them in the database
    *
-   * @param $entitlement
-   * @return bool
-   */
-  public function hasReqEntitlement($entitlement) {
-    return in_array(strtolower($entitlement), $this->entitlements);
-  }
-
-  /**
-   * Check if the user has the all the required entitlements
-   *
-   * @param $entitlements
-   * @return bool
-   */
-  public function hasAllReqEntitlements($entitlements) {
-    foreach ($entitlements as $entitlement) {
-      if (!in_array(strtolower($entitlement), $this->entitlements)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Check if the user has at least one required entitlement
-   *
-   * @param $entitlements
-   * @return bool
-   */
-  public function hasOneOfReqEntitlement($entitlements) {
-    foreach ($entitlements as $entitlement) {
-      if (in_array(strtolower($entitlement), $this->entitlements)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
    * @param string $email Email to authenticate with
    * @param string $password Password to authenticate with. (Unhashed)
-   * @return bool Return true if authenticated.
-   * @throws Exception
+   * @throws AuthException
+   * @throws DatabaseException
    */
   public function authenticateWithEmailPassword($email, $password) {
-    global $db;
-    $sql = $db->prepare(Queries::GET_ACTIVE_AUTHID_BY_EMAIL);
+    $db = DB::get();
+    $sql = $db->prepare(Queries::GET_CURRENT_USERID_BY_EMAIL);
     $sql->execute([$email]);
-    $authId = $sql->fetchColumn();
-    if ($authId) {
-      $sql = $db->prepare(Queries::GET_PASSWORD_BY_AUTHID);
-      $sql->execute([$authId]);
-      $pwdHash = $sql->fetchColumn();
-      if ($pwdHash) {
-        if (password_verify($password, $pwdHash)) {
+    $uid = $sql->fetchColumn();
+    if ($uid) {
+      $sql = $db->prepare(Queries::GET_AUTHID_BY_USERID);
+      $sql->execute([$uid]);
+      $authId = $sql->fetchColumn();
+      if ($authId) {
+        $this->loadFromDB($authId);
+        if (password_verify($password, $this->PasswordHash)) {
           $sql = $db->prepare(Queries::REPLACE_SESSION);
-          $sql->execute([session_id(), $authId]);
+          $replaced = $sql->execute([session_id(), $this->AuthAccountId]);
+          if (!$replaced) {
+            throw new AuthException('Could not create auth session in database, you will need to log in again');
+          }
           $this->authenticated = true;
-          return true;
+          return;
         } else {
-          throw new Exception('Password was incorrect. Please try again, or reset your password');
+          throw new AuthException('Password incorrect, please try again, or reset your password');
         }
       } else {
-        throw new Exception('No authorized account found with the corresponding id, please contact an admin');
+        throw new AuthException('This user does not have an auth account to log in with');
       }
     } else {
-      throw new Exception('Could not find a user with that email address');
+      throw new AuthException('Could not find an active user with that email address');
     }
   }
 
   /**
+   * Look up auth session for this user and authenticate if valid
+   *
    * @throws Exception
    */
   public function authenticateWithSession() {
-    global $db, $user;
+    $db = DB::get();
 
     // check session table for sessionId
     $sql = $db->prepare(Queries::GET_SESSION_BY_ID);
     $sql->execute([session_id()]);
-    if ($authSession = $sql->fetch()) {
-      $authId = $authSession->AuthAccountId;
-      $startTime = $authSession->StartTime;
-      $timeElapsed = strtotime(date('Y-m-d h:i:sa')) - strtotime($startTime);
+    $authSession = $sql->fetch();
+    if ($authSession) {
+      $timeElapsed = strtotime(date('Y-m-d h:i:sa')) - strtotime($authSession->StartTime);
       // check if session was created in last 24 hours. (24 * 60 * 60 = 86,400 seconds)
       if ($timeElapsed > 86400) {
         $this->authenticated = false;
         $sql = $db->prepare(Queries::DELETE_SESSION_BY_ID);
         $sql->execute([session_id()]);
-        throw new Exception('This session has timed out, please log in again');
+        throw new AuthException('This session has timed out, please log in again');
       }
-      $sql = $db->prepare(Queries::GET_ISACTIVE_BY_AUTHID);
-      $sql->execute([$authId]);
-      if ($isActive = $sql->fetchColumn()) {
-        $this->authenticated = $isActive;
-        if ($this->authenticated) {
-          $this->loadUser($authId);
-          $this->loadEntitlements();
-        }
-        return;
-      } else {
-        $this->authenticated = false;
-        throw new Exception('No account associated with this id');
-      }
+      $this->loadFromDB($authSession->AuthAccountId);
+      $this->authenticated = $this->Active;
     } else {
       $this->authenticated = false;
-      return;
     }
   }
 
   /**
-   * Loads the user
+   * Load the auth account from the database
    *
-   * @param $authId
-   * @throws Exception
+   * @param $id
+   * @throws DatabaseException
    */
-  private function loadUser($authId) {
-    global $db, $user;
-
-    $sql = $db->prepare(Queries::GET_USER_BY_AUTHID);
-    $sql->execute([$authId]);
-    if (!($user = $sql->fetchObject('User'))) {
-      throw new Exception('Could not find user with that AuthAccountId in the database');
-    }
-
-    // add OperatorId to User Profile
-    $sql = $db->prepare(Queries::GET_OPID_BY_USERID);
-    $sql->execute([$user->UserId]);
-    $opid = $sql->fetchColumn();
-    if ($opid) {
-      $user->OperatorId = $opid;
+  private function loadFromDB($id) {
+    $db = DB::get();
+    $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_ID);
+    $sql->execute([$id]);
+    $obj = $sql->fetch();
+    if ($obj) {
+      foreach (get_object_vars($obj) as $key => $value) {
+        $this->{$key} = $value;
+      }
     } else {
-      throw new Exception('Could not find operator with that UserId in the database');
+      throw new DatabaseException ('Could not load Auth Account from database');
     }
-  }
-
-  /**
-   * Fetch entitlements by opid from db, store on authUser
-   */
-  private function loadEntitlements() {
-    global $db, $user;
-
-    $sql = $db->prepare(Queries::GET_ENTITLEMENTS_BY_OPID);
-    $sql->execute([$user->OperatorId]);
-    $this->entitlements = array_map('strtolower', $sql->fetchAll(PDO::FETCH_COLUMN));
   }
 
   public function logout() {
-    global $db;
+    $db = DB::get();
+    $session = Session::get();
 
-    $this->authenticated = false;
     $sql = $db->prepare(Queries::DELETE_SESSION_BY_ID);
-    $sql->execute([session_id()]);
-    redirect('login');
+    if ($sql->execute([session_id()])) {
+      $this->authenticated = false;
+      redirect('login');
+    } else {
+      $session->flashMessage = 'Could not log out user, please try again';
+    }
   }
 
 

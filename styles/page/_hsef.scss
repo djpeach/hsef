@@ -1,6 +1,6 @@
-.lab1 {
+.hsef {
   font-size: 1.4rem;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$top-margin});
   display: flex;
   flex-flow: column nowrap;
 

@@ -16,7 +16,7 @@ class Post {
 
   public static function get() {
     if (!isset(Post::$instance)) {
-      Post::$instance = new Post();
+      self::$instance = new Post();
     }
     return Post::$instance;
   }

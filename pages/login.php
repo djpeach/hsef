@@ -1,4 +1,3 @@
-<?php if ($authAccount->isAuthenticated()) { redirect('dashboard'); die(); } ?>
 <?php
 // initialize errors, set to empty unless request_method is POST
 $errors = new Errors($_SERVER['REQUEST_METHOD'] === 'POST');
@@ -21,11 +20,13 @@ if (isset(Post::get()->LOGIN)) {
   if ($errors->isEmpty()) {
     $post = Post::get();
     try {
-      $authAccount->authenticateWithEmailPassword($post->email, $post->password);
-      if ($authAccount->isAuthenticated()) {
+      AuthAccount::get()->authenticateWithEmailPassword($post->email, $post->password);
+      if (AuthAccount::get()->isAuthenticated()) {
         redirect('dashboard');
+      } else {
+        throw new AuthException('Could not authenticate for unknown reason');
       }
-    } catch (Exception $e) {
+    } catch (AuthException $e) {
       $errors->authError = $e->getMessage();
     }
   }

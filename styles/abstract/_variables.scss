@@ -10,6 +10,11 @@ $colors: (
   error: #f2304d,
 );
 
+$theme-colors: (
+        "gold": #eebb4d,
+        "darkgreen": #184d47,
+);
+
 // ================ BREAKPOINTS ============== //
 
 $breakpoints: (
@@ -21,3 +26,7 @@ $breakpoints: (
   xl2: 1424px,
   xl3: 1824px
 );
+
+// ================ OTHER ============== //
+
+$top-margin: 5rem;

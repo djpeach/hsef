@@ -4,66 +4,45 @@
    * Global Helpers and Variables
    */
   require_once 'helpers/Session.php';
-  $session = new Session();
-
+  require_once 'helpers/DB.php';
   require_once 'helpers/Post.php';
   require_once 'helpers/AuthAccount.php';
   require_once 'helpers/User.php';
+  require_once 'helpers/Operator.php';
   require_once 'helpers/Errors.php';
   require_once 'helpers/Queries.php';
   require_once 'helpers/utils.php';
+  require_once 'helpers/Exceptions.php';
 
   /**
    * Use this for href attributes.
    * eg <a href="/hsef/?page=dashboard">Dashboard</a>
    */
   if (isset($_GET['page'])) {
-    $session->page = $_GET['page'];
+    Session::get()->page = $_GET['page'];
     echo "<script>history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&]page=[^&]+/, '').replace(/^&/, '?'));</script>";
-  }
-
-  $authAccount = new AuthAccount();
-  $user = new User();
-
-  /**
-   * Database Connection
-   */
-  $db = null;
-  try {
-    $host = 'localhost';
-    $db   = 'djpeach_db';
-    $user = 'djpeach';
-    $pass = 'djpeach';
-    $charset = 'utf8mb4';
-
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $options = [
-      PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-      PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-
-    $db = new PDO($dsn, $user, $pass, $options);
-  } catch (\PDOException $e) {
-    // TODO: list admin email, or auto-send email.
-    print $e;
-    print "Error connecting to database. Contact a admin ASAP!";
-    die();
   }
 
   /**
    * Initialize page variable
    */
-  if (!isset($session->page)) {
-    $session->page = 'login';
+  if (!isset(Session::get()->page)) {
+    Session::get()->page = 'login';
   }
-  $page = $session->page;
 
   /**
    * Initialize authentication
    * Auth strategy: reach out to db and look for valid session with this session_id()
+   *
+   * Load AuthAccount, User, and Operator details from the database if authenticated
    */
-  $authAccount->authenticate();
+  AuthAccount::get()->authenticate();
+  if (!AuthAccount::get()->isAuthenticated() && Session::get()->page !== 'login') {
+    redirect('login');
+  } else if (AuthAccount::get()->isAuthenticated()) {
+    User::get(AuthAccount::get()->UserId);
+    Operator::get(User::get()->UserId);
+  }
 
 ?>
 

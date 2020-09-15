@@ -1,16 +1,25 @@
 <?php
 
-ini_set('session.cookie_lifetime', 86400);
-ini_set('session.name', 'hsef');
-
 /**
  * Class Session
  * A class to make using $_SESSION unified and familiar
  */
 class Session {
 
-  public function __construct() {
+  private static $instance;
+
+  private function __construct() {
+    ini_set('session.cookie_lifetime', 86400);
+    ini_set('session.name', 'hsef');
+
     session_start();
+  }
+
+  public static function get() {
+    if (!isset(self::$instance)) {
+      self::$instance = new Session();
+    }
+    return self::$instance;
   }
 
   public function __set($name, $value) {
@@ -33,3 +42,5 @@ class Session {
     unset($_SESSION[$name]);
   }
 }
+
+Session::get();

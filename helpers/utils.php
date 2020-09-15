@@ -30,7 +30,7 @@ function cameltostr($camel) {
  * @param string $page name of the file in /pages to load
  */
 function redirect($page, $message=null) {
-  global $session;
+  $session = Session::get();
   $session->page = $page;
   if ($message) {
     if ($page === 'exception') {
