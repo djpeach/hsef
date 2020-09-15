@@ -6,7 +6,7 @@
         <?php echo Session::get()->exceptionMessage; ?>
       </p>
       <hr>
-      <a href="/hsef/" class="alert-link">Go back to Home Page</a>
+      <a href="/hsef/?page=dashboard" class="alert-link">Go back to Home Page</a>
     </div>
   </article>
 </main>

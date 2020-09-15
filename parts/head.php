@@ -15,6 +15,20 @@
   require_once 'helpers/Exceptions.php';
 
   /**
+   * Initialize authentication
+   * Auth strategy: reach out to db and look for valid session with this session_id()
+   *
+   * Load AuthAccount, User, and Operator details from the database if authenticated
+   */
+  AuthAccount::get()->authenticate();
+  if (!AuthAccount::get()->isAuthenticated() && Session::get()->page !== 'login') {
+    redirect('login');
+  } else if (AuthAccount::get()->isAuthenticated()) {
+    User::get(AuthAccount::get()->UserId);
+    Operator::get(User::get()->UserId);
+  }
+
+  /**
    * Use this for href attributes.
    * eg <a href="/hsef/?page=dashboard">Dashboard</a>
    */
@@ -28,20 +42,6 @@
    */
   if (!isset(Session::get()->page)) {
     Session::get()->page = 'login';
-  }
-
-  /**
-   * Initialize authentication
-   * Auth strategy: reach out to db and look for valid session with this session_id()
-   *
-   * Load AuthAccount, User, and Operator details from the database if authenticated
-   */
-  AuthAccount::get()->authenticate();
-  if (!AuthAccount::get()->isAuthenticated() && Session::get()->page !== 'login') {
-    redirect('login');
-  } else if (AuthAccount::get()->isAuthenticated()) {
-    User::get(AuthAccount::get()->UserId);
-    Operator::get(User::get()->UserId);
   }
 
 ?>
