@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  let rowSliders = $('*[data-toggle="rowSlide"]');
+  let rowSliders = $('*[data-toggle="row-slide"]');
 
   rowSliders.click(function() {
     let target = $($(this).attr('data-target'));

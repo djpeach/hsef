@@ -23,7 +23,7 @@
       </div>
       <?php $admins = DB::get()->query(Queries::GET_ALL_ADMINS)->fetchAll(); ?>
       <?php foreach ($admins as $admin) : ?>
-        <div class="row no-gutters-r flex-nowrap">
+        <div class="row no-gutters-r row-sliding">
           <div class="col-1">
             <p><?php echo $admin->OperatorId; ?></p>
           </div>
@@ -34,16 +34,13 @@
             <p><?php echo $admin->Email; ?></p>
           </div>
           <div class="col-2">
-            <span class="tool-icon" data-toggle="rowSlide" data-target="#tools-<?php echo $admin->OperatorId; ?>">
+            <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $admin->OperatorId; ?>">
               <i class="fas fa-ellipsis-v text-darkgreen"></i>
             </span>
           </div>
-          <div class="col-10 d-flex justify-content-around" id="tools-<?php echo $admin->OperatorId; ?>">
+          <div class="col-6 d-flex justify-content-around" id="tools-<?php echo $admin->OperatorId; ?>">
               <span class="tool-icon bg-primary">
                 <i class="fas fa-edit text-white"></i>
-              </span>
-              <span class="tool-icon bg-warning">
-                <i class="fas fa-key text-white"></i>
               </span>
               <span class="tool-icon bg-danger">
                 <i class="fas fa-trash text-white"></i>

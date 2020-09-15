@@ -28,3 +28,33 @@
      padding-left: 0;
    }
  }
+
+.row.row-sliding {
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+
+  .tool-icon {
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 1.8rem;
+    background-color: transparent;
+    border: none;
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+
+    &:first-child {
+      border-top-left-radius: .4rem;
+      border-bottom-left-radius: .4rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: .4rem;
+      border-bottom-right-radius: .4rem;
+    }
+
+    &:focus,&:active {
+      outline: 0;
+    }
+  }
+}
