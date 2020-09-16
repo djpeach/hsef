@@ -31,7 +31,7 @@
     if ($newPage) {
       $publicPage = in_array($_GET['page'], $publicPages);
       if (!$authenticated && !$publicPage) {
-        redirect('login');
+        Session::get()->page = 'login';
       } else if (!$authenticated && $publicPage) {
         Session::get()->page = $_GET['page'];
       } else if ($authenticated && !$publicPage) {
