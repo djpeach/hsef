@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-14 20:42:57.116
+-- Last modification date: 2020-09-15 23:25:54.015
 
 -- tables
 -- Table: AuthAccount
@@ -9,6 +9,7 @@ CREATE TABLE AuthAccount (
     Username varchar(255) NOT NULL,
     Active bool NOT NULL DEFAULT true,
     UserId int unsigned NOT NULL,
+    UNIQUE INDEX fak_AuthAccount_User_UserId (UserId),
     CONSTRAINT AuthAccount_pk PRIMARY KEY (AuthAccountId)
 );
 
@@ -90,6 +91,8 @@ CREATE TABLE OneTimeToken (
 CREATE TABLE Operator (
     OperatorId int unsigned NOT NULL AUTO_INCREMENT,
     UserId int unsigned NOT NULL,
+    Title varchar(255) NULL,
+    HighestDegree varchar(255) NULL,
     UNIQUE INDEX fak_Operator_User_UserId (UserId),
     CONSTRAINT Operator_pk PRIMARY KEY (OperatorId)
 );
@@ -179,16 +182,28 @@ CREATE TABLE User (
     LastName char(128) NOT NULL,
     Suffix char(64) NULL,
     Gender enum('male', 'female', 'other') NULL,
-    Status enum('active', 'pending') NOT NULL,
+    Status enum('active', 'registered', 'invited', archived') NOT NULL,
     CheckedIn bool NULL DEFAULT false,
     Email char(128) NULL,
-    DateCreated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT User_pk PRIMARY KEY (UserId)
-);
+) COMMENT 'Status:
+    ''''active'''' users are the only ones who can authenticate.
+    ''''registered'''' users are those who have signed up but have yet to be approved
+     ''''invited'''' users are those that have been invited through the system, but have yet to accept
+    ''''archived'''' are users that exist for historical display purposes.';
 
 CREATE INDEX ix_User_Email ON User (Email);
 
 CREATE INDEX ix_User_FirstName_LastName ON User (FirstName,LastName);
+
+-- Table: UserYear
+CREATE TABLE UserYear (
+    UserYearId int unsigned NOT NULL AUTO_INCREMENT,
+    Year year NOT NULL,
+    UserId int unsigned NOT NULL,
+    UNIQUE INDEX ak_User_UserId_Year (Year,UserId),
+    CONSTRAINT UserYear_pk PRIMARY KEY (UserYearId)
+);
 
 -- foreign keys
 -- Reference: JudgingSession_Operator (table: JudgingSession)
@@ -206,6 +221,10 @@ ALTER TABLE JudgingSession ADD CONSTRAINT JudgingSession_TimeSlot FOREIGN KEY Ju
 -- Reference: Ranking_Project (table: Ranking)
 ALTER TABLE Ranking ADD CONSTRAINT Ranking_Project FOREIGN KEY Ranking_Project (ProjectId)
     REFERENCES Project (ProjectId);
+
+-- Reference: UserYear_User (table: UserYear)
+ALTER TABLE UserYear ADD CONSTRAINT UserYear_User FOREIGN KEY UserYear_User (UserId)
+    REFERENCES User (UserId);
 
 -- Reference: fk_AuthSession_AuthAccount_AuthAccountId (table: AuthSession)
 ALTER TABLE AuthSession ADD CONSTRAINT fk_AuthSession_AuthAccount_AuthAccountId FOREIGN KEY fk_AuthSession_AuthAccount_AuthAccountId (AuthAccountId)
