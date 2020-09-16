@@ -182,7 +182,7 @@ CREATE TABLE User (
     LastName char(128) NOT NULL,
     Suffix char(64) NULL,
     Gender enum('male', 'female', 'other') NULL,
-    Status enum('active', 'registered', 'invited', archived') NOT NULL,
+    Status enum('active', 'registered', 'invited', 'archived') NOT NULL,
     CheckedIn bool NULL DEFAULT false,
     Email char(128) NULL,
     CONSTRAINT User_pk PRIMARY KEY (UserId)
