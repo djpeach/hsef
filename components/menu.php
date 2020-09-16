@@ -9,6 +9,7 @@
         <?php if ($operator->hasReqEntitlement('owner')) : ?>
           <span class="navbar-text">Owner Tools</span>
           <a href="/hsef/?page=accessManagement" class="nav-item nav-link text-gold">Global Access Management</a>
+          <a href="/hsef/?page=eventManagement" class="nav-item nav-link text-gold">Event Management</a>
         <?php endif; ?>
         <?php if ($operator->hasReqEntitlement('moderator')) : ?>
           <span class="navbar-text">Moderator Tools</span>

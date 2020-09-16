@@ -21,20 +21,51 @@
    * Load AuthAccount, User, and Operator details from the database if authenticated
    */
   AuthAccount::get()->authenticate();
-  if (!AuthAccount::get()->isAuthenticated() && Session::get()->page !== 'login') {
-    redirect('login');
-  } else if (AuthAccount::get()->isAuthenticated()) {
-    User::get(AuthAccount::get()->UserId);
-    Operator::get(User::get()->UserId);
+
+  function urlGuard() {
+    $publicPages = ['login', 'judgeRegistration', 'judgeInvitation'];
+
+    $newPage = isset($_GET['page']);
+    $authenticated = AuthAccount::get()->isAuthenticated();
+
+    if ($newPage) {
+      $publicPage = in_array($_GET['page'], $publicPages);
+      if (!$authenticated && !$publicPage) {
+        redirect('login');
+      } else if (!$authenticated && $publicPage) {
+        Session::get()->page = $_GET['page'];
+      } else if ($authenticated && !$publicPage) {
+        Session::get()->page = $_GET['page'];
+      } else if ($authenticated && $publicPage) {
+        redirect('dashboard');
+      }
+    } else {
+      $publicPage = in_array(Session::get()->page, $publicPages);
+      if ($authenticated && $publicPage) {
+        redirect('dashboard');
+      } else if (!$authenticated && !$publicPage) {
+        redirect('login');
+      }
+    }
   }
+
+  urlGuard();
 
   /**
    * Use this for href attributes.
    * eg <a href="/hsef/?page=dashboard">Dashboard</a>
    */
-  if (isset($_GET['page']) && AuthAccount::get()->isAuthenticated()) {
-    Session::get()->page = $_GET['page'];
-  }
+//  if (isset($_GET['page']) && (AuthAccount::get()->isAuthenticated()) || in_array($_GET['page'], $publicPages)) {
+//    Session::get()->page = $_GET['page'];
+//  }
+//
+//  AuthAccount::get()->authenticate();
+//  if (!AuthAccount::get()->isAuthenticated() && !in_array(Session::get()->page, $publicPages)) {
+//    redirect('login');
+//  } else if (AuthAccount::get()->isAuthenticated()) {
+//    User::get(AuthAccount::get()->UserId);
+//    Operator::get(User::get()->UserId);
+//  }
 
   /**
    * Initialize page variable

@@ -1,9 +1,8 @@
-<article class="limit-width-md bg-light mt-5 rounded">
-<!--  <h1>Welcome, --><?php //echo User::get()->FirstName; ?><!--!</h1>-->
-  <h3>Entitlements: </h3>
-  <ul class="list-group">
-    <?php foreach(Operator::get()->getEntitlements() as $entitlement) : ?>
-      <li class="list-group-item"><?php echo $entitlement; ?></li>
-    <?php endforeach; ?>
-  </ul>
-</article>
+<main>
+  <article class="limit-width-md p-5">
+    <h2 class="article-header">Welcome!</h2>
+    <?php include 'components/divider.php' ?>
+    <p>This page welcomes the user and explains how to use the system.</p>
+    <p>No Entitlements Needed</p>
+  </article>
+</main>
