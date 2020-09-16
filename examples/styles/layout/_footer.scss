@@ -1,0 +1,13 @@
+footer {
+  width: 100vw;
+  background-color: map_get($colors, navy-slate);
+  padding: 30px;
+  color: white;
+  flex: 0 0 auto;
+
+  margin-top: auto;
+
+  p {
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,13 @@
+form {
+  button {
+    border: none;
+    background-color: map_get($colors, navy);
+    padding: .8rem 1.8rem;
+    border-radius: .4rem;
+    color: white;
+    font-weight: 600;
+    margin-left: auto;
+    margin-top: 20px;
+    font-size: 1.6rem;
+  }
+}

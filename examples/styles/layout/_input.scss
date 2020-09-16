@@ -1,0 +1,22 @@
+input:not([type='radio']):not([type='checkbox']) {
+  border: none;
+  padding: 2.5rem 1.5rem 1.5rem;
+  font-weight: 400;
+  border-bottom: 1px solid map_get($colors, border);
+  width: 100%;
+  outline: none;
+
+  &[type='password']:not(:placeholder-shown) {
+    font-weight: 900;
+    letter-spacing: .3rem;
+  }
+}
+
+select {
+  border: none;
+  padding: 1.5rem;
+  font-weight: 400;
+  border-bottom: 1px solid map_get($colors, border);
+  outline: none;
+  width: 100%;
+}

@@ -38,12 +38,12 @@
               <i class="fas fa-ellipsis-v text-darkgreen"></i>
             </span>
           </div>
-          <div class="col-6 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
+          <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
             <div class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </div>
-            <div class="col-4 tool-icon bg-gold">
-              <i class="fas fa-key text-white"></i>
+            <div class="col-4 tool-icon bg-primary">
+              <i class="fas fa-user text-white"></i>
             </div>
             <div class="col-4 tool-icon bg-red">
               <i class="fas fa-trash text-white"></i>
