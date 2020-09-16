@@ -1,10 +1,11 @@
 .floating-label-group {
   position: relative;
+
   label {
     position: absolute;
     top: 1.2rem;
     left: 0;
-    color: map_get($colors, darkgreen);
+    color: map_get($theme-colors, darkgreen);
     font-size: 1.2rem;
     font-weight: 600;
     transition: all .1s ease-in-out;
@@ -14,5 +15,34 @@
   input:not(:placeholder-shown) ~ label {
     opacity: 1;
     top: 0;
+  }
+
+  &--radio, &--select, &--checkbox {
+    margin-top: 1rem;
+
+    .group-label {
+      color: map_get($theme-colors, darkgreen);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    input {
+      margin-left: 16px;
+    }
+
+    select {
+      margin-left: 16px;
+    }
+
+    .form-error {
+      @extend .form-error;
+    }
+  }
+
+  .form-error {
+    margin: .8rem 0 0 0;
+    color: map_get($theme-colors, error);
+    font-size: 1.6rem;
+    padding: 0 0 0 .8rem;
   }
 }

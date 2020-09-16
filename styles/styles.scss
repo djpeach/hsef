@@ -8,19 +8,23 @@
 @import "base/utilities";
 
 // ================ COMPONENTS =============== //
+@import "component/btns";
 @import "component/custom-divider";
 @import "component/floating-label-group";
-@import "component/form";
+@import "component/login-form";
+@import "component/navbar-custom";
+@import "component/data-table";
 
 // ================= LAYOUTS ================= //
 @import "layout/header";
 @import "layout/main";
 @import "layout/article";
+@import "layout/form";
 @import "layout/input";
 @import "layout/footer";
 
 // ================== Pages ================== //
-@import "page/lab1";
+@import "page/hsef";
 
 // ================= VENDORS ================= //
 @import "vendor/bootstrap/bootstrap";

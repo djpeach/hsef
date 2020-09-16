@@ -1,1 +1,66 @@
 @include create_limit_width_utilities($breakpoints);
+
+.row.no-gutters-r {
+  margin-right: 0;
+
+  & > [class^="col-"],
+  & > [class*=" col-"] {
+    padding-right: 0;
+  }
+}
+
+.row.no-gutters-l {
+  margin-left: 0;
+
+  & > [class^="col-"],
+  & > [class*=" col-"] {
+    padding-left: 0;
+  }
+}
+
+.row.no-gutters {
+   margin-right: 0;
+   margin-left: 0;
+
+   & > [class^="col-"],
+   & > [class*=" col-"] {
+     padding-right: 0;
+     padding-left: 0;
+   }
+ }
+
+.row.row-sliding {
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+
+  .slide-tray {
+    display: flex;
+    align-self: stretch;
+    min-width: fit-content !important;
+    padding: 0;
+  }
+
+  .tool-icon {
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 1.8rem;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:first-child {
+      border-top-left-radius: .4rem;
+      border-bottom-left-radius: .4rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: .4rem;
+      border-bottom-right-radius: .4rem;
+    }
+
+    &:focus,&:active {
+      outline: 0;
+    }
+  }
+}

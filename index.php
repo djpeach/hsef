@@ -1,21 +1,26 @@
-<?php require 'parts/head.php' ?>
+<?php require 'parts/head.php'; ?>
 
-<div class="lab1">
-  <header>
-    <h1>HSEF Judging</h1>
-  </header>
+<?php $authAccount = AuthAccount::get(); ?>
 
-  <main>
-    <article>
-      <h2 class="article-header">Judge & Admin Login Portal</h2>
-      <?php include 'components/divider.php' ?>
-      <?php require 'components/login-form.php' ?>
+<div class="hsef">
+  <?php include_once 'components/menu.php'; ?>
+
+  <?php if (isset(Session::get()->flashMessage)) : ?>
+    <article class="limit-width-sm">
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">Alert: </h4>
+        <p>
+          <?php echo Session::get()->flashMessage; ?>
+        </p>
+      </div>
     </article>
-  </main>
+  <?php unset(Session::get()->flashMessage); endif; ?>
+
+  <?php require "pages/".Session::get()->page.".php"; ?>
 
   <footer>
     <p>Made by Group 4 for N-342</p>
   </footer>
 </div>
 
-<?php require 'parts/foot.php' ?>
+<?php require 'parts/foot.php'; ?>

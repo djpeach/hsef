@@ -1,6 +1,7 @@
 .custom-divider {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
+  height: 3.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,13 +10,13 @@
     width: 100%;
     max-width: 12rem;
     height: 0.4rem;
-    background-color: map_get($colors, darkgreen);
+    background-color: map_get($theme-colors, darkgreen);
     border-radius: 1rem;
-    border-color: map_get($colors, darkgreen) !important;
+    border-color: map_get($theme-colors, darkgreen) !important;
   }
 
   &__icon {
-    color: map_get($colors, darkgreen) !important;
+    color: map_get($theme-colors, darkgreen) !important;
     font-size: 3.2rem;
     margin: -.2rem 1.5rem 0;
   }

@@ -1,11 +1,15 @@
 // ================== COLORS ================= //
 
-$colors: (
-  yellow: #eebb4d,
-  darkgreen: #184d47,
-  green: #96bb7c,
-  lightgreen: #d6efc7,
-  white: #ffffff,
+$theme-colors: (
+        yellow: #eebb4d,
+        gold: #eebb4d,
+        darkgreen: #184d47,
+        green: #96bb7c,
+        lightgreen: #d6efc7,
+        white: #ffffff,
+        border: lightslategrey,
+        error: #f2304d,
+        red: #d63e3e,
 );
 
 // ================ BREAKPOINTS ============== //
@@ -19,3 +23,7 @@ $breakpoints: (
   xl2: 1424px,
   xl3: 1824px
 );
+
+// ================ OTHER ============== //
+
+$top-margin: 5rem;
