@@ -33,7 +33,6 @@
         <?php endif; ?>
         <?php if (isset(Post::get()->LOGOUT)) {
           $authAccount->logout();
-          redirect('login');
         } ?>
         <form method="POST" class="form-inline">
           <button class="btn btn-lg btn-gold my-4 font-weight-bolder ml-0" type="submit" name="LOGOUT">Logout</button>
