@@ -13,6 +13,7 @@
       <li>Archive the event when it is over (It is important this is done at the end of the event)</li>
       <li>Generate final scores</li>
       <li>What else?</li>
+      <li>What else?</li>
     </ul>
   </article>
 </main>
