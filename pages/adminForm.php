@@ -10,12 +10,16 @@
       if ($existingAdmin && !isset($_POST['ADMIN_FORM'])) {
         $sql = DB::get()->prepare(Queries::GET_OPERATOR_BY_ID);
         $sql->execute([$_GET['opid']]);
-        $uid = $sql->fetch()->UserId;
+        $operator = $sql->fetch();
+        $post->title = $operator->Title;
+        $post->highestDegree = $operator->HighestDegree;
+        $uid = $operator->UserId;
         $sql = DB::get()->prepare(Queries::GET_USER_BY_ID);
         $sql->execute([$uid]);
         $user = $sql->fetch();
         $post->firstName = $user->FirstName;
         $post->lastName = $user->LastName;
+        $post->suffix = $user->Suffix;
         $post->email = $user->Email;
       }
 
@@ -42,13 +46,47 @@
             $errors->email = 'Value set is not a valid email';
           }
         } else if ($selectedUser) {
-          if (!$post->userValue) {
+          if (!$post->operatorId) {
             $errors->user = 'Must select an existing user, or create a new one';
           }
         }
 
         if ($errors->isEmpty()) {
-          // update/create user and admin records
+          $db = DB::get();
+          $opid = null;
+          if ($existingAdmin) { // edited existing admin
+            $opid = $_GET['opid'];
+              // update user details
+            $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
+            $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
+            // update operator details
+            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
+            $sql->execute([$post->title, $post->highestDegree, $opid]);
+          } else if ($selectedUser) { // created new admin from existing user
+            // make operator an admin
+            $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+            $sql->execute([$post->operatorId]);
+            // update operator details
+            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
+            $sql->execute([$post->title, $post->highestDegree, $post->operatorId]);
+            $opid = $post->operatorId;
+          } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
+            // create new user
+            $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
+            $suffix = $post->suffix === '' ? null : $post->suffix;
+            $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
+            $uid = $db->lastInsertId();
+            // create new operator
+            $sql = $db->prepare(Queries::CREATE_NEW_OPERATOR_WITH_USERID);
+            $title = $post->title === '' ? null : $post->title;
+            $highestDegree = $post->highestDegree === '' ? null : $post->highestDegree;
+            $sql->execute([$uid, $title, $highestDegree]);
+            $opid = $db->lastInsertId();
+            // make new operator an admin
+            $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+            $sql->execute([$opid]);
+          }
+          redirect('adminForm', [['opid', $opid], ['readonly', 'true']]);
         }
       }
     ?>
@@ -56,7 +94,7 @@
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
       <?php include_once 'pages/userFields.php'?>
-      <fieldset <?php echo $readonly ? 'readonly' : ''; ?>>
+      <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
           <div class="row mt-3">
             <div class="col">
               <div class="floating-label-group">

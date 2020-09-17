@@ -1,7 +1,7 @@
 $(document).ready(function() {
   let userSelectToggle = $('#selectUserToggle');
   let userSelect = $('#userSelect');
-  let userValue = $('#userValue');
+  let operatorId = $('#operatorId');
 
   userSelect.prop('readonly', !userSelectToggle.prop('checked'))
 
@@ -13,7 +13,7 @@ $(document).ready(function() {
     source: `/hsef/api/users/fuzzyMatch/promote-to-admin`, // sends get to api with ?term=<user input>
     minLength: 2,
     select: function (event, ui) {
-      userValue.val(ui.item.value); // add actual value to hidden field
+      operatorId.val(ui.item.value); // add actual value to hidden field
       userSelect.val(ui.item.label);
       return false;
     }

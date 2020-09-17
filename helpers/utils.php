@@ -28,18 +28,14 @@ function cameltostr($camel) {
 
 /**
  * @param string $page name of the file in /pages to load
+ * @param array $params eg [["uid", "12"], ["newUser", "false"]]
  */
-function redirect($page, $message=null) {
-  $session = Session::get();
-  $session->page = $page;
-  if ($message) {
-    if ($page === 'exception') {
-      $session->exceptionMessage = $message;
-    } else {
-      $session->flashMessage = $message;
-    }
+function redirect($page, $params=array()) {
+  $route = '?page='.$page;
+  foreach ($params as $param) {
+    $route .= "&$param[0]=$param[1]";
   }
-  echo "<script> location.href = '/hsef/'; </script>";
+  echo "<script> location.href = '/hsef/".$route."'; </script>";
 }
 
 /**

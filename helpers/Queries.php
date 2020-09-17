@@ -17,6 +17,11 @@ class Queries {
   const GET_ENTITLEMENTS_BY_OPID = 'SELECT Name FROM Entitlement WHERE EntitlementId in (SELECT EntitlementId FROM OperatorEntitlement WHERE OperatorId = ?)';
   const GET_CATEGORIES_BY_OPID = 'SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)';
   const GET_GRADELEVELS_BY_OPID = 'SELECT Name FROM GradeLevel WHERE GradeLevelId in (SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?)';
+  const UPDATE_USER_BY_OPID = 'UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)';
+  const NEW_ADMIN_BY_OPID = 'INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (?, 3)';
+  const UPDATE_OPERATOR_BY_ID = 'UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE OperatorId = ?';
+  const CREATE_NEW_USER_WITH_EMAIL = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
+  const CREATE_NEW_OPERATOR_WITH_USERID = "INSERT INTO Operator(UserId, Title, HighestDegree) VALUES (?, ?, ?)";
 
   const GET_ALL_ADMINS =
     "SELECT 
