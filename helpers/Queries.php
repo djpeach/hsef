@@ -42,28 +42,12 @@ GROUP BY O.OperatorId;";
     "SELECT 
        O.OperatorId, 
        U.FirstName, 
-       U.MiddleName, 
-       U.LastName, 
-       U.Suffix, 
-       U.Email, 
-       U.CheckedIn 
-FROM Operator O 
-    JOIN OperatorEntitlement OE 
-        on (
-            O.OperatorId = OE.OperatorId 
-                AND O.OperatorId NOT in (
-            SELECT OperatorId 
-            FROM OperatorEntitlement O2
-                JOIN Entitlement E 
-                    on O2.EntitlementId = E.EntitlementId
-            WHERE E.Name = 'Admin'
-        ))
-    JOIN User U 
-        on O.UserId = U.UserId
-    JOIN Entitlement E2 
-        on OE.EntitlementId = E2.EntitlementId
-WHERE E2.Name in ('Judge', 'Viewer')
-GROUP BY O.OperatorId;";
+       U.LastName,
+       U.UserId
+FROM Operator O
+    JOIN User U on O.UserId = U.UserId
+WHERE O.OperatorId NOT IN (SELECT OperatorId FROM OperatorEntitlement OE2 WHERE OE2.EntitlementId = 3)
+AND (U.FirstName LIKE ? OR U.LastName LIKE ?)";
 
   const QUERY_USERS_BY_NAME =
     "SELECT * 
