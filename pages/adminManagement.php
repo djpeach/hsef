@@ -39,12 +39,12 @@
             </span>
           </div>
           <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
-            <div class="col-4 tool-icon bg-green">
+            <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
-            </div>
-            <div class="col-4 tool-icon bg-primary">
+            </a>
+            <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
-            </div>
+            </a>
             <div class="col-4 tool-icon bg-red">
               <i class="fas fa-trash text-white"></i>
             </div>
@@ -52,7 +52,7 @@
         </div>
       <?php endforeach; ?>
       <div class="row mt-3">
-        <a class="btn btn-gold" href="/hsef/?page=newAdmin"><i class="fas fa-plus"></i>New Admin</a>
+        <a class="btn btn-gold" href="/hsef/?page=adminForm"><i class="fas fa-plus"></i>New Admin</a>
       </div>
     </div>
   </article>

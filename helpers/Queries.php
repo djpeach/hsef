@@ -13,6 +13,7 @@ class Queries {
   const DELETE_SESSION_BY_ID = 'DELETE FROM AuthSession WHERE SessionId = ?';
   const GET_USER_BY_ID = 'SELECT * FROM User WHERE UserId = ?';
   const GET_OPERATOR_BY_USERID = 'SELECT * FROM Operator WHERE UserId = ?';
+  const GET_OPERATOR_BY_ID = 'SELECT * FROM Operator WHERE OperatorId = ?';
   const GET_ENTITLEMENTS_BY_OPID = 'SELECT Name FROM Entitlement WHERE EntitlementId in (SELECT EntitlementId FROM OperatorEntitlement WHERE OperatorId = ?)';
   const GET_CATEGORIES_BY_OPID = 'SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)';
   const GET_GRADELEVELS_BY_OPID = 'SELECT Name FROM GradeLevel WHERE GradeLevelId in (SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?)';
@@ -20,6 +21,7 @@ class Queries {
   const GET_ALL_ADMINS =
     "SELECT 
        O.OperatorId, 
+       U.UserId,
        U.FirstName, 
        U.MiddleName, 
        U.LastName, 

@@ -1,6 +1,6 @@
 form {
 
-  button {
+  button, a.btn {
     border: none;
     background-color: map_get($theme-colors, darkgreen);
     padding: .8rem 1.8rem;

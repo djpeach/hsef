@@ -294,7 +294,7 @@ article .article-header {
   margin-bottom: 1.4rem;
 }
 
-form button {
+form button, form a.btn {
   border: none;
   background-color: #184d47;
   padding: 0.8rem 1.8rem;

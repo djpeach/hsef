@@ -40,4 +40,9 @@ class Post {
   public function __unset($name) {
     unset($this->{$name});
   }
+
+  public function __destruct() {
+    $_POST = array();
+  }
+
 }

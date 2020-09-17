@@ -36,6 +36,7 @@
       $publicPage = in_array($_GET['page'], $publicPages);
       if (!$authenticated && !$publicPage) {
         Session::get()->page = 'login';
+        Session::get()->flashMessage = 'You need to log in to view this page';
       } else if (!$authenticated && $publicPage) {
         Session::get()->page = $_GET['page'];
       } else if ($authenticated && !$publicPage) {
