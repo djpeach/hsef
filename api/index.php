@@ -15,8 +15,13 @@ $app = new App();
  */
 $app->get('/users/fuzzyMatch', function ($req, $res) {
   $sql = DB::get()->prepare(Queries::QUERY_USERS_BY_NAME);
-  $query = "%{$req->params['query']}%";
+  $query = "%{$req->params['term']}%";
   $sql->execute([$query, $query]);
-  $users = $sql->fetchAll();
+  $users = array_map(function($user) {
+    return [
+      "label" => $user->FirstName.' '.$user->LastName,
+      "value" => $user->UserId
+    ];
+  }, $sql->fetchAll());
   $res->json($users);
 });

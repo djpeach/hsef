@@ -14,15 +14,8 @@
           <div class="col-10">
 
             <label for="userSelect" class="d-none">User Select</label>
-<!--            <select id="userSelect" name="userSelect" class="ml-3">-->
-<!--            </select>-->
-            <input name="userSelect" id="userSelect" placeholder="Search for a user">
-<!--            <datalist id="users">-->
-<!--              <option value="1">Daniel Peach</option>-->
-<!--              <option value="2">Daniel Northam</option>-->
-<!--              <option value="3">Kate Davis</option>-->
-<!--              <option value="4">Ashley Harris</option>-->
-<!--            </datalist>-->
+            <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user">
+            <input type="text" name="userValue" id="userValue" hidden>
           </div>
         </div>
         <p class="form-error"><?php echo $errors->user; ?></p>

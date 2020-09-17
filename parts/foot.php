@@ -12,6 +12,7 @@
 <!-- Custom Scripts -->
 <?php
   $jsLoader = JS::get();
+  $globalScripts = ['utils'];
   $globalScripts = ['rowSlider'];
 
   foreach ($globalScripts as $globalScript) {
