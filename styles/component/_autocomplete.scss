@@ -1,0 +1,43 @@
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.ui-autocomplete.ui-menu {
+  padding: 0;
+  margin-left: 12px;
+  max-width: 530px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: map-get($theme-colors, darkgreen);
+  border-radius: 0 0 8px 8px;
+  border-top: none;
+
+  li.ui-menu-item {
+    cursor: pointer;
+
+    .ui-menu-item-wrapper {
+      background: none;
+      list-style: none;
+      border: none;
+      padding: 2.5rem 1.5rem 1.5rem;
+      font-weight: 500;
+      border-bottom: 1px solid map_get($theme-colors, border);
+      width: 100%;
+      outline: none;
+      font-size: 1.8rem;
+
+      &.ui-state-active {
+        background-color: transparentize(map-get($theme-colors, darkgreen), .2) !important;
+        color: white;
+      }
+
+    }
+  }
+}

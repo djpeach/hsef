@@ -6,19 +6,23 @@
         <p class="group-label">Select Existing User</p>
         <div class="row">
           <div class="col-2">
-            <label class="switch d-block ml-auto mt-3">
+            <label class="switch d-block ml-auto mt-4">
               <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#newUser" <?php echo $readonly ? '' : 'checked' ?>>
               <span class="slider round"></span>
             </label>
           </div>
           <div class="col-10">
+
             <label for="userSelect" class="d-none">User Select</label>
-            <select id="userSelect" name="userSelect" class="ml-3">
-              <option value="1">Daniel Peach</option>
-              <option value="2">Ashley Harris</option>
-              <option value="3">Daniel Northam</option>
-              <option value="4">Kate Davis</option>
-            </select>
+<!--            <select id="userSelect" name="userSelect" class="ml-3">-->
+<!--            </select>-->
+            <input name="userSelect" id="userSelect" placeholder="Search for a user">
+<!--            <datalist id="users">-->
+<!--              <option value="1">Daniel Peach</option>-->
+<!--              <option value="2">Daniel Northam</option>-->
+<!--              <option value="3">Kate Davis</option>-->
+<!--              <option value="4">Ashley Harris</option>-->
+<!--            </datalist>-->
           </div>
         </div>
         <p class="form-error"><?php echo $errors->user; ?></p>

@@ -21,7 +21,7 @@ class JS {
 
   public function loadScripts() {
     foreach ($this->scripts as $script) {
-      echo "<script src='/hsef/js/$script.js'></script><br>";
+      echo "<script src='/hsef/js/$script.js'></script>\n";
     }
   }
 }
