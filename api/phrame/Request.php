@@ -6,6 +6,8 @@ require 'iRequest.php';
 
 class Request implements iRequest {
 
+  public $params = array();
+
   public function __construct() {
     // Add each $_SERVER property to the Request object
     foreach($_SERVER as $key => $value) {
@@ -36,7 +38,7 @@ class Request implements iRequest {
         foreach($_POST as $key => $value) {
           $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
         }
-        return json_encode($body);
+        return $body;
     }
   }
 }

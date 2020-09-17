@@ -65,4 +65,12 @@ FROM Operator O
 WHERE E2.Name in ('Judge', 'Viewer')
 GROUP BY O.OperatorId;";
 
+  const QUERY_USERS_BY_NAME =
+    "SELECT * 
+FROM User
+WHERE FirstName 
+          LIKE ? 
+   OR LastName 
+          LIKE ?";
+
 }

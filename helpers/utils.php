@@ -41,3 +41,11 @@ function redirect($page, $message=null) {
   }
   echo "<script> location.href = '/hsef/'; </script>";
 }
+
+/**
+ * Pretty prints some data in php format
+ * @param $data
+ */
+function prettyPrint($data) {
+  echo json_encode($data).'<br>';
+}
