@@ -29,9 +29,9 @@ class Router implements iRouter {
 
   public function handle($req, $res) {
     $method = strtoupper($req->requestMethod);
-    $map = $this->{$method};
+    $methodsMap = $this->{$method};
     $route = $this->normalizeRoute($req->requestUri);
-    $handler = $map[$route];
+    $handler = $methodsMap[$route];
     $handler($req, $res);
   }
 }

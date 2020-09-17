@@ -9,4 +9,10 @@ form {
     font-weight: 600;
     font-size: 1.6rem;
   }
+
+  .group-label {
+    color: map_get($theme-colors, darkgreen);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 }

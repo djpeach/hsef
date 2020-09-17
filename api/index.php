@@ -4,19 +4,6 @@ use Phrame\App as App;
 
 $app = new App();
 
-$app->get('/', function($req, $res) {
-  $res->json($req);
-});
-
-$app->get('/ping', function($req, $res) {
-  $res->send('pong');
-});
-
-$app->get('/another/test', function($req, $res) {
-  $res->send('success');
-});
-
-$app->delete('/admin/:id', function($req, $res) {
-  // run db delete
-  $res->send('success');
+$app->get('/users/query', function ($req, $res) {
+  $res->json([["name"=>"Daniel Peach", "id"=>1],["name"=>"Ashley Harris", "id"=>2],["name"=>"Daniel Northam", "id"=>3],["name"=>"Kate Davis", "id"=>4]]);
 });

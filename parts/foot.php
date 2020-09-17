@@ -9,6 +9,14 @@
 <script src="https://kit.fontawesome.com/5ca0af638e.js" crossorigin="anonymous"></script>
 
 <!-- Custom Scripts -->
-<script src="/hsef/js/rowSlider.js"></script>
+<?php
+  $jsLoader = JS::get();
+  $globalScripts = ['rowSlider'];
+
+  foreach ($globalScripts as $globalScript) {
+    $jsLoader->add($globalScript);
+  }
+?>
+<?php $jsLoader->loadScripts(); ?>
 </body>
 </html>

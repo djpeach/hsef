@@ -176,17 +176,64 @@ body {
 }
 .floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox {
   margin-top: 1rem;
-}
-.floating-label-group--radio .group-label, .floating-label-group--select .group-label, .floating-label-group--checkbox .group-label {
-  color: #184d47;
-  font-size: 1.2rem;
-  font-weight: 600;
+  /* The switch - the box around the slider */
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */
 }
 .floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input {
   margin-left: 16px;
 }
 .floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select {
   margin-left: 16px;
+}
+.floating-label-group--radio .switch, .floating-label-group--select .switch, .floating-label-group--checkbox .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.floating-label-group--radio .switch input, .floating-label-group--select .switch input, .floating-label-group--checkbox .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.floating-label-group--radio .slider, .floating-label-group--select .slider, .floating-label-group--checkbox .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.floating-label-group--radio .slider:before, .floating-label-group--select .slider:before, .floating-label-group--checkbox .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.floating-label-group--radio input:checked + .slider, .floating-label-group--select input:checked + .slider, .floating-label-group--checkbox input:checked + .slider {
+  background-color: #184d47;
+}
+.floating-label-group--radio input:focus + .slider, .floating-label-group--select input:focus + .slider, .floating-label-group--checkbox input:focus + .slider {
+  box-shadow: 0 0 1px #184d47;
+}
+.floating-label-group--radio input:checked + .slider:before, .floating-label-group--select input:checked + .slider:before, .floating-label-group--checkbox input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.floating-label-group--radio .slider.round, .floating-label-group--select .slider.round, .floating-label-group--checkbox .slider.round {
+  border-radius: 34px;
+}
+.floating-label-group--radio .slider.round:before, .floating-label-group--select .slider.round:before, .floating-label-group--checkbox .slider.round:before {
+  border-radius: 50%;
 }
 .floating-label-group .form-error {
   margin: 0.8rem 0 0 0;
@@ -302,6 +349,11 @@ form button, form a.btn {
   color: white;
   font-weight: 600;
   font-size: 1.6rem;
+}
+form .group-label {
+  color: #184d47;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 input:not([type=radio]):not([type=checkbox]) {

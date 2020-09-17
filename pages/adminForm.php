@@ -4,10 +4,10 @@
 } ?>
 <main>
   <article class="limit-width-md p-5">
-    <h2 class="article-header">Admin Form</h2>
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-      if (isset($_GET['opid']) && !isset($_POST['ADMIN_FORM'])) {
+      $existingAdmin = isset($_GET['opid']);
+      if ($existingAdmin && !isset($_POST['ADMIN_FORM'])) {
         $sql = DB::get()->prepare(Queries::GET_OPERATOR_BY_ID);
         $sql->execute([$_GET['opid']]);
         $uid = $sql->fetch()->UserId;
@@ -21,7 +21,6 @@
 
       $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
     ?>
-    <?php include 'components/divider.php' ?>
     <?php
 
       $req_fields = ['firstName', 'lastName', 'email'];
@@ -40,6 +39,8 @@
         }
       }
     ?>
+    <h2 class="article-header"><?php echo $existingAdmin ? ($readonly ? 'Admin Profile' : 'Edit Admin') : 'New Admin'; ?></h2>
+    <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
       <?php include_once 'pages/userFields.php'?>
       <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
@@ -75,7 +76,7 @@
           <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen ml-auto">Edit Admin</a>
         </div>
       </fieldset>
-      <?php endif; ?>
+      <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
     </form>
   </article>
 </main>
