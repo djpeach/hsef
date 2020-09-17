@@ -1,32 +1,33 @@
-<fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
-  <?php if (!$existingAdmin) : ?>
-    <div class="row mt-3">
-    <div class="col">
-      <div class="floating-label-group--checkbox">
-        <p class="group-label">Select Existing User</p>
-        <div class="row">
-          <div class="col-2">
-            <label class="switch d-block ml-auto mt-4">
-              <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#newUser" <?php echo $readonly ? '' : 'checked' ?>>
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="col-10">
 
-            <label for="userSelect" class="d-none">User Select</label>
-            <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user">
-            <input type="text" name="userValue" id="userValue" hidden>
-          </div>
+<?php if (!$existingAdmin) : ?>
+  <div class="row mt-3">
+  <div class="col">
+    <div class="floating-label-group--checkbox">
+      <p class="group-label">Select Existing User</p>
+      <div class="row">
+        <div class="col-2">
+          <label class="switch d-block ml-auto mt-4">
+            <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#userDetailFields" <?php echo $selectedUser ? 'checked' : '' ?>>
+            <span class="slider round"></span>
+          </label>
         </div>
-        <p class="form-error"><?php echo $errors->user; ?></p>
+        <div class="col-10">
+
+          <label for="userSelect" class="d-none">User Select</label>
+          <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user" value="<?php echo $post->userSelect ?>">
+          <input type="text" name="userValue" id="userValue" hidden value="<?php echo $post->userValue ?>">
+        </div>
       </div>
+      <p class="form-error"><?php echo $errors->user; ?></p>
     </div>
   </div>
+</div>
+<?php endif; ?>
+<div id="userDetailFields" class="<?php echo $existingAdmin ? '' : ($selectedUser ? 'collapse' : 'show') ?>">
+  <?php if (!$existingAdmin) : ?>
+    <p class="group-label mt-3">Create New User</p>
   <?php endif; ?>
-  <div id="newUser" class="<?php echo $existingAdmin ? '' : ($readonly ? '' : 'collapse') ?>">
-    <?php if (!$existingAdmin) : ?>
-      <p class="group-label mt-3">Create New User</p>
-    <?php endif; ?>
+  <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
     <div class="row mt-3">
       <div class="col">
         <div class="floating-label-group">
@@ -59,6 +60,6 @@
         </div>
       </div>
     </div>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 <?php JS::get()->add('userFields'); ?>

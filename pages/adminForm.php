@@ -23,19 +23,32 @@
     ?>
     <?php
 
-      $req_fields = ['firstName', 'lastName', 'email'];
+      $requiredUserFields = ['firstName', 'lastName', 'email'];
+      $formSubmitted = isset($_POST['ADMIN_FORM']);
+      $selectedUser = $formSubmitted && $post->selectUserToggle;
 
       // Find and create validation errors
-      if (isset($_POST['ADMIN_FORM'])) {
-        foreach ($req_fields as $field) {
-          if (!$post->{$field}) {
-            $errors->{$field} = "You must set a value for {$field}";
+      if ($formSubmitted) {
+        if (!$selectedUser) {
+          foreach ($requiredUserFields as $field) {
+            if (!$post->{$field}) {
+              $fieldName = cameltostr($field);
+              $errors->{$field} = "$fieldName is required";
+            }
+          }
+
+          // extra email validation
+          if (!$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
+            $errors->email = 'Value set is not a valid email';
+          }
+        } else if ($selectedUser) {
+          if (!$post->userValue) {
+            $errors->user = 'Must select an existing user, or create a new one';
           }
         }
 
-        // extra email validation
-        if (!$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
-          $errors->email = 'Value set is not a valid email';
+        if ($errors->isEmpty()) {
+          // update/create user and admin records
         }
       }
     ?>
@@ -43,7 +56,7 @@
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
       <?php include_once 'pages/userFields.php'?>
-      <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
+      <fieldset <?php echo $readonly ? 'readonly' : ''; ?>>
           <div class="row mt-3">
             <div class="col">
               <div class="floating-label-group">

@@ -11,6 +11,10 @@ input:not([type='radio']):not([type='checkbox']) {
     font-weight: 900;
     letter-spacing: .3rem;
   }
+
+  &[readonly] {
+    background-color: rgba(239, 239, 239, 0.3);
+  }
 }
 
 select {

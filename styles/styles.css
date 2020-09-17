@@ -275,12 +275,6 @@ body {
 .floating-label-group--radio .slider.round:before, .floating-label-group--select .slider.round:before, .floating-label-group--checkbox .slider.round:before {
   border-radius: 50%;
 }
-.floating-label-group .form-error {
-  margin: 0.8rem 0 0 0;
-  color: #f2304d;
-  font-size: 1.6rem;
-  padding: 0 0 0 0.8rem;
-}
 
 .login-form {
   margin-top: 45px;
@@ -395,6 +389,12 @@ form .group-label {
   font-size: 1.2rem;
   font-weight: 600;
 }
+form .form-error {
+  margin: 0.8rem 0 0 0;
+  color: #f2304d;
+  font-size: 1.6rem;
+  padding: 0 0 0 0.8rem;
+}
 
 input:not([type=radio]):not([type=checkbox]) {
   border: none;
@@ -408,6 +408,9 @@ input:not([type=radio]):not([type=checkbox]) {
 input:not([type=radio]):not([type=checkbox])[type=password]:not(:placeholder-shown) {
   font-weight: 900;
   letter-spacing: 0.3rem;
+}
+input:not([type=radio]):not([type=checkbox])[readonly] {
+  background-color: rgba(239, 239, 239, 0.3);
 }
 
 select {
