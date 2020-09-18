@@ -132,12 +132,11 @@ body {
 
 .ui-autocomplete.ui-menu {
   padding: 0;
-  margin-left: 12px;
-  max-width: 530px;
+  z-index: 1;
+  max-width: 100%;
   border-width: 1px;
   border-style: solid;
-  border-color: #184d47;
-  border-radius: 0 0 8px 8px;
+  border-color: lightslategrey;
   border-top: none;
 }
 .ui-autocomplete.ui-menu li.ui-menu-item {
@@ -147,12 +146,15 @@ body {
   background: none;
   list-style: none;
   border: none;
-  padding: 2.5rem 1.5rem 1.5rem;
+  padding: 1.3rem;
   font-weight: 500;
-  border-bottom: 1px solid lightslategrey;
   width: 100%;
   outline: none;
   font-size: 1.8rem;
+  overflow: hidden;
+}
+.ui-autocomplete.ui-menu li.ui-menu-item .ui-menu-item-wrapper:not(:last-child) {
+  border-bottom: 1px solid lightslategrey;
 }
 .ui-autocomplete.ui-menu li.ui-menu-item .ui-menu-item-wrapper.ui-state-active {
   background-color: rgba(24, 77, 71, 0.8) !important;

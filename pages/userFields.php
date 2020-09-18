@@ -11,7 +11,7 @@
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-10">
+        <div class="col-10" id="userSelectDiv">
 
           <label for="userSelect" class="d-none">User Select</label>
           <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user" value="<?php echo $post->userSelect ?>">
