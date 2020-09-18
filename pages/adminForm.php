@@ -128,7 +128,7 @@
           </div>
           <?php if (!$readonly) : ?>
             <div class="row mt-3">
-              <button class="ml-auto" type="submit" name="ADMIN_FORM">Save Admin</button>
+              <button class="ml-auto btn btn-darkgreen" type="submit" name="ADMIN_FORM">Save Admin</button>
             </div>
           <?php endif; ?>
       </fieldset>
@@ -139,7 +139,14 @@
           $href = '/hsef/?page=adminForm';
           $href .= isset($_GET['opid']) ? '&opid='.$_GET['opid'] : '';
           ?>
-          <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen ml-auto">Edit Admin</a>
+          <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white mr-auto">
+            <i class="fas fa-angle-left text-white"></i>
+            View All Admins
+          </a>
+          <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen ml-auto">
+            <i class="fas fa-edit text-white"></i>
+            Edit Admin
+          </a>
         </div>
       </fieldset>
       <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
