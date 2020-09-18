@@ -45,8 +45,32 @@
             <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
-            <div class="col-4 tool-icon bg-red">
+            <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModalLabel-<?php echo $admin->OperatorId; ?>">
               <i class="fas fa-trash text-white"></i>
+            </button>
+            <!-- Deletion Modal -->
+            <div class="modal fade" id="deletionModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deletionModalLabel-<?php echo $admin->OperatorId; ?>">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-danger">
+                      <h4 class="alert-heading">Warning: This is a destructive action</h4>
+                      <p>Do you want to remove this user as an admin, or remove this user from the system completely?</p>
+                      <hr>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger">Demote from Admin</button>
+                    <button type="button" class="btn btn-danger">Delete from System</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -88,37 +88,6 @@ body {
   padding-left: 0;
 }
 
-.row.row-sliding {
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-}
-.row.row-sliding .slide-tray {
-  display: flex;
-  align-self: stretch;
-  min-width: fit-content !important;
-  padding: 0;
-}
-.row.row-sliding .tool-icon {
-  cursor: pointer;
-  padding: 1rem;
-  font-size: 1.8rem;
-  flex: 1 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.row.row-sliding .tool-icon:first-child {
-  border-top-left-radius: 0.4rem;
-  border-bottom-left-radius: 0.4rem;
-}
-.row.row-sliding .tool-icon:last-child {
-  border-top-right-radius: 0.4rem;
-  border-bottom-right-radius: 0.4rem;
-}
-.row.row-sliding .tool-icon:focus, .row.row-sliding .tool-icon:active {
-  outline: 0;
-}
-
 .ui-helper-hidden-accessible {
   border: 0;
   clip: rect(0 0 0 0);
