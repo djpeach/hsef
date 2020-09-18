@@ -6,9 +6,9 @@ class DB {
   private function __construct() {
     try {
       $host = 'localhost';
-      $db   = 'djpeach_db';
-      $user = 'djpeach';
-      $pass = 'qwerty';
+      $db   = getenv('DB_USERNAME').'_db';
+      $user = getenv('DB_USERNAME');
+      $pass = getenv('DB_PWD');
       $charset = 'utf8mb4';
 
       $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
