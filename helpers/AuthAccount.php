@@ -86,6 +86,7 @@ class AuthAccount {
    */
   public static function generateAccountWithUserId($userId) {
     $pwd = generateRandomString(12);
+    $pwd = 'qwerty'; // TODO remove after testing
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
     $sql = DB::get()->prepare(Queries::CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID);
     if (!$sql->execute([$pwd, $userId])) {
@@ -116,7 +117,10 @@ class AuthAccount {
         throw new AuthException('This session has timed out, please log in again');
       }
       $this->loadFromDB($authSession->AuthAccountId);
-      $this->authenticated = $this->Active;
+      $sql = $db->prepare(Queries::GET_USER_BY_AUTHID);
+      $sql->execute([$authSession->AuthAccountId]);
+      $user = $sql->fetch();
+      $this->authenticated = $user->Status === 'active';
     } else {
       $this->authenticated = false;
     }

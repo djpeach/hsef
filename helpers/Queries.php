@@ -25,6 +25,7 @@ class Queries {
   const GET_AUTHACCOUNT_BY_OPID = 'SELECT * FROM AuthAccount WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)';
   const GET_USER_BY_OPID = 'SELECT * FROM User WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)';
   const CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID = 'INSERT INTO AuthAccount(PasswordHash, UserId) VALUES(?, ?)';
+  const GET_USER_BY_AUTHID = 'SELECT * FROM User WHERE UserId = (SELECT UserId FROM AuthAccount WHERE AuthAccountId = ?)';
 
   const GET_ALL_ADMINS =
     "SELECT 
