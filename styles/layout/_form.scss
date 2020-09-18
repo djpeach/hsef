@@ -1,14 +1,5 @@
 form {
 
-  button.btn, a.btn {
-    border: none;
-    padding: .8rem 1.8rem;
-    border-radius: .4rem;
-    color: white;
-    font-weight: 600;
-    font-size: 1.6rem;
-  }
-
   .group-label {
     color: map_get($theme-colors, darkgreen);
     font-size: 1.2rem;

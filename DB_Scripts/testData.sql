@@ -39,15 +39,15 @@ INSERT INTO Operator(OperatorId, UserId)
 VALUES (6, 6);
 
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (1, 'Owner');
+VALUES (1, 'owner');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (2, 'Moderator');
+VALUES (2, 'moderator');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (3, 'Admin');
+VALUES (3, 'admin');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (4, 'Judge');
+VALUES (4, 'judge');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (5, 'Viewer');
+VALUES (5, 'viewer');
 
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 1);

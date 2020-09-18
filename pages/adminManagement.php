@@ -2,8 +2,41 @@
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>
+<?php
+  $post = new Post();
+  $errors = new Errors();
+  $formSubmitted = isset($_POST['DELETE_SUBMIT']);
+
+  if ($formSubmitted) {
+    $delType = $post->deleteType;
+    $adminId = $post->operatorId;
+
+    $sql = null;
+    if ($delType === "delete") {
+      $sql = DB::get()->prepare(Queries::ARCHIVE_USER_BY_OPID);
+    } else if ($delType === "demote") {
+      $sql = DB::get()->prepare(Queries::DELETE_ADMIN_BY_OPID);
+    } else {
+      $errors->message = "Something went wrong, please try again";
+    }
+
+    if ($errors->isEmpty()) {
+      if (!$sql->execute([$adminId])) {
+        $errors->message = "Database execution went wrong, please try again";
+      }
+    }
+  }
+?>
 <main>
   <article class="limit-width-md pt-5">
+    <?php if (!$errors->isEmpty()) : ?>
+      <div class="limit-width-sm alert alert-danger mb-5">
+        <h4 class="alert-heading">Alert: </h4>
+        <p>
+          <?php echo $errors->message; ?>
+        </p>
+      </div>
+    <?php endif; ?>
     <h2 class="article-header">Admin Management</h2>
     <?php include 'components/divider.php' ?>
     <div class="container-sm data-table">
@@ -21,7 +54,7 @@
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $admins = DB::get()->query(Queries::GET_ALL_ADMINS)->fetchAll(); ?>
+      <?php $admins = DB::get()->query(Queries::GET_ALL_ACTIVE_ADMINS)->fetchAll(); ?>
       <?php foreach ($admins as $admin) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
@@ -45,39 +78,62 @@
             <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
-            <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModalLabel-<?php echo $admin->OperatorId; ?>">
+            <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $admin->OperatorId; ?>">
               <i class="fas fa-trash text-white"></i>
             </button>
             <!-- Deletion Modal -->
-            <div class="modal fade" id="deletionModal" tabindex="-1">
+            <div class="modal fade deletion-modal" id="deletionModal-<?php echo $admin->OperatorId; ?>" tabindex="-1">
               <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="deletionModalLabel-<?php echo $admin->OperatorId; ?>">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="alert alert-danger">
-                      <h4 class="alert-heading">Warning: This is a destructive action</h4>
-                      <p>Do you want to remove this user as an admin, or remove this user from the system completely?</p>
-                      <hr>
+                <form method="POST">
+                  <div class="modal-content">
+                    <div class="modal-header bg-light font-weight-bold">
+                      <h3 class="modal-title">Remove Admin</h3>
+                      <button type="button" class="close" data-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="alert alert-danger">
+                        <h4 class="alert-heading">
+                          <i class="fas fa-exclamation-circle"></i>
+                          Warning: this is a destructive action
+                        </h4>
+                      </div>
+                      <div class="radio-btns">
+                        <div class="radio-btns-group">
+                          <input type="radio" id="demote-<?php echo $admin->OperatorId; ?>" name="deleteType" value="demote">
+                          <label for="demote-<?php echo $admin->OperatorId; ?>">Demote from Admin</label>
+                        </div>
+                        <p class="additional-info">This will <span class="font-weight-bold">demote</span> the user, but retain them in the system</p>
+                        <div class="radio-btns-group">
+                          <input type="radio" id="delete-<?php echo $admin->OperatorId; ?>" name="deleteType" value="delete">
+                          <label for="delete-<?php echo $admin->OperatorId; ?>">Delete user from system</label>
+                        </div>
+                        <p class="additional-info">This will <span class="font-weight-bold">delete</span> the user, and <span class="font-weight-bold">remove them from the system</span></p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <label for="operatorNameConfirmation-<?php echo $admin->OperatorId ?>">Please type <span class="font-weight-bold"><?php echo $admin->FirstName.' '.$admin->LastName ?></span> to confirm.</label>
+                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $admin->OperatorId ?>" disabled>
+                      <input type="text" name="operatorId" value="<?php echo $admin->OperatorId ?>" hidden>
+                      <?php // TODO: figure out a way to pass the name confirm value to JS ?>
+                      <input type="text" name="deleteConfirmValue" value="<?php echo $admin->FirstName.' '.$admin->LastName ?>" hidden>
+                      <button type="submit" class="btn btn-outline-danger mx-auto" name="DELETE_SUBMIT" disabled>I understand, remove admin.</button>
                     </div>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger">Demote from Admin</button>
-                    <button type="button" class="btn btn-danger">Delete from System</button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       <?php endforeach; ?>
       <div class="row mt-3">
-        <a class="btn btn-gold" href="/hsef/?page=adminForm"><i class="fas fa-plus"></i>New Admin</a>
+        <a class="btn btn-yellow ml-auto text-white" href="/hsef/?page=adminForm">
+          <i class="fas fa-plus mr-1"></i>
+          New Admin
+        </a>
       </div>
     </div>
   </article>
 </main>
+<?php JS::get()->add('deletionModal'); ?>

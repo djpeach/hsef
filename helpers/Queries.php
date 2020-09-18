@@ -27,8 +27,9 @@ class Queries {
   const CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID = 'INSERT INTO AuthAccount(PasswordHash, UserId) VALUES(?, ?)';
   const GET_USER_BY_AUTHID = 'SELECT * FROM User WHERE UserId = (SELECT UserId FROM AuthAccount WHERE AuthAccountId = ?)';
   const DELETE_ADMIN_BY_OPID = "DELETE FROM OperatorEntitlement WHERE OperatorId = ?";
+  const ARCHIVE_USER_BY_OPID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
 
-  const GET_ALL_ADMINS =
+  const GET_ALL_ACTIVE_ADMINS =
     "SELECT 
        O.OperatorId, 
        U.UserId,
@@ -44,7 +45,8 @@ FROM Operator O
         on OE.EntitlementId = E.EntitlementId
     JOIN User U 
         on O.UserId = U.UserId
-WHERE E.Name = 'Admin' 
+WHERE E.Name = 'admin'
+AND U.Status = 'active'
 GROUP BY O.OperatorId;";
 
   const GET_USERS_TO_PROMOTE_TO_ADMIN =

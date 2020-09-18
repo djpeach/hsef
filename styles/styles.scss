@@ -15,6 +15,8 @@
 @import "component/login-form";
 @import "component/navbar-custom";
 @import "component/data-table";
+@import "component/row-sliding";
+@import "component/deletion-modal";
 
 // ================= LAYOUTS ================= //
 @import "layout/header";
@@ -23,6 +25,7 @@
 @import "layout/form";
 @import "layout/input";
 @import "layout/footer";
+@import "layout/button";
 
 // ================== Pages ================== //
 @import "page/hsef";

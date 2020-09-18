@@ -130,22 +130,6 @@ body {
   color: white;
 }
 
-.btn.btn-gold {
-  display: block;
-  color: white;
-  font-size: 1.6rem;
-  margin-left: auto;
-  width: fit-content;
-  font-weight: 500;
-}
-.btn.btn-gold:hover, .btn.btn-gold:focus {
-  color: white;
-}
-.btn.btn-gold i {
-  margin-right: 0.8rem;
-  margin-top: -0.2rem;
-}
-
 .custom-divider {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
@@ -310,6 +294,97 @@ body {
   background-color: rgba(24, 77, 71, 0.2);
 }
 
+.row.row-sliding {
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+.row.row-sliding .slide-tray {
+  display: flex;
+  align-self: stretch;
+  min-width: fit-content !important;
+  padding: 0;
+}
+.row.row-sliding .tool-icon {
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 1.8rem;
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 !important;
+}
+.row.row-sliding .tool-icon:first-child {
+  border-top-left-radius: 0.4rem !important;
+  border-bottom-left-radius: 0.4rem !important;
+}
+.row.row-sliding .tool-icon:last-child {
+  border-top-right-radius: 0.4rem !important;
+  border-bottom-right-radius: 0.4rem !important;
+}
+.row.row-sliding .tool-icon:focus, .row.row-sliding .tool-icon:active {
+  outline: 0;
+}
+
+.deletion-modal {
+  white-space: normal;
+  overflow: auto;
+}
+.deletion-modal .alert {
+  margin: -1rem;
+  border-radius: 0;
+  padding: 1.2rem 1.4rem;
+}
+.deletion-modal .alert .alert-heading {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+.deletion-modal .alert .alert-heading i {
+  margin-right: 0.8rem;
+}
+.deletion-modal .radio-btns {
+  margin: 4rem 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.deletion-modal .radio-btns .radio-btns-group {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.deletion-modal .radio-btns .radio-btns-group:not(:first-child) {
+  margin-top: 2rem;
+}
+.deletion-modal .radio-btns .radio-btns-group label {
+  margin-left: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+.deletion-modal .radio-btns .additional-info {
+  margin-left: 2.2rem;
+  font-size: 1.3rem;
+}
+.deletion-modal .modal-footer {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: left;
+}
+.deletion-modal .modal-footer input {
+  border: 1px solid lightslategrey !important;
+  padding: 0.4rem !important;
+  font-size: 1.4rem !important;
+  border-radius: 0.4rem !important;
+  margin: 1rem 0 !important;
+}
+.deletion-modal .modal-footer input:focus {
+  outline: unset !important;
+}
+.deletion-modal .modal-footer button {
+  width: 100%;
+  font-weight: 600;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -346,14 +421,6 @@ article .article-header {
   margin-bottom: 1.4rem;
 }
 
-form button.btn, form a.btn {
-  border: none;
-  padding: 0.8rem 1.8rem;
-  border-radius: 0.4rem;
-  color: white;
-  font-weight: 600;
-  font-size: 1.6rem;
-}
 form .group-label {
   color: #184d47;
   font-size: 1.2rem;
@@ -401,6 +468,13 @@ footer {
 }
 footer p {
   margin-left: auto;
+}
+
+button.btn, a.btn {
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.4rem;
 }
 
 .hsef {
