@@ -53,38 +53,53 @@
 
         if ($errors->isEmpty()) {
           $db = DB::get();
-          $opid = null;
+          $opid =$existingAdmin ? $_GET['opid'] : null;
           if ($existingAdmin) { // edited existing admin
-            $opid = $_GET['opid'];
               // update user details
             $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
             $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
             // update operator details
             $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
             $sql->execute([$post->title, $post->highestDegree, $opid]);
-          } else if ($selectedUser) { // created new admin from existing user
-            // make operator an admin
-            $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
-            $sql->execute([$post->operatorId]);
-            // update operator details
-            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
-            $sql->execute([$post->title, $post->highestDegree, $post->operatorId]);
-            $opid = $post->operatorId;
-          } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
-            // create new user
-            $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
-            $suffix = $post->suffix === '' ? null : $post->suffix;
-            $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
-            $uid = $db->lastInsertId();
-            // create new operator
-            $sql = $db->prepare(Queries::CREATE_NEW_OPERATOR_WITH_USERID);
-            $title = $post->title === '' ? null : $post->title;
-            $highestDegree = $post->highestDegree === '' ? null : $post->highestDegree;
-            $sql->execute([$uid, $title, $highestDegree]);
-            $opid = $db->lastInsertId();
-            // make new operator an admin
-            $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+          } else { // new admin
+            if ($selectedUser) { // created new admin from existing user
+              // make operator an admin
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+              $sql->execute([$post->operatorId]);
+              // update operator details
+              $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
+              $sql->execute([$post->title, $post->highestDegree, $post->operatorId]);
+              $opid = $post->operatorId;
+            } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
+              // create new user
+              $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
+              $suffix = $post->suffix === '' ? null : $post->suffix;
+              $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
+              $uid = $db->lastInsertId();
+              // create new operator
+              $sql = $db->prepare(Queries::CREATE_NEW_OPERATOR_WITH_USERID);
+              $title = $post->title === '' ? null : $post->title;
+              $highestDegree = $post->highestDegree === '' ? null : $post->highestDegree;
+              $sql->execute([$uid, $title, $highestDegree]);
+              $opid = $db->lastInsertId();
+              // make new operator an admin
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+              $sql->execute([$opid]);
+            }
+            // check for auth account
+            $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_OPID);
             $sql->execute([$opid]);
+
+            if ($sql->fetch()) {
+              // TODO: email existing user they have been made an admin
+            } else {
+              $sql = $db->prepare(Queries::GET_USER_BY_OPID);
+              $sql->execute([$opid]);
+              $user = $sql->fetch();
+              $pwd = AuthAccount::generateAccountWithUserId($user->UserId);
+              // TODO: email user their new auth credentials
+            }
+
           }
           redirect('adminForm', [['opid', $opid], ['readonly', 'true']]);
         }

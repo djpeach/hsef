@@ -5,7 +5,7 @@
  * A class with static consts to centralize the most used queries
  */
 class Queries {
-  const GET_CURRENT_USERID_BY_EMAIL = "SELECT UserId FROM User WHERE Email = ? AND Status = 'active'";
+  const GET_ACTIVE_USERID_BY_EMAIL = "SELECT UserId FROM User WHERE Email = ? AND Status = 'active'";
   const GET_AUTHID_BY_USERID = 'SELECT AuthAccountId FROM AuthAccount WHERE UserId = ?';
   const GET_AUTHACCOUNT_BY_ID = 'SELECT * FROM AuthAccount WHERE AuthAccountId = ?';
   const GET_SESSION_BY_ID = 'SELECT * FROM AuthSession WHERE SessionId = ?';
@@ -22,13 +22,15 @@ class Queries {
   const UPDATE_OPERATOR_BY_ID = 'UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE OperatorId = ?';
   const CREATE_NEW_USER_WITH_EMAIL = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
   const CREATE_NEW_OPERATOR_WITH_USERID = "INSERT INTO Operator(UserId, Title, HighestDegree) VALUES (?, ?, ?)";
+  const GET_AUTHACCOUNT_BY_OPID = 'SELECT * FROM AuthAccount WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)';
+  const GET_USER_BY_OPID = 'SELECT * FROM User WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)';
+  const CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID = 'INSERT INTO AuthAccount(PasswordHash, UserId) VALUES(?, ?)';
 
   const GET_ALL_ADMINS =
     "SELECT 
        O.OperatorId, 
        U.UserId,
        U.FirstName, 
-       U.MiddleName, 
        U.LastName, 
        U.Suffix, 
        U.Email, 

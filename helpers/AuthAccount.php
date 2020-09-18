@@ -51,7 +51,7 @@ class AuthAccount {
    */
   public function authenticateWithEmailPassword($email, $password) {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_CURRENT_USERID_BY_EMAIL);
+    $sql = $db->prepare(Queries::GET_ACTIVE_USERID_BY_EMAIL);
     $sql->execute([$email]);
     $uid = $sql->fetchColumn();
     if ($uid) {
@@ -77,6 +77,21 @@ class AuthAccount {
     } else {
       throw new AuthException('Could not find an active user with that email address');
     }
+  }
+
+  /**
+   * @param $userId
+   * @return false|string
+   * @throws DatabaseException
+   */
+  public static function generateAccountWithUserId($userId) {
+    $pwd = generateRandomString(12);
+    $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    $sql = DB::get()->prepare(Queries::CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID);
+    if (!$sql->execute([$pwd, $userId])) {
+      throw new DatabaseException('Failed to generate auth account for user');
+    }
+    return $pwd;
   }
 
   /**
