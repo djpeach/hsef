@@ -22,9 +22,15 @@ $(document).ready(function() {
       return false;
     },
     focus: function( event, ui ) {
+      operatorId.val(ui.item.value); // add actual value to hidden field
       userSelect.val(ui.item.label);
       return false;
-    }
+    },
+    close: function (event, ui) {
+      operatorId.val(ui.item.value); // add actual value to hidden field
+      userSelect.val(ui.item.label);
+      return false;
+    },
   });
 
 });
