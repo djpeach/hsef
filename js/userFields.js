@@ -1,7 +1,7 @@
 $(document).ready(function() {
   let userSelectToggle = $('#selectUserToggle');
   let userSelect = $('#userSelect');
-  let operatorId = $('#operatorId');
+  let operatorId = $('#userId');
 
   userSelect.prop('readonly', !userSelectToggle.prop('checked'))
 

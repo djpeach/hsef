@@ -39,7 +39,7 @@ $app->get('/users/fuzzyMatch/promote-to-admin', function ($req, $res) {
   $users = array_map(function($user) {
     return [
       "label" => $user->FirstName.' '.$user->LastName,
-      "value" => $user->OperatorId
+      "value" => $user->UserId
     ];
   }, $sql->fetchAll());
   $res->json($users);

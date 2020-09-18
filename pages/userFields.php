@@ -15,7 +15,7 @@
 
           <label for="userSelect" class="d-none">User Select</label>
           <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user" value="<?php echo $post->userSelect ?>">
-          <input type="text" name="operatorId" id="operatorId" hidden value="<?php echo $post->operatorId ?>">
+          <input type="text" name="userId" id="userId" hidden value="<?php echo $post->userId ?>">
         </div>
       </div>
       <p class="form-error"><?php echo $errors->user; ?></p>

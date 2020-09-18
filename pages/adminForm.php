@@ -46,7 +46,7 @@
             $errors->email = 'Value set is not a valid email';
           }
         } else if ($selectedUser) {
-          if (!$post->operatorId) {
+          if (!$post->userId) {
             $errors->user = 'Must select an existing user, or create a new one';
           }
         }
@@ -59,17 +59,20 @@
             $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
             $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
             // update operator details
-            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
+            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_OPID);
             $sql->execute([$post->title, $post->highestDegree, $opid]);
           } else { // new admin
             if ($selectedUser) { // created new admin from existing user
               // make operator an admin
-              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
-              $sql->execute([$post->operatorId]);
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
+              $sql->execute([$post->userId]);
               // update operator details
-              $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
-              $sql->execute([$post->title, $post->highestDegree, $post->operatorId]);
-              $opid = $post->operatorId;
+              $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_UID);
+              $sql->execute([$post->title, $post->highestDegree, $post->userId]);
+              // get Operator Id
+              $sql = $db->prepare(Queries::GET_OPERATOR_BY_USERID);
+              $sql->execute([$post->userId]);
+              $opid = $sql->fetch()->OperatorId;
             } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
               // create new user
               $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
@@ -83,8 +86,8 @@
               $sql->execute([$uid, $title, $highestDegree]);
               $opid = $db->lastInsertId();
               // make new operator an admin
-              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
-              $sql->execute([$opid]);
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
+              $sql->execute([$uid]);
             }
             // check for auth account
             $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_OPID);
