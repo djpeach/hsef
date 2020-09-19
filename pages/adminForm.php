@@ -59,7 +59,7 @@
             $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
             $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
             // update operator details
-            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_OPID);
+            $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
             $sql->execute([$post->title, $post->highestDegree, $opid]);
           } else { // new admin
             if ($selectedUser) { // created new admin from existing user
@@ -70,7 +70,7 @@
               $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_UID);
               $sql->execute([$post->title, $post->highestDegree, $post->userId]);
               // get Operator Id
-              $sql = $db->prepare(Queries::GET_OPERATOR_BY_USERID);
+              $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
               $sql->execute([$post->userId]);
               $opid = $sql->fetch()->OperatorId;
             } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
@@ -80,7 +80,7 @@
               $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
               $uid = $db->lastInsertId();
               // create new operator
-              $sql = $db->prepare(Queries::CREATE_NEW_OPERATOR_WITH_USERID);
+              $sql = $db->prepare(Queries::CREATE_NEW_OPERATOR_WITH_UID);
               $title = $post->title === '' ? null : $post->title;
               $highestDegree = $post->highestDegree === '' ? null : $post->highestDegree;
               $sql->execute([$uid, $title, $highestDegree]);

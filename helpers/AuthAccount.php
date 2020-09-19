@@ -51,13 +51,13 @@ class AuthAccount {
    */
   public function authenticateWithEmailPassword($email, $password) {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_ACTIVE_USERID_BY_EMAIL);
+    $sql = $db->prepare(Queries::GET_ACTIVE_USER_BY_EMAIL);
     $sql->execute([$email]);
-    $uid = $sql->fetchColumn();
+    $uid = $sql->fetch()->UserId;
     if ($uid) {
-      $sql = $db->prepare(Queries::GET_AUTHID_BY_USERID);
+      $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_UID);
       $sql->execute([$uid]);
-      $authId = $sql->fetchColumn();
+      $authId = $sql->fetch()->AuthAccountId;
       if ($authId) {
         $this->loadFromDB($authId);
         if (password_verify($password, $this->PasswordHash)) {
@@ -88,7 +88,7 @@ class AuthAccount {
     $pwd = generateRandomString(12);
     $pwd = 'qwerty'; // TODO remove after testing
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-    $sql = DB::get()->prepare(Queries::CREATE_AUTHACCOUNT_WITH_PASSWORD_AND_USERID);
+    $sql = DB::get()->prepare(Queries::CREATE_NEW_AUTHACCOUNT);
     if (!$sql->execute([$pwd, $userId])) {
       throw new DatabaseException('Failed to generate auth account for user');
     }

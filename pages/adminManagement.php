@@ -15,7 +15,7 @@
     if ($delType === "delete") {
       $sql = DB::get()->prepare(Queries::ARCHIVE_USER_BY_OPID);
     } else if ($delType === "demote") {
-      $sql = DB::get()->prepare(Queries::DELETE_ADMIN_BY_OPID);
+      $sql = DB::get()->prepare(Queries::REMOVE_ADMIN_BY_OPID);
     } else {
       $errors->message = "Something went wrong, please try again";
     }
