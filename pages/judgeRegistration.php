@@ -34,6 +34,12 @@
 
       if ($errors->isEmpty()) {
         // do db work
+        // if user with email exists:
+          // if user.status == 'active'
+            // inform them they are already a judge and offer to send an email with auth credentials
+          // else
+            // user.status = 'registered', inform them they are pending approval
+        // else create new user, user.status = 'registered, inform them they are pending approval
         $registered = true;
       }
     }
