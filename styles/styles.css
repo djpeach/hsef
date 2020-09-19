@@ -483,7 +483,7 @@ button.btn, a.btn {
   display: flex;
   flex-flow: column nowrap;
 }
-.hsef main article h2 {
+.hsef main article .article-header {
   text-align: center;
 }
 

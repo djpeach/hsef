@@ -15,9 +15,12 @@
   require_once 'helpers/utils.php';
   require_once 'helpers/Exceptions.php';
 
-ini_set('variables_order', 'EGPCS');
-ini_set('session.cookie_lifetime', 86400);
-ini_set('session.name', 'hsef');
+  ini_set('variables_order', 'EGPCS');
+  ini_set('session.cookie_lifetime', 86400);
+  ini_set('session.name', 'hsef');
+
+  // TODO get the actual email for sending emails
+  $rootEmail = "hsef@sefi.org";
 
   /**
    * Initialize authentication
