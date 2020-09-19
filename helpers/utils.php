@@ -28,16 +28,33 @@ function cameltostr($camel) {
 
 /**
  * @param string $page name of the file in /pages to load
+ * @param array $params eg [["uid", "12"], ["newUser", "false"]]
  */
-function redirect($page, $message=null) {
-  $session = Session::get();
-  $session->page = $page;
-  if ($message) {
-    if ($page === 'exception') {
-      $session->exceptionMessage = $message;
-    } else {
-      $session->flashMessage = $message;
-    }
+function redirect($page, $params=array()) {
+  $route = '?page='.$page;
+  foreach ($params as $param) {
+    $route .= "&$param[0]=$param[1]";
   }
-  echo "<script> location.href = '/hsef/'; </script>";
+  echo "<script> location.href = '/hsef/".$route."'; </script>";
+}
+
+/**
+ * Pretty prints some data in php format
+ * @param $data
+ */
+function prettyPrint($data) {
+  echo json_encode($data).'<br>';
+}
+
+/**
+ * Generates a random string
+ */
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
 }

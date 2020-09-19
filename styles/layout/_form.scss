@@ -1,12 +1,15 @@
 form {
 
-  button {
-    border: none;
-    background-color: map_get($theme-colors, darkgreen);
-    padding: .8rem 1.8rem;
-    border-radius: .4rem;
-    color: white;
+  .group-label {
+    color: map_get($theme-colors, darkgreen);
+    font-size: 1.2rem;
     font-weight: 600;
+  }
+
+  .form-error {
+    margin: .8rem 0 0 0;
+    color: map_get($theme-colors, error);
     font-size: 1.6rem;
+    padding: 0 0 0 .8rem;
   }
 }

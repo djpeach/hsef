@@ -6,7 +6,7 @@
   <?php include_once 'components/menu.php'; ?>
 
   <?php if (isset(Session::get()->flashMessage)) : ?>
-    <article class="limit-width-sm">
+    <article class="limit-width-sm mt-5">
       <div class="alert alert-danger">
         <h4 class="alert-heading">Alert: </h4>
         <p>

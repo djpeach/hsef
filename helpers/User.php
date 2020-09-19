@@ -6,7 +6,6 @@ class User {
   // Database Fields
   public $UserId;
   public $FirstName;
-  public $MiddleName;
   public $LastName;
   public $Gender;
   public $Status;
@@ -53,7 +52,6 @@ class User {
       $user = self::$instance;
     }
     $name = $user->FirstName;
-    $name .= $user->MiddleName ? " $user->MiddleName" : "";
     $name .= " $user->LastName";
     $name .= $user->Suffix ? " $user->Suffix" : "";
     return $name;

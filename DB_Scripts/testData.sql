@@ -39,15 +39,15 @@ INSERT INTO Operator(OperatorId, UserId)
 VALUES (6, 6);
 
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (1, 'Owner');
+VALUES (1, 'owner');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (2, 'Moderator');
+VALUES (2, 'moderator');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (3, 'Admin');
+VALUES (3, 'admin');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (4, 'Judge');
+VALUES (4, 'judge');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (5, 'Viewer');
+VALUES (5, 'viewer');
 
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 1);
@@ -55,6 +55,10 @@ INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (1, 4);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (1, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 1);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
@@ -66,17 +70,21 @@ VALUES (2, 4);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (3, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (3, 2);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (3, 3);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (3, 4);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
+VALUES (3, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (4, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (5, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (6, 3);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
-VALUES (1, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
-VALUES (1, 5);
 
 # ----- Downs ----- #
 SET FOREIGN_KEY_CHECKS = 0;

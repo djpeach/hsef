@@ -51,13 +51,13 @@ class AuthAccount {
    */
   public function authenticateWithEmailPassword($email, $password) {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_CURRENT_USERID_BY_EMAIL);
+    $sql = $db->prepare(Queries::GET_ACTIVE_USER_BY_EMAIL);
     $sql->execute([$email]);
-    $uid = $sql->fetchColumn();
+    $uid = $sql->fetch()->UserId;
     if ($uid) {
-      $sql = $db->prepare(Queries::GET_AUTHID_BY_USERID);
+      $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_UID);
       $sql->execute([$uid]);
-      $authId = $sql->fetchColumn();
+      $authId = $sql->fetch()->AuthAccountId;
       if ($authId) {
         $this->loadFromDB($authId);
         if (password_verify($password, $this->PasswordHash)) {
@@ -77,6 +77,22 @@ class AuthAccount {
     } else {
       throw new AuthException('Could not find an active user with that email address');
     }
+  }
+
+  /**
+   * @param $userId
+   * @return false|string
+   * @throws DatabaseException
+   */
+  public static function generateAccountWithUserId($userId) {
+    $pwd = generateRandomString(12);
+    $pwd = 'qwerty'; // TODO remove after testing
+    $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    $sql = DB::get()->prepare(Queries::CREATE_NEW_AUTHACCOUNT);
+    if (!$sql->execute([$pwd, $userId])) {
+      throw new DatabaseException('Failed to generate auth account for user');
+    }
+    return $pwd;
   }
 
   /**
@@ -101,7 +117,10 @@ class AuthAccount {
         throw new AuthException('This session has timed out, please log in again');
       }
       $this->loadFromDB($authSession->AuthAccountId);
-      $this->authenticated = $this->Active;
+      $sql = $db->prepare(Queries::GET_USER_BY_AUTHID);
+      $sql->execute([$authSession->AuthAccountId]);
+      $user = $sql->fetch();
+      $this->authenticated = $user->Status === 'active';
     } else {
       $this->authenticated = false;
     }

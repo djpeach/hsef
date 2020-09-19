@@ -3,3 +3,9 @@
   die();
 } ?>
 <h1>Score Management</h1>
+// add dropdown here
+
+<script>
+  // use js to fill dropdown
+  // fetch counties from database
+</script>

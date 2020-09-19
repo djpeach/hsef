@@ -129,7 +129,6 @@ CREATE TABLE Project (
     ProjectId int unsigned NOT NULL AUTO_INCREMENT,
     Number smallint unsigned NULL,
     Name char(128) NOT NULL,
-    GradeLevelId int unsigned NULL,
     Abstract varchar(600) NULL,
     BoothId int unsigned NULL,
     CourseNetworkingId int unsigned NULL,
@@ -160,7 +159,7 @@ CREATE TABLE Student (
     StudentId int unsigned NOT NULL AUTO_INCREMENT,
     SchoolId int unsigned NOT NULL,
     UserId int unsigned NOT NULL,
-    ProjectId int unsigned NOT NULL,
+    ProjectId int unsigned NULL,
     GradeLevelId int unsigned NOT NULL,
     UNIQUE INDEX fak_Student_UserId (UserId),
     CONSTRAINT Student_pk PRIMARY KEY (StudentId)

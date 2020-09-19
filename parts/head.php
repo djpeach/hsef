@@ -5,6 +5,7 @@
    */
   require_once 'helpers/Session.php';
   require_once 'helpers/DB.php';
+  require_once 'helpers/JS.php';
   require_once 'helpers/Post.php';
   require_once 'helpers/AuthAccount.php';
   require_once 'helpers/User.php';
@@ -40,6 +41,7 @@ ini_set('session.name', 'hsef');
       $publicPage = in_array($_GET['page'], $publicPages);
       if (!$authenticated && !$publicPage) {
         Session::get()->page = 'login';
+        Session::get()->flashMessage = 'You need to log in to view this page';
       } else if (!$authenticated && $publicPage) {
         Session::get()->page = $_GET['page'];
       } else if ($authenticated && !$publicPage) {
@@ -78,6 +80,9 @@ ini_set('session.name', 'hsef');
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="styles/styles.css"/>
+
+  <!-- jQuery UI CSS -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
 
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700,900"/>

@@ -34,7 +34,7 @@ class Operator {
   private function loadFromDB() {
     $db = DB::get();
 
-    $sql = $db->prepare(Queries::GET_OPERATOR_BY_USERID);
+    $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
     $sql->execute([$this->UserId]);
     $obj = $sql->fetch();
     if ($obj) {
@@ -52,7 +52,7 @@ class Operator {
    */
   private function loadEntitlements() {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_ENTITLEMENTS_BY_OPID);
+    $sql = $db->prepare(Queries::GET_ENTITLEMENT_NAMES_BY_OPID);
     if ($sql->execute([$this->OperatorId])) {
       $entitlements = $sql->fetchAll(PDO::FETCH_COLUMN);
       if ($entitlements) {
@@ -69,7 +69,7 @@ class Operator {
    */
   private function loadCategoryPreferences() {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_CATEGORIES_BY_OPID);
+    $sql = $db->prepare(Queries::GET_CATEGORY_NAMES_BY_OPID);
     if ($sql->execute([$this->OperatorId])) {
       $categories = $sql->fetchAll(PDO::FETCH_COLUMN);
       if ($categories) {
@@ -86,7 +86,7 @@ class Operator {
    */
   private function loadGradeLevelPreferences() {
     $db = DB::get();
-    $sql = $db->prepare(Queries::GET_GRADELEVELS_BY_OPID);
+    $sql = $db->prepare(Queries::GET_GRADELEVEL_NAMES_BY_OPID);
     if ($sql->execute([$this->OperatorId])) {
       $gradeLevels = $sql->fetchAll(PDO::FETCH_COLUMN);
       if ($gradeLevels) {
