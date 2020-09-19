@@ -1,5 +1,5 @@
-<!-- the file that includes this must set $post, $errors, $existingUser, and $selectedUser -->
-<?php if (!$existingUser) : ?>
+<!-- the file that includes this must set $post, $errors, $existingUser, $allowUserSelect, and $didSelectUser -->
+<?php if (!$existingUser && $allowUserSelect) : ?>
   <div class="row mt-3">
   <div class="col">
     <div class="floating-label-group--checkbox">
@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-2">
           <label class="switch d-block ml-auto mt-4">
-            <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#userDetailFields" <?php echo $selectedUser ? 'checked' : '' ?>>
+            <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#userDetailFields" <?php echo $didSelectUser ? 'checked' : '' ?>>
             <span class="slider round"></span>
           </label>
         </div>
@@ -23,7 +23,7 @@
   </div>
 </div>
 <?php endif; ?>
-<div id="userDetailFields" class="<?php echo $existingUser ? '' : ($selectedUser ? 'collapse' : 'show') ?>">
+<div id="userDetailFields" class="<?php echo ($existingUser || !$allowUserSelect) ? '' : ($didSelectUser ? 'collapse' : 'show') ?>">
   <?php if (!$existingUser) : ?>
     <p class="group-label mt-3">Create New User</p>
   <?php endif; ?>
