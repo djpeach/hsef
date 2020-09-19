@@ -6,8 +6,8 @@
   <article class="limit-width-md p-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-      $existingAdmin = isset($_GET['opid']);
-      if ($existingAdmin && !isset($_POST['ADMIN_FORM'])) {
+      $existingUser = isset($_GET['opid']);
+      if ($existingUser && !isset($_POST['ADMIN_FORM'])) {
         $sql = DB::get()->prepare(Queries::GET_OPERATOR_BY_ID);
         $sql->execute([$_GET['opid']]);
         $operator = $sql->fetch();
@@ -53,8 +53,8 @@
 
         if ($errors->isEmpty()) {
           $db = DB::get();
-          $opid =$existingAdmin ? $_GET['opid'] : null;
-          if ($existingAdmin) { // edited existing admin
+          $opid =$existingUser ? $_GET['opid'] : null;
+          if ($existingUser) { // edited existing admin
               // update user details
             $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
             $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
@@ -73,7 +73,7 @@
               $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
               $sql->execute([$post->userId]);
               $opid = $sql->fetch()->OperatorId;
-            } else if (!$selectedUser && !$existingAdmin) { // created new admin with new user details
+            } else if (!$selectedUser && !$existingUser) { // created new admin with new user details
               // create new user
               $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
               $suffix = $post->suffix === '' ? null : $post->suffix;
@@ -108,7 +108,7 @@
         }
       }
     ?>
-    <h2 class="article-header"><?php echo $existingAdmin ? ($readonly ? 'Admin Profile' : 'Edit Admin') : 'New Admin'; ?></h2>
+    <h2 class="article-header"><?php echo $existingUser ? ($readonly ? 'Admin Profile' : 'Edit Admin') : 'New Admin'; ?></h2>
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
       <?php include_once 'pages/userFields.php'?>

@@ -1,5 +1,5 @@
-
-<?php if (!$existingAdmin) : ?>
+<!-- the file that includes this must set $post, $errors, $existingUser, and $selectedUser -->
+<?php if (!$existingUser) : ?>
   <div class="row mt-3">
   <div class="col">
     <div class="floating-label-group--checkbox">
@@ -23,8 +23,8 @@
   </div>
 </div>
 <?php endif; ?>
-<div id="userDetailFields" class="<?php echo $existingAdmin ? '' : ($selectedUser ? 'collapse' : 'show') ?>">
-  <?php if (!$existingAdmin) : ?>
+<div id="userDetailFields" class="<?php echo $existingUser ? '' : ($selectedUser ? 'collapse' : 'show') ?>">
+  <?php if (!$existingUser) : ?>
     <p class="group-label mt-3">Create New User</p>
   <?php endif; ?>
   <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
