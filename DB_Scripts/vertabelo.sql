@@ -1,13 +1,11 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-15 23:25:54.015
+-- Last modification date: 2020-09-19 15:23:07.419
 
 -- tables
 -- Table: AuthAccount
 CREATE TABLE AuthAccount (
     AuthAccountId int unsigned NOT NULL AUTO_INCREMENT,
     PasswordHash varchar(255) NOT NULL,
-    Username varchar(255) NOT NULL,
-    Active bool NOT NULL DEFAULT true,
     UserId int unsigned NOT NULL,
     UNIQUE INDEX fak_AuthAccount_User_UserId (UserId),
     CONSTRAINT AuthAccount_pk PRIMARY KEY (AuthAccountId)
@@ -159,7 +157,7 @@ CREATE TABLE Student (
     StudentId int unsigned NOT NULL AUTO_INCREMENT,
     SchoolId int unsigned NOT NULL,
     UserId int unsigned NOT NULL,
-    ProjectId int unsigned NULL,
+    ProjectId int unsigned NOT NULL,
     GradeLevelId int unsigned NOT NULL,
     UNIQUE INDEX fak_Student_UserId (UserId),
     CONSTRAINT Student_pk PRIMARY KEY (StudentId)
@@ -177,19 +175,15 @@ CREATE TABLE TimeSlot (
 CREATE TABLE User (
     UserId int unsigned NOT NULL AUTO_INCREMENT,
     FirstName char(128) NOT NULL,
-    MiddleName char(128) NULL,
     LastName char(128) NOT NULL,
     Suffix char(64) NULL,
     Gender enum('male', 'female', 'other') NULL,
     Status enum('active', 'registered', 'invited', 'archived') NOT NULL,
     CheckedIn bool NULL DEFAULT false,
     Email char(128) NULL,
+    UNIQUE INDEX ak_User_Email (Email),
     CONSTRAINT User_pk PRIMARY KEY (UserId)
-) COMMENT 'Status:
-    ''''active'''' users are the only ones who can authenticate.
-    ''''registered'''' users are those who have signed up but have yet to be approved
-     ''''invited'''' users are those that have been invited through the system, but have yet to accept
-    ''''archived'''' are users that exist for historical display purposes.';
+);
 
 CREATE INDEX ix_User_Email ON User (Email);
 
@@ -268,10 +262,6 @@ ALTER TABLE Project ADD CONSTRAINT fk_Project_Booth_BoothId FOREIGN KEY fk_Proje
 -- Reference: fk_Project_Category_CategoryId (table: Project)
 ALTER TABLE Project ADD CONSTRAINT fk_Project_Category_CategoryId FOREIGN KEY fk_Project_Category_CategoryId (CategoryId)
     REFERENCES Category (CategoryId);
-
--- Reference: fk_Project_GradeLevel_GradeLevelId (table: Project)
-ALTER TABLE Project ADD CONSTRAINT fk_Project_GradeLevel_GradeLevelId FOREIGN KEY fk_Project_GradeLevel_GradeLevelId (GradeLevelId)
-    REFERENCES GradeLevel (GradeLevelId);
 
 -- Reference: fk_School_County_CountyId (table: School)
 ALTER TABLE School ADD CONSTRAINT fk_School_County_CountyId FOREIGN KEY fk_School_County_CountyId (CountyId)
