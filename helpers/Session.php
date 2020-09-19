@@ -9,6 +9,8 @@ class Session {
   private static $instance;
 
   private function __construct() {
+    ini_set('session.cookie_lifetime', 86400);
+    ini_set('session.name', 'hsef');
 
     session_start();
   }
