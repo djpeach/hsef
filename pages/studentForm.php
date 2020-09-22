@@ -43,7 +43,7 @@
         }
 
         // extra email validation
-        if (isset($post->email) && !$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
+        if ($post->email !== '' && !$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
           $errors->email = 'Value set is not a valid email';
         }
       } else if ($selectedUser) {
@@ -58,7 +58,8 @@
         if ($existingUser) { // edited existing student
           // update user details
           $sql = $db->prepare(Queries::UPDATE_USER_BY_SID);
-          $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $sid]);
+          $email = $post->email === '' ? null : $post->email;
+          $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $sid]);
           // update student details
           // TODO
         } else { // new student
@@ -94,7 +95,7 @@
             $href .= isset($_GET['sid']) ? '&sid='.$_GET['sid'] : '';
             ?>
             <div class="col-6">
-              <a href="/hsef/?page=studentForm" class="btn btn-yellow text-white">
+              <a href="/hsef/?page=studentManagement" class="btn btn-yellow text-white">
                 <i class="fas fa-angle-left text-white"></i>
                 View All Students
               </a>
