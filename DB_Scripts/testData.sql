@@ -12,18 +12,18 @@ VALUES (5, 'Andy', 'Harris', 'male', 'active', 'ajharris@iupui.edu'); # 5
 INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email)
 VALUES (6, 'Lingma', 'Acheson', 'female', 'active', 'linglu@iupui.edu'); # 6
 
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (1, 'djpeach', '$2y$10$EEhxG.T6J7nCu5ieTllTsuvvOdF606zuGfZdur/RcTvfxpg/vxZfW', 1);
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (2, 'harris16', '$2y$10$oDxFkCtEjgAmJb7VQrpJTeq6DU5ICU1O3xBl1uWyteAh2ngusNns6', 2);
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (3, 'dnortham', '$2y$10$QEGvUI8tmr8JiBvqd6BRfel4QlSGJNadsEmtVnm5rfILLIEg0CMUi', 3);
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (4, 'kadadavi', '$2y$10$PP7DCm/dqE7fPjRYyPyjDeMzuBB7hG6LDdw8v0d5ypbIyfDRXv/HC', 4);
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (5, 'ajharris', '$2y$10$qPYniUF.xnAqQLS0c9hRLeyrCURFfQ/fBS2foss9BBB88sxFNQVRC', 5);
-INSERT INTO AuthAccount(AuthAccountId, Username, PasswordHash, UserId)
-VALUES (6, 'linglu', '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 6);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId)
+VALUES (1, '$2y$10$EEhxG.T6J7nCu5ieTllTsuvvOdF606zuGfZdur/RcTvfxpg/vxZfW', 1);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId)
+VALUES (2, '$2y$10$oDxFkCtEjgAmJb7VQrpJTeq6DU5ICU1O3xBl1uWyteAh2ngusNns6', 2);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId)
+VALUES (3, '$2y$10$QEGvUI8tmr8JiBvqd6BRfel4QlSGJNadsEmtVnm5rfILLIEg0CMUi', 3);
+INSERT INTO AuthAccount(AuthAccountId,  PasswordHash, UserId)
+VALUES (4, '$2y$10$PP7DCm/dqE7fPjRYyPyjDeMzuBB7hG6LDdw8v0d5ypbIyfDRXv/HC', 4);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId)
+VALUES (5, '$2y$10$qPYniUF.xnAqQLS0c9hRLeyrCURFfQ/fBS2foss9BBB88sxFNQVRC', 5);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId)
+VALUES (6, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 6);
 
 INSERT INTO Operator(OperatorId, UserId)
 VALUES (1, 1);
