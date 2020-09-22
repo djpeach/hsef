@@ -54,8 +54,8 @@
     <div class="row mt-3">
       <div class="col">
         <div class="floating-label-group">
-          <input type="email" placeholder="Email*" id="email" name="email" value="<?php echo $post->email ?>">
-          <label for="email">Email*</label>
+          <input type="email" placeholder="Email<?php echo in_array('email', $requiredUserFields) ? '*' : ''; ?>" id="email" name="email" value="<?php echo $post->email ?>">
+          <label for="email">Email<?php echo in_array('email', $requiredUserFields) ? '*' : ''; ?></label>
           <p class="form-error"><?php echo $errors->email; ?></p>
         </div>
       </div>

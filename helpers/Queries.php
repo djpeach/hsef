@@ -95,7 +95,13 @@ class Queries {
   // TODO
 
   // Students
-  // TODO
+  const CREATE_NEW_STUDENT_WITH_UID = "INSERT INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUEs (?, ?, ?, ?)";
+  const UPDATE_STUDENT_BY_UID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE UserId = ?";
+  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE StudentId = ?";
+  const GET_STUDENT_BY_UID = "SELECT * FROM Student WHERE UserId = ?";
+  const GET_STUDENT_BY_ID = "SELECT * FROM Student WHERE StudentId = ?";
+  const REMOVE_STUDENT_BY_UID = "DELETE FROM Student WHERE UserId = ?";
+  const REMOVE_STUDENT_BY_ID = "DELETE FROM Student WHERE StudentId = ?";
 
   // Time Slots
   // TODO: Strategize management of time slots
@@ -107,14 +113,33 @@ class Queries {
   const GET_USER_BY_AUTHID = "SELECT * FROM User WHERE UserId = (SELECT UserId FROM AuthAccount WHERE AuthAccountId = ?)";
   const QUERY_USERS_BY_NAME = "SELECT * FROM User WHERE FirstName OR LastName LIKE ?";
   const UPDATE_USER_BY_OPID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
+  const UPDATE_USER_BY_SID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
   const CREATE_NEW_USER_WITH_EMAIL = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
-  const ARCHIVE_USER_BY_OPID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
-  const ARCHIVE_USER_BY_UID = "UPDATE User SET Status='archived' WHERE UserId = ?";
+  const ARCHIVE_OPERATOR_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
+  const ARCHIVE_STUDENT_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
+  const ARCHIVE_USER_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = ?";
 
   // User Years
   // TODO
 
   // Joins
+  const GET_ALL_ACTIVE_STUDENTS =
+    "SELECT
+       S.StudentId,
+       U.UserId,
+       U.FirstName,
+       U.LastName,
+       U.Suffix,
+       S2.Name as SchoolName
+FROM User U
+    JOIN Student S
+         on U.UserId = S.UserId
+    LEFT JOIN School S2
+        on S.SchoolId = S2.SchoolId
+        OR S.SchoolId IS NULL
+WHERE U.Status = 'active'";
+
+
   const GET_ALL_ACTIVE_ADMINS =
     "SELECT 
        O.OperatorId, 

@@ -5,15 +5,15 @@
 <?php
 $post = new Post();
 $errors = new Errors();
-$formSubmitted = isset($_POST['DELETE_SUBMIT']);
+$delFormSubmitted = isset($_POST['JUDGE_DELETE_SUBMIT']);
 
-if ($formSubmitted) {
+if ($delFormSubmitted) {
   $delType = $post->deleteType;
   $judgeId = $post->operatorId;
 
   $sql = null;
   if ($delType === "delete") {
-    $sql = DB::get()->prepare(Queries::ARCHIVE_USER_BY_OPID);
+    $sql = DB::get()->prepare(Queries::ARCHIVE_OPERATOR_BY_ID);
   } else if ($delType === "demote") {
     $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
   } else {
@@ -118,7 +118,7 @@ if ($formSubmitted) {
                       <input type="text" name="operatorId" value="<?php echo $judge->OperatorId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $judge->FirstName.' '.$judge->LastName ?>" hidden>
-                      <button type="submit" class="btn btn-outline-danger mx-auto" name="DELETE_SUBMIT" disabled>I understand, remove judge.</button>
+                      <button type="submit" class="btn btn-outline-danger mx-auto" name="JUDGE_DELETE_SUBMIT" disabled>I understand, remove judge.</button>
                     </div>
                   </div>
                 </form>
@@ -127,7 +127,7 @@ if ($formSubmitted) {
           </div>
         </div>
       <?php endforeach; ?>
-      <div class="row mt-3">
+      <div class="row no-gutters mt-3">
         <div class="col text-right">
           <a class="btn btn-yellow text-white" href="/hsef/?page=judgeForm">
             <i class="fas fa-plus mr-1"></i>
