@@ -7,6 +7,7 @@
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
       $existingUser = isset($_GET['opid']);
+      $allowUserSelect = true;
       if ($existingUser && !isset($_POST['ADMIN_FORM'])) {
         $sql = DB::get()->prepare(Queries::GET_OPERATOR_BY_ID);
         $sql->execute([$_GET['opid']]);

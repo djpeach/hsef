@@ -17,6 +17,9 @@
 
   ini_set('variables_order', 'EGPCS');
 
+  // TODO get the actual email for sending emails
+  $rootEmail = "hsef@sefi.org";
+
   /**
    * Initialize authentication
    * Auth strategy: reach out to db and look for valid session with this session_id()
