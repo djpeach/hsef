@@ -135,6 +135,26 @@ WHERE E.Name = 'admin'
 AND U.Status = 'active'
 GROUP BY O.OperatorId;";
 
+  const GET_ALL_ACTIVE_JUDGES =
+    "SELECT 
+       O.OperatorId, 
+       U.UserId,
+       U.FirstName, 
+       U.LastName, 
+       U.Suffix, 
+       U.Email, 
+       U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE 
+        on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E 
+        on OE.EntitlementId = E.EntitlementId
+    JOIN User U 
+        on O.UserId = U.UserId
+WHERE E.Name = 'judge'
+AND U.Status = 'active'
+GROUP BY O.OperatorId;";
+
   const GET_USERS_TO_PROMOTE_TO_ADMIN =
     "SELECT 
        O.OperatorId, 
@@ -144,5 +164,16 @@ GROUP BY O.OperatorId;";
 FROM Operator O
     JOIN User U on O.UserId = U.UserId
 WHERE O.OperatorId NOT IN (SELECT OperatorId FROM OperatorEntitlement OE2 WHERE OE2.EntitlementId = 3)
+AND (U.FirstName LIKE ? OR U.LastName LIKE ?)";
+
+  const GET_USERS_TO_PROMOTE_TO_JUDGE =
+    "SELECT 
+       O.OperatorId, 
+       U.FirstName, 
+       U.LastName,
+       U.UserId
+FROM Operator O
+    JOIN User U on O.UserId = U.UserId
+WHERE O.OperatorId NOT IN (SELECT OperatorId FROM OperatorEntitlement OE2 WHERE OE2.EntitlementId = 4)
 AND (U.FirstName LIKE ? OR U.LastName LIKE ?)";
 }

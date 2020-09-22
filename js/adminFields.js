@@ -14,7 +14,6 @@ $(document).ready(function() {
     position: { my : "right top", at: "right bottom" },
     source: `/hsef/api/users/fuzzyMatch/promote-to-admin`, // sends get to api with ?term=<user input>
     delay: 500,
-    autoFocus: true,
     minLength: 2,
     select: function (event, ui) {
       operatorId.val(ui.item.value); // add actual value to hidden field
@@ -32,5 +31,4 @@ $(document).ready(function() {
       return false;
     },
   });
-
 });

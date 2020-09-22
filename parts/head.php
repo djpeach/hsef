@@ -33,7 +33,7 @@
   }
 
   function urlGuard() {
-    $publicPages = ['login', 'judgeRegistration', 'judgeInvitation'];
+    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
 
     $newPage = isset($_GET['page']);
     $authenticated = AuthAccount::get()->isAuthenticated();

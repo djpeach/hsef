@@ -3,7 +3,7 @@
   die();
 } ?>
 <main>
-  <article class="limit-width-md p-5">
+  <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
       $existingUser = isset($_GET['opid']);
@@ -132,7 +132,9 @@
           </div>
           <?php if (!$readonly) : ?>
             <div class="row mt-3">
-              <button class="ml-auto btn btn-darkgreen" type="submit" name="ADMIN_FORM">Save Admin</button>
+              <div class="col text-right">
+                <button class="ml-auto btn btn-darkgreen" type="submit" name="ADMIN_FORM">Save Admin</button>
+              </div>
             </div>
           <?php endif; ?>
       </fieldset>
@@ -143,17 +145,22 @@
           $href = '/hsef/?page=adminForm';
           $href .= isset($_GET['opid']) ? '&opid='.$_GET['opid'] : '';
           ?>
-          <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white mr-auto">
-            <i class="fas fa-angle-left text-white"></i>
-            View All Admins
-          </a>
-          <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen ml-auto">
-            <i class="fas fa-edit text-white"></i>
-            Edit Admin
-          </a>
+          <div class="col-6">
+            <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white">
+              <i class="fas fa-angle-left text-white"></i>
+              View All Admins
+            </a>
+          </div>
+          <div class="col-6 text-right">
+            <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen">
+              <i class="fas fa-edit text-white"></i>
+              Edit Admin
+            </a>
+          </div>
         </div>
       </fieldset>
       <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
     </form>
   </article>
 </main>
+<?php JS::get()->add('adminFields'); ?>

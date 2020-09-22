@@ -62,4 +62,3 @@
     </div>
   </fieldset>
 </div>
-<?php JS::get()->add('userFields'); ?>

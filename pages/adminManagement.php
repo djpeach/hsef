@@ -128,10 +128,12 @@
         </div>
       <?php endforeach; ?>
       <div class="row mt-3">
-        <a class="btn btn-yellow ml-auto text-white" href="/hsef/?page=adminForm">
-          <i class="fas fa-plus mr-1"></i>
-          New Admin
-        </a>
+        <div class="col text-right">
+          <a class="btn btn-yellow text-white" href="/hsef/?page=adminForm">
+            <i class="fas fa-plus mr-1"></i>
+            New Admin
+          </a>
+        </div>
       </div>
     </div>
   </article>
