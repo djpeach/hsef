@@ -64,8 +64,6 @@ $app->get('/users/fuzzyMatch/promote-to-judge', function ($req, $res) {
   $res->json($users);
 });
 
-
-
 /**
  * params:
  *    query => The query string to fuzzy match against
@@ -75,12 +73,61 @@ $app->get('/users/fuzzyMatch/promote-to-judge', function ($req, $res) {
 $app->get('/users/fuzzyMatch/school', function ($req, $res) {
   $sql = DB::get()->prepare(Queries::QUERY_SCHOOLS_BY_NAME);
   $query = "%{$req->params['term']}%";
-  $sql->execute([$query, $query]);
-  $users = array_map(function($user) {
+  $sql->execute([$query]);
+  $schools = array_map(function($school) {
     return [
-      "label" => $user->Name,
-      "value" => $user->SchoolId
+      "label" => $school->Name,
+      "value" => $school->SchoolId
     ];
   }, $sql->fetchAll());
-  $res->json($users);
+  $res->json($schools);
+});
+
+/**
+ * params:
+ *    query => The query string to fuzzy match against
+ * return:
+ *    {UserId: int, FirstName: string, LastName: string}
+ */
+$app->get('/users/fuzzyMatch/county', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_COUNTIES_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $counties = array_map(function($county) {
+    return [
+      "label" => $county->Name,
+      "value" => $county->CountyId
+    ];
+  }, $sql->fetchAll());
+  $res->json($counties);
+});
+
+$app->post('/school', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_SCHOOL);
+  $body = $req->body();
+  try {
+    $countyId = $body->countyId ? $body->countyId : null;
+    $sql->execute([$req->body()->name, $countyId]);
+    $res->json(["createdSchool"=>[
+      "name" => $body->name,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
+});
+
+$app->post('/county', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_COUNTY);
+  try {
+    $sql->execute([$req->body()->name]);
+    $res->json(["createdCounty"=>[
+      "name" => $req->body()->name,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
 });

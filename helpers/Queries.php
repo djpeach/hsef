@@ -36,7 +36,7 @@ class Queries {
   const DELETE_CATEGORY_BY_ID = "DELETE FROM Category WHERE CategoryId = ?";
 
   // Counties
-  const CREATE_COUNTY_WITH_NAME = "INSERT INTO County(Name) VALUES (?)";
+  const CREATE_NEW_COUNTY = "INSERT INTO County(Name) VALUES (?)";
   const QUERY_COUNTIES_BY_NAME = "SELECT * FROM County WHERE Name LIKE ?";
   const GET_COUNTY_BY_ID = "SELECT * FROM County WHERE CountyId = ?";
   const GET_ALL_COUNTIES = "SELECT * FROM County";
@@ -92,6 +92,7 @@ class Queries {
   // TODO: Strategize management of rankings
 
   // Schools
+  const CREATE_NEW_SCHOOL = "INSERT INTO School(Name, CountyId) VALUES(?, ?)";
   const GET_ALL_SCHOOLS_AND_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId";
   const GET_SCHOOL_BY_ID_WITH_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId WHERE S.SchoolId = ?";
   const QUERY_SCHOOLS_BY_NAME = "SELECT * FROM School WHERE Name LIKE ?";
