@@ -28,8 +28,10 @@ class Queries {
   const DELETE_BOOTH_BY_ID = "DELETE FROM Booth WHERE BoothId = ?";
 
   // Categories
-  const CREATE_ACTIVE_CATEGORY = "INSERT INTO Category(Name, Active) VALUES(?, true)";
+  const CREATE_NEW_CATEGORY = "INSERT INTO Category(Name, Active) VALUES(?, true)";
   const GET_CATEGORY_NAMES_BY_OPID = "SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)";
+  const GET_ALL_CATEGORIES = "SELECT * FROM Category";
+  const GET_CATEGORY_BY_ID = "SELECT * FROM Category WHERE CategoryId = ?";
   const UPDATE_CATEGORY_NAME_BY_ID = "UPDATE Category SET Name=? WHERE CategoryId = ?";
   const DEACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=false WHERE CategoryId = ?";
   const ACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=true WHERE CategoryId = ?";
