@@ -39,6 +39,7 @@
                 <a target="_blank" href="/hsef/?page=gradeLevelForm" class="list-group-item list-group-item-action">Grade Level Form</a>
                 <a target="_blank" href="/hsef/?page=judgeInvitation" class="list-group-item list-group-item-action">Judge Invitation (New Judge Form)</a>
                 <a target="_blank" href="/hsef/?page=judgeRegistration" class="list-group-item list-group-item-action">Judge Registration (public page)</a>
+                <a target="_blank" href="/hsef/?page=judgingSession" class="list-group-item list-group-item-action">Judging Session</a>
                 <a target="_blank" href="/hsef/?page=projectForm" class="list-group-item list-group-item-action">Project Form</a>
                 <a target="_blank" href="/hsef/?page=schoolForm" class="list-group-item list-group-item-action">School Form</a>
                 <a target="_blank" href="/hsef/?page=scoringForm" class="list-group-item list-group-item-action">Scoring Form</a>
