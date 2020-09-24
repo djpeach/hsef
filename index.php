@@ -18,7 +18,7 @@
 
   <?php require "pages/".Session::get()->page.".php"; ?>
 
-  <footer>
+  <footer class="mt-5">
     <p>Made by Group 4 for N-342</p>
   </footer>
 </div>

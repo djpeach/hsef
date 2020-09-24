@@ -1,9 +1,9 @@
-<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>
 <main>
-  <article class="limit-width-md p-5">
+  <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
       $existingUser = isset($_GET['opid']);
@@ -30,11 +30,11 @@
 
       $requiredUserFields = ['firstName', 'lastName', 'email'];
       $formSubmitted = isset($_POST['ADMIN_FORM']);
-      $selectedUser = $formSubmitted && $post->selectUserToggle;
+      $didSelectUser = $formSubmitted && $post->selectUserToggle;
 
       // Find and create validation errors
       if ($formSubmitted) {
-        if (!$selectedUser) {
+        if (!$didSelectUser) {
           foreach ($requiredUserFields as $field) {
             if (!$post->{$field}) {
               $fieldName = cameltostr($field);
@@ -46,7 +46,7 @@
           if (!$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
             $errors->email = 'Value set is not a valid email';
           }
-        } else if ($selectedUser) {
+        } else if ($didSelectUser) {
           if (!$post->userId) {
             $errors->user = 'Must select an existing user, or create a new one';
           }
@@ -63,7 +63,7 @@
             $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
             $sql->execute([$post->title, $post->highestDegree, $opid]);
           } else { // new admin
-            if ($selectedUser) { // created new admin from existing user
+            if ($didSelectUser) { // created new admin from existing user
               // make operator an admin
               $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
               $sql->execute([$post->userId]);
@@ -74,7 +74,7 @@
               $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
               $sql->execute([$post->userId]);
               $opid = $sql->fetch()->OperatorId;
-            } else if (!$selectedUser && !$existingUser) { // created new admin with new user details
+            } else if (!$didSelectUser && !$existingUser) { // created new admin with new user details
               // create new user
               $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
               $suffix = $post->suffix === '' ? null : $post->suffix;
@@ -132,7 +132,9 @@
           </div>
           <?php if (!$readonly) : ?>
             <div class="row mt-3">
-              <button class="ml-auto btn btn-darkgreen" type="submit" name="ADMIN_FORM">Save Admin</button>
+              <div class="col text-right">
+                <button class="ml-auto btn btn-darkgreen" type="submit" name="ADMIN_FORM">Save Admin</button>
+              </div>
             </div>
           <?php endif; ?>
       </fieldset>
@@ -143,17 +145,22 @@
           $href = '/hsef/?page=adminForm';
           $href .= isset($_GET['opid']) ? '&opid='.$_GET['opid'] : '';
           ?>
-          <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white mr-auto">
-            <i class="fas fa-angle-left text-white"></i>
-            View All Admins
-          </a>
-          <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen ml-auto">
-            <i class="fas fa-edit text-white"></i>
-            Edit Admin
-          </a>
+          <div class="col-6">
+            <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white">
+              <i class="fas fa-angle-left text-white"></i>
+              View All Admins
+            </a>
+          </div>
+          <div class="col-6 text-right">
+            <a href="<?php echo $href.'&readonly=false' ?>" class="btn btn-darkgreen">
+              <i class="fas fa-edit text-white"></i>
+              Edit Admin
+            </a>
+          </div>
         </div>
       </fieldset>
       <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
     </form>
   </article>
 </main>
+<?php JS::get()->add('adminFields'); ?>

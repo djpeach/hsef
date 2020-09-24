@@ -1,5 +1,5 @@
 <main>
-  <article class="limit-width-md p-5">
+  <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
     $existingUser = false;
@@ -78,7 +78,9 @@
             </div>
           </div>
           <div class="row mt-3">
-            <button class="ml-auto btn btn-darkgreen" type="submit" name="JUDGE_REGISTRATION">Submit Registration</button>
+            <div class="col text-right">
+              <button class="btn btn-darkgreen" type="submit" name="JUDGE_REGISTRATION">Submit Registration</button>
+            </div>
           </div>
         </fieldset>
       </form>

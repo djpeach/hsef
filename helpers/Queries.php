@@ -38,7 +38,9 @@ class Queries {
   // Counties
   const CREATE_COUNTY_WITH_NAME = "INSERT INTO County(Name) VALUES (?)";
   const QUERY_COUNTIES_BY_NAME = "SELECT * FROM County WHERE Name LIKE ?";
-  const UPDATE_COUNTY_NAME_BY_ID = "UPDATE County SET Name=? WHERE CountyId = ?";
+  const GET_COUNTY_BY_ID = "SELECT * FROM County WHERE CountyId = ?";
+  const GET_ALL_COUNTIES = "SELECT * FROM County";
+  const UPDATE_COUNTY_BY_ID = "UPDATE County SET Name=? WHERE CountyId = ?";
   const DELETE_COUNTY_BY_ID = "DELETE FROM County WHERE CountyId = ?";
 
   // Entitlements
@@ -75,8 +77,6 @@ class Queries {
   const REMOVE_ADMIN_BY_OPID = "DELETE FROM OperatorEntitlement WHERE OperatorId = ? and EntitlementId = (SELECT EntitlementId FROM Entitlement WHERE Name = 'admin')";
   const NEW_JUDGE_BY_UID = "INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES ((SELECT UserId FROM Operator WHERE Operator.OperatorId = ?), (SELECT EntitlementId FROM Entitlement WHERE Name = 'judge'))";
   const REMOVE_JUDGE_BY_OPID = "DELETE FROM OperatorEntitlement WHERE OperatorId = ? and EntitlementId = (SELECT EntitlementId FROM Entitlement WHERE Name = 'judge')";
-  const NEW_MODERATOR_BY_UID = "INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES ((SELECT UserId FROM Operator WHERE Operator.OperatorId = ?), (SELECT EntitlementId FROM Entitlement WHERE Name = 'moderator'))";
-  const REMOVE_MODERATOR_BY_OPID = "DELETE FROM OperatorEntitlement WHERE OperatorId = ? and EntitlementId = (SELECT EntitlementId FROM Entitlement WHERE Name = 'moderator')";
 
   // Operator Grade Level Preferences
   const ADD_GRADELEVEL_TO_OPERATOR = "INSERT INTO OperatorGradeLevel(GradeLevelId, OperatorId) VALUES(?, ?)";
@@ -84,18 +84,27 @@ class Queries {
 
   // Projects
   const CREATE_NEW_PROJECT_WITH_NAME = "INSERT INTO Project(Name) VALUES(?)";
-  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, GradeLevelId, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
   const GET_PROJECT_BY_ID = "SELECT * FROM Project WHERE ProjectId = ?";
-  const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, GradeLevelId=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
+  const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
 
   // Rankings
   // TODO: Strategize management of rankings
 
   // Schools
-  // TODO
+  const GET_ALL_SCHOOLS_AND_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId";
+  const GET_SCHOOL_BY_ID_WITH_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId WHERE S.SchoolId = ?";
+  const QUERY_SCHOOLS_BY_NAME = "SELECT * FROM School WHERE Name LIKE ?";
+  const DELETE_SCHOOL_BY_ID = "DELETE FROM School WHERE SchoolId = ?";
 
   // Students
-  // TODO
+  const CREATE_NEW_STUDENT_WITH_UID = "INSERT INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUEs (?, ?, ?, ?)";
+  const UPDATE_STUDENT_BY_UID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE UserId = ?";
+  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE StudentId = ?";
+  const GET_STUDENT_BY_UID = "SELECT * FROM Student WHERE UserId = ?";
+  const GET_STUDENT_BY_ID = "SELECT * FROM Student WHERE StudentId = ?";
+  const DELETE_STUDENT_BY_UID = "DELETE FROM Student WHERE UserId = ?";
+  const DELETE_STUDENT_BY_ID = "DELETE FROM Student WHERE StudentId = ?";
 
   // Time Slots
   // TODO: Strategize management of time slots
@@ -107,14 +116,33 @@ class Queries {
   const GET_USER_BY_AUTHID = "SELECT * FROM User WHERE UserId = (SELECT UserId FROM AuthAccount WHERE AuthAccountId = ?)";
   const QUERY_USERS_BY_NAME = "SELECT * FROM User WHERE FirstName OR LastName LIKE ?";
   const UPDATE_USER_BY_OPID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
+  const UPDATE_USER_BY_SID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
   const CREATE_NEW_USER_WITH_EMAIL = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
-  const ARCHIVE_USER_BY_OPID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
-  const ARCHIVE_USER_BY_UID = "UPDATE User SET Status='archived' WHERE UserId = ?";
+  const ARCHIVE_OPERATOR_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
+  const ARCHIVE_STUDENT_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
+  const ARCHIVE_USER_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = ?";
 
   // User Years
   // TODO
 
   // Joins
+  const GET_ALL_ACTIVE_STUDENTS =
+    "SELECT
+       S.StudentId,
+       U.UserId,
+       U.FirstName,
+       U.LastName,
+       U.Suffix,
+       S2.Name as SchoolName,
+       S2.SchoolId
+FROM User U
+    JOIN Student S
+         on U.UserId = S.UserId
+    LEFT JOIN School S2
+        on S.SchoolId = S2.SchoolId
+WHERE U.Status = 'active'";
+
+
   const GET_ALL_ACTIVE_ADMINS =
     "SELECT 
        O.OperatorId, 
@@ -135,6 +163,26 @@ WHERE E.Name = 'admin'
 AND U.Status = 'active'
 GROUP BY O.OperatorId;";
 
+  const GET_ALL_ACTIVE_JUDGES =
+    "SELECT 
+       O.OperatorId, 
+       U.UserId,
+       U.FirstName, 
+       U.LastName, 
+       U.Suffix, 
+       U.Email, 
+       U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE 
+        on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E 
+        on OE.EntitlementId = E.EntitlementId
+    JOIN User U 
+        on O.UserId = U.UserId
+WHERE E.Name = 'judge'
+AND U.Status = 'active'
+GROUP BY O.OperatorId;";
+
   const GET_USERS_TO_PROMOTE_TO_ADMIN =
     "SELECT 
        O.OperatorId, 
@@ -144,5 +192,16 @@ GROUP BY O.OperatorId;";
 FROM Operator O
     JOIN User U on O.UserId = U.UserId
 WHERE O.OperatorId NOT IN (SELECT OperatorId FROM OperatorEntitlement OE2 WHERE OE2.EntitlementId = 3)
+AND (U.FirstName LIKE ? OR U.LastName LIKE ?)";
+
+  const GET_USERS_TO_PROMOTE_TO_JUDGE =
+    "SELECT 
+       O.OperatorId, 
+       U.FirstName, 
+       U.LastName,
+       U.UserId
+FROM Operator O
+    JOIN User U on O.UserId = U.UserId
+WHERE O.OperatorId NOT IN (SELECT OperatorId FROM OperatorEntitlement OE2 WHERE OE2.EntitlementId = 4)
 AND (U.FirstName LIKE ? OR U.LastName LIKE ?)";
 }

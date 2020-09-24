@@ -1,19 +1,19 @@
-<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>
 <?php
   $post = new Post();
   $errors = new Errors();
-  $formSubmitted = isset($_POST['DELETE_SUBMIT']);
+  $delFormSubmitted = isset($_POST['ADMIN_DELETE_SUBMIT']);
 
-  if ($formSubmitted) {
+  if ($delFormSubmitted) {
     $delType = $post->deleteType;
     $adminId = $post->operatorId;
 
     $sql = null;
     if ($delType === "delete") {
-      $sql = DB::get()->prepare(Queries::ARCHIVE_USER_BY_OPID);
+      $sql = DB::get()->prepare(Queries::ARCHIVE_OPERATOR_BY_ID);
     } else if ($delType === "demote") {
       $sql = DB::get()->prepare(Queries::REMOVE_ADMIN_BY_OPID);
     } else {
@@ -118,7 +118,7 @@
                       <input type="text" name="operatorId" value="<?php echo $admin->OperatorId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $admin->FirstName.' '.$admin->LastName ?>" hidden>
-                      <button type="submit" class="btn btn-outline-danger mx-auto" name="DELETE_SUBMIT" disabled>I understand, remove admin.</button>
+                      <button type="submit" class="btn btn-outline-danger mx-auto" name="ADMIN_DELETE_SUBMIT" disabled>I understand, remove admin.</button>
                     </div>
                   </div>
                 </form>
@@ -127,11 +127,13 @@
           </div>
         </div>
       <?php endforeach; ?>
-      <div class="row mt-3">
-        <a class="btn btn-yellow ml-auto text-white" href="/hsef/?page=adminForm">
-          <i class="fas fa-plus mr-1"></i>
-          New Admin
-        </a>
+      <div class="row no-gutters mt-3">
+        <div class="col text-right">
+          <a class="btn btn-yellow text-white" href="/hsef/?page=adminForm">
+            <i class="fas fa-plus mr-1"></i>
+            New Admin
+          </a>
+        </div>
       </div>
     </div>
   </article>

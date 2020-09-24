@@ -1,27 +1,27 @@
 <!-- the file that includes this must set $post, $errors, $existingUser, $allowUserSelect, and $didSelectUser -->
 <?php if (!$existingUser && $allowUserSelect) : ?>
   <div class="row mt-3">
-  <div class="col">
-    <div class="floating-label-group--checkbox">
-      <p class="group-label">Select Existing User</p>
-      <div class="row">
-        <div class="col-2">
-          <label class="switch d-block ml-auto mt-4">
-            <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#userDetailFields" <?php echo $didSelectUser ? 'checked' : '' ?>>
-            <span class="slider round"></span>
-          </label>
-        </div>
-        <div class="col-10" id="userSelectDiv">
+    <div class="col">
+      <div class="floating-label-group--checkbox">
+        <p class="group-label">Select Existing User</p>
+        <div class="row">
+          <div class="col-2">
+            <label class="switch d-block ml-auto mt-4">
+              <input name="selectUserToggle" id="selectUserToggle" type="checkbox" data-toggle="collapse" data-target="#userDetailFields" <?php echo $didSelectUser ? 'checked' : '' ?>>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-10" id="userSelectDiv">
 
-          <label for="userSelect" class="d-none">User Select</label>
-          <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user" value="<?php echo $post->userSelect ?>">
-          <input type="text" name="userId" id="userId" hidden value="<?php echo $post->userId ?>">
+            <label for="userSelect" class="d-none">User Select</label>
+            <input type="text" name="userSelect" id="userSelect" placeholder="Search for a user" value="<?php echo $post->userSelect ?>">
+            <input type="text" name="userId" id="userId" hidden value="<?php echo $post->userId ?>">
+          </div>
         </div>
+        <p class="form-error"><?php echo $errors->user; ?></p>
       </div>
-      <p class="form-error"><?php echo $errors->user; ?></p>
     </div>
   </div>
-</div>
 <?php endif; ?>
 <div id="userDetailFields" class="<?php echo ($existingUser || !$allowUserSelect) ? '' : ($didSelectUser ? 'collapse' : 'show') ?>">
   <?php if (!$existingUser) : ?>
@@ -54,12 +54,11 @@
     <div class="row mt-3">
       <div class="col">
         <div class="floating-label-group">
-          <input type="email" placeholder="Email*" id="email" name="email" value="<?php echo $post->email ?>">
-          <label for="email">Email*</label>
+          <input type="email" placeholder="Email<?php echo in_array('email', $requiredUserFields) ? '*' : ''; ?>" id="email" name="email" value="<?php echo $post->email ?>">
+          <label for="email">Email<?php echo in_array('email', $requiredUserFields) ? '*' : ''; ?></label>
           <p class="form-error"><?php echo $errors->email; ?></p>
         </div>
       </div>
     </div>
   </fieldset>
 </div>
-<?php JS::get()->add('userFields'); ?>

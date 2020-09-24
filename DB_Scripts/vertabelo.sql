@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-19 15:23:07.419
+-- Last modification date: 2020-09-22 16:25:51.99
 
 -- tables
 -- Table: AuthAccount
@@ -67,12 +67,13 @@ CREATE TABLE GradeLevel (
 CREATE TABLE JudgingSession (
     JudgingSessionId int unsigned NOT NULL AUTO_INCREMENT,
     RawScore int NULL,
-    TimeSlotId int unsigned NOT NULL,
-    ProjectId int unsigned NOT NULL,
-    OperatorId int unsigned NOT NULL,
-    UNIQUE INDEX ak_JudgingSession_OperatorId_TimeSlotId (OperatorId,TimeSlotId),
+    ProjectId int unsigned NULL,
+    OperatorId int unsigned NULL,
+    StartTime time NOT NULL,
+    EndTime time NOT NULL,
+    UNIQUE INDEX ak_JudgingSession_OperatorId_TimeSlotId (OperatorId,StartTime,EndTime),
     UNIQUE INDEX ak_JudgingSession_OperatorId_ProjectId (OperatorId,ProjectId),
-    UNIQUE INDEX ak_JudgingSession_TimeSlotId_ProjectId (TimeSlotId,ProjectId),
+    UNIQUE INDEX ak_JudgingSession_TimeSlotId_ProjectId (ProjectId,StartTime,EndTime),
     CONSTRAINT JudgingSession_pk PRIMARY KEY (JudgingSessionId)
 );
 
@@ -155,20 +156,12 @@ CREATE TABLE School (
 -- Table: Student
 CREATE TABLE Student (
     StudentId int unsigned NOT NULL AUTO_INCREMENT,
-    SchoolId int unsigned NOT NULL,
+    SchoolId int unsigned NULL,
     UserId int unsigned NOT NULL,
-    ProjectId int unsigned NOT NULL,
-    GradeLevelId int unsigned NOT NULL,
+    ProjectId int unsigned NULL,
+    GradeLevelId int unsigned NULL,
     UNIQUE INDEX fak_Student_UserId (UserId),
     CONSTRAINT Student_pk PRIMARY KEY (StudentId)
-);
-
--- Table: TimeSlot
-CREATE TABLE TimeSlot (
-    TimeSlotId int unsigned NOT NULL AUTO_INCREMENT,
-    StartTime time NOT NULL,
-    EndTime time NOT NULL,
-    CONSTRAINT TimeSlot_pk PRIMARY KEY (TimeSlotId)
 );
 
 -- Table: User
@@ -199,41 +192,41 @@ CREATE TABLE UserYear (
 );
 
 -- foreign keys
--- Reference: JudgingSession_Operator (table: JudgingSession)
-ALTER TABLE JudgingSession ADD CONSTRAINT JudgingSession_Operator FOREIGN KEY JudgingSession_Operator (OperatorId)
-    REFERENCES Operator (OperatorId);
-
--- Reference: JudgingSession_Project (table: JudgingSession)
-ALTER TABLE JudgingSession ADD CONSTRAINT JudgingSession_Project FOREIGN KEY JudgingSession_Project (ProjectId)
-    REFERENCES Project (ProjectId);
-
--- Reference: JudgingSession_TimeSlot (table: JudgingSession)
-ALTER TABLE JudgingSession ADD CONSTRAINT JudgingSession_TimeSlot FOREIGN KEY JudgingSession_TimeSlot (TimeSlotId)
-    REFERENCES TimeSlot (TimeSlotId);
-
--- Reference: Ranking_Project (table: Ranking)
-ALTER TABLE Ranking ADD CONSTRAINT Ranking_Project FOREIGN KEY Ranking_Project (ProjectId)
-    REFERENCES Project (ProjectId);
-
--- Reference: UserYear_User (table: UserYear)
-ALTER TABLE UserYear ADD CONSTRAINT UserYear_User FOREIGN KEY UserYear_User (UserId)
-    REFERENCES User (UserId);
-
 -- Reference: fk_AuthSession_AuthAccount_AuthAccountId (table: AuthSession)
 ALTER TABLE AuthSession ADD CONSTRAINT fk_AuthSession_AuthAccount_AuthAccountId FOREIGN KEY fk_AuthSession_AuthAccount_AuthAccountId (AuthAccountId)
-    REFERENCES AuthAccount (AuthAccountId);
+    REFERENCES AuthAccount (AuthAccountId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+-- Reference: fk_JudgingSession_Operator_OperatorId (table: JudgingSession)
+ALTER TABLE JudgingSession ADD CONSTRAINT fk_JudgingSession_Operator_OperatorId FOREIGN KEY fk_JudgingSession_Operator_OperatorId (OperatorId)
+    REFERENCES Operator (OperatorId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
+
+-- Reference: fk_JudgingSession_Project_ProjectId (table: JudgingSession)
+ALTER TABLE JudgingSession ADD CONSTRAINT fk_JudgingSession_Project_ProjectId FOREIGN KEY fk_JudgingSession_Project_ProjectId (ProjectId)
+    REFERENCES Project (ProjectId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_OneTimeToken_AuthAccount_AuthAccountId (table: OneTimeToken)
 ALTER TABLE OneTimeToken ADD CONSTRAINT fk_OneTimeToken_AuthAccount_AuthAccountId FOREIGN KEY fk_OneTimeToken_AuthAccount_AuthAccountId (AuthAccountId)
-    REFERENCES AuthAccount (AuthAccountId);
+    REFERENCES AuthAccount (AuthAccountId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_OperatorCategory_Category_CategoryId (table: OperatorCategory)
 ALTER TABLE OperatorCategory ADD CONSTRAINT fk_OperatorCategory_Category_CategoryId FOREIGN KEY fk_OperatorCategory_Category_CategoryId (CategoryId)
-    REFERENCES Category (CategoryId);
+    REFERENCES Category (CategoryId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_OperatorCategory_Operator_OperatorId (table: OperatorCategory)
 ALTER TABLE OperatorCategory ADD CONSTRAINT fk_OperatorCategory_Operator_OperatorId FOREIGN KEY fk_OperatorCategory_Operator_OperatorId (OperatorId)
-    REFERENCES Operator (OperatorId);
+    REFERENCES Operator (OperatorId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_OperatorEntitlement_Entitlement_EntitlementId (table: OperatorEntitlement)
 ALTER TABLE OperatorEntitlement ADD CONSTRAINT fk_OperatorEntitlement_Entitlement_EntitlementId FOREIGN KEY fk_OperatorEntitlement_Entitlement_EntitlementId (EntitlementId)
@@ -241,7 +234,9 @@ ALTER TABLE OperatorEntitlement ADD CONSTRAINT fk_OperatorEntitlement_Entitlemen
 
 -- Reference: fk_OperatorEntitlement_Operator_OperatorId (table: OperatorEntitlement)
 ALTER TABLE OperatorEntitlement ADD CONSTRAINT fk_OperatorEntitlement_Operator_OperatorId FOREIGN KEY fk_OperatorEntitlement_Operator_OperatorId (OperatorId)
-    REFERENCES Operator (OperatorId);
+    REFERENCES Operator (OperatorId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_OperatorGradeLevel_GradeLevel_GradeLevelId (table: OperatorGradeLevel)
 ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_GradeLevel_GradeLevelId FOREIGN KEY fk_OperatorGradeLevel_GradeLevel_GradeLevelId (GradeLevelId)
@@ -249,43 +244,75 @@ ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_GradeLevel_G
 
 -- Reference: fk_OperatorGradeLevel_Operator_OperatorId (table: OperatorGradeLevel)
 ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_Operator_OperatorId FOREIGN KEY fk_OperatorGradeLevel_Operator_OperatorId (OperatorId)
-    REFERENCES Operator (OperatorId);
+    REFERENCES Operator (OperatorId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_Operator_User_UserId (table: Operator)
 ALTER TABLE Operator ADD CONSTRAINT fk_Operator_User_UserId FOREIGN KEY fk_Operator_User_UserId (UserId)
-    REFERENCES User (UserId);
+    REFERENCES User (UserId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_Project_Booth_BoothId (table: Project)
 ALTER TABLE Project ADD CONSTRAINT fk_Project_Booth_BoothId FOREIGN KEY fk_Project_Booth_BoothId (BoothId)
-    REFERENCES Booth (BoothId);
+    REFERENCES Booth (BoothId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_Project_Category_CategoryId (table: Project)
 ALTER TABLE Project ADD CONSTRAINT fk_Project_Category_CategoryId FOREIGN KEY fk_Project_Category_CategoryId (CategoryId)
-    REFERENCES Category (CategoryId);
+    REFERENCES Category (CategoryId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
+
+-- Reference: fk_Ranking_Project_ProjectId (table: Ranking)
+ALTER TABLE Ranking ADD CONSTRAINT fk_Ranking_Project_ProjectId FOREIGN KEY fk_Ranking_Project_ProjectId (ProjectId)
+    REFERENCES Project (ProjectId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_School_County_CountyId (table: School)
 ALTER TABLE School ADD CONSTRAINT fk_School_County_CountyId FOREIGN KEY fk_School_County_CountyId (CountyId)
-    REFERENCES County (CountyId);
+    REFERENCES County (CountyId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_Student_GradeLevel_GradeLevelId (table: Student)
 ALTER TABLE Student ADD CONSTRAINT fk_Student_GradeLevel_GradeLevelId FOREIGN KEY fk_Student_GradeLevel_GradeLevelId (GradeLevelId)
-    REFERENCES GradeLevel (GradeLevelId);
+    REFERENCES GradeLevel (GradeLevelId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_Student_Project_ProjectId (table: Student)
 ALTER TABLE Student ADD CONSTRAINT fk_Student_Project_ProjectId FOREIGN KEY fk_Student_Project_ProjectId (ProjectId)
-    REFERENCES Project (ProjectId);
+    REFERENCES Project (ProjectId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_Student_School_SchoolId (table: Student)
 ALTER TABLE Student ADD CONSTRAINT fk_Student_School_SchoolId FOREIGN KEY fk_Student_School_SchoolId (SchoolId)
-    REFERENCES School (SchoolId);
+    REFERENCES School (SchoolId)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 
 -- Reference: fk_Student_User_UserId (table: Student)
 ALTER TABLE Student ADD CONSTRAINT fk_Student_User_UserId FOREIGN KEY fk_Student_User_UserId (UserId)
-    REFERENCES User (UserId);
+    REFERENCES User (UserId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+-- Reference: fk_UserYear_User_UserId (table: UserYear)
+ALTER TABLE UserYear ADD CONSTRAINT fk_UserYear_User_UserId FOREIGN KEY fk_UserYear_User_UserId (UserId)
+    REFERENCES User (UserId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- Reference: fk_User_AuthAccount_UserId (table: AuthAccount)
 ALTER TABLE AuthAccount ADD CONSTRAINT fk_User_AuthAccount_UserId FOREIGN KEY fk_User_AuthAccount_UserId (UserId)
-    REFERENCES User (UserId);
+    REFERENCES User (UserId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- End of file.
 

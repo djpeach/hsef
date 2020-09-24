@@ -28,12 +28,13 @@ function cameltostr($camel) {
 
 /**
  * @param string $page name of the file in /pages to load
- * @param array $params eg [["uid", "12"], ["newUser", "false"]]
+ * @param array $params eg ["uid"=>12, "newUser"=>false]
  */
 function redirect($page, $params=array()) {
   $route = '?page='.$page;
-  foreach ($params as $param) {
-    $route .= "&$param[0]=$param[1]";
+  foreach ($params as $key=>$value) {
+    $value = is_bool($value) ? ($value ? 'true' : 'false') : $value;
+    $route .= "&$key=$value";
   }
   echo "<script> location.href = '/hsef/".$route."'; </script>";
 }
