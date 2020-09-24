@@ -58,6 +58,7 @@ class Queries {
   const GET_GRADELEVEL_NAMES_BY_OPID = "SELECT Name FROM GradeLevel WHERE GradeLevelId in (SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?)";
   const GET_GRADELEVEL_BY_ID = "SELECT * FROM GradeLevel WHERE GradeLevelId = ?";
   const GET_ALL_GRADELEVELS = "SELECT * FROM GradeLevel";
+  const QUERY_GRADELEVELS_BY_NAME = "SELECT * FROM GradeLevel WHERE Name LIKE ?";
   const UPDATE_GRADELEVEL_NAME_BY_ID = "UPDATE GradeLevel SET Name=? WHERE GradeLevelId = ?";
   const DEACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=false WHERE GradeLevelId = ?";
   const ACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=true WHERE GradeLevelId = ?";
@@ -92,9 +93,11 @@ class Queries {
 
   // Projects
   const CREATE_NEW_PROJECT_WITH_NAME = "INSERT INTO Project(Name) VALUES(?)";
-  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
-  const GET_PROJECT_BY_ID = "SELECT * FROM Project WHERE ProjectId = ?";
+  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?)";
+  const GET_PROJECT_BY_ID = "SELECT P.ProjectId, P.Number as ProjectNumber, P.Name as ProjectName, P.Abstract, P.BoothId, P.CourseNetworkingId, P.CategoryId, B.Number as BoothNumber, C.Name as CategoryName
+FROM Project P LEFT JOIN Booth B on P.BoothId = B.BoothId LEFT JOIN Category C on P.CategoryId = C.CategoryId WHERE P.ProjectId = ?";
   const GET_ALL_PROJECTS = "SELECT * FROM Project";
+  const QUERY_PROJECTS_BY_NAME = "SELECT P.ProjectId, P.Name FROM Project P WHERE P.Name LIKE ?";
   const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
   const DELETE_PROJECT_BY_ID = "DELETE FROM Project WHERE ProjectId = ?";
 

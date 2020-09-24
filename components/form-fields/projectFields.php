@@ -44,7 +44,7 @@
     <div class="col-10">
       <div class="floating-label-group pr-5" id="categorySelectDiv">
         <p class="group-label">Select Existing Category</p>
-        <input type="text" name="categorySelect" id="categorySelect" placeholder="Search for a booth" value="<?php echo $post->categorySelect ?>">
+        <input type="text" name="categorySelect" id="categorySelect" placeholder="Search for a category" value="<?php echo $post->categorySelect ?>">
         <input type="text" name="categoryId" id="categoryId" hidden value="<?php echo $post->categoryId ?>">
         <p class="form-error"><?php echo $errors->category; ?></p>
       </div>
@@ -54,6 +54,15 @@
         <i class="fas fa-plus mr-1"></i>
         New Category
       </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <div class="floating-label-group">
+        <input type="text" placeholder="Course Networking Id" id="cnid" name="cnid" value="<?php echo $post->cnid ?>">
+        <label for="cnid">Course Networking Id</label>
+        <p class="form-error"><?php echo $errors->cnid; ?></p>
+      </div>
     </div>
   </div>
 </fieldset>

@@ -29,8 +29,11 @@ if ($delFormSubmitted) {
         <div class="col-2">
           <p class="font-weight-bold">Id</p>
         </div>
-        <div class="col-6">
+        <div class="col">
           <p class="font-weight-bold">Number</p>
+        </div>
+        <div class="col">
+          <p class="font-weight-bold">Name</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
@@ -44,6 +47,9 @@ if ($delFormSubmitted) {
           </div>
           <div class="col">
             <p><?php echo $project->Number; ?></p>
+          </div>
+          <div class="col">
+            <p><?php echo $project->Name; ?></p>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $project->ProjectId; ?>">

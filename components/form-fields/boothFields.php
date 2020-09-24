@@ -2,9 +2,9 @@
   <div class="row mt-3">
     <div class="col">
       <div class="floating-label-group">
-        <input type="text" placeholder="Number*" id="number" name="number" value="<?php echo $post->number ?>">
-        <label for="number">Number*</label>
-        <p class="form-error"><?php echo $errors->number; ?></p>
+        <input type="text" placeholder="Number*" id="boothNumber" name="boothNumber" value="<?php echo $post->boothNumber ?>">
+        <label for="boothNumber">Number*</label>
+        <p class="form-error"><?php echo $errors->boothNumber; ?></p>
       </div>
     </div>
   </div>

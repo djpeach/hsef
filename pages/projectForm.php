@@ -13,7 +13,16 @@
       $sql = DB::get()->prepare(Queries::GET_PROJECT_BY_ID);
       $sql->execute([$_GET['pid']]);
       $project = $sql->fetch();
-      $post->number = $project->Number;
+      $post->number = $project->ProjectNumber;
+      $post->name = $project->ProjectName;
+      $post->abstract = $project->Abstract;
+      $post->boothId = $project->BoothId;
+      $post->boothNumber = $project->BoothNumber;
+      $post->boothSelect = $project->BoothNumber;
+      $post->categoryId = $project->CategoryId;
+      $post->categoryName = $project->CategoryName;
+      $post->categorySelect = $project->CategoryName;
+      $post->cnid = $project->CourseNetworkingId;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
@@ -35,10 +44,18 @@
         $pid = $existingProject ? $_GET["pid"] : null;
         if ($existingProject) {
           $sql = DB::get()->prepare(Queries::UPDATE_PROJECT_BY_ID);
-          $sql->execute([$post->number, $pid]);
+          $abstract = isset($post->abstract) ? $post->abstract : null;
+          $boothId = isset($post->boothId) ? $post->boothId : null;
+          $categoryId = isset($post->categoryId) ? $post->categoryId : null;
+          $cnid = isset($post->cnid) ? $post->cnid : null;
+          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId, $pid]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
-          $sql->execute([$post->number]);
+          $abstract = isset($post->abstract) ? $post->abstract : null;
+          $boothId = isset($post->boothId) ? $post->boothId : null;
+          $categoryId = isset($post->categoryId) ? $post->categoryId : null;
+          $cnid = isset($post->cnid) ? $post->cnid : null;
+          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId]);
           $pid = DB::get()->lastInsertId();
         }
         redirect('projectForm', ['pid'=>$pid, 'readonly'=>true]);

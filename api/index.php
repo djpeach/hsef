@@ -140,6 +140,44 @@ $app->get('/users/fuzzyMatch/category', function ($req, $res) {
   $res->json($categories);
 });
 
+/**
+ * params:
+ *    query => The query string to fuzzy match against
+ * return:
+ *    {UserId: int, FirstName: string, LastName: string}
+ */
+$app->get('/users/fuzzyMatch/gradeLevel', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_GRADELEVELS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->GradeLevelId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
+});
+
+/**
+ * params:
+ *    query => The query string to fuzzy match against
+ * return:
+ *    {UserId: int, FirstName: string, LastName: string}
+ */
+$app->get('/users/fuzzyMatch/project', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_PROJECTS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->ProjectId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
+});
+
 $app->post('/school', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_SCHOOL);
@@ -174,9 +212,9 @@ $app->post('/booth', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
   try {
-    $sql->execute([$req->body()->number]);
+    $sql->execute([$req->body()->boothNumber]);
     $res->json(["createdBooth"=>[
-      "name" => $req->body()->number,
+      "name" => $req->body()->boothNumber,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -188,9 +226,42 @@ $app->post('/category', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
   try {
-    $sql->execute([$req->body()->name]);
+    $sql->execute([$req->body()->categoryName]);
     $res->json(["createdCategory"=>[
+      "name" => $req->body()->categoryName,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
+});
+
+$app->post('/gradeLevel', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_GRADELEVEL);
+  try {
+    $sql->execute([$req->body()->name]);
+    $res->json(["createdGradeLevel"=>[
       "name" => $req->body()->name,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
+});
+
+$app->post('/project', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
+  try {
+    $body = $req->body();
+    $abstract = isset($body->abstract) ? $body->abstract : null;
+    $boothId = isset($body->boothId) ? $body->boothId : null;
+    $categoryId = isset($body->categoryId) ? $body->categoryId : null;
+    $cnid = isset($body->cnid) ? $body->cnid : null;
+    $sql->execute([$body->number, $body->name, $abstract, $boothId, $cnid, $categoryId]);
+    $res->json(["createdProject"=>[
+      "name" => $body->name,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
