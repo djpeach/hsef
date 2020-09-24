@@ -130,6 +130,16 @@ body {
   color: white;
 }
 
+.mgt-card {
+  border-radius: 0.8rem;
+}
+.mgt-card i {
+  font-size: 4rem;
+}
+.mgt-card .mgt-card-label {
+  font-weight: bolder;
+}
+
 .custom-divider {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
