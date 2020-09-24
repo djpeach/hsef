@@ -1,4 +1,4 @@
-<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>
@@ -30,11 +30,11 @@
 
       $requiredUserFields = ['firstName', 'lastName', 'email'];
       $formSubmitted = isset($_POST['ADMIN_FORM']);
-      $selectedUser = $formSubmitted && $post->selectUserToggle;
+      $didSelectUser = $formSubmitted && $post->selectUserToggle;
 
       // Find and create validation errors
       if ($formSubmitted) {
-        if (!$selectedUser) {
+        if (!$didSelectUser) {
           foreach ($requiredUserFields as $field) {
             if (!$post->{$field}) {
               $fieldName = cameltostr($field);
@@ -46,7 +46,7 @@
           if (!$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
             $errors->email = 'Value set is not a valid email';
           }
-        } else if ($selectedUser) {
+        } else if ($didSelectUser) {
           if (!$post->userId) {
             $errors->user = 'Must select an existing user, or create a new one';
           }
@@ -63,7 +63,7 @@
             $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
             $sql->execute([$post->title, $post->highestDegree, $opid]);
           } else { // new admin
-            if ($selectedUser) { // created new admin from existing user
+            if ($didSelectUser) { // created new admin from existing user
               // make operator an admin
               $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
               $sql->execute([$post->userId]);
@@ -74,7 +74,7 @@
               $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
               $sql->execute([$post->userId]);
               $opid = $sql->fetch()->OperatorId;
-            } else if (!$selectedUser && !$existingUser) { // created new admin with new user details
+            } else if (!$didSelectUser && !$existingUser) { // created new admin with new user details
               // create new user
               $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
               $suffix = $post->suffix === '' ? null : $post->suffix;

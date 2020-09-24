@@ -9,14 +9,11 @@
         <?php if ($operator->hasReqEntitlement('owner')) : ?>
           <span class="navbar-text">Owner Tools</span>
           <a href="/hsef/?page=accessManagement" class="nav-item nav-link text-gold">Global Access Management</a>
-          <a href="/hsef/?page=eventManagement" class="nav-item nav-link text-gold">Event Management</a>
-        <?php endif; ?>
-        <?php if ($operator->hasReqEntitlement('moderator')) : ?>
-          <span class="navbar-text">Moderator Tools</span>
           <a href="/hsef/?page=adminManagement" class="nav-item nav-link text-gold">Admin Management</a>
         <?php endif; ?>
         <?php if ($operator->hasReqEntitlement('admin')) : ?>
           <span class="navbar-text">Admin Tools</span>
+          <a href="/hsef/?page=eventManagement" class="nav-item nav-link text-gold">Event Management</a>
           <a href="/hsef/?page=judgeManagement" class="nav-item nav-link text-gold">Judge Management</a>
           <a href="/hsef/?page=studentManagement" class="nav-item nav-link text-gold">Student Management</a>
           <a href="/hsef/?page=projectManagement" class="nav-item nav-link text-gold">Project Management</a>

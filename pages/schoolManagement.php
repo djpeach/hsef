@@ -5,15 +5,11 @@
 <?php
 $post = new Post();
 $errors = new Errors();
-$delFormSubmitted = isset($_POST['STUDENT_DELETE_SUBMIT']);
+$delFormSubmitted = isset($_POST['SCHOOL_DELETE_SUBMIT']);
 
 if ($delFormSubmitted) {
-  $delType = $post->deleteType;
-  $studentId = $post->studentId;
-  $sql = DB::get()->prepare(Queries::ARCHIVE_STUDENT_BY_ID);
-  if (!$sql->execute([$studentId])) {
-    $errors->message = "Database execution went wrong, please try again";
-  }
+  $sql = DB::get()->prepare(Queries::DELETE_SCHOOL_BY_ID);
+  $sql->execute([$post->schoolId]);
 }
 ?>
 <main>
@@ -26,7 +22,7 @@ if ($delFormSubmitted) {
         </p>
       </div>
     <?php endif; ?>
-    <h2 class="article-header">Student Management</h2>
+    <h2 class="article-header">School Management</h2>
     <?php include 'components/divider.php' ?>
     <div class="container-sm data-table">
       <div class="row border-bottom border-darkgreen mb-3 no-gutters pl-2">
@@ -37,54 +33,54 @@ if ($delFormSubmitted) {
           <p class="font-weight-bold">Name</p>
         </div>
         <div class="col-5">
-          <p class="font-weight-bold">School</p>
+          <p class="font-weight-bold">County</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $students = DB::get()->query(Queries::GET_ALL_ACTIVE_STUDENTS)->fetchAll(); ?>
-      <?php foreach ($students as $student) : ?>
+      <?php $schools = DB::get()->query(Queries::GET_ALL_SCHOOLS_AND_COUNTY)->fetchAll(); ?>
+      <?php foreach ($schools as $school) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
-            <p><?php echo $student->StudentId; ?></p>
+            <p><?php echo $school->SchoolId; ?></p>
           </div>
           <div class="col-4">
-            <p><?php echo User::fullName($student); ?></p>
+            <p><?php echo $school->SchoolName; ?></p>
           </div>
           <div class="col-5">
             <p>
-              <?php if ($student->SchoolName) : ?>
-                <a href="/hsef/?page=schoolForm&sid=<?php echo $student->SchoolId; ?>&readonly=true">
-                  <?php echo $student->SchoolName; ?>
+              <?php if ($school->CountyName) : ?>
+                <a href="/hsef/?page=countyForm&cid=<?php echo $school->CountyId; ?>&readonly=true">
+                  <?php echo $school->CountyName; ?>
                 </a>
               <?php else : ?>
-                N/A
+                 N/A
               <?php endif; ?>
             </p>
           </div>
           <div class="col-2 d-md-none">
-            <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $student->StudentId; ?>">
+            <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $school->SchoolId; ?>">
               <i class="fas fa-ellipsis-v text-darkgreen"></i>
             </span>
           </div>
-          <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $student->StudentId; ?>">
-            <a href="/hsef/?page=studentForm&sid=<?php echo $student->StudentId ?>&readonly=false" class="col-4 tool-icon bg-green">
+          <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $school->SchoolId; ?>">
+            <a href="/hsef/?page=schoolForm&sid=<?php echo $school->SchoolId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </a>
-            <a href="/hsef/?page=studentForm&sid=<?php echo $student->StudentId ?>&readonly=true" class="col-4 tool-icon bg-primary">
+            <a href="/hsef/?page=schoolForm&sid=<?php echo $school->SchoolId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
-            <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $student->StudentId; ?>">
+            <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $school->SchoolId; ?>">
               <i class="fas fa-trash text-white"></i>
             </button>
             <!-- Deletion Modal -->
-            <div class="modal fade deletion-modal" id="deletionModal-<?php echo $student->StudentId; ?>" tabindex="-1">
+            <div class="modal fade deletion-modal" id="deletionModal-<?php echo $school->SchoolId; ?>" tabindex="-1">
               <div class="modal-dialog">
                 <form method="POST">
                   <div class="modal-content">
                     <div class="modal-header bg-light font-weight-bold">
-                      <h3 class="modal-title">Remove Student</h3>
+                      <h3 class="modal-title">Remove School</h3>
                       <button type="button" class="close" data-dismiss="modal">
                         <i class="fas fa-times"></i>
                       </button>
@@ -98,12 +94,12 @@ if ($delFormSubmitted) {
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <label for="studentNameConfirmation-<?php echo $student->StudentId ?>">Please type <span class="font-weight-bold"><?php echo $student->FirstName.' '.$student->LastName ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="studentNameConfirmation-<?php echo $student->StudentId ?>" disabled>
-                      <input type="text" name="studentId" value="<?php echo $student->StudentId ?>" hidden>
+                      <label for="schoolNameConfirmation-<?php echo $school->SchoolId ?>">Please type <span class="font-weight-bold"><?php echo $school->SchoolName; ?></span> to confirm.</label>
+                      <input type="text" name="deleteConfirm" id="schoolNameConfirmation-<?php echo $school->SchoolId ?>" disabled>
+                      <input type="text" name="schoolId" value="<?php echo $school->SchoolId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
-                      <input type="text" name="deleteConfirmValue" value="<?php echo $student->FirstName.' '.$student->LastName ?>" hidden>
-                      <button type="submit" class="btn btn-outline-danger mx-auto" name="STUDENT_DELETE_SUBMIT" disabled>I understand, remove student.</button>
+                      <input type="text" name="deleteConfirmValue" hidden>
+                      <button type="submit" class="btn btn-outline-danger mx-auto" name="SCHOOL_DELETE_SUBMIT" disabled>I understand, remove school.</button>
                     </div>
                   </div>
                 </form>
@@ -114,9 +110,9 @@ if ($delFormSubmitted) {
       <?php endforeach; ?>
       <div class="row no-gutters mt-3">
         <div class="col text-right">
-          <a class="btn btn-yellow text-white" href="/hsef/?page=studentForm">
+          <a class="btn btn-yellow text-white" href="/hsef/?page=schoolForm">
             <i class="fas fa-plus mr-1"></i>
-            New Student
+            New School
           </a>
         </div>
       </div>

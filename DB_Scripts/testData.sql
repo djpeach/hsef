@@ -60,8 +60,6 @@ VALUES (6, 6);
 INSERT INTO Entitlement(EntitlementId, Name)
 VALUES (1, 'owner');
 INSERT INTO Entitlement(EntitlementId, Name)
-VALUES (2, 'moderator');
-INSERT INTO Entitlement(EntitlementId, Name)
 VALUES (3, 'admin');
 INSERT INTO Entitlement(EntitlementId, Name)
 VALUES (4, 'judge');
@@ -136,6 +134,23 @@ INSERT INTO Booth(Number)
 VALUES (104);
 INSERT INTO Booth(Number)
 VALUES (105);
+
+INSERT INTO County(CountyId, Name) VALUES (1, 'Hendricks');
+INSERT INTO County(CountyId, Name) VALUES (2, 'Franklin');
+INSERT INTO County(CountyId, Name) VALUES (3, 'Marion');
+INSERT INTO County(CountyId, Name) VALUES (4, 'Hancock');
+INSERT INTO County(CountyId, Name) VALUES (5, 'Anderson');
+INSERT INTO County(CountyId, Name) VALUES (6, 'Carmel');
+INSERT INTO County(CountyId, Name) VALUES (7, 'Wabash');
+
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (1, 'Warren School', 2);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (2, 'Lawrence School', 1);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (3, 'ABC School', 3);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (4, 'XYZ School', 2);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (5, 'Park School', 7);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (6, 'Tudor School', 4);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (7, 'Carmel School', null);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (8, 'Greenfield School', null);
 
 # ----- Downs ----- #
 SET FOREIGN_KEY_CHECKS = 0;

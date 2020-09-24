@@ -1,4 +1,4 @@
-<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>

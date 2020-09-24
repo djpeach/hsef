@@ -3,7 +3,7 @@
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
     $existingUser = false;
-    $allowUserSelect = false;
+    $allowUserSelect = true;
     $registered = false;
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;

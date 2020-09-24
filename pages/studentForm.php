@@ -1,4 +1,4 @@
-<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'moderator'])) {
+<?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
   redirect('exception', 'You do not have permission to view this page');
   die();
 } ?>
@@ -30,26 +30,19 @@
 
     $requiredUserFields = ['firstName', 'lastName'];
     $formSubmitted = isset($_POST['STUDENT_FORM']);
-    $selectedUser = $formSubmitted && $post->selectUserToggle;
 
     // Find and create validation errors
     if ($formSubmitted) {
-      if (!$selectedUser) {
-        foreach ($requiredUserFields as $field) {
-          if (!$post->{$field}) {
-            $fieldName = cameltostr($field);
-            $errors->{$field} = "$fieldName is required";
-          }
+      foreach ($requiredUserFields as $field) {
+        if (!$post->{$field}) {
+          $fieldName = cameltostr($field);
+          $errors->{$field} = "$fieldName is required";
         }
+      }
 
-        // extra email validation
-        if ($post->email !== '' && !$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
-          $errors->email = 'Value set is not a valid email';
-        }
-      } else if ($selectedUser) {
-        if (!$post->userId) {
-          $errors->user = 'Must select an existing user, or create a new one';
-        }
+      // extra email validation
+      if ($post->email !== '' && !$errors->email && !filter_var($post->email, FILTER_VALIDATE_EMAIL)) {
+        $errors->email = 'Value set is not a valid email';
       }
 
       if ($errors->isEmpty()) {
@@ -62,13 +55,6 @@
           $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $sid]);
           // update student details
           // TODO
-        } else { // new student
-          if ($selectedUser) { // created new student from existing user
-            // TODO
-          } else if (!$selectedUser && !$existingUser) { // created new student with new user details
-            // TODO
-          }
-
         }
         redirect('studentForm', [['sid', $sid], ['readonly', 'true']]);
       }
@@ -78,11 +64,28 @@
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
       <?php include_once 'pages/userFields.php'?>
+      <div class="row no-gutters mt-3">
+        <div class="col-10">
+          <div class="floating-label-group pr-5" id="schoolSelectDiv">
+            <p class="group-label">Select Existing School</p>
+              <label for="schoolSelect" class="d-none">User Select</label>
+              <input type="text" name="schoolSelect" id="schoolSelect" placeholder="Search for a school" value="<?php echo $post->schoolSelect ?>">
+              <input type="text" name="schoolId" id="schoolId" hidden value="<?php echo $post->schoolId ?>">
+            <p class="form-error"><?php echo $errors->school; ?></p>
+          </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#schoolFormModal">
+            <i class="fas fa-plus mr-1"></i>
+            New School
+          </button>
+        </div>
+      </div>
       <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
         <?php if (!$readonly) : ?>
           <div class="row mt-3">
             <div class="col text-right">
-              <button class="ml-auto btn btn-darkgreen" type="submit" name="STUDENT_FORM">Save Student</button>
+              <button class="btn btn-darkgreen" type="submit" name="STUDENT_FORM">Save Student</button>
             </div>
           </div>
         <?php endif; ?>
@@ -110,5 +113,25 @@
         </fieldset>
       <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
     </form>
+    <div class="modal fade" id="schoolFormModal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Add a New School</h3>
+            <button type="button" class="close" data-dismiss="modal">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <?php include 'pages/schoolForm.php'; ?>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-darkgreen">Save School</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </article>
 </main>
+<?php JS::get()->add('studentFields'); ?>
