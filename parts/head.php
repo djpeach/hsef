@@ -34,7 +34,8 @@
   }
 
   function urlGuard() {
-    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
+//    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
+    $publicPages = ['login'];
 
     $newPage = isset($_GET['page']);
     $authenticated = AuthAccount::get()->isAuthenticated();
@@ -50,15 +51,14 @@
         Session::get()->page = $_GET['page'];
       } else if ($authenticated && $publicPage) {
         // authenticated users should not be going to public pages.
-        Session::get()->page = $_GET['page']; // TODO remove this after presentation
-//        redirect('dashboard'); TODO uncomment this after presentation
+        redirect('dashboard');
       }
     } else { // on your current page
       $publicPage = in_array(Session::get()->page, $publicPages);
       if (!$authenticated && !$publicPage) {
         redirect('login');
       } else if ($authenticated && $publicPage) {
-//        redirect('dashboard'); TODO uncomment this after presentation
+        redirect('dashboard');
       }
     }
   }
