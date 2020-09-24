@@ -8,11 +8,44 @@
     </div>
     <div class="row limit-width-md mx-auto">
       <div class="col">
-        <div class="alert alert-darkgreen" role="alert">
+        <div class="alert alert-darkgreen">
           <h4 class="alert-heading">Your Dashboard</h4>
           <p>This page is your dashboard. It contains all you most important tools.</p>
           <hr>
           <p class="mb-0">You can also find frequently asked questions and send an email to an admin if you have any issues</p>
+        </div>
+      </div>
+    </div>
+    <div class="row limit-width-md mx-auto">
+      <div class="col">
+        <div class="alert alert-warning alert-dismissible fade show">
+          <div class="row">
+            <div class="col">
+              <p class="mb-0">
+                <strong>Presentation 1 (Forms):</strong> Use these quicklinks to avoid navigating every flow in the system.
+                <button type="button" class="close" style="margin-top: -.8rem;" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="list-group">
+                <a target="_blank" href="/hsef/?page=adminForm" class="list-group-item list-group-item-action">Admin Form</a>
+                <a target="_blank" href="/hsef/?page=boothForm" class="list-group-item list-group-item-action">Booth Form</a>
+                <a target="_blank" href="/hsef/?page=categoryForm" class="list-group-item list-group-item-action">Category Form</a>
+                <a target="_blank" href="/hsef/?page=countyForm" class="list-group-item list-group-item-action">County Form</a>
+                <a target="_blank" href="/hsef/?page=gradeLevelForm" class="list-group-item list-group-item-action">Grade Level Form</a>
+                <a target="_blank" href="/hsef/?page=judgeForm" class="list-group-item list-group-item-action">Judge Form</a>
+                <a target="_blank" href="/hsef/?page=judgeInvitation" class="list-group-item list-group-item-action">Judge Invitation</a>
+                <a target="_blank" href="/hsef/?page=judgeRegistration" class="list-group-item list-group-item-action">Judge Registration</a>
+                <a target="_blank" href="/hsef/?page=projectForm" class="list-group-item list-group-item-action">Project Form</a>
+                <a target="_blank" href="/hsef/?page=schoolForm" class="list-group-item list-group-item-action">School Form</a>
+                <a target="_blank" href="/hsef/?page=scoringForm" class="list-group-item list-group-item-action">Scoring Form</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
