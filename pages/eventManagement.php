@@ -5,8 +5,20 @@
 <main>
   <article class="limit-width-md container pt-5">
     <div class="row">
+      <div class="col text-center">
+        <h2 class="article-header">Pre-Event Tools</h2>
+        <?php include 'components/divider.php' ?>
+        <button class="btn btn-outline-green mx-2 mt-3">
+          Generate Judge Sessions
+        </button>
+        <button class="btn btn-outline-darkgreen mx-2 mt-3">
+          Generate Judge Auth Accounts
+        </button>
+      </div>
+    </div>
+    <div class="row mt-5">
       <div class="col">
-        <h2 class="article-header">Event Management</h2>
+        <h2 class="article-header mt-5">Event Management</h2>
         <?php include 'components/divider.php' ?>
       </div>
     </div>
