@@ -10,21 +10,66 @@
         <?php include 'components/divider.php' ?>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <a href="/hsef/?page=schoolManagement">Schools</a>
+      <div class="container">
+          <div class="row">
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-user-graduate"></i></div>
+                      <div class="card-body">
+                          <div class="card-title"><a href="/hsef/?page=studentManagement">Student</a></div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-chalkboard"></i></div>
+                      <div class="card-body">
+                          <div class="card-title"><a href="/hsef/?page=projectManagement">Projects</a></div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-gavel"></i></div>
+                      <div class="card-body">
+                          <div class="card-title"><a href="/hsef/?page=judgeManagement">Judges</a></div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-school"></i></div>
+                      <div class="card-body">
+                          <div class="card-title"><a href="/hsef/?page=schoolManagement">Schools</a></div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-list-ul"></i></div>
+                      <div class="card-body">
+                          <div class="card-title">categories</div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+                  <div class="card text-yellow bg-darkgreen">
+                      <div class="card-header"><i class="fas fa-award"></i></div>
+                      <div class="card-body">
+                          <div class="card-title"><a href="/hsef/?page=scoreManagement">Scores</a></div>
+                          <div class="card-text"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-
-    <p>This page allows the admins to edit event details such as: </p>
-    <ul>
-      <li>Judge time slot lengths and black out slots</li>
-      <li>Booth numbers and those in use</li>
-      <li>Archive the event when it is over (It is important this is done at the end of the event)</li>
-      <li>Generate final scores</li>
-      <li>What else?</li>
-      <li>What else?</li>
-    </ul>
   </article>
 </main>
 
