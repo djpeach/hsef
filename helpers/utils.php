@@ -28,7 +28,7 @@ function cameltostr($camel) {
 
 /**
  * @param string $page name of the file in /pages to load
- * @param array $params eg [["uid", "12"], ["newUser", "false"]]
+ * @param array $params eg ["uid"=>12, "newUser"=>false]
  */
 function redirect($page, $params=array()) {
   $route = '?page='.$page;
