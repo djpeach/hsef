@@ -20,23 +20,29 @@ class Queries {
   const DELETE_SESSION_BY_ID = "DELETE FROM AuthSession WHERE SessionId = ?";
 
   // Booths
-  const CREATE_ACTIVE_BOOTH = "INSERT INTO Booth(Number, Active) VALUES(?, true)";
+  const CREATE_NEW_BOOTH = "INSERT INTO Booth(Number, Active) VALUES(?, true)";
   const GET_ACTIVE_BOOTHS = "SELECT * FROM Booth WHERE Active = true";
+  const QUERY_BOOTHS_BY_NUMBER = "SELECT * FROM Booth WHERE Number LIKE ?";
+  const GET_ALL_BOOTHS = "SELECT * FROM Booth";
+  const GET_BOOTH_BY_ID = "SELECT * FROM Booth Where BoothId = ?";
   const UPDATE_BOOTH_NUMBER_BY_ID = "UPDATE Booth SET Number=? WHERE BoothId = ?";
   const DEACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=false WHERE BoothId = ?";
   const ACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=true WHERE BoothId = ?";
   const DELETE_BOOTH_BY_ID = "DELETE FROM Booth WHERE BoothId = ?";
 
   // Categories
-  const CREATE_ACTIVE_CATEGORY = "INSERT INTO Category(Name, Active) VALUES(?, true)";
+  const CREATE_NEW_CATEGORY = "INSERT INTO Category(Name, Active) VALUES(?, true)";
+  const QUERY_CATEGORIES_BY_NAME = "SELECT * FROM Category WHERE Name LIKE ?";
   const GET_CATEGORY_NAMES_BY_OPID = "SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)";
+  const GET_ALL_CATEGORIES = "SELECT * FROM Category";
+  const GET_CATEGORY_BY_ID = "SELECT * FROM Category WHERE CategoryId = ?";
   const UPDATE_CATEGORY_NAME_BY_ID = "UPDATE Category SET Name=? WHERE CategoryId = ?";
   const DEACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=false WHERE CategoryId = ?";
   const ACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=true WHERE CategoryId = ?";
   const DELETE_CATEGORY_BY_ID = "DELETE FROM Category WHERE CategoryId = ?";
 
   // Counties
-  const CREATE_COUNTY_WITH_NAME = "INSERT INTO County(Name) VALUES (?)";
+  const CREATE_NEW_COUNTY = "INSERT INTO County(Name) VALUES (?)";
   const QUERY_COUNTIES_BY_NAME = "SELECT * FROM County WHERE Name LIKE ?";
   const GET_COUNTY_BY_ID = "SELECT * FROM County WHERE CountyId = ?";
   const GET_ALL_COUNTIES = "SELECT * FROM County";
@@ -48,8 +54,11 @@ class Queries {
   const GET_ENTITLEMENT_NAMES_BY_OPID = "SELECT Name FROM Entitlement WHERE EntitlementId in (SELECT EntitlementId FROM OperatorEntitlement WHERE OperatorId = ?)";
 
   // Grade Levels
-  const CREATE_ACTIVE_GRADELEVEL = "INSERT INTO GradeLevel(Name, Active) VALUES(?, true)";
+  const CREATE_NEW_GRADELEVEL = "INSERT INTO GradeLevel(Name) VALUES(?)";
   const GET_GRADELEVEL_NAMES_BY_OPID = "SELECT Name FROM GradeLevel WHERE GradeLevelId in (SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?)";
+  const GET_GRADELEVEL_BY_ID = "SELECT * FROM GradeLevel WHERE GradeLevelId = ?";
+  const GET_ALL_GRADELEVELS = "SELECT * FROM GradeLevel";
+  const QUERY_GRADELEVELS_BY_NAME = "SELECT * FROM GradeLevel WHERE Name LIKE ?";
   const UPDATE_GRADELEVEL_NAME_BY_ID = "UPDATE GradeLevel SET Name=? WHERE GradeLevelId = ?";
   const DEACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=false WHERE GradeLevelId = ?";
   const ACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=true WHERE GradeLevelId = ?";
@@ -84,14 +93,19 @@ class Queries {
 
   // Projects
   const CREATE_NEW_PROJECT_WITH_NAME = "INSERT INTO Project(Name) VALUES(?)";
-  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
-  const GET_PROJECT_BY_ID = "SELECT * FROM Project WHERE ProjectId = ?";
+  const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?)";
+  const GET_PROJECT_BY_ID = "SELECT P.ProjectId, P.Number as ProjectNumber, P.Name as ProjectName, P.Abstract, P.BoothId, P.CourseNetworkingId, P.CategoryId, B.Number as BoothNumber, C.Name as CategoryName
+FROM Project P LEFT JOIN Booth B on P.BoothId = B.BoothId LEFT JOIN Category C on P.CategoryId = C.CategoryId WHERE P.ProjectId = ?";
+  const GET_ALL_PROJECTS = "SELECT * FROM Project";
+  const QUERY_PROJECTS_BY_NAME = "SELECT P.ProjectId, P.Name FROM Project P WHERE P.Name LIKE ?";
   const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
+  const DELETE_PROJECT_BY_ID = "DELETE FROM Project WHERE ProjectId = ?";
 
   // Rankings
   // TODO: Strategize management of rankings
 
   // Schools
+  const CREATE_NEW_SCHOOL = "INSERT INTO School(Name, CountyId) VALUES(?, ?)";
   const GET_ALL_SCHOOLS_AND_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId";
   const GET_SCHOOL_BY_ID_WITH_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId WHERE S.SchoolId = ?";
   const QUERY_SCHOOLS_BY_NAME = "SELECT * FROM School WHERE Name LIKE ?";

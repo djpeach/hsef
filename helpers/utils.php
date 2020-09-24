@@ -33,6 +33,10 @@ function cameltostr($camel) {
 function redirect($page, $params=array()) {
   $route = '?page='.$page;
   foreach ($params as $key=>$value) {
+    if ($key === 'errMsg') {
+      Session::get()->errMsg = $value;
+      continue;
+    }
     $value = is_bool($value) ? ($value ? 'true' : 'false') : $value;
     $route .= "&$key=$value";
   }

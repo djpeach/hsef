@@ -6,6 +6,7 @@
   require_once 'helpers/Session.php';
   require_once 'helpers/DB.php';
   require_once 'helpers/JS.php';
+  require_once 'helpers/ModalLoader.php';
   require_once 'helpers/Post.php';
   require_once 'helpers/AuthAccount.php';
   require_once 'helpers/User.php';
@@ -49,14 +50,15 @@
         Session::get()->page = $_GET['page'];
       } else if ($authenticated && $publicPage) {
         // authenticated users should not be going to public pages.
-        redirect('dashboard');
+        Session::get()->page = $_GET['page']; // TODO remove this after presentation
+//        redirect('dashboard'); TODO uncomment this after presentation
       }
     } else { // on your current page
       $publicPage = in_array(Session::get()->page, $publicPages);
       if (!$authenticated && !$publicPage) {
         redirect('login');
       } else if ($authenticated && $publicPage) {
-        redirect('dashboard');
+//        redirect('dashboard'); TODO uncomment this after presentation
       }
     }
   }

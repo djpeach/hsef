@@ -1,5 +1,5 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <main>
@@ -68,7 +68,6 @@
         <div class="col-10">
           <div class="floating-label-group pr-5" id="schoolSelectDiv">
             <p class="group-label">Select Existing School</p>
-              <label for="schoolSelect" class="d-none">User Select</label>
               <input type="text" name="schoolSelect" id="schoolSelect" placeholder="Search for a school" value="<?php echo $post->schoolSelect ?>">
               <input type="text" name="schoolId" id="schoolId" hidden value="<?php echo $post->schoolId ?>">
             <p class="form-error"><?php echo $errors->school; ?></p>
@@ -78,6 +77,38 @@
           <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#schoolFormModal">
             <i class="fas fa-plus mr-1"></i>
             New School
+          </button>
+        </div>
+      </div>
+      <div class="row no-gutters mt-3">
+        <div class="col-10">
+          <div class="floating-label-group pr-5" id="gradeLevelSelectDiv">
+            <p class="group-label">Select Existing Grade Level</p>
+              <input type="text" name="gradeLevelSelect" id="gradeLevelSelect" placeholder="Search for a grade level" value="<?php echo $post->gradeLevelSelect ?>">
+              <input type="text" name="gradeLevelId" id="gradeLevelId" hidden value="<?php echo $post->gradeLevelId ?>">
+            <p class="form-error"><?php echo $errors->gradeLevel; ?></p>
+          </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#gradeLevelFormModal">
+            <i class="fas fa-plus mr-1"></i>
+            New Grade Level
+          </button>
+        </div>
+      </div>
+      <div class="row no-gutters mt-3">
+        <div class="col-10">
+          <div class="floating-label-group pr-5" id="categorySelectDiv">
+            <p class="group-label">Select Existing Project</p>
+              <input type="text" name="projectSelect" id="projectSelect" placeholder="Search for a project" value="<?php echo $post->projectSelect ?>">
+              <input type="text" name="projectId" id="projectId" hidden value="<?php echo $post->projectId ?>">
+            <p class="form-error"><?php echo $errors->project; ?></p>
+          </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#projectFormModal">
+            <i class="fas fa-plus mr-1"></i>
+            New Project
           </button>
         </div>
       </div>
@@ -113,25 +144,9 @@
         </fieldset>
       <?php endif; // TODO: do the edit/readonly toggle with javascript, not a redirect ?>
     </form>
-    <div class="modal fade" id="schoolFormModal" tabindex="-1">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Add a New School</h3>
-            <button type="button" class="close" data-dismiss="modal">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <?php include 'pages/schoolForm.php'; ?>
-          </div>
-          <div class="modal-footer d-flex justify-content-between">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-darkgreen">Save School</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </article>
 </main>
+<?php ModalLoader::get()->add('newSchool'); ?>
+<?php ModalLoader::get()->add('newGradeLevel'); ?>
+<?php ModalLoader::get()->add('newProject'); ?>
 <?php JS::get()->add('studentFields'); ?>

@@ -1,5 +1,5 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <main>
@@ -40,17 +40,7 @@
     <h2 class="article-header"><?php echo $existingCounty ? ($readonly ? 'County Info' : 'Edit County') : 'New County'; ?></h2>
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
-      <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
-        <div class="row mt-3">
-          <div class="col">
-            <div class="floating-label-group">
-              <input type="text" placeholder="Name*" id="name" name="name" value="<?php echo $post->name ?>">
-              <label for="name">Name*</label>
-              <p class="form-error"><?php echo $errors->name; ?></p>
-            </div>
-          </div>
-        </div>
-      </fieldset>
+      <?php include 'components/form-fields/countyFields.php'; ?>
       <?php if ($readonly) : ?>
         <fieldset>
           <div class="row mt-3">
@@ -82,4 +72,3 @@
     </form>
   </article>
 </main>
-<?php JS::get()->add('studentFields'); ?>

@@ -1,5 +1,5 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <?php
@@ -82,7 +82,7 @@ if ($delFormSubmitted) {
                     <div class="modal-footer">
                       <label for="countyNameConfirmation-<?php echo $county->CountyId ?>">Please type <span class="font-weight-bold"><?php echo $county->Name; ?></span> to confirm.</label>
                       <input type="text" name="deleteConfirm" id="countyNameConfirmation-<?php echo $county->CountyId ?>" disabled>
-                      <input type="text" name="CountyId" value="<?php echo $county->CountyId ?>" hidden>
+                      <input type="text" name="countyId" value="<?php echo $county->CountyId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" hidden>
                       <button type="submit" class="btn btn-outline-danger mx-auto" name="COUNTY_DELETE_SUBMIT" disabled>I understand, remove county.</button>
