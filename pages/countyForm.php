@@ -72,4 +72,3 @@
     </form>
   </article>
 </main>
-<?php JS::get()->add('studentFields'); ?>
