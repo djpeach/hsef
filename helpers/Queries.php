@@ -20,8 +20,10 @@ class Queries {
   const DELETE_SESSION_BY_ID = "DELETE FROM AuthSession WHERE SessionId = ?";
 
   // Booths
-  const CREATE_ACTIVE_BOOTH = "INSERT INTO Booth(Number, Active) VALUES(?, true)";
+  const CREATE_NEW_BOOTH = "INSERT INTO Booth(Number, Active) VALUES(?, true)";
   const GET_ACTIVE_BOOTHS = "SELECT * FROM Booth WHERE Active = true";
+  const GET_ALL_BOOTHS = "SELECT * FROM Booth";
+  const GET_BOOTH_BY_ID = "SELECT * FROM Booth Where BoothId = ?";
   const UPDATE_BOOTH_NUMBER_BY_ID = "UPDATE Booth SET Number=? WHERE BoothId = ?";
   const DEACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=false WHERE BoothId = ?";
   const ACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=true WHERE BoothId = ?";
