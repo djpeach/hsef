@@ -17,8 +17,21 @@
     top: 0;
   }
 
-  &--radio, &--select, &--checkbox {
+  &--radio, &--select, &--checkbox, &--textarea {
     margin-top: 1rem;
+
+    textarea {
+      font-size: 1.8rem;
+      padding: 1rem 1.5rem;
+      width: 100%;
+      border-radius: .2rem;
+      border: 1px solid map-get($theme-colors, border);
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
 
     input {
       margin-left: 16px;

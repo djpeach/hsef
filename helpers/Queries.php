@@ -22,6 +22,7 @@ class Queries {
   // Booths
   const CREATE_NEW_BOOTH = "INSERT INTO Booth(Number, Active) VALUES(?, true)";
   const GET_ACTIVE_BOOTHS = "SELECT * FROM Booth WHERE Active = true";
+  const QUERY_BOOTHS_BY_NUMBER = "SELECT * FROM Booth WHERE Number LIKE ?";
   const GET_ALL_BOOTHS = "SELECT * FROM Booth";
   const GET_BOOTH_BY_ID = "SELECT * FROM Booth Where BoothId = ?";
   const UPDATE_BOOTH_NUMBER_BY_ID = "UPDATE Booth SET Number=? WHERE BoothId = ?";
@@ -31,6 +32,7 @@ class Queries {
 
   // Categories
   const CREATE_NEW_CATEGORY = "INSERT INTO Category(Name, Active) VALUES(?, true)";
+  const QUERY_CATEGORIES_BY_NAME = "SELECT * FROM Category WHERE Name LIKE ?";
   const GET_CATEGORY_NAMES_BY_OPID = "SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)";
   const GET_ALL_CATEGORIES = "SELECT * FROM Category";
   const GET_CATEGORY_BY_ID = "SELECT * FROM Category WHERE CategoryId = ?";
@@ -92,7 +94,9 @@ class Queries {
   const CREATE_NEW_PROJECT_WITH_NAME = "INSERT INTO Project(Name) VALUES(?)";
   const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
   const GET_PROJECT_BY_ID = "SELECT * FROM Project WHERE ProjectId = ?";
+  const GET_ALL_PROJECTS = "SELECT * FROM Project";
   const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
+  const DELETE_PROJECT_BY_ID = "DELETE FROM Project WHERE ProjectId = ?";
 
   // Rankings
   // TODO: Strategize management of rankings

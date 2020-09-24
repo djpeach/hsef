@@ -102,6 +102,44 @@ $app->get('/users/fuzzyMatch/county', function ($req, $res) {
   $res->json($counties);
 });
 
+/**
+ * params:
+ *    query => The query string to fuzzy match against
+ * return:
+ *    {UserId: int, FirstName: string, LastName: string}
+ */
+$app->get('/users/fuzzyMatch/booth', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_BOOTHS_BY_NUMBER);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $booths = array_map(function($booth) {
+    return [
+      "label" => $booth->Number,
+      "value" => $booth->BoothId
+    ];
+  }, $sql->fetchAll());
+  $res->json($booths);
+});
+
+/**
+ * params:
+ *    query => The query string to fuzzy match against
+ * return:
+ *    {UserId: int, FirstName: string, LastName: string}
+ */
+$app->get('/users/fuzzyMatch/category', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_CATEGORIES_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->CategoryId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
+});
+
 $app->post('/school', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_SCHOOL);
@@ -124,6 +162,34 @@ $app->post('/county', function($req, $res) {
   try {
     $sql->execute([$req->body()->name]);
     $res->json(["createdCounty"=>[
+      "name" => $req->body()->name,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
+});
+
+$app->post('/booth', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
+  try {
+    $sql->execute([$req->body()->number]);
+    $res->json(["createdBooth"=>[
+      "name" => $req->body()->number,
+      "id" => DB::get()->lastInsertId()
+    ]]);
+  } catch (PDOException $e) {
+    $res->json(["error"=>$e->getMessage()]);
+  }
+});
+
+$app->post('/category', function($req, $res) {
+  // TODO: Create new school
+  $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
+  try {
+    $sql->execute([$req->body()->name]);
+    $res->json(["createdCategory"=>[
       "name" => $req->body()->name,
       "id" => DB::get()->lastInsertId()
     ]]);
