@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark navbar-custom bg-darkgreen fixed-top">
   <a href="/hsef/?page=dashboard" class="navbar-brand text-gold">HSEF System</a>
   <?php if ($authAccount->isAuthenticated()) : $operator = Operator::get(); ?>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu">
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#mainMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainMenu">

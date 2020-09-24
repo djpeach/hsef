@@ -54,7 +54,7 @@
                   <div class="card text-yellow bg-darkgreen">
                       <div class="card-header"><i class="fas fa-list-ul"></i></div>
                       <div class="card-body">
-                          <div class="card-title">categories</div>
+                          <div class="card-title"><a href="/hsef/?page=categoryForm">Categories</a></div>
                           <div class="card-text"></div>
                       </div>
                   </div>

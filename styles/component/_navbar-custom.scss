@@ -8,26 +8,6 @@
     color: map_get($theme-colors, yellow);
   }
 
-  .navbar-collapse {
-    position: absolute;
-    top: 54px;
-    left: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    width: 100%;
-    transition: all 0.4s ease;
-    display: block;
-  }
-  .navbar-collapse.collapsing {
-    height: auto !important;
-    margin-left: 50%;
-    left: 50%;
-    transition: all 0.2s ease;
-  }
-  .navbar-collapse.show {
-    left: 0;
-  }
   .navbar-toggler {
     border: .25rem solid map_get($theme-colors, border);
 
