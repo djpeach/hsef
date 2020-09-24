@@ -7,7 +7,6 @@ INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (5, 
 INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (6, 'Lingma', 'Acheson', 'female', 'active', 'linglu@iupui.edu'); # 6
 INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (7, 'Ethan', 'Netsch', 'male', 'active', 'enetsch@iu.edu'); # 6
 # students
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (7, 'Beatrice', 'Ortega', 'active');
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (8, 'Elysia', 'Driscoll', 'active');
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (9, 'Jazmin', 'Roberson', 'active');
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (10, 'Lindsey', 'Stone', 'active');
@@ -16,6 +15,7 @@ INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (12, 'Sebastien', '
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (13, 'Darnell', 'Lennon', 'active');
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (14, 'Aamir', 'Browning', 'active');
 INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (15, 'Parker', 'Henderson', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (16, 'Beatrice', 'Ortega', 'active');
 
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (1, '$2y$10$EEhxG.T6J7nCu5ieTllTsuvvOdF606zuGfZdur/RcTvfxpg/vxZfW', 1);
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (2, '$2y$10$oDxFkCtEjgAmJb7VQrpJTeq6DU5ICU1O3xBl1uWyteAh2ngusNns6', 2);
