@@ -48,8 +48,10 @@ class Queries {
   const GET_ENTITLEMENT_NAMES_BY_OPID = "SELECT Name FROM Entitlement WHERE EntitlementId in (SELECT EntitlementId FROM OperatorEntitlement WHERE OperatorId = ?)";
 
   // Grade Levels
-  const CREATE_ACTIVE_GRADELEVEL = "INSERT INTO GradeLevel(Name, Active) VALUES(?, true)";
+  const CREATE_NEW_GRADELEVEL = "INSERT INTO GradeLevel(Name) VALUES(?)";
   const GET_GRADELEVEL_NAMES_BY_OPID = "SELECT Name FROM GradeLevel WHERE GradeLevelId in (SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?)";
+  const GET_GRADELEVEL_BY_ID = "SELECT * FROM GradeLevel WHERE GradeLevelId = ?";
+  const GET_ALL_GRADELEVELS = "SELECT * FROM GradeLevel";
   const UPDATE_GRADELEVEL_NAME_BY_ID = "UPDATE GradeLevel SET Name=? WHERE GradeLevelId = ?";
   const DEACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=false WHERE GradeLevelId = ?";
   const ACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=true WHERE GradeLevelId = ?";
