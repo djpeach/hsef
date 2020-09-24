@@ -16,10 +16,11 @@ $(document).ready(function() {
           let schoolId = $('#schoolId');
           schoolSelect.val(res.data.createdSchool.name);
           schoolId.val(res.data.createdSchool.id);
+          schoolFormErrors.html('');
         } else if (res.data.error) {
-          schoolFormErrors.append(`<li>${res.data.error}</li>`);
+          schoolFormErrors.html(`<li>${res.data.error}</li>`);
         } else {
-          schoolFormErrors.append(`<li>Unknown error, please try again.</li>`);
+          schoolFormErrors.html(`<li>Unknown error, please try again.</li>`);
         }
       })
     })

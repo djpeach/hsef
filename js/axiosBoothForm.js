@@ -16,10 +16,11 @@ $(document).ready(function() {
           let boothId = $('#boothId');
           boothSelect.val(res.data.createdBooth.name);
           boothId.val(res.data.createdBooth.id);
+          boothFormErrors.html('');
         } else if (res.data.error) {
-          boothFormErrors.append(`<li>${res.data.error}</li>`);
+          boothFormErrors.html(`<li>${res.data.error}</li>`);
         } else {
-          boothFormErrors.append(`<li>Unknown error, please try again.</li>`);
+          boothFormErrors.html(`<li>Unknown error, please try again.</li>`);
         }
       })
     })

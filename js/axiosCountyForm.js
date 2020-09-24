@@ -16,10 +16,11 @@ $(document).ready(function() {
           let countyId = $('#countyId');
           countySelect.val(res.data.createdCounty.name);
           countyId.val(res.data.createdCounty.id);
+          countyFormErrors.html('');
         } else if (res.data.error) {
-          countyFormErrors.append(`<li>${res.data.error}</li>`);
+          countyFormErrors.html(`<li>${res.data.error}</li>`);
         } else {
-          countyFormErrors.append(`<li>Unknown error, please try again.</li>`);
+          countyFormErrors.html(`<li>Unknown error, please try again.</li>`);
         }
       })
     })

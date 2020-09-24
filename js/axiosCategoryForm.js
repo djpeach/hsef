@@ -16,10 +16,11 @@ $(document).ready(function() {
           let categoryId = $('#categoryId');
           categorySelect.val(res.data.createdCategory.name);
           categoryId.val(res.data.createdCategory.id);
+          categoryFormErrors.html('');
         } else if (res.data.error) {
-          categoryFormErrors.append(`<li>${res.data.error}</li>`);
+          categoryFormErrors.html(`<li>${res.data.error}</li>`);
         } else {
-          categoryFormErrors.append(`<li>Unknown error, please try again.</li>`);
+          categoryFormErrors.html(`<li>Unknown error, please try again.</li>`);
         }
       })
     })
