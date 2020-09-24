@@ -37,9 +37,8 @@
                 <a target="_blank" href="/hsef/?page=categoryForm" class="list-group-item list-group-item-action">Category Form</a>
                 <a target="_blank" href="/hsef/?page=countyForm" class="list-group-item list-group-item-action">County Form</a>
                 <a target="_blank" href="/hsef/?page=gradeLevelForm" class="list-group-item list-group-item-action">Grade Level Form</a>
-                <a target="_blank" href="/hsef/?page=judgeForm" class="list-group-item list-group-item-action">Judge Form</a>
-                <a target="_blank" href="/hsef/?page=judgeInvitation" class="list-group-item list-group-item-action">Judge Invitation</a>
-                <a target="_blank" href="/hsef/?page=judgeRegistration" class="list-group-item list-group-item-action">Judge Registration</a>
+                <a target="_blank" href="/hsef/?page=judgeInvitation" class="list-group-item list-group-item-action">Judge Invitation (New Judge Form)</a>
+                <a target="_blank" href="/hsef/?page=judgeRegistration" class="list-group-item list-group-item-action">Judge Registration (public page)</a>
                 <a target="_blank" href="/hsef/?page=projectForm" class="list-group-item list-group-item-action">Project Form</a>
                 <a target="_blank" href="/hsef/?page=schoolForm" class="list-group-item list-group-item-action">School Form</a>
                 <a target="_blank" href="/hsef/?page=scoringForm" class="list-group-item list-group-item-action">Scoring Form</a>

@@ -129,7 +129,7 @@ if ($delFormSubmitted) {
       <?php endforeach; ?>
       <div class="row no-gutters mt-3">
         <div class="col text-right">
-          <a class="btn btn-yellow text-white" href="/hsef/?page=judgeForm">
+          <a class="btn btn-yellow text-white" href="/hsef/?page=judgeInvitation">
             <i class="fas fa-plus mr-1"></i>
             New Judge
           </a>
