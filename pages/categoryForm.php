@@ -7,7 +7,7 @@
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
     $existingCategory = isset($_GET['cid']);
-    $formSubmitted = isset($_POST['COUNTY_FORM']);
+    $formSubmitted = isset($_POST['CATEGORY_FORM']);
 
     if ($existingCategory && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_CATEGORY_BY_ID);
@@ -72,7 +72,7 @@
         <fieldset>
           <div class="row mt-3">
             <div class="col text-right">
-              <button class="btn btn-darkgreen" type="submit" name="COUNTY_FORM">Save Category</button>
+              <button class="btn btn-darkgreen" type="submit" name="CATEGORY_FORM">Save Category</button>
             </div>
           </div>
         </fieldset>

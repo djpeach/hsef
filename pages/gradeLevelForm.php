@@ -7,7 +7,7 @@
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
     $existingGradeLevel = isset($_GET['glid']);
-    $formSubmitted = isset($_POST['COUNTY_FORM']);
+    $formSubmitted = isset($_POST['GRADELEVEL_FORM']);
 
     if ($existingGradeLevel && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_GRADELEVEL_BY_ID);
@@ -72,7 +72,7 @@
         <fieldset>
           <div class="row mt-3">
             <div class="col text-right">
-              <button class="btn btn-darkgreen" type="submit" name="COUNTY_FORM">Save Grade Level</button>
+              <button class="btn btn-darkgreen" type="submit" name="GRADELEVEL_FORM">Save Grade Level</button>
             </div>
           </div>
         </fieldset>
