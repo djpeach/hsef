@@ -69,8 +69,6 @@ VALUES (5, 'viewer');
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 1);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
-VALUES (1, 2);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (1, 4);
@@ -79,8 +77,6 @@ VALUES (1, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 1);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
-VALUES (2, 2);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 4);
@@ -88,8 +84,6 @@ INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (2, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (3, 1);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
-VALUES (3, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
 VALUES (3, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId)
