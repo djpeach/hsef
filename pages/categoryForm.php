@@ -13,7 +13,7 @@
       $sql = DB::get()->prepare(Queries::GET_CATEGORY_BY_ID);
       $sql->execute([$_GET['id']]);
       $category = $sql->fetch();
-      $post->name = $category->Name;
+      $post->categoryName = $category->Name;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;

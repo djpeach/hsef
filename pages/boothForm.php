@@ -13,7 +13,7 @@
       $sql = DB::get()->prepare(Queries::GET_BOOTH_BY_ID);
       $sql->execute([$_GET['id']]);
       $booth = $sql->fetch();
-      $post->number = $booth->Number;
+      $post->boothNumber = $booth->Number;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;

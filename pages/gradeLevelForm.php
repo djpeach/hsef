@@ -13,7 +13,7 @@
       $sql = DB::get()->prepare(Queries::GET_GRADELEVEL_BY_ID);
       $sql->execute([$_GET['id']]);
       $gradeLevel = $sql->fetch();
-      $post->name = $gradeLevel->Name;
+      $post->gradeLevelName = $gradeLevel->Name;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;

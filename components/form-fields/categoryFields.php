@@ -4,7 +4,7 @@
       <div class="floating-label-group">
         <input type="text" placeholder="Name*" id="categoryName" name="categoryName" value="<?php echo $post->categoryName ?>">
         <label for="categoryName">Name*</label>
-        <p class="form-error"><?php echo $errors->name; ?></p>
+        <p class="form-error"><?php echo $errors->categoryName; ?></p>
       </div>
     </div>
   </div>

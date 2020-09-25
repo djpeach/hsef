@@ -13,7 +13,7 @@
       $sql = DB::get()->prepare(Queries::GET_COUNTY_BY_ID);
       $sql->execute([$_GET['id']]);
       $county = $sql->fetch();
-      $post->name = $county->Name;
+      $post->countyName = $county->Name;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
