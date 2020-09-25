@@ -382,9 +382,11 @@ body {
   font-weight: 800;
   margin-bottom: 0;
 }
-.deletion-modal .radio-btns .additional-info {
+.deletion-modal .additional-info {
   margin-left: 2.2rem;
   font-size: 1.3rem;
+  white-space: normal !important;
+  overflow: auto !important;
 }
 .deletion-modal .modal-footer {
   display: flex;
