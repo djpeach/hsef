@@ -105,7 +105,7 @@
             }
 
           }
-          redirect('adminForm', [['opid', $opid], ['readonly', 'true']]);
+          redirect('adminForm', ['opid'=>$opid, 'readonly'=>true]);
         }
       }
     ?>

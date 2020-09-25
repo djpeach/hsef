@@ -105,7 +105,7 @@
           }
 
         }
-        redirect('judgeForm', [['opid', $opid], ['readonly', 'true']]);
+        redirect('judgeForm', ['opid'=>$opid, 'readonly'=>true]);
       }
     }
     ?>

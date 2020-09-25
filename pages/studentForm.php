@@ -56,7 +56,7 @@
           // update student details
           // TODO
         }
-        redirect('studentForm', [['sid', $sid], ['readonly', 'true']]);
+        redirect('studentForm', ['sid'=>$sid, 'readonly'=>true]);
       }
     }
     ?>
