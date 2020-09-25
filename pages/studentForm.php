@@ -47,18 +47,28 @@
 
       if ($errors->isEmpty()) {
         $db = DB::get();
-        $id =$existingUser ? $_GET['id'] : null;
+        $id = $existingUser ? $_GET['id'] : null;
+        $email = $post->email ? $post-email : null;
+        $schoolId = $post->schoolSelect ? $post->schoolId : null;
+        $gradeLevelId = $post->gradeLevelSelect ? $post->gradeLevelId : null;
+        $projectId = $post->projectSelect ? $post->projectId : null;
+
         if ($existingUser) { // edited existing student
           // update user details
           $sql = $db->prepare(Queries::UPDATE_USER_BY_SID);
-          $email = $post->email === '' ? null : $post->email;
           $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $id]);
           // update student details
           $sql = $db->prepare(Queries::UPDATE_STUDENT_BY_ID);
-          $schoolId = $post->schoolId ? $post->schoolId : null;
-          $gradeLevelId = $post->gradeLevelId ? $post->gradeLevelId : null;
-          $projectId = $post->projectId ? $post->projectId : null;
-          $sql->execute([$schoolId, $gradeLevelId, $projectId, $id]);
+          $sql->execute([$schoolId, $projectId, $gradeLevelId, $id]);
+        } else { // creating new student
+          // create new user
+          $sql = $db->prepare(Queries::CREATE_NEW_USER);
+          $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email]);
+          $uid = $db->lastInsertId();
+          // create new student
+          $sql = $db->prepare(Queries::CREATE_NEW_STUDENT);
+          $sql->execute([$schoolId, $uid, $projectId, $gradeLevelId]);
+          $id = $db->lastInsertId();
         }
         redirect('studentForm', ['id'=>$id, 'readonly'=>true]);
       }
