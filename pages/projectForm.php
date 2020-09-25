@@ -29,7 +29,7 @@
     ?>
     <?php
 
-    $requiredFields = ['number'];
+    $requiredFields = ['projectNumber', 'projectName'];
 
     // Find and create validation errors
     if ($formSubmitted) {

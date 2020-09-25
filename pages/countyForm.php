@@ -20,7 +20,7 @@
     ?>
     <?php
 
-    $requiredFields = ['name'];
+    $requiredFields = ['countyName'];
 
     // Find and create validation errors
     if ($formSubmitted) {

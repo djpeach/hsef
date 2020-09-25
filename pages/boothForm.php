@@ -20,7 +20,7 @@
     ?>
     <?php
 
-    $requiredFields = ['number'];
+    $requiredFields = ['boothNumber'];
 
     // Find and create validation errors
     if ($formSubmitted) {

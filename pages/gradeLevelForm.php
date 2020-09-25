@@ -20,7 +20,7 @@
     ?>
     <?php
 
-    $requiredFields = ['name'];
+    $requiredFields = ['gradeLevelName'];
 
     // Find and create validation errors
     if ($formSubmitted) {
