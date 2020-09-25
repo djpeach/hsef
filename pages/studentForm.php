@@ -113,7 +113,7 @@
         </div>
         <div class="row no-gutters mt-3">
           <div class="col-10">
-            <div class="floating-label-group pr-5" id="categorySelectDiv">
+            <div class="floating-label-group pr-5" id="projectSelectDiv">
               <p class="group-label">Select Existing Project</p>
               <input type="text" name="projectSelect" id="projectSelect" placeholder="Search for a project" value="<?php echo $post->projectSelect ?>">
               <input type="text" name="projectId" id="projectId" hidden value="<?php echo $post->projectId ?>">

@@ -8,6 +8,7 @@ $(document).ready(function() {
       e.preventDefault();
       let formData = newProjectForm.serializeJSON();
       axios.post('/project', formData).then((res) => {
+        console.log(res.status, res.date);
         if (res.status === 200 && res.data.createdProject) {
           projectFormModal.modal('hide');
           newProjectForm.trigger('reset');

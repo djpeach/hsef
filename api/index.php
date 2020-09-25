@@ -184,9 +184,9 @@ $app->post('/school', function($req, $res) {
   $body = $req->body();
   try {
     $countyId = $body->countyId ? $body->countyId : null;
-    $sql->execute([$req->body()->name, $countyId]);
+    $sql->execute([$body->schoolName, $countyId]);
     $res->json(["createdSchool"=>[
-      "name" => $body->name,
+      "name" => $body->schoolName,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -197,10 +197,11 @@ $app->post('/school', function($req, $res) {
 $app->post('/county', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_COUNTY);
+  $body = $req->body();
   try {
-    $sql->execute([$req->body()->name]);
+    $sql->execute([$body->countyName]);
     $res->json(["createdCounty"=>[
-      "name" => $req->body()->name,
+      "name" => $req->body()->countyName,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -211,10 +212,11 @@ $app->post('/county', function($req, $res) {
 $app->post('/booth', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
+  $body = $req->body();
   try {
-    $sql->execute([$req->body()->boothNumber]);
+    $sql->execute([$body->boothNumber]);
     $res->json(["createdBooth"=>[
-      "name" => $req->body()->boothNumber,
+      "name" => $body->boothNumber,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -225,10 +227,11 @@ $app->post('/booth', function($req, $res) {
 $app->post('/category', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
+  $body = $req->body();
   try {
-    $sql->execute([$req->body()->categoryName]);
+    $sql->execute([$body->categoryName]);
     $res->json(["createdCategory"=>[
-      "name" => $req->body()->categoryName,
+      "name" => $body->categoryName,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -239,10 +242,11 @@ $app->post('/category', function($req, $res) {
 $app->post('/gradeLevel', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_GRADELEVEL);
+  $body = $req->body();
   try {
-    $sql->execute([$req->body()->name]);
+    $sql->execute([$body->gradeLevelName]);
     $res->json(["createdGradeLevel"=>[
-      "name" => $req->body()->name,
+      "name" => $body->gradeLevelName,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {
@@ -253,15 +257,15 @@ $app->post('/gradeLevel', function($req, $res) {
 $app->post('/project', function($req, $res) {
   // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
+  $body = $req->body();
   try {
-    $body = $req->body();
-    $abstract = isset($body->abstract) ? $body->abstract : null;
-    $boothId = isset($body->boothId) ? $body->boothId : null;
-    $categoryId = isset($body->categoryId) ? $body->categoryId : null;
-    $cnid = isset($body->cnid) ? $body->cnid : null;
-    $sql->execute([$body->number, $body->name, $abstract, $boothId, $cnid, $categoryId]);
+    $abstract = $body->abstract ? $body->abstract : null;
+    $boothId = $body->boothId ? $body->boothId : null;
+    $categoryId = $body->categoryId ? $body->categoryId : null;
+    $cnid = $body->cnid ? $body->cnid : null;
+    $sql->execute([$body->projectNumber, $body->projectName, $abstract, $boothId, $cnid, $categoryId]);
     $res->json(["createdProject"=>[
-      "name" => $body->name,
+      "name" => $body->projectName,
       "id" => DB::get()->lastInsertId()
     ]]);
   } catch (PDOException $e) {

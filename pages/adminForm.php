@@ -76,7 +76,7 @@
               $id = $sql->fetch()->OperatorId;
             } else if (!$didSelectUser && !$existingUser) { // created new admin with new user details
               // create new user
-              $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
+              $sql = $db->prepare(Queries::CREATE_NEW_USER);
               $suffix = $post->suffix === '' ? null : $post->suffix;
               $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
               $uid = $db->lastInsertId();

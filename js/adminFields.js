@@ -15,19 +15,18 @@ $(document).ready(function() {
     source: `/hsef/api/users/fuzzyMatch/promote-to-admin`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
-      operatorId.val(ui.item.value); // add actual value to hidden field
-      userSelect.val(ui.item.label);
+      if (ui.item) {
+        operatorId.val(ui.item.value); // add actual value to hidden field
+        userSelect.val(ui.item.label);
+      }
       return false;
     },
-    focus: function( event, ui ) {
-      operatorId.val(ui.item.value); // add actual value to hidden field
-      userSelect.val(ui.item.label);
+    focus: function (event, ui) {
+      if (ui.item) {
+        operatorId.val(ui.item.value); // add actual value to hidden field
+        userSelect.val(ui.item.label);
+      }
       return false;
-    },
-    close: function (event, ui) {
-      operatorId.val(ui.item.value); // add actual value to hidden field
-      userSelect.val(ui.item.label);
-      return false;
-    },
+    }
   });
 });

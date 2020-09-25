@@ -10,17 +10,19 @@
     $formSubmitted = isset($_POST['SCHOOL_FORM']);
 
     if ($existingSchool && !$formSubmitted) {
-      $sql = DB::get()->prepare(Queries::GET_SCHOOL_BY_ID_WITH_COUNTY);
+      $sql = DB::get()->prepare(Queries::GET_SCHOOL_BY_ID);
       $sql->execute([$_GET['id']]);
       $school = $sql->fetch();
-      $post->name = $school->SchoolName;
+      $post->schoolName = $school->SchoolName;
+      $post->countyId = $school->CountyId;
+      $post->countySelect = $school->CountyName;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
     ?>
     <?php
 
-    $requiredFields = ['name'];
+    $requiredFields = ['schoolName'];
 
     // Find and create validation errors
     if ($formSubmitted) {
@@ -32,8 +34,21 @@
       }
 
       if ($errors->isEmpty()) {
-        // TODO database work
-        redirect('schoolForm', ['id'=>5, 'readonly'=>true]);
+        $db = DB::get();
+        $id = $existingSchool ? $_GET['id'] : null;
+        $countyId = $post->countySelect ? $post->countyId : null;
+
+        if ($existingSchool) { // edited existing school
+          // update school details
+          $sql = $db->prepare(Queries::UPDATE_SCHOOL_BY_ID);
+          $sql->execute([$post->schoolName, $countyId, $id]);
+        } else { // creating new school
+          // create new school
+          $sql = $db->prepare(Queries::CREATE_NEW_SCHOOL);
+          $sql->execute([$post->schoolName, $countyId]);
+          $id = $db->lastInsertId();
+        }
+        redirect('schoolForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>

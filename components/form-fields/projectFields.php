@@ -2,16 +2,16 @@
   <div class="row mt-3">
     <div class="col-3">
       <div class="floating-label-group">
-        <input type="text" placeholder="Number*" id="number" name="number" value="<?php echo $post->number ?>">
-        <label for="number">Number*</label>
-        <p class="form-error"><?php echo $errors->number; ?></p>
+        <input type="text" placeholder="Number*" id="projectNumber" name="projectNumber" value="<?php echo $post->projectNumber ?>">
+        <label for="projectNumber">Number*</label>
+        <p class="form-error"><?php echo $errors->projectNumber; ?></p>
       </div>
     </div>
     <div class="col-9">
       <div class="floating-label-group">
-        <input type="text" placeholder="Name*" id="name" name="name" value="<?php echo $post->name ?>">
-        <label for="name">Name*</label>
-        <p class="form-error"><?php echo $errors->name; ?></p>
+        <input type="text" placeholder="Name*" id="projectName" name="projectName" value="<?php echo $post->projectName ?>">
+        <label for="projectName">Name*</label>
+        <p class="form-error"><?php echo $errors->projectName; ?></p>
       </div>
     </div>
   </div>

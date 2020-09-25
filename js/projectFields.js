@@ -8,20 +8,19 @@ $(document).ready(function() {
     source: `/hsef/api/users/fuzzyMatch/booth`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
-      boothId.val(ui.item.value); // add actual value to hidden field
-      boothSelect.val(ui.item.label);
+      if (ui.item) {
+        boothId.val(ui.item.value); // add actual value to hidden field
+        boothSelect.val(ui.item.label);
+      }
       return false;
     },
-    focus: function( event, ui ) {
-      boothId.val(ui.item.value); // add actual value to hidden field
-      boothSelect.val(ui.item.label);
+    focus: function (event, ui) {
+      if (ui.item) {
+        boothId.val(ui.item.value); // add actual value to hidden field
+        boothSelect.val(ui.item.label);
+      }
       return false;
-    },
-    close: function (event, ui) {
-      boothId.val(ui.item.value); // add actual value to hidden field
-      boothSelect.val(ui.item.label);
-      return false;
-    },
+    }
   });
 
   let categorySelect = $('#categorySelect');
@@ -33,19 +32,18 @@ $(document).ready(function() {
     source: `/hsef/api/users/fuzzyMatch/category`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
-      categoryId.val(ui.item.value); // add actual value to hidden field
-      categorySelect.val(ui.item.label);
+      if (ui.item) {
+        categoryId.val(ui.item.value); // add actual value to hidden field
+        categorySelect.val(ui.item.label);
+      }
       return false;
     },
-    focus: function( event, ui ) {
-      categoryId.val(ui.item.value); // add actual value to hidden field
-      categorySelect.val(ui.item.label);
+    focus: function (event, ui) {
+      if (ui.item) {
+        categoryId.val(ui.item.value); // add actual value to hidden field
+        categorySelect.val(ui.item.label);
+      }
       return false;
-    },
-    close: function (event, ui) {
-      categoryId.val(ui.item.value); // add actual value to hidden field
-      categorySelect.val(ui.item.label);
-      return false;
-    },
+    }
   });
 });

@@ -161,14 +161,15 @@ WHERE ProjectId in (SELECT S.ProjectId FROM Student S JOIN User U on S.UserId = 
   // Schools
   const CREATE_NEW_SCHOOL = "INSERT INTO School(Name, CountyId) VALUES(?, ?)";
   const GET_ALL_SCHOOLS_AND_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId";
-  const GET_SCHOOL_BY_ID_WITH_COUNTY = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId WHERE S.SchoolId = ?";
+  const GET_SCHOOL_BY_ID = "SELECT SchoolId, S.Name as SchoolName, C.Name as CountyName, C.CountyId FROM School S LEFT JOIN County C on S.CountyId = C.CountyId WHERE S.SchoolId = ?";
   const QUERY_SCHOOLS_BY_NAME = "SELECT * FROM School WHERE Name LIKE ?";
+  const UPDATE_SCHOOL_BY_ID = "UPDATE School SET Name=?, CountyId=? WHERE SchoolId = ?";
   const DELETE_SCHOOL_BY_ID = "DELETE FROM School WHERE SchoolId = ?";
 
   // Students
-  const CREATE_NEW_STUDENT_WITH_UID = "INSERT INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUEs (?, ?, ?, ?)";
+  const CREATE_NEW_STUDENT = "INSERT INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUEs (?, ?, ?, ?)";
   const UPDATE_STUDENT_BY_UID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE UserId = ?";
-  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?, GradeLevelId=?, ProjectId=? WHERE StudentId = ?";
+  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?,ProjectId=?, GradeLevelId=? WHERE StudentId = ?";
   const GET_STUDENT_BY_UID = "SELECT * FROM Student WHERE UserId = ?";
   const GET_ALL_STUDENTS =
     "SELECT 
@@ -232,7 +233,7 @@ WHERE U.Status = 'active' AND StudentId = ?";
   const QUERY_USERS_BY_NAME = "SELECT * FROM User WHERE FirstName OR LastName LIKE ?";
   const UPDATE_USER_BY_OPID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
   const UPDATE_USER_BY_SID = "UPDATE User SET FirstName=?, LastName=?, Suffix=?, Email=? WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
-  const CREATE_NEW_USER_WITH_EMAIL = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
+  const CREATE_NEW_USER = "INSERT INTO User(FirstName, LastName, Suffix, Status, Email) VALUES(?, ?, ?, 'active', ?)";
   const ARCHIVE_OPERATOR_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
   const ARCHIVE_STUDENT_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = (SELECT UserId FROM Student WHERE StudentId = ?)";
   const ARCHIVE_USER_BY_ID = "UPDATE User SET Status='archived' WHERE UserId = ?";
