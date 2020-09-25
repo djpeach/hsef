@@ -8,23 +8,9 @@ $errors = new Errors();
 $delFormSubmitted = isset($_POST['JUDGE_DELETE_SUBMIT']);
 
 if ($delFormSubmitted) {
-  $delType = $post->deleteType;
   $judgeId = $post->operatorId;
-
-  $sql = null;
-  if ($delType === "delete") {
-    $sql = DB::get()->prepare(Queries::ARCHIVE_OPERATOR_BY_ID);
-  } else if ($delType === "demote") {
-    $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
-  } else {
-    $errors->message = "Something went wrong, please try again";
-  }
-
-  if ($errors->isEmpty()) {
-    if (!$sql->execute([$judgeId])) {
-      $errors->message = "Database execution went wrong, please try again";
-    }
-  }
+  $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
+  $sql->execute([$judgeId]);
 }
 ?>
 <main>
@@ -99,22 +85,11 @@ if ($delFormSubmitted) {
                           Warning: this is a destructive action
                         </h4>
                       </div>
-                      <div class="radio-btns">
-                        <div class="radio-btns-group">
-                          <input type="radio" id="demote-<?php echo $judge->OperatorId; ?>" name="deleteType" value="demote">
-                          <label for="demote-<?php echo $judge->OperatorId; ?>">Demote from Judge</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">remove the judge permissions from</span> the user, but retain them in the system for the current year. They will lose all access to judge tools immediately.</p>
-                        <div class="radio-btns-group">
-                          <input type="radio" id="delete-<?php echo $judge->OperatorId; ?>" name="deleteType" value="delete">
-                          <label for="delete-<?php echo $judge->OperatorId; ?>">Delete user from system</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">delete</span> the user, and <span class="font-weight-bold">remove them from the system for the current year</span></p>
-                      </div>
+                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the judge, and they will lose access to all judging tools immediately.</p>
                     </div>
                     <div class="modal-footer">
                       <label for="operatorNameConfirmation-<?php echo $judge->OperatorId ?>">Please type <span class="font-weight-bold"><?php echo $judge->FirstName.' '.$judge->LastName ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $judge->OperatorId ?>" disabled>
+                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $judge->OperatorId ?>">
                       <input type="text" name="operatorId" value="<?php echo $judge->OperatorId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $judge->FirstName.' '.$judge->LastName ?>" hidden>
@@ -129,7 +104,7 @@ if ($delFormSubmitted) {
       <?php endforeach; ?>
       <div class="row no-gutters mt-3">
         <div class="col text-right">
-          <a class="btn btn-yellow text-white" href="/hsef/?page=judgeInvitation">
+          <a class="btn btn-yellow text-white" href="/hsef/?page=judgeForm">
             <i class="fas fa-plus mr-1"></i>
             New Judge
           </a>

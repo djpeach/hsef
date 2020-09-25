@@ -85,7 +85,7 @@
                           Warning: this is a destructive action
                         </h4>
                       </div>
-                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the admin, and they will lose access to all event management tools.</p>
+                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the admin, and they will lose access to all event management tools immediately.</p>
                     </div>
                     <div class="modal-footer">
                       <label for="operatorNameConfirmation-<?php echo $admin->OperatorId ?>">Please type <span class="font-weight-bold"><?php echo $admin->FirstName.' '.$admin->LastName ?></span> to confirm.</label>
