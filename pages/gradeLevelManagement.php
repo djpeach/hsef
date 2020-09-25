@@ -51,10 +51,10 @@ if ($delFormSubmitted) {
             </span>
           </div>
           <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $gradeLevel->GradeLevelId; ?>">
-            <a href="/hsef/?page=gradeLevelForm&glid=<?php echo $gradeLevel->GradeLevelId ?>&readonly=false" class="col-4 tool-icon bg-green">
+            <a href="/hsef/?page=gradeLevelForm&id=<?php echo $gradeLevel->GradeLevelId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </a>
-            <a href="/hsef/?page=gradeLevelForm&glid=<?php echo $gradeLevel->GradeLevelId ?>&readonly=true" class="col-4 tool-icon bg-primary">
+            <a href="/hsef/?page=gradeLevelForm&id=<?php echo $gradeLevel->GradeLevelId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
             <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $gradeLevel->GradeLevelId; ?>">

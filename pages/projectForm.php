@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingProject = isset($_GET['pid']);
+    $existingProject = isset($_GET['id']);
     $formSubmitted = isset($_POST['PROJECT_FORM']);
 
     if ($existingProject && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_PROJECT_BY_ID);
-      $sql->execute([$_GET['pid']]);
+      $sql->execute([$_GET['id']]);
       $project = $sql->fetch();
       $post->number = $project->ProjectNumber;
       $post->name = $project->ProjectName;
@@ -41,14 +41,14 @@
       }
 
       if ($errors->isEmpty()) {
-        $pid = $existingProject ? $_GET["pid"] : null;
+        $id = $existingProject ? $_GET["id"] : null;
         if ($existingProject) {
           $sql = DB::get()->prepare(Queries::UPDATE_PROJECT_BY_ID);
           $abstract = isset($post->abstract) ? $post->abstract : null;
           $boothId = isset($post->boothId) ? $post->boothId : null;
           $categoryId = isset($post->categoryId) ? $post->categoryId : null;
           $cnid = isset($post->cnid) ? $post->cnid : null;
-          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId, $pid]);
+          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId, $id]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
           $abstract = isset($post->abstract) ? $post->abstract : null;
@@ -56,9 +56,9 @@
           $categoryId = isset($post->categoryId) ? $post->categoryId : null;
           $cnid = isset($post->cnid) ? $post->cnid : null;
           $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId]);
-          $pid = DB::get()->lastInsertId();
+          $id = DB::get()->lastInsertId();
         }
-        redirect('projectForm', ['pid'=>$pid, 'readonly'=>true]);
+        redirect('projectForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
@@ -77,7 +77,7 @@
             </div>
             <?php if ($existingProject) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=projectForm&pid=<?php echo $_GET['pid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=projectForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit Project
                 </a>

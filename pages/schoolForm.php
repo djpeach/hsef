@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingSchool = isset($_GET['sid']);
+    $existingSchool = isset($_GET['id']);
     $formSubmitted = isset($_POST['SCHOOL_FORM']);
 
     if ($existingSchool && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_SCHOOL_BY_ID_WITH_COUNTY);
-      $sql->execute([$_GET['sid']]);
+      $sql->execute([$_GET['id']]);
       $school = $sql->fetch();
       $post->name = $school->SchoolName;
     }
@@ -33,7 +33,7 @@
 
       if ($errors->isEmpty()) {
         // TODO database work
-        redirect('schoolForm', ['sid'=>5, 'readonly'=>true]);
+        redirect('schoolForm', ['id'=>5, 'readonly'=>true]);
       }
     }
     ?>
@@ -52,7 +52,7 @@
             </div>
             <?php if ($existingSchool) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=schoolForm&sid=<?php echo $_GET['sid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=schoolForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit School
                 </a>

@@ -6,11 +6,11 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingUser = isset($_GET['sid']);
+    $existingUser = isset($_GET['id']);
     $allowUserSelect = false;
     if ($existingUser && !isset($_POST['STUDENT_FORM'])) {
       $sql = DB::get()->prepare(Queries::GET_STUDENT_BY_ID);
-      $sql->execute([$_GET['sid']]);
+      $sql->execute([$_GET['id']]);
       $student = $sql->fetch();
       $post->schoolId = $student->SchoolId;
       $post->schoolSelect = $student->SchoolName;
@@ -47,20 +47,20 @@
 
       if ($errors->isEmpty()) {
         $db = DB::get();
-        $sid =$existingUser ? $_GET['sid'] : null;
+        $id =$existingUser ? $_GET['id'] : null;
         if ($existingUser) { // edited existing student
           // update user details
           $sql = $db->prepare(Queries::UPDATE_USER_BY_SID);
           $email = $post->email === '' ? null : $post->email;
-          $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $sid]);
+          $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $id]);
           // update student details
           $sql = $db->prepare(Queries::UPDATE_STUDENT_BY_ID);
           $schoolId = $post->schoolId ? $post->schoolId : null;
           $gradeLevelId = $post->gradeLevelId ? $post->gradeLevelId : null;
           $projectId = $post->projectId ? $post->projectId : null;
-          $sql->execute([$schoolId, $gradeLevelId, $projectId, $sid]);
+          $sql->execute([$schoolId, $gradeLevelId, $projectId, $id]);
         }
-        redirect('studentForm', ['sid'=>$sid, 'readonly'=>true]);
+        redirect('studentForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
@@ -128,7 +128,7 @@
         <div class="row mt-3">
           <?php
           $href = '/hsef/?page=studentForm';
-          $href .= isset($_GET['sid']) ? '&sid='.$_GET['sid'] : '';
+          $href .= isset($_GET['id']) ? '&id='.$_GET['id'] : '';
           ?>
           <div class="col-6">
             <a href="/hsef/?page=studentManagement" class="btn btn-yellow text-white">

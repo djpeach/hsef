@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingGradeLevel = isset($_GET['glid']);
+    $existingGradeLevel = isset($_GET['id']);
     $formSubmitted = isset($_POST['GRADELEVEL_FORM']);
 
     if ($existingGradeLevel && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_GRADELEVEL_BY_ID);
-      $sql->execute([$_GET['glid']]);
+      $sql->execute([$_GET['id']]);
       $gradeLevel = $sql->fetch();
       $post->name = $gradeLevel->Name;
     }
@@ -32,16 +32,16 @@
       }
 
       if ($errors->isEmpty()) {
-        $glid = $existingGradeLevel ? $_GET["glid"] : null;
+        $id = $existingGradeLevel ? $_GET["id"] : null;
         if ($existingGradeLevel) {
           $sql = DB::get()->prepare(Queries::UPDATE_GRADELEVEL_NAME_BY_ID);
-          $sql->execute([$post->name, $glid]);
+          $sql->execute([$post->name, $id]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_GRADELEVEL);
           $sql->execute([$post->name]);
-          $glid = DB::get()->lastInsertId();
+          $id = DB::get()->lastInsertId();
         }
-        redirect('gradeLevelForm', ['glid'=>$glid, 'readonly'=>true]);
+        redirect('gradeLevelForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
@@ -60,7 +60,7 @@
             </div>
             <?php if ($existingGradeLevel) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=gradeLevelForm&glid=<?php echo $_GET['glid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=gradeLevelForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit Grade Level
                 </a>

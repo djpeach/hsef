@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingBooth = isset($_GET['bid']);
+    $existingBooth = isset($_GET['id']);
     $formSubmitted = isset($_POST['BOOTH_FORM']);
 
     if ($existingBooth && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_BOOTH_BY_ID);
-      $sql->execute([$_GET['bid']]);
+      $sql->execute([$_GET['id']]);
       $booth = $sql->fetch();
       $post->number = $booth->Number;
     }
@@ -32,16 +32,16 @@
       }
 
       if ($errors->isEmpty()) {
-        $bid = $existingBooth ? $_GET["bid"] : null;
+        $id = $existingBooth ? $_GET["id"] : null;
         if ($existingBooth) {
           $sql = DB::get()->prepare(Queries::UPDATE_BOOTH_NUMBER_BY_ID);
-          $sql->execute([$post->number, $bid]);
+          $sql->execute([$post->number, $id]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
           $sql->execute([$post->number]);
-          $bid = DB::get()->lastInsertId();
+          $id = DB::get()->lastInsertId();
         }
-        redirect('boothForm', ['bid'=>$bid, 'readonly'=>true]);
+        redirect('boothForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
@@ -60,7 +60,7 @@
             </div>
             <?php if ($existingBooth) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=boothForm&bid=<?php echo $_GET['bid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=boothForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit Booth
                 </a>

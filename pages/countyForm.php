@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingCounty = isset($_GET['cid']);
+    $existingCounty = isset($_GET['id']);
     $formSubmitted = isset($_POST['COUNTY_FORM']);
 
     if ($existingCounty && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_COUNTY_BY_ID);
-      $sql->execute([$_GET['cid']]);
+      $sql->execute([$_GET['id']]);
       $county = $sql->fetch();
       $post->name = $county->Name;
     }
@@ -33,7 +33,7 @@
 
       if ($errors->isEmpty()) {
         // TODO database work
-        redirect('countyForm', ['cid'=>1, 'readonly'=>true]);
+        redirect('countyForm', ['id'=>1, 'readonly'=>true]);
       }
     }
     ?>
@@ -52,7 +52,7 @@
             </div>
             <?php if ($existingCounty) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=countyForm&cid=<?php echo $_GET['cid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=countyForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit County
                 </a>

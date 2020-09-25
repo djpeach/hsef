@@ -51,10 +51,10 @@ if ($delFormSubmitted) {
             </span>
           </div>
           <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $category->CategoryId; ?>">
-            <a href="/hsef/?page=categoryForm&cid=<?php echo $category->CategoryId ?>&readonly=false" class="col-4 tool-icon bg-green">
+            <a href="/hsef/?page=categoryForm&id=<?php echo $category->CategoryId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </a>
-            <a href="/hsef/?page=categoryForm&cid=<?php echo $category->CategoryId ?>&readonly=true" class="col-4 tool-icon bg-primary">
+            <a href="/hsef/?page=categoryForm&id=<?php echo $category->CategoryId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
             <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $category->CategoryId; ?>">

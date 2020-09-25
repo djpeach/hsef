@@ -6,12 +6,12 @@
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingCategory = isset($_GET['cid']);
+    $existingCategory = isset($_GET['id']);
     $formSubmitted = isset($_POST['CATEGORY_FORM']);
 
     if ($existingCategory && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_CATEGORY_BY_ID);
-      $sql->execute([$_GET['cid']]);
+      $sql->execute([$_GET['id']]);
       $category = $sql->fetch();
       $post->name = $category->Name;
     }
@@ -32,16 +32,16 @@
       }
 
       if ($errors->isEmpty()) {
-        $cid = $existingCategory ? $_GET["cid"] : null;
+        $id = $existingCategory ? $_GET["id"] : null;
         if ($existingCategory) {
           $sql = DB::get()->prepare(Queries::UPDATE_CATEGORY_NAME_BY_ID);
-          $sql->execute([$post->name, $cid]);
+          $sql->execute([$post->name, $id]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
           $sql->execute([$post->name]);
-          $cid = DB::get()->lastInsertId();
+          $id = DB::get()->lastInsertId();
         }
-        redirect('categoryForm', ['cid'=>$cid, 'readonly'=>true]);
+        redirect('categoryForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
@@ -60,7 +60,7 @@
             </div>
             <?php if ($existingCategory) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=categoryForm&cid=<?php echo $_GET['cid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=categoryForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit Category
                 </a>
