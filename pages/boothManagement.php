@@ -81,7 +81,7 @@ if ($delFormSubmitted) {
                     </div>
                     <div class="modal-footer">
                       <label for="boothNameConfirmation-<?php echo $booth->BoothId ?>">Please type <span class="font-weight-bold"><?php echo $booth->Name; ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="boothNameConfirmation-<?php echo $booth->BoothId ?>" disabled>
+                      <input type="text" name="deleteConfirm" id="boothNameConfirmation-<?php echo $booth->BoothId ?>">
                       <input type="text" name="boothId" value="<?php echo $booth->BoothId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" hidden>
