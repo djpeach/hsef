@@ -114,9 +114,56 @@ FROM Project P LEFT JOIN Booth B on P.BoothId = B.BoothId LEFT JOIN Category C o
   // Students
   const CREATE_NEW_STUDENT_WITH_UID = "INSERT INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUEs (?, ?, ?, ?)";
   const UPDATE_STUDENT_BY_UID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE UserId = ?";
-  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?, ProjectId=?, GradeLevelId=? WHERE StudentId = ?";
+  const UPDATE_STUDENT_BY_ID = "UPDATE Student SET SchoolId=?, GradeLevelId=?, ProjectId=? WHERE StudentId = ?";
   const GET_STUDENT_BY_UID = "SELECT * FROM Student WHERE UserId = ?";
-  const GET_STUDENT_BY_ID = "SELECT * FROM Student WHERE StudentId = ?";
+  const GET_ALL_STUDENTS =
+    "SELECT 
+       U.FirstName,
+       U.LastName,
+       U.Suffix,
+       U.Email,
+       S.StudentId, 
+       S.SchoolId, 
+       S.UserId, 
+       S.ProjectId, 
+       S.GradeLevelId, 
+       S2.Name as SchoolName, 
+       GL.Name as GradeLevelName,
+       P.Name as ProjectName
+FROM Student S 
+    LEFT JOIN School S2 
+        on S2.SchoolId = S.SchoolId 
+    LEFT JOIN GradeLevel GL 
+        on GL.GradeLevelId = S.GradeLevelId 
+    LEFT JOIN Project P 
+        on P.ProjectId = S.ProjectId 
+    JOIN User U 
+        on S.UserId = U.UserId
+WHERE U.Status = 'active'";
+  const GET_STUDENT_BY_ID =
+    "SELECT 
+       U.FirstName,
+       U.LastName,
+       U.Suffix,
+       U.Email,
+       S.StudentId, 
+       S.SchoolId, 
+       S.UserId, 
+       S.ProjectId, 
+       S.GradeLevelId, 
+       S2.Name as SchoolName, 
+       GL.Name as GradeLevelName,
+       P.Name as ProjectName
+FROM Student S 
+    LEFT JOIN School S2 
+        on S2.SchoolId = S.SchoolId 
+    LEFT JOIN GradeLevel GL 
+        on GL.GradeLevelId = S.GradeLevelId 
+    LEFT JOIN Project P 
+        on P.ProjectId = S.ProjectId 
+    JOIN User U 
+        on S.UserId = U.UserId
+WHERE U.Status = 'active' AND StudentId = ?";
   const DELETE_STUDENT_BY_UID = "DELETE FROM Student WHERE UserId = ?";
   const DELETE_STUDENT_BY_ID = "DELETE FROM Student WHERE StudentId = ?";
 
@@ -140,21 +187,6 @@ FROM Project P LEFT JOIN Booth B on P.BoothId = B.BoothId LEFT JOIN Category C o
   // TODO
 
   // Joins
-  const GET_ALL_ACTIVE_STUDENTS =
-    "SELECT
-       S.StudentId,
-       U.UserId,
-       U.FirstName,
-       U.LastName,
-       U.Suffix,
-       S2.Name as SchoolName,
-       S2.SchoolId
-FROM User U
-    JOIN Student S
-         on U.UserId = S.UserId
-    LEFT JOIN School S2
-        on S.SchoolId = S2.SchoolId
-WHERE U.Status = 'active'";
 
 
   const GET_ALL_ACTIVE_ADMINS =

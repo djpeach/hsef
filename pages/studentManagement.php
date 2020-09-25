@@ -33,28 +33,31 @@ if ($delFormSubmitted) {
         <div class="col-1">
           <p class="font-weight-bold">Id</p>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-5">
+        <div class="col-4">
           <p class="font-weight-bold">School</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Grade</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $students = DB::get()->query(Queries::GET_ALL_ACTIVE_STUDENTS)->fetchAll(); ?>
+      <?php $students = DB::get()->query(Queries::GET_ALL_STUDENTS)->fetchAll(); ?>
       <?php foreach ($students as $student) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
             <p><?php echo $student->StudentId; ?></p>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <p><?php echo User::fullName($student); ?></p>
           </div>
-          <div class="col-5">
+          <div class="col-4">
             <p>
-              <?php if ($student->SchoolName) : ?>
+              <?php if ($student->SchoolId) : ?>
                 <a href="/hsef/?page=schoolForm&sid=<?php echo $student->SchoolId; ?>&readonly=true">
                   <?php echo $student->SchoolName; ?>
                 </a>
@@ -62,6 +65,15 @@ if ($delFormSubmitted) {
                 N/A
               <?php endif; ?>
             </p>
+          </div>
+          <div class="col-2">
+            <?php if ($student->GradeLevelId) : ?>
+              <a href="/hsef/?page=gradeLevelForm&glid=<?php echo $student->GradeLevelId; ?>&readonly=true">
+                <?php echo $student->GradeLevelName; ?>
+              </a>
+            <?php else : ?>
+              N/A
+            <?php endif; ?>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $student->StudentId; ?>">
@@ -99,7 +111,7 @@ if ($delFormSubmitted) {
                     </div>
                     <div class="modal-footer">
                       <label for="studentNameConfirmation-<?php echo $student->StudentId ?>">Please type <span class="font-weight-bold"><?php echo $student->FirstName.' '.$student->LastName ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="studentNameConfirmation-<?php echo $student->StudentId ?>" disabled>
+                      <input type="text" name="deleteConfirm" id="studentNameConfirmation-<?php echo $student->StudentId ?>">
                       <input type="text" name="studentId" value="<?php echo $student->StudentId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $student->FirstName.' '.$student->LastName ?>" hidden>
