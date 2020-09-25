@@ -30,11 +30,14 @@ if ($delFormSubmitted) {
         <div class="col-1">
           <p class="font-weight-bold">Id</p>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-5">
+        <div class="col-4">
           <p class="font-weight-bold">Email</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Checked In</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
@@ -46,11 +49,28 @@ if ($delFormSubmitted) {
           <div class="col-1">
             <p><?php echo $judge->OperatorId; ?></p>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <p><?php echo User::fullName($judge); ?></p>
           </div>
-          <div class="col-5">
-            <p><?php echo $judge->Email; ?></p>
+          <div class="col-4">
+            <p>
+              <?php if ($judge->Email) : ?>
+                <a href="mailto:<?php echo $judge->Email; ?>">
+                  <?php echo $judge->Email; ?>
+                </a>
+              <?php else : ?>
+                N/A
+              <?php endif; ?>
+            </p>
+          </div>
+          <div class="col-2 text-center">
+            <p class="font-weight-bold">
+              <?php if ($judge->CheckedIn) : ?>
+                <i class="fas fa-check-square"></i>
+              <?php else : ?>
+                <i class="fas fa-times"></i>
+              <?php endif; ?>
+            </p>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $judge->OperatorId; ?>">
