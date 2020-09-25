@@ -32,14 +32,15 @@
       }
 
       if ($errors->isEmpty()) {
+        $db = DB::get();
         $id = $existingCategory ? $_GET["id"] : null;
         if ($existingCategory) {
-          $sql = DB::get()->prepare(Queries::UPDATE_CATEGORY_NAME_BY_ID);
-          $sql->execute([$post->name, $id]);
+          $sql = $db->prepare(Queries::UPDATE_CATEGORY_BY_ID);
+          $sql->execute([$post->categoryName, $id]);
         } else {
-          $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
-          $sql->execute([$post->name]);
-          $id = DB::get()->lastInsertId();
+          $sql = $db->prepare(Queries::CREATE_NEW_CATEGORY);
+          $sql->execute([$post->categoryName]);
+          $id = $db->lastInsertId();
         }
         redirect('categoryForm', ['id'=>$id, 'readonly'=>true]);
       }

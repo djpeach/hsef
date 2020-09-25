@@ -32,14 +32,15 @@
       }
 
       if ($errors->isEmpty()) {
+        $db = DB::get();
         $id = $existingBooth ? $_GET["id"] : null;
         if ($existingBooth) {
-          $sql = DB::get()->prepare(Queries::UPDATE_BOOTH_NUMBER_BY_ID);
-          $sql->execute([$post->number, $id]);
+          $sql = $db->prepare(Queries::UPDATE_BOOTH_BY_ID);
+          $sql->execute([$post->boothNumber, $id]);
         } else {
-          $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
-          $sql->execute([$post->number]);
-          $id = DB::get()->lastInsertId();
+          $sql = $db->prepare(Queries::CREATE_NEW_BOOTH);
+          $sql->execute([$post->boothNumber]);
+          $id = $db->lastInsertId();
         }
         redirect('boothForm', ['id'=>$id, 'readonly'=>true]);
       }

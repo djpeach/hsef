@@ -25,7 +25,7 @@ class Queries {
   const QUERY_BOOTHS_BY_NUMBER = "SELECT * FROM Booth WHERE Number LIKE ?";
   const GET_ALL_BOOTHS = "SELECT * FROM Booth";
   const GET_BOOTH_BY_ID = "SELECT * FROM Booth Where BoothId = ?";
-  const UPDATE_BOOTH_NUMBER_BY_ID = "UPDATE Booth SET Number=? WHERE BoothId = ?";
+  const UPDATE_BOOTH_BY_ID = "UPDATE Booth SET Number=? WHERE BoothId = ?";
   const DEACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=false WHERE BoothId = ?";
   const ACTIVATE_BOOTH_BY_ID = "UPDATE Booth SET Active=true WHERE BoothId = ?";
   const DELETE_BOOTH_BY_ID = "DELETE FROM Booth WHERE BoothId = ?";
@@ -36,7 +36,7 @@ class Queries {
   const GET_CATEGORY_NAMES_BY_OPID = "SELECT Name FROM Category WHERE CategoryId in (SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?)";
   const GET_ALL_CATEGORIES = "SELECT * FROM Category";
   const GET_CATEGORY_BY_ID = "SELECT * FROM Category WHERE CategoryId = ?";
-  const UPDATE_CATEGORY_NAME_BY_ID = "UPDATE Category SET Name=? WHERE CategoryId = ?";
+  const UPDATE_CATEGORY_BY_ID = "UPDATE Category SET Name=? WHERE CategoryId = ?";
   const DEACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=false WHERE CategoryId = ?";
   const ACTIVATE_CATEGORY_BY_ID = "UPDATE Category SET Active=true WHERE CategoryId = ?";
   const DELETE_CATEGORY_BY_ID = "DELETE FROM Category WHERE CategoryId = ?";
@@ -59,7 +59,7 @@ class Queries {
   const GET_GRADELEVEL_BY_ID = "SELECT * FROM GradeLevel WHERE GradeLevelId = ?";
   const GET_ALL_GRADELEVELS = "SELECT * FROM GradeLevel";
   const QUERY_GRADELEVELS_BY_NAME = "SELECT * FROM GradeLevel WHERE Name LIKE ?";
-  const UPDATE_GRADELEVEL_NAME_BY_ID = "UPDATE GradeLevel SET Name=? WHERE GradeLevelId = ?";
+  const UPDATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Name=? WHERE GradeLevelId = ?";
   const DEACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=false WHERE GradeLevelId = ?";
   const ACTIVATE_GRADELEVEL_BY_ID = "UPDATE GradeLevel SET Active=true WHERE GradeLevelId = ?";
   const DELETE_GRADELEVEL_BY_ID = "DELETE FROM GradeLevel WHERE GradeLevelId = ?";

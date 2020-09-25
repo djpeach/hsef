@@ -32,14 +32,15 @@
       }
 
       if ($errors->isEmpty()) {
+        $db = DB::get();
         $id = $existingGradeLevel ? $_GET["id"] : null;
         if ($existingGradeLevel) {
-          $sql = DB::get()->prepare(Queries::UPDATE_GRADELEVEL_NAME_BY_ID);
-          $sql->execute([$post->name, $id]);
+          $sql = $db->prepare(Queries::UPDATE_GRADELEVEL_BY_ID);
+          $sql->execute([$post->gradeLevelName, $id]);
         } else {
-          $sql = DB::get()->prepare(Queries::CREATE_NEW_GRADELEVEL);
-          $sql->execute([$post->name]);
-          $id = DB::get()->lastInsertId();
+          $sql = $db->prepare(Queries::CREATE_NEW_GRADELEVEL);
+          $sql->execute([$post->gradeLevelName]);
+          $id = $db->lastInsertId();
         }
         redirect('gradeLevelForm', ['id'=>$id, 'readonly'=>true]);
       }

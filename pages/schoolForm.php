@@ -38,12 +38,10 @@
         $id = $existingSchool ? $_GET['id'] : null;
         $countyId = $post->countySelect ? $post->countyId : null;
 
-        if ($existingSchool) { // edited existing school
-          // update school details
+        if ($existingSchool) {
           $sql = $db->prepare(Queries::UPDATE_SCHOOL_BY_ID);
           $sql->execute([$post->schoolName, $countyId, $id]);
-        } else { // creating new school
-          // create new school
+        } else {
           $sql = $db->prepare(Queries::CREATE_NEW_SCHOOL);
           $sql->execute([$post->schoolName, $countyId]);
           $id = $db->lastInsertId();

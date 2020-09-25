@@ -32,7 +32,16 @@
       }
 
       if ($errors->isEmpty()) {
-        // TODO database work
+        $db = DB::get();
+        $id = $existingCounty ? $_GET["id"] : null;
+        if ($existingCounty) {
+          $sql = $db->prepare(Queries::UPDATE_CATEGORY_BY_ID);
+          $sql->execute([$post->countyName, $id]);
+        } else {
+          $sql = $db->prepare(Queries::CREATE_NEW_CATEGORY);
+          $sql->execute([$post->countyName]);
+          $id = $db->lastInsertId();
+        }
         redirect('countyForm', ['id'=>1, 'readonly'=>true]);
       }
     }

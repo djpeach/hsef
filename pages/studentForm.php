@@ -53,14 +53,14 @@
         $gradeLevelId = $post->gradeLevelSelect ? $post->gradeLevelId : null;
         $projectId = $post->projectSelect ? $post->projectId : null;
 
-        if ($existingUser) { // edited existing student
+        if ($existingUser) {
           // update user details
           $sql = $db->prepare(Queries::UPDATE_USER_BY_SID);
           $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email, $id]);
           // update student details
           $sql = $db->prepare(Queries::UPDATE_STUDENT_BY_ID);
           $sql->execute([$schoolId, $projectId, $gradeLevelId, $id]);
-        } else { // creating new student
+        } else {
           // create new user
           $sql = $db->prepare(Queries::CREATE_NEW_USER);
           $sql->execute([$post->firstName, $post->lastName, $post->suffix, $email]);
