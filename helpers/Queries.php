@@ -71,6 +71,44 @@ class Queries {
   const CREATE_NEW_OPERATOR_WITH_UID = "INSERT INTO Operator(UserId, Title, HighestDegree) VALUES (?, ?, ?)";
   const GET_OPERATOR_BY_UID = "SELECT * FROM Operator WHERE UserId = ?";
   const GET_OPERATOR_BY_ID = "SELECT * FROM Operator WHERE OperatorId = ?";
+  const GET_ALL_ADMINS =
+    "SELECT 
+       O.OperatorId, 
+       U.UserId,
+       U.FirstName, 
+       U.LastName, 
+       U.Suffix, 
+       U.Email, 
+       U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE 
+        on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E 
+        on OE.EntitlementId = E.EntitlementId
+    JOIN User U 
+        on O.UserId = U.UserId
+WHERE E.Name = 'admin'
+AND U.Status = 'active'
+GROUP BY O.OperatorId;";
+  const GET_ALL_JUDGES =
+    "SELECT 
+       O.OperatorId, 
+       U.UserId,
+       U.FirstName, 
+       U.LastName, 
+       U.Suffix, 
+       U.Email, 
+       U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE 
+        on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E 
+        on OE.EntitlementId = E.EntitlementId
+    JOIN User U 
+        on O.UserId = U.UserId
+WHERE E.Name = 'judge'
+AND U.Status = 'active'
+GROUP BY O.OperatorId;";
   const UPDATE_OPERATOR_BY_UID = "UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE UserId = ?";
   const UPDATE_OPERATOR_BY_ID = "UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE OperatorId = ?";
   const DELETE_OPERATOR_BY_ID = "DELETE FROM Operator WHERE OperatorId = ?";
@@ -96,7 +134,23 @@ class Queries {
   const CREATE_NEW_PROJECT = "INSERT INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) VALUES(?, ?, ?, ?, ?, ?)";
   const GET_PROJECT_BY_ID = "SELECT P.ProjectId, P.Number as ProjectNumber, P.Name as ProjectName, P.Abstract, P.BoothId, P.CourseNetworkingId, P.CategoryId, B.Number as BoothNumber, C.Name as CategoryName
 FROM Project P LEFT JOIN Booth B on P.BoothId = B.BoothId LEFT JOIN Category C on P.CategoryId = C.CategoryId WHERE P.ProjectId = ?";
-  const GET_ALL_PROJECTS = "SELECT * FROM Project";
+  const GET_ALL_PROJECTS = "
+SELECT 
+       P.ProjectId, 
+       P.Number as ProjectNumber, 
+       P.Name as ProjectName, 
+       P.Abstract, 
+       P.BoothId, 
+       P.CourseNetworkingId, 
+       P.CategoryId,
+       B.Number as BoothNumber,
+       C.Name as CategoryName
+FROM Project P 
+    LEFT JOIN Booth B 
+        on P.BoothId = B.BoothId 
+    LEFT JOIN Category C 
+        on P.CategoryId = C.CategoryId
+WHERE ProjectId in (SELECT S.ProjectId FROM Student S JOIN User U on S.UserId = U.UserId WHERE U.Status = 'active')";
   const QUERY_PROJECTS_BY_NAME = "SELECT P.ProjectId, P.Name FROM Project P WHERE P.Name LIKE ?";
   const UPDATE_PROJECT_BY_ID = "UPDATE Project SET Number=?, Name=?, Abstract=?, BoothId=?, CourseNetworkingId=?, CategoryId=? WHERE ProjectId = ?";
   const DELETE_PROJECT_BY_ID = "DELETE FROM Project WHERE ProjectId = ?";
@@ -186,48 +240,6 @@ WHERE U.Status = 'active' AND StudentId = ?";
   // User Years
   // TODO
 
-  // Joins
-
-
-  const GET_ALL_ACTIVE_ADMINS =
-    "SELECT 
-       O.OperatorId, 
-       U.UserId,
-       U.FirstName, 
-       U.LastName, 
-       U.Suffix, 
-       U.Email, 
-       U.CheckedIn 
-FROM Operator O 
-    JOIN OperatorEntitlement OE 
-        on O.OperatorId = OE.OperatorId 
-    JOIN Entitlement E 
-        on OE.EntitlementId = E.EntitlementId
-    JOIN User U 
-        on O.UserId = U.UserId
-WHERE E.Name = 'admin'
-AND U.Status = 'active'
-GROUP BY O.OperatorId;";
-
-  const GET_ALL_ACTIVE_JUDGES =
-    "SELECT 
-       O.OperatorId, 
-       U.UserId,
-       U.FirstName, 
-       U.LastName, 
-       U.Suffix, 
-       U.Email, 
-       U.CheckedIn 
-FROM Operator O 
-    JOIN OperatorEntitlement OE 
-        on O.OperatorId = OE.OperatorId 
-    JOIN Entitlement E 
-        on OE.EntitlementId = E.EntitlementId
-    JOIN User U 
-        on O.UserId = U.UserId
-WHERE E.Name = 'judge'
-AND U.Status = 'active'
-GROUP BY O.OperatorId;";
 
   const GET_USERS_TO_PROMOTE_TO_ADMIN =
     "SELECT 

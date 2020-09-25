@@ -43,7 +43,7 @@ if ($delFormSubmitted) {
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $judges = DB::get()->query(Queries::GET_ALL_ACTIVE_JUDGES)->fetchAll(); ?>
+      <?php $judges = DB::get()->query(Queries::GET_ALL_JUDGES)->fetchAll(); ?>
       <?php foreach ($judges as $judge) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">

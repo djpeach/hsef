@@ -27,13 +27,16 @@ if ($delFormSubmitted) {
     <div class="container-sm data-table">
       <div class="row border-bottom border-darkgreen mb-3 no-gutters pl-2">
         <div class="col-2">
-          <p class="font-weight-bold">Id</p>
-        </div>
-        <div class="col">
           <p class="font-weight-bold">Number</p>
         </div>
-        <div class="col">
+        <div class="col-4">
           <p class="font-weight-bold">Name</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Booth</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Category</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
@@ -42,14 +45,33 @@ if ($delFormSubmitted) {
       <?php $projects = DB::get()->query(Queries::GET_ALL_PROJECTS)->fetchAll(); ?>
       <?php foreach ($projects as $project) : ?>
         <div class="row row-sliding no-gutters pl-3">
-          <div class="col-1">
-            <p><?php echo $project->ProjectId; ?></p>
+          <div class="col-2">
+            <p><?php echo $project->ProjectNumber; ?></p>
           </div>
-          <div class="col">
-            <p><?php echo $project->Number; ?></p>
+          <div class="col-4">
+            <p><?php echo $project->ProjectName; ?></p>
           </div>
-          <div class="col">
-            <p><?php echo $project->Name; ?></p>
+          <div class="col-2">
+            <p>
+              <?php if ($project->BoothId) : ?>
+                <a href="/hsef/?page=boothForm&id=<?php echo $project->BoothId; ?>&readonly=true">
+                  <?php echo $project->BoothNumber; ?>
+                </a>
+              <?php else : ?>
+                N/A
+              <?php endif; ?>
+            </p>
+          </div>
+          <div class="col-2">
+            <p>
+              <?php if ($project->CategoryId) : ?>
+                <a href="/hsef/?page=categoryForm&id=<?php echo $project->CategoryId; ?>&readonly=true">
+                  <?php echo $project->CategoryName; ?>
+                </a>
+              <?php else : ?>
+                N/A
+              <?php endif; ?>
+            </p>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $project->ProjectId; ?>">
