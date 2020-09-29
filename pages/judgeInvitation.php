@@ -9,7 +9,7 @@
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
 
     $requiredUserFields = ['firstName', 'lastName', 'email'];
-    $formSubmitted = isset($_POST['JUDGE_REGISTRATION']);
+    $formSubmitted = isset($_POST['JUDGE_INVITATION']);
     $didSelectUser = $formSubmitted && $post->selectUserToggle;
 
     // Find and create validation errors
@@ -77,7 +77,7 @@
           </div>
           <div class="row mt-3">
             <div class="col text-right">
-              <button class="ml-auto btn btn-darkgreen" type="submit" name="JUDGE_REGISTRATION">Submit Registration</button>
+              <button class="ml-auto btn btn-darkgreen" type="submit" name="JUDGE_INVITATION">Submit Invitation</button>
             </div>
           </div>
         </fieldset>

@@ -1,26 +1,28 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <main>
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingSchool = isset($_GET['sid']);
+    $existingSchool = isset($_GET['id']);
     $formSubmitted = isset($_POST['SCHOOL_FORM']);
 
     if ($existingSchool && !$formSubmitted) {
-      $sql = DB::get()->prepare(Queries::GET_SCHOOL_BY_ID_WITH_COUNTY);
-      $sql->execute([$_GET['sid']]);
+      $sql = DB::get()->prepare(Queries::GET_SCHOOL_BY_ID);
+      $sql->execute([$_GET['id']]);
       $school = $sql->fetch();
-      $post->name = $school->SchoolName;
+      $post->schoolName = $school->SchoolName;
+      $post->countyId = $school->CountyId;
+      $post->countySelect = $school->CountyName;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
     ?>
     <?php
 
-    $requiredFields = ['name'];
+    $requiredFields = ['schoolName'];
 
     // Find and create validation errors
     if ($formSubmitted) {
@@ -32,25 +34,26 @@
       }
 
       if ($errors->isEmpty()) {
-        // TODO database work
-        redirect('schoolForm', ['sid'=>5, 'readonly'=>true]);
+        $db = DB::get();
+        $id = $existingSchool ? $_GET['id'] : null;
+        $countyId = $post->countySelect ? $post->countyId : null;
+
+        if ($existingSchool) {
+          $sql = $db->prepare(Queries::UPDATE_SCHOOL_BY_ID);
+          $sql->execute([$post->schoolName, $countyId, $id]);
+        } else {
+          $sql = $db->prepare(Queries::CREATE_NEW_SCHOOL);
+          $sql->execute([$post->schoolName, $countyId]);
+          $id = $db->lastInsertId();
+        }
+        redirect('schoolForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>
     <h2 class="article-header"><?php echo $existingSchool ? ($readonly ? 'School Info' : 'Edit School') : 'New School'; ?></h2>
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
-      <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
-        <div class="row mt-3">
-          <div class="col">
-            <div class="floating-label-group">
-              <input type="text" placeholder="Name*" id="name" name="name" value="<?php echo $post->name ?>">
-              <label for="name">Name*</label>
-              <p class="form-error"><?php echo $errors->name; ?></p>
-            </div>
-          </div>
-        </div>
-      </fieldset>
+      <?php include 'components/form-fields/schoolFields.php'; ?>
       <?php if ($readonly) : ?>
         <fieldset>
           <div class="row mt-3">
@@ -62,7 +65,7 @@
             </div>
             <?php if ($existingSchool) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=schoolForm&sid=<?php echo $_GET['sid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=schoolForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit School
                 </a>
@@ -82,4 +85,3 @@
     </form>
   </article>
 </main>
-<?php JS::get()->add('studentFields'); ?>

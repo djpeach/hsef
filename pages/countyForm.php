@@ -1,26 +1,26 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <main>
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-    $existingCounty = isset($_GET['cid']);
+    $existingCounty = isset($_GET['id']);
     $formSubmitted = isset($_POST['COUNTY_FORM']);
 
     if ($existingCounty && !$formSubmitted) {
       $sql = DB::get()->prepare(Queries::GET_COUNTY_BY_ID);
-      $sql->execute([$_GET['cid']]);
+      $sql->execute([$_GET['id']]);
       $county = $sql->fetch();
-      $post->name = $county->Name;
+      $post->countyName = $county->Name;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
     ?>
     <?php
 
-    $requiredFields = ['name'];
+    $requiredFields = ['countyName'];
 
     // Find and create validation errors
     if ($formSubmitted) {
@@ -32,25 +32,24 @@
       }
 
       if ($errors->isEmpty()) {
-        // TODO database work
-        redirect('countyForm', ['cid'=>1, 'readonly'=>true]);
+        $db = DB::get();
+        $id = $existingCounty ? $_GET["id"] : null;
+        if ($existingCounty) {
+          $sql = $db->prepare(Queries::UPDATE_CATEGORY_BY_ID);
+          $sql->execute([$post->countyName, $id]);
+        } else {
+          $sql = $db->prepare(Queries::CREATE_NEW_CATEGORY);
+          $sql->execute([$post->countyName]);
+          $id = $db->lastInsertId();
+        }
+        redirect('countyForm', ['id'=>1, 'readonly'=>true]);
       }
     }
     ?>
     <h2 class="article-header"><?php echo $existingCounty ? ($readonly ? 'County Info' : 'Edit County') : 'New County'; ?></h2>
     <?php include 'components/divider.php' ?>
     <form method="POST" class="container">
-      <fieldset <?php echo $readonly ? 'disabled' : ''; ?>>
-        <div class="row mt-3">
-          <div class="col">
-            <div class="floating-label-group">
-              <input type="text" placeholder="Name*" id="name" name="name" value="<?php echo $post->name ?>">
-              <label for="name">Name*</label>
-              <p class="form-error"><?php echo $errors->name; ?></p>
-            </div>
-          </div>
-        </div>
-      </fieldset>
+      <?php include 'components/form-fields/countyFields.php'; ?>
       <?php if ($readonly) : ?>
         <fieldset>
           <div class="row mt-3">
@@ -62,7 +61,7 @@
             </div>
             <?php if ($existingCounty) : ?>
               <div class="col-6 text-right">
-                <a href="/hsef/?page=countyForm&cid=<?php echo $_GET['cid']; ?>&readonly=false" class="btn btn-darkgreen">
+                <a href="/hsef/?page=countyForm&id=<?php echo $_GET['id']; ?>&readonly=false" class="btn btn-darkgreen">
                   <i class="fas fa-edit text-white"></i>
                   Edit County
                 </a>
@@ -82,4 +81,3 @@
     </form>
   </article>
 </main>
-<?php JS::get()->add('studentFields'); ?>

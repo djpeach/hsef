@@ -6,6 +6,7 @@
   require_once 'helpers/Session.php';
   require_once 'helpers/DB.php';
   require_once 'helpers/JS.php';
+  require_once 'helpers/ModalLoader.php';
   require_once 'helpers/Post.php';
   require_once 'helpers/AuthAccount.php';
   require_once 'helpers/User.php';
@@ -33,7 +34,8 @@
   }
 
   function urlGuard() {
-    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
+//    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
+    $publicPages = ['login'];
 
     $newPage = isset($_GET['page']);
     $authenticated = AuthAccount::get()->isAuthenticated();

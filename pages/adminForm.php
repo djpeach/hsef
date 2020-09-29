@@ -1,16 +1,16 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <main>
   <article class="limit-width-md pt-5">
     <?php $post = new Post(); $errors = new Errors(); ?>
     <?php
-      $existingUser = isset($_GET['opid']);
+      $existingUser = isset($_GET['id']);
       $allowUserSelect = true;
       if ($existingUser && !isset($_POST['ADMIN_FORM'])) {
         $sql = DB::get()->prepare(Queries::GET_OPERATOR_BY_ID);
-        $sql->execute([$_GET['opid']]);
+        $sql->execute([$_GET['id']]);
         $operator = $sql->fetch();
         $post->title = $operator->Title;
         $post->highestDegree = $operator->HighestDegree;
@@ -54,14 +54,14 @@
 
         if ($errors->isEmpty()) {
           $db = DB::get();
-          $opid =$existingUser ? $_GET['opid'] : null;
+          $id =$existingUser ? $_GET['id'] : null;
           if ($existingUser) { // edited existing admin
               // update user details
             $sql = $db->prepare(Queries::UPDATE_USER_BY_OPID);
-            $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $opid]);
+            $sql->execute([$post->firstName, $post->lastName, $post->suffix, $post->email, $id]);
             // update operator details
             $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_ID);
-            $sql->execute([$post->title, $post->highestDegree, $opid]);
+            $sql->execute([$post->title, $post->highestDegree, $id]);
           } else { // new admin
             if ($didSelectUser) { // created new admin from existing user
               // make operator an admin
@@ -73,10 +73,10 @@
               // get Operator Id
               $sql = $db->prepare(Queries::GET_OPERATOR_BY_UID);
               $sql->execute([$post->userId]);
-              $opid = $sql->fetch()->OperatorId;
+              $id = $sql->fetch()->OperatorId;
             } else if (!$didSelectUser && !$existingUser) { // created new admin with new user details
               // create new user
-              $sql = $db->prepare(Queries::CREATE_NEW_USER_WITH_EMAIL);
+              $sql = $db->prepare(Queries::CREATE_NEW_USER);
               $suffix = $post->suffix === '' ? null : $post->suffix;
               $sql->execute([$post->firstName, $post->lastName, $suffix, $post->email]);
               $uid = $db->lastInsertId();
@@ -85,27 +85,27 @@
               $title = $post->title === '' ? null : $post->title;
               $highestDegree = $post->highestDegree === '' ? null : $post->highestDegree;
               $sql->execute([$uid, $title, $highestDegree]);
-              $opid = $db->lastInsertId();
+              $id = $db->lastInsertId();
               // make new operator an admin
               $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
               $sql->execute([$uid]);
             }
             // check for auth account
             $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_OPID);
-            $sql->execute([$opid]);
+            $sql->execute([$id]);
 
             if ($sql->fetch()) {
               // TODO: email existing user they have been made an admin
             } else {
               $sql = $db->prepare(Queries::GET_USER_BY_OPID);
-              $sql->execute([$opid]);
+              $sql->execute([$id]);
               $user = $sql->fetch();
               $pwd = AuthAccount::generateAccountWithUserId($user->UserId);
               // TODO: email user their new auth credentials
             }
 
           }
-          redirect('adminForm', [['opid', $opid], ['readonly', 'true']]);
+          redirect('adminForm', ['id'=>$id, 'readonly'=>true]);
         }
       }
     ?>
@@ -143,7 +143,7 @@
         <div class="row mt-3">
           <?php
           $href = '/hsef/?page=adminForm';
-          $href .= isset($_GET['opid']) ? '&opid='.$_GET['opid'] : '';
+          $href .= isset($_GET['id']) ? '&id='.$_GET['id'] : '';
           ?>
           <div class="col-6">
             <a href="/hsef/?page=adminManagement" class="btn btn-yellow text-white">

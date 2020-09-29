@@ -1,6 +1,3 @@
--- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-09-22 16:25:51.99
-
 -- tables
 -- Table: AuthAccount
 CREATE TABLE AuthAccount (

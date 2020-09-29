@@ -1,5 +1,5 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <?php
@@ -8,23 +8,9 @@
   $delFormSubmitted = isset($_POST['ADMIN_DELETE_SUBMIT']);
 
   if ($delFormSubmitted) {
-    $delType = $post->deleteType;
     $adminId = $post->operatorId;
-
-    $sql = null;
-    if ($delType === "delete") {
-      $sql = DB::get()->prepare(Queries::ARCHIVE_OPERATOR_BY_ID);
-    } else if ($delType === "demote") {
-      $sql = DB::get()->prepare(Queries::REMOVE_ADMIN_BY_OPID);
-    } else {
-      $errors->message = "Something went wrong, please try again";
-    }
-
-    if ($errors->isEmpty()) {
-      if (!$sql->execute([$adminId])) {
-        $errors->message = "Database execution went wrong, please try again";
-      }
-    }
+    $sql = DB::get()->prepare(Queries::REMOVE_ADMIN_BY_OPID);
+    $sql->execute([$adminId]);
   }
 ?>
 <main>
@@ -54,7 +40,7 @@
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $admins = DB::get()->query(Queries::GET_ALL_ACTIVE_ADMINS)->fetchAll(); ?>
+      <?php $admins = DB::get()->query(Queries::GET_ALL_ADMINS)->fetchAll(); ?>
       <?php foreach ($admins as $admin) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
@@ -72,10 +58,10 @@
             </span>
           </div>
           <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $admin->OperatorId; ?>">
-            <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=false" class="col-4 tool-icon bg-green">
+            <a href="/hsef/?page=adminForm&id=<?php echo $admin->OperatorId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </a>
-            <a href="/hsef/?page=adminForm&opid=<?php echo $admin->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
+            <a href="/hsef/?page=adminForm&id=<?php echo $admin->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
             <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $admin->OperatorId; ?>">
@@ -99,24 +85,12 @@
                           Warning: this is a destructive action
                         </h4>
                       </div>
-                      <div class="radio-btns">
-                        <div class="radio-btns-group">
-                          <input type="radio" id="demote-<?php echo $admin->OperatorId; ?>" name="deleteType" value="demote">
-                          <label for="demote-<?php echo $admin->OperatorId; ?>">Demote from Admin</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">demote</span> the user, but retain them in the system</p>
-                        <div class="radio-btns-group">
-                          <input type="radio" id="delete-<?php echo $admin->OperatorId; ?>" name="deleteType" value="delete">
-                          <label for="delete-<?php echo $admin->OperatorId; ?>">Delete user from system</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">delete</span> the user, and <span class="font-weight-bold">remove them from the system</span></p>
-                      </div>
+                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the admin, and they will lose access to all event management tools immediately.</p>
                     </div>
                     <div class="modal-footer">
                       <label for="operatorNameConfirmation-<?php echo $admin->OperatorId ?>">Please type <span class="font-weight-bold"><?php echo $admin->FirstName.' '.$admin->LastName ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $admin->OperatorId ?>" disabled>
+                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $admin->OperatorId ?>">
                       <input type="text" name="operatorId" value="<?php echo $admin->OperatorId ?>" hidden>
-                      <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $admin->FirstName.' '.$admin->LastName ?>" hidden>
                       <button type="submit" class="btn btn-outline-danger mx-auto" name="ADMIN_DELETE_SUBMIT" disabled>I understand, remove admin.</button>
                     </div>

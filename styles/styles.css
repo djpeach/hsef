@@ -130,6 +130,16 @@ body {
   color: white;
 }
 
+.mgt-card {
+  border-radius: 0.8rem;
+}
+.mgt-card i {
+  font-size: 4rem;
+}
+.mgt-card .mgt-card-label {
+  font-weight: bolder;
+}
+
 .custom-divider {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
@@ -169,31 +179,42 @@ body {
   opacity: 1;
   top: 0;
 }
-.floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox {
+.floating-label-group--radio, .floating-label-group--select, .floating-label-group--checkbox, .floating-label-group--textarea {
   margin-top: 1rem;
   /* The switch - the box around the slider */
   /* Hide default HTML checkbox */
   /* The slider */
   /* Rounded sliders */
 }
-.floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input {
+.floating-label-group--radio textarea, .floating-label-group--select textarea, .floating-label-group--checkbox textarea, .floating-label-group--textarea textarea {
+  font-size: 1.8rem;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  border-radius: 0.2rem;
+  border: 1px solid lightslategrey;
+  resize: none;
+}
+.floating-label-group--radio textarea:focus, .floating-label-group--select textarea:focus, .floating-label-group--checkbox textarea:focus, .floating-label-group--textarea textarea:focus {
+  outline: none;
+}
+.floating-label-group--radio input, .floating-label-group--select input, .floating-label-group--checkbox input, .floating-label-group--textarea input {
   margin-left: 16px;
 }
-.floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select {
+.floating-label-group--radio select, .floating-label-group--select select, .floating-label-group--checkbox select, .floating-label-group--textarea select {
   margin-left: 16px;
 }
-.floating-label-group--radio .switch, .floating-label-group--select .switch, .floating-label-group--checkbox .switch {
+.floating-label-group--radio .switch, .floating-label-group--select .switch, .floating-label-group--checkbox .switch, .floating-label-group--textarea .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
-.floating-label-group--radio .switch input, .floating-label-group--select .switch input, .floating-label-group--checkbox .switch input {
+.floating-label-group--radio .switch input, .floating-label-group--select .switch input, .floating-label-group--checkbox .switch input, .floating-label-group--textarea .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-.floating-label-group--radio .slider, .floating-label-group--select .slider, .floating-label-group--checkbox .slider {
+.floating-label-group--radio .slider, .floating-label-group--select .slider, .floating-label-group--checkbox .slider, .floating-label-group--textarea .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -204,7 +225,7 @@ body {
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-.floating-label-group--radio .slider:before, .floating-label-group--select .slider:before, .floating-label-group--checkbox .slider:before {
+.floating-label-group--radio .slider:before, .floating-label-group--select .slider:before, .floating-label-group--checkbox .slider:before, .floating-label-group--textarea .slider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -215,19 +236,19 @@ body {
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-.floating-label-group--radio input:checked + .slider, .floating-label-group--select input:checked + .slider, .floating-label-group--checkbox input:checked + .slider {
+.floating-label-group--radio input:checked + .slider, .floating-label-group--select input:checked + .slider, .floating-label-group--checkbox input:checked + .slider, .floating-label-group--textarea input:checked + .slider {
   background-color: #184d47;
 }
-.floating-label-group--radio input:focus + .slider, .floating-label-group--select input:focus + .slider, .floating-label-group--checkbox input:focus + .slider {
+.floating-label-group--radio input:focus + .slider, .floating-label-group--select input:focus + .slider, .floating-label-group--checkbox input:focus + .slider, .floating-label-group--textarea input:focus + .slider {
   box-shadow: 0 0 1px #184d47;
 }
-.floating-label-group--radio input:checked + .slider:before, .floating-label-group--select input:checked + .slider:before, .floating-label-group--checkbox input:checked + .slider:before {
+.floating-label-group--radio input:checked + .slider:before, .floating-label-group--select input:checked + .slider:before, .floating-label-group--checkbox input:checked + .slider:before, .floating-label-group--textarea input:checked + .slider:before {
   transform: translateX(26px);
 }
-.floating-label-group--radio .slider.round, .floating-label-group--select .slider.round, .floating-label-group--checkbox .slider.round {
+.floating-label-group--radio .slider.round, .floating-label-group--select .slider.round, .floating-label-group--checkbox .slider.round, .floating-label-group--textarea .slider.round {
   border-radius: 34px;
 }
-.floating-label-group--radio .slider.round:before, .floating-label-group--select .slider.round:before, .floating-label-group--checkbox .slider.round:before {
+.floating-label-group--radio .slider.round:before, .floating-label-group--select .slider.round:before, .floating-label-group--checkbox .slider.round:before, .floating-label-group--textarea .slider.round:before {
   border-radius: 50%;
 }
 
@@ -361,9 +382,11 @@ body {
   font-weight: 800;
   margin-bottom: 0;
 }
-.deletion-modal .radio-btns .additional-info {
+.deletion-modal .additional-info {
   margin-left: 2.2rem;
   font-size: 1.3rem;
+  white-space: normal !important;
+  overflow: auto !important;
 }
 .deletion-modal .modal-footer {
   display: flex;

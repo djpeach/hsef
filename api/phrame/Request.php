@@ -34,7 +34,7 @@ class Request implements iRequest {
       case ("GET"):
         return null;
       case ("POST"):
-        $body = array();
+        $body = json_decode(file_get_contents('php://input'));
         foreach($_POST as $key => $value) {
           $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
         }

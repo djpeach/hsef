@@ -1,5 +1,5 @@
 <?php if (!Operator::get()->hasOneOfReqEntitlement(['owner', 'admin'])) {
-  redirect('exception', 'You do not have permission to view this page');
+  redirect('exception', ['errMsg' => 'You do not have permission to view this page']);
   die();
 } ?>
 <?php
@@ -8,23 +8,9 @@ $errors = new Errors();
 $delFormSubmitted = isset($_POST['JUDGE_DELETE_SUBMIT']);
 
 if ($delFormSubmitted) {
-  $delType = $post->deleteType;
   $judgeId = $post->operatorId;
-
-  $sql = null;
-  if ($delType === "delete") {
-    $sql = DB::get()->prepare(Queries::ARCHIVE_OPERATOR_BY_ID);
-  } else if ($delType === "demote") {
-    $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
-  } else {
-    $errors->message = "Something went wrong, please try again";
-  }
-
-  if ($errors->isEmpty()) {
-    if (!$sql->execute([$judgeId])) {
-      $errors->message = "Database execution went wrong, please try again";
-    }
-  }
+  $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
+  $sql->execute([$judgeId]);
 }
 ?>
 <main>
@@ -44,27 +30,47 @@ if ($delFormSubmitted) {
         <div class="col-1">
           <p class="font-weight-bold">Id</p>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-5">
+        <div class="col-4">
           <p class="font-weight-bold">Email</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Checked In</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $judges = DB::get()->query(Queries::GET_ALL_ACTIVE_JUDGES)->fetchAll(); ?>
+      <?php $judges = DB::get()->query(Queries::GET_ALL_JUDGES)->fetchAll(); ?>
       <?php foreach ($judges as $judge) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">
             <p><?php echo $judge->OperatorId; ?></p>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <p><?php echo User::fullName($judge); ?></p>
           </div>
-          <div class="col-5">
-            <p><?php echo $judge->Email; ?></p>
+          <div class="col-4">
+            <p>
+              <?php if ($judge->Email) : ?>
+                <a href="mailto:<?php echo $judge->Email; ?>">
+                  <?php echo $judge->Email; ?>
+                </a>
+              <?php else : ?>
+                N/A
+              <?php endif; ?>
+            </p>
+          </div>
+          <div class="col-2 text-center">
+            <p class="font-weight-bold">
+              <?php if ($judge->CheckedIn) : ?>
+                <i class="fas fa-check-square"></i>
+              <?php else : ?>
+                <i class="fas fa-times"></i>
+              <?php endif; ?>
+            </p>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $judge->OperatorId; ?>">
@@ -72,10 +78,10 @@ if ($delFormSubmitted) {
             </span>
           </div>
           <div class="col-4 col-md-2 slide-tray" id="tools-<?php echo $judge->OperatorId; ?>">
-            <a href="/hsef/?page=judgeForm&opid=<?php echo $judge->OperatorId ?>&readonly=false" class="col-4 tool-icon bg-green">
+            <a href="/hsef/?page=judgeForm&id=<?php echo $judge->OperatorId ?>&readonly=false" class="col-4 tool-icon bg-green">
               <i class="fas fa-edit text-white"></i>
             </a>
-            <a href="/hsef/?page=judgeForm&opid=<?php echo $judge->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
+            <a href="/hsef/?page=judgeForm&id=<?php echo $judge->OperatorId ?>&readonly=true" class="col-4 tool-icon bg-primary">
               <i class="fas fa-user text-white"></i>
             </a>
             <button class="btn col-4 tool-icon btn-danger" data-toggle="modal" data-target="#deletionModal-<?php echo $judge->OperatorId; ?>">
@@ -99,22 +105,11 @@ if ($delFormSubmitted) {
                           Warning: this is a destructive action
                         </h4>
                       </div>
-                      <div class="radio-btns">
-                        <div class="radio-btns-group">
-                          <input type="radio" id="demote-<?php echo $judge->OperatorId; ?>" name="deleteType" value="demote">
-                          <label for="demote-<?php echo $judge->OperatorId; ?>">Demote from Judge</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">remove the judge permissions from</span> the user, but retain them in the system for the current year. They will lose all access to judge tools immediately.</p>
-                        <div class="radio-btns-group">
-                          <input type="radio" id="delete-<?php echo $judge->OperatorId; ?>" name="deleteType" value="delete">
-                          <label for="delete-<?php echo $judge->OperatorId; ?>">Delete user from system</label>
-                        </div>
-                        <p class="additional-info">This will <span class="font-weight-bold">delete</span> the user, and <span class="font-weight-bold">remove them from the system for the current year</span></p>
-                      </div>
+                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the judge, and they will lose access to all judging tools immediately.</p>
                     </div>
                     <div class="modal-footer">
                       <label for="operatorNameConfirmation-<?php echo $judge->OperatorId ?>">Please type <span class="font-weight-bold"><?php echo $judge->FirstName.' '.$judge->LastName ?></span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $judge->OperatorId ?>" disabled>
+                      <input type="text" name="deleteConfirm" id="operatorNameConfirmation-<?php echo $judge->OperatorId ?>">
                       <input type="text" name="operatorId" value="<?php echo $judge->OperatorId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
                       <input type="text" name="deleteConfirmValue" value="<?php echo $judge->FirstName.' '.$judge->LastName ?>" hidden>

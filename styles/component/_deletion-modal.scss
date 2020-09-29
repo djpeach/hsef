@@ -38,11 +38,13 @@
         margin-bottom: 0;
       }
     }
+  }
 
-    .additional-info {
-      margin-left: 2.2rem;
-      font-size: 1.3rem;
-    }
+  .additional-info {
+    margin-left: 2.2rem;
+    font-size: 1.3rem;
+    white-space: normal !important;
+    overflow: auto !important;;
   }
 
   .modal-footer {
