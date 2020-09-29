@@ -304,6 +304,26 @@ VALUES (10, 10, 'Binary',
         13, 8010, 5);
 
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (1, 'Adams Central High School', 1);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (2, 'Blackhawk Christian School', 2);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (3, 'Columbus East High School', 3);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (4, 'Benton Central Junior-Senior High School', 4);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (5, 'Blackford High School', 5);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (6, 'Lebanon Sneior High School', 6);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (7, 'Brown County High School', 7);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (8, 'Carroll High School', 8);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (9, 'Logansport  Community High School', 9);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (10, 'Northview High School', 10);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (11, 'Clinton Central High School', 11);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (12, 'Crawford County Junior- Senior High School', 12);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (13, 'Washington High School', 13);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (14, 'East Central High School', 14);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (15, 'Greensburg Community High School', 15);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (16, 'DeKalb High School', 16);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (17, 'Delta High School', 17);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (18, 'Jasper High School', 18);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (19, 'Elkhart Central High School', 19);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (20, 'Connersville High School', 20);
+
 
 # ----- Downs ----- #
 SET FOREIGN_KEY_CHECKS = 0;
