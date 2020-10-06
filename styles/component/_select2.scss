@@ -1,4 +1,20 @@
 .select2-container--hsef {
+
+  &.select2-container--disabled,
+  &.select2-container--disabled.select2-container--focus {
+    .select2-selection {
+      cursor: not-allowed;
+      background-color: rgba(239, 239, 239, 0.3);
+
+      button, .select2-selection__choice__display {
+        cursor: not-allowed;
+      }
+    }
+    .select2-search__field {
+      background-color: transparent;
+    }
+  }
+
   .select2-selection {
     border: none;
     padding: 2.5rem 1.5rem 1.5rem;

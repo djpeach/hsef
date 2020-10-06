@@ -14,6 +14,9 @@
       $operator = $sql->fetch();
       $post->title = $operator->Title;
       $post->highestDegree = $operator->HighestDegree;
+      $sql = DB::get()->prepare(Queries::GET_CATEGORY_IDS_BY_OPID);
+      $sql->execute([$operator->OperatorId]);
+      $post->judgeCategoryPrefs = $sql->fetchAll(PDO::FETCH_COLUMN);
       $uid = $operator->UserId;
       $sql = DB::get()->prepare(Queries::GET_USER_BY_ID);
       $sql->execute([$uid]);
@@ -90,20 +93,24 @@
             $sql = $db->prepare(Queries::NEW_JUDGE_BY_UID);
             $sql->execute([$uid]);
           }
-          // check for auth account
-          $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_OPID);
-          $sql->execute([$id]);
-
-          if ($sql->fetch()) {
-            // TODO: email existing user they have been made an judge
-          } else {
-            $sql = $db->prepare(Queries::GET_USER_BY_OPID);
-            $sql->execute([$id]);
-            $user = $sql->fetch();
-            $pwd = AuthAccount::generateAccountWithUserId($user->UserId);
-            // TODO: email user their new auth credentials
+        }
+        // update operator category preferences
+        $sql = $db->prepare(Queries::GET_CATEGORY_IDS_BY_OPID);
+        $sql->execute([$id]);
+        $dbCatIds = $sql->fetchAll(PDO::FETCH_COLUMN);
+        foreach ($dbCatIds as $dbCatId) {
+          if (count($post->judgeCategoryPrefs) === 0 || !in_array($dbCatId, $post->judgeCategoryPrefs)) {
+            $sql = $db->prepare(Queries::REMOVE_CATEGORY_FROM_OPERATOR);
+            $sql->execute([$dbCatId, $id]);
           }
-
+        }
+        if (count($post->judgeCategoryPrefs) !== 0) {
+          foreach ($post->judgeCategoryPrefs as $categoryPrefId) {
+            if (!in_array($categoryPrefId, $dbCatIds)) {
+              $sql = $db->prepare(Queries::ADD_CATEGORY_TO_OPERATOR);
+              $sql->execute([$categoryPrefId, $id]);
+            }
+          }
         }
         redirect('judgeForm', ['id'=>$id, 'readonly'=>true]);
       }
@@ -138,10 +145,14 @@
           <div class="col-10">
             <div class="floating-label-group--select pr-5" id="judgeCategoryPrefsDiv">
               <p class="group-label">Select All Category Preferences</p>
-              <select name="categoryPrefs[]" id="judgeCategoryPrefs" multiple>
-<!--                --><?php //foreach ($post->judgeCategoryPrefs as $categoryPref) : ?>
-<!--                  <option value="--><?php //echo $categoryPref->value ?><!--" selected></option>-->
-<!--                --><?php //endforeach; ?>
+              <select name="judgeCategoryPrefs[]" id="judgeCategoryPrefs" multiple <?php echo $readonly ? 'disabled' : '' ?>>
+                <?php foreach ($post->judgeCategoryPrefs as $catId) :
+                  $sql = DB::get()->prepare(Queries::GET_CATEGORY_BY_ID);
+                  $sql->execute([$catId]);
+                  $categoryPref = $sql->fetch();
+                ?>
+                  <option value="<?php echo $categoryPref->CategoryId ?>" selected><?php echo $categoryPref->Name ?></option>
+                <?php endforeach; ?>
               </select>
               <p class="form-error"><?php echo $errors->judgeCategoryPrefs; ?></p>
             </div>
