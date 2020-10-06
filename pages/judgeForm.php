@@ -17,6 +17,9 @@
       $sql = DB::get()->prepare(Queries::GET_CATEGORY_IDS_BY_OPID);
       $sql->execute([$operator->OperatorId]);
       $post->judgeCategoryPrefs = $sql->fetchAll(PDO::FETCH_COLUMN);
+      $sql = DB::get()->prepare(Queries::GET_GRADELEVEL_IDS_BY_OPID);
+      $sql->execute([$operator->OperatorId]);
+      $post->judgeGradeLevelPrefs = $sql->fetchAll(PDO::FETCH_COLUMN);
       $uid = $operator->UserId;
       $sql = DB::get()->prepare(Queries::GET_USER_BY_ID);
       $sql->execute([$uid]);
@@ -112,6 +115,25 @@
             }
           }
         }
+
+        // update operator grade level preferences
+        $sql = $db->prepare(Queries::GET_GRADELEVEL_IDS_BY_OPID);
+        $sql->execute([$id]);
+        $dbGradeLevelIds = $sql->fetchAll(PDO::FETCH_COLUMN);
+        foreach ($dbGradeLevelIds as $dbGradeLevelId) {
+          if (count($post->judgeGradeLevelPrefs) === 0 || !in_array($dbGradeLevelId, $post->judgeGradeLevelPrefs)) {
+            $sql = $db->prepare(Queries::REMOVE_GRADELEVEL_FROM_OPERATOR);
+            $sql->execute([$dbGradeLevelId, $id]);
+          }
+        }
+        if (count($post->judgeGradeLevelPrefs) !== 0) {
+          foreach ($post->judgeGradeLevelPrefs as $gradeLevelPrefId) {
+            if (!in_array($gradeLevelPrefId, $dbGradeLevelIds)) {
+              $sql = $db->prepare(Queries::ADD_GRADELEVEL_TO_OPERATOR);
+              $sql->execute([$gradeLevelPrefId, $id]);
+            }
+          }
+        }
         redirect('judgeForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
@@ -164,6 +186,29 @@
             </button>
           </div>
         </div>
+        <div class="row no-gutters mt-3">
+          <div class="col-10">
+            <div class="floating-label-group--select pr-5" id="judgeGradeLevelPrefsDiv">
+              <p class="group-label">Select All Grade Level Preferences</p>
+              <select name="judgeGradeLevelPrefs[]" id="judgeGradeLevelPrefs" multiple <?php echo $readonly ? 'disabled' : '' ?>>
+                <?php foreach ($post->judgeGradeLevelPrefs as $gradeLevelId) :
+                  $sql = DB::get()->prepare(Queries::GET_GRADELEVEL_BY_ID);
+                  $sql->execute([$gradeLevelId]);
+                  $gradeLevelPref = $sql->fetch();
+                ?>
+                  <option value="<?php echo $gradeLevelPref->GradeLevelId ?>" selected><?php echo $gradeLevelPref->Name ?></option>
+                <?php endforeach; ?>
+              </select>
+              <p class="form-error"><?php echo $errors->judgeGradeLevelPrefs; ?></p>
+            </div>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#gradeLevelFormModal">
+              <i class="fas fa-plus mr-1"></i>
+              New Grade Level
+            </button>
+          </div>
+        </div>
         <?php if (!$readonly) : ?>
           <div class="row mt-3">
             <div class="col text-right">
@@ -199,3 +244,4 @@
 </main>
 <?php JS::get()->add('judgeFields'); ?>
 <?php ModalLoader::get()->add('newCategory'); ?>
+<?php ModalLoader::get()->add('newGradeLevel'); ?>

@@ -55,4 +55,30 @@ $(document).ready(function() {
       }
     }
   })
+
+  let judgeGradeLevelPrefs = $('#judgeGradeLevelPrefs');
+  let judgeGradeLevelParent = $('#judgeGradeLevelPrefsDiv');
+
+  judgeGradeLevelPrefs.select2({
+    allowClear: true,
+    minimumInputLength: 1,
+    dropdownParent: judgeGradeLevelParent,
+    theme: 'hsef',
+    placeholder: 'Search for grade levels',
+    language: {
+      inputTooShort: function() {
+        return 'Start typing to search for grade levels';
+      }
+    },
+    ajax: {
+      url: '/hsef/api/gradeLevels/fuzzyMatch',
+      delay: 500,
+      dataType: 'json',
+      processResults: function (data) {
+        return {
+          results: data.map(item => ({id: item.value, text: item.label}))
+        }
+      }
+    }
+  })
 });

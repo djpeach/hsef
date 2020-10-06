@@ -21,7 +21,6 @@ $(document).ready(function() {
 
           let categoryPrefs = $('#judgeCategoryPrefs');
           if (categoryPrefs.length !== 0 ) {
-            console.log('got judge category prefs');
             let newOption = new Option(res.data.createdCategory.name, res.data.createdCategory.id, true, true);
             categoryPrefs.append(newOption).trigger('change');
           }

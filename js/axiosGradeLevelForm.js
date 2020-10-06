@@ -14,8 +14,17 @@ $(document).ready(function() {
 
           let gradeLevelSelect = $('#gradeLevelSelect');
           let gradeLevelId = $('#gradeLevelId');
-          gradeLevelSelect.val(res.data.createdGradeLevel.name);
-          gradeLevelId.val(res.data.createdGradeLevel.id);
+          if (gradeLevelSelect.length !== 0 && gradeLevelId.length !== 0) {
+            gradeLevelSelect.val(res.data.createdGradeLevel.name);
+            gradeLevelId.val(res.data.createdGradeLevel.id);
+          }
+
+          let gradeLevelPrefs = $('#judgeGradeLevelPrefs');
+          if (gradeLevelPrefs.length !== 0 ) {
+            let newOption = new Option(res.data.createdGradeLevel.name, res.data.createdGradeLevel.id, true, true);
+            gradeLevelPrefs.append(newOption).trigger('change');
+          }
+
           gradeLevelFormErrors.html('');
         } else if (res.data.error) {
           gradeLevelFormErrors.html(`<li>${res.data.error}</li>`);

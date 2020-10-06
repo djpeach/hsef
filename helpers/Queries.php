@@ -116,6 +116,7 @@ GROUP BY O.OperatorId;";
 
   // Operator Category Preferences
   const ADD_CATEGORY_TO_OPERATOR = "REPLACE INTO OperatorCategory(CategoryId, OperatorId) VALUES(?, ?)";
+  const GET_CATEGORY_IDS_BY_OPID = "SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?";
   const REMOVE_CATEGORY_FROM_OPERATOR = "DELETE FROM OperatorCategory WHERE CategoryId = ? AND OperatorId = ?";
 
   // Operator Entitlements
@@ -128,7 +129,7 @@ GROUP BY O.OperatorId;";
 
   // Operator Grade Level Preferences
   const ADD_GRADELEVEL_TO_OPERATOR = "INSERT INTO OperatorGradeLevel(GradeLevelId, OperatorId) VALUES(?, ?)";
-  const GET_CATEGORY_IDS_BY_OPID = "SELECT CategoryId FROM OperatorCategory WHERE OperatorId = ?";
+  const GET_GRADELEVEL_IDS_BY_OPID = "SELECT GradeLevelId FROM OperatorGradeLevel WHERE OperatorId = ?";
   const REMOVE_GRADELEVEL_FROM_OPERATOR = "DELETE FROM OperatorGradeLevel WHERE GradeLevelId = ? AND OperatorId = ?";
 
   // Projects
