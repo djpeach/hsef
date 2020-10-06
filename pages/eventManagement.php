@@ -22,68 +22,6 @@
         <?php include 'components/divider.php' ?>
       </div>
     </div>
-<<<<<<< HEAD
-      <div class="container">
-          <div class="row">
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-user-graduate"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=studentManagement">Student</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-chalkboard"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=projectManagement">Projects</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-gavel"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=judgeManagement">Judges</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-school"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=schoolManagement">Schools</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-list-ul"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=categoryForm">Categories</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4">
-                  <div class="card text-yellow bg-darkgreen">
-                      <div class="card-header"><i class="fas fa-award"></i></div>
-                      <div class="card-body">
-                          <div class="card-title"><a href="/hsef/?page=scoreManagement">Scores</a></div>
-                          <div class="card-text"></div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-=======
     <div class="row">
       <div class="mt-3 col-12 col-sm-6 col-md-4">
         <a href="/hsef/?page=judgeManagement" class="mgt-card card text-yellow bg-darkgreen">
@@ -109,8 +47,6 @@
           </div>
         </a>
       </div>
-    </div>
-    <div class="row">
       <div class="mt-3 col-12 col-sm-6 col-md-4">
         <a href="/hsef/?page=schoolManagement" class="mgt-card card text-yellow bg-darkgreen">
           <div class="card-body text-center">
@@ -135,8 +71,6 @@
           </div>
         </a>
       </div>
-    </div>
-    <div class="row">
       <div class="mt-3 col-12 col-sm-6 col-md-4">
         <a href="/hsef/?page=boothManagement" class="mgt-card card text-yellow bg-darkgreen">
           <div class="card-body text-center">
@@ -171,7 +105,6 @@
         </button>
       </div>
     </div>
->>>>>>> 8498506e6eb89543e6f09057ac06ac559be06df9
   </article>
 </main>
 
