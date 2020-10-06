@@ -121,89 +121,89 @@ INSERT INTO County(CountyId, Name) VALUES (6, 'Boone');
 INSERT INTO County(CountyId, Name) VALUES (7, 'Brown');
 INSERT INTO County(CountyId, Name) VALUES (8, 'Carroll');
 INSERT INTO County(CountyId, Name) VALUES (9, 'Cass');
-INSERT INTO County(CountyId, Name) VALUES ('Clark');
-INSERT INTO County(CountyId, Name) VALUES ('Clay');
-INSERT INTO County(CountyId, Name) VALUES ('Clinton');
-INSERT INTO County(CountyId, Name) VALUES ('Crawford');
-INSERT INTO County(CountyId, Name) VALUES ('Daviess');
-INSERT INTO County(CountyId, Name) VALUES ('De Kalb');
-INSERT INTO County(CountyId, Name) VALUES ('Dearborn');
-INSERT INTO County(CountyId, Name) VALUES ('Decatur');
-INSERT INTO County(CountyId, Name) VALUES ('Delaware');
-INSERT INTO County(CountyId, Name) VALUES ('Dubois');
-INSERT INTO County(CountyId, Name) VALUES ('Elkhart');
-INSERT INTO County(CountyId, Name) VALUES ('Fayette');
-INSERT INTO County(CountyId, Name) VALUES ('Floyd');
-INSERT INTO County(CountyId, Name) VALUES ('Fountain');
-INSERT INTO County(CountyId, Name) VALUES ('Franklin');
-INSERT INTO County(CountyId, Name) VALUES ('Fulton');
-INSERT INTO County(CountyId, Name) VALUES ('Gibson');
-INSERT INTO County(CountyId, Name) VALUES ('Grant');
-INSERT INTO County(CountyId, Name) VALUES ('Greene');
-INSERT INTO County(CountyId, Name) VALUES ('Hamilton');
-INSERT INTO County(CountyId, Name) VALUES ('Hancock');
-INSERT INTO County(CountyId, Name) VALUES ('Harrison');
-INSERT INTO County(CountyId, Name) VALUES ('Hendricks');
-INSERT INTO County(CountyId, Name) VALUES ('Henry');
-INSERT INTO County(CountyId, Name) VALUES ('Howard');
-INSERT INTO County(CountyId, Name) VALUES ('Huntington');
-INSERT INTO County(CountyId, Name) VALUES ('Jackson');
-INSERT INTO County(CountyId, Name) VALUES ('Jasper');
-INSERT INTO County(CountyId, Name) VALUES ('Jay');
-INSERT INTO County(CountyId, Name) VALUES ('Jefferson');
-INSERT INTO County(CountyId, Name) VALUES ('Jennings');
-INSERT INTO County(CountyId, Name) VALUES ('Johnson');
-INSERT INTO County(CountyId, Name) VALUES ('Knox');
-INSERT INTO County(CountyId, Name) VALUES ('Kosciusko');
-INSERT INTO County(CountyId, Name) VALUES ('La Porte');
-INSERT INTO County(CountyId, Name) VALUES ('Lagrange');
-INSERT INTO County(CountyId, Name) VALUES ('Lake');
-INSERT INTO County(CountyId, Name) VALUES ('Lawrence');
-INSERT INTO County(CountyId, Name) VALUES ('Madison');
-INSERT INTO County(CountyId, Name) VALUES ('Marion');
-INSERT INTO County(CountyId, Name) VALUES ('Marshall');
-INSERT INTO County(CountyId, Name) VALUES ('Martin');
-INSERT INTO County(CountyId, Name) VALUES ('Miami');
-INSERT INTO County(CountyId, Name) VALUES ('Monroe');
-INSERT INTO County(CountyId, Name) VALUES ('Montgomery');
-INSERT INTO County(CountyId, Name) VALUES ('Morgan');
-INSERT INTO County(CountyId, Name) VALUES ('Newton');
-INSERT INTO County(CountyId, Name) VALUES ('Noble');
-INSERT INTO County(CountyId, Name) VALUES ('Ohio');
-INSERT INTO County(CountyId, Name) VALUES ('Orange');
-INSERT INTO County(CountyId, Name) VALUES ('Owen');
-INSERT INTO County(CountyId, Name) VALUES ('Parke');
-INSERT INTO County(CountyId, Name) VALUES ('Perry');
-INSERT INTO County(CountyId, Name) VALUES ('Pike');
-INSERT INTO County(CountyId, Name) VALUES ('Porter');
-INSERT INTO County(CountyId, Name) VALUES ('Posey');
-INSERT INTO County(CountyId, Name) VALUES ('Pulaski');
-INSERT INTO County(CountyId, Name) VALUES ('Putnam');
-INSERT INTO County(CountyId, Name) VALUES ('Randolph');
-INSERT INTO County(CountyId, Name) VALUES ('Ripley');
-INSERT INTO County(CountyId, Name) VALUES ('Rush');
-INSERT INTO County(CountyId, Name) VALUES ('Scott');
-INSERT INTO County(CountyId, Name) VALUES ('Shelby');
-INSERT INTO County(CountyId, Name) VALUES ('Spencer');
-INSERT INTO County(CountyId, Name) VALUES ('St Joseph');
-INSERT INTO County(CountyId, Name) VALUES ('Starke');
-INSERT INTO County(CountyId, Name) VALUES ('Steuben');
-INSERT INTO County(CountyId, Name) VALUES ('Sullivan');
-INSERT INTO County(CountyId, Name) VALUES ('Switzerland');
-INSERT INTO County(CountyId, Name) VALUES ('Tippecanoe');
-INSERT INTO County(CountyId, Name) VALUES ('Tipton');
-INSERT INTO County(CountyId, Name) VALUES ('Union');
-INSERT INTO County(CountyId, Name) VALUES ('Vanderburgh');
-INSERT INTO County(CountyId, Name) VALUES ('Vermillion');
-INSERT INTO County(CountyId, Name) VALUES ('Vigo');
-INSERT INTO County(CountyId, Name) VALUES ('Wabash');
-INSERT INTO County(CountyId, Name) VALUES ('Warren');
-INSERT INTO County(CountyId, Name) VALUES ('Warrick');
-INSERT INTO County(CountyId, Name) VALUES ('Washington');
-INSERT INTO County(CountyId, Name) VALUES ('Wayne');
-INSERT INTO County(CountyId, Name) VALUES ('Wells');
-INSERT INTO County(CountyId, Name) VALUES ('White');
-INSERT INTO County(CountyId, Name) VALUES ('Whitley');
+INSERT INTO County(CountyId, Name) VALUES (10, 'Clark');
+INSERT INTO County(CountyId, Name) VALUES (11, 'Clay');
+INSERT INTO County(CountyId, Name) VALUES (12, 'Clinton');
+INSERT INTO County(CountyId, Name) VALUES (13, 'Crawford');
+INSERT INTO County(CountyId, Name) VALUES (14, 'Daviess');
+INSERT INTO County(CountyId, Name) VALUES (15, 'De Kalb');
+INSERT INTO County(CountyId, Name) VALUES (16, 'Dearborn');
+INSERT INTO County(CountyId, Name) VALUES (17, 'Decatur');
+INSERT INTO County(CountyId, Name) VALUES (18, 'Delaware');
+INSERT INTO County(CountyId, Name) VALUES (19, 'Dubois');
+INSERT INTO County(CountyId, Name) VALUES (20, 'Elkhart');
+INSERT INTO County(CountyId, Name) VALUES (21, 'Fayette');
+INSERT INTO County(CountyId, Name) VALUES (22, 'Floyd');
+INSERT INTO County(CountyId, Name) VALUES (23, 'Fountain');
+INSERT INTO County(CountyId, Name) VALUES (24, 'Franklin');
+INSERT INTO County(CountyId, Name) VALUES (25, 'Fulton');
+INSERT INTO County(CountyId, Name) VALUES (26, 'Gibson');
+INSERT INTO County(CountyId, Name) VALUES (27, 'Grant');
+INSERT INTO County(CountyId, Name) VALUES (28, 'Greene');
+INSERT INTO County(CountyId, Name) VALUES (29, 'Hamilton');
+INSERT INTO County(CountyId, Name) VALUES (30, 'Hancock');
+INSERT INTO County(CountyId, Name) VALUES (31, 'Harrison');
+INSERT INTO County(CountyId, Name) VALUES (32, 'Hendricks');
+INSERT INTO County(CountyId, Name) VALUES (33, 'Henry');
+INSERT INTO County(CountyId, Name) VALUES (34, 'Howard');
+INSERT INTO County(CountyId, Name) VALUES (35, 'Huntington');
+INSERT INTO County(CountyId, Name) VALUES (36, 'Jackson');
+INSERT INTO County(CountyId, Name) VALUES (37, 'Jasper');
+INSERT INTO County(CountyId, Name) VALUES (38, 'Jay');
+INSERT INTO County(CountyId, Name) VALUES (39, 'Jefferson');
+INSERT INTO County(CountyId, Name) VALUES (40, 'Jennings');
+INSERT INTO County(CountyId, Name) VALUES (41, 'Johnson');
+INSERT INTO County(CountyId, Name) VALUES (42, 'Knox');
+INSERT INTO County(CountyId, Name) VALUES (43, 'Kosciusko');
+INSERT INTO County(CountyId, Name) VALUES (44, 'La Porte');
+INSERT INTO County(CountyId, Name) VALUES (45, 'Lagrange');
+INSERT INTO County(CountyId, Name) VALUES (46, 'Lake');
+INSERT INTO County(CountyId, Name) VALUES (47, 'Lawrence');
+INSERT INTO County(CountyId, Name) VALUES (48, 'Madison');
+INSERT INTO County(CountyId, Name) VALUES (49, 'Marion');
+INSERT INTO County(CountyId, Name) VALUES (50, 'Marshall');
+INSERT INTO County(CountyId, Name) VALUES (51, 'Martin');
+INSERT INTO County(CountyId, Name) VALUES (52, 'Miami');
+INSERT INTO County(CountyId, Name) VALUES (53, 'Monroe');
+INSERT INTO County(CountyId, Name) VALUES (54, 'Montgomery');
+INSERT INTO County(CountyId, Name) VALUES (55, 'Morgan');
+INSERT INTO County(CountyId, Name) VALUES (56, 'Newton');
+INSERT INTO County(CountyId, Name) VALUES (57,'Noble');
+INSERT INTO County(CountyId, Name) VALUES (58, 'Ohio');
+INSERT INTO County(CountyId, Name) VALUES (59, 'Orange');
+INSERT INTO County(CountyId, Name) VALUES (60, 'Owen');
+INSERT INTO County(CountyId, Name) VALUES (61, 'Parke');
+INSERT INTO County(CountyId, Name) VALUES (62, 'Perry');
+INSERT INTO County(CountyId, Name) VALUES (63, 'Pike');
+INSERT INTO County(CountyId, Name) VALUES (64, 'Porter');
+INSERT INTO County(CountyId, Name) VALUES (65, 'Posey');
+INSERT INTO County(CountyId, Name) VALUES (66, 'Pulaski');
+INSERT INTO County(CountyId, Name) VALUES (67, 'Putnam');
+INSERT INTO County(CountyId, Name) VALUES (68, 'Randolph');
+INSERT INTO County(CountyId, Name) VALUES (69, 'Ripley');
+INSERT INTO County(CountyId, Name) VALUES (70, 'Rush');
+INSERT INTO County(CountyId, Name) VALUES (71, 'Scott');
+INSERT INTO County(CountyId, Name) VALUES (72, 'Shelby');
+INSERT INTO County(CountyId, Name) VALUES (73, 'Spencer');
+INSERT INTO County(CountyId, Name) VALUES (74, 'St Joseph');
+INSERT INTO County(CountyId, Name) VALUES (75, 'Starke');
+INSERT INTO County(CountyId, Name) VALUES (76, 'Steuben');
+INSERT INTO County(CountyId, Name) VALUES (77, 'Sullivan');
+INSERT INTO County(CountyId, Name) VALUES (78, 'Switzerland');
+INSERT INTO County(CountyId, Name) VALUES (79, 'Tippecanoe');
+INSERT INTO County(CountyId, Name) VALUES (80, 'Tipton');
+INSERT INTO County(CountyId, Name) VALUES (81, 'Union');
+INSERT INTO County(CountyId, Name) VALUES (82, 'Vanderburgh');
+INSERT INTO County(CountyId, Name) VALUES (83, 'Vermillion');
+INSERT INTO County(CountyId, Name) VALUES (84, 'Vigo');
+INSERT INTO County(CountyId, Name) VALUES (85, 'Wabash');
+INSERT INTO County(CountyId, Name) VALUES (86, 'Warren');
+INSERT INTO County(CountyId, Name) VALUES (87, 'Warrick');
+INSERT INTO County(CountyId, Name) VALUES (88, 'Washington');
+INSERT INTO County(CountyId, Name) VALUES (89, 'Wayne');
+INSERT INTO County(CountyId, Name) VALUES (90, 'Wells');
+INSERT INTO County(CountyId, Name) VALUES (91, 'White');
+INSERT INTO County(CountyId, Name) VALUES (92, 'Whitley');
 
 INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (1, '1st Grade');
 INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (2, '2nd Grade');
@@ -265,9 +265,65 @@ INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (7, 9);
 INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
 VALUES (1, 1, 'Volcanoes',
         'Aenean viverra rhoncus pede. Nullam dictum felis eu pede mollis pretium. Praesent nec nisl a purus blandit viverra.',
-        4, 3523, 2);
+        4, 3523, 1);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (2, 2, 'Solar System',
+        'Sed aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        5, 5670, 4);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (3, 3, 'Plants',
+        'Sed aliquam ultrices dsajk mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        6, 2190, 10);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (4, 4, 'Cells',
+        'Sed dsajn aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        7, 2178, 2);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (5, 5, 'Chemicals',
+        'Sed aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        8, 3461, 3);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (6, 6, 'Robots',
+        'Sed beep boop aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        9, 4591, 6);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (7, 7, 'Rocks are cool',
+        'Sed Rock aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        10, 2156, 7);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (8, 8, 'Vertical vs. Horizontal',
+        'Sed fas aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        11, 4892, 8);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (9, 9, '2+2=5',
+        'Sed aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        12, 3154, 9);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (10, 10, 'Binary',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        13, 8010, 5);
 
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (1, 'Adams Central High School', 1);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (2, 'Blackhawk Christian School', 2);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (3, 'Columbus East High School', 3);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (4, 'Benton Central Junior-Senior High School', 4);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (5, 'Blackford High School', 5);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (6, 'Lebanon Sneior High School', 6);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (7, 'Brown County High School', 7);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (8, 'Carroll High School', 8);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (9, 'Logansport  Community High School', 9);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (10, 'Northview High School', 10);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (11, 'Clinton Central High School', 11);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (12, 'Crawford County Junior- Senior High School', 12);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (13, 'Washington High School', 13);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (14, 'East Central High School', 14);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (15, 'Greensburg Community High School', 15);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (16, 'DeKalb High School', 16);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (17, 'Delta High School', 17);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (18, 'Jasper High School', 18);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (19, 'Elkhart Central High School', 19);
+INSERT INTO School(SchoolId, Name, CountyId) VALUES (20, 'Connersville High School', 20);
+
 
 # ----- Downs ----- #
 SET FOREIGN_KEY_CHECKS = 0;

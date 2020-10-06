@@ -47,8 +47,6 @@
           </div>
         </a>
       </div>
-    </div>
-    <div class="row">
       <div class="mt-3 col-12 col-sm-6 col-md-4">
         <a href="/hsef/?page=schoolManagement" class="mgt-card card text-yellow bg-darkgreen">
           <div class="card-body text-center">
@@ -73,8 +71,6 @@
           </div>
         </a>
       </div>
-    </div>
-    <div class="row">
       <div class="mt-3 col-12 col-sm-6 col-md-4">
         <a href="/hsef/?page=boothManagement" class="mgt-card card text-yellow bg-darkgreen">
           <div class="card-body text-center">
