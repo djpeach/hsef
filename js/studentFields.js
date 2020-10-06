@@ -5,7 +5,7 @@ $(document).ready(function() {
   schoolSelect.autocomplete({
     appendTo: "#schoolSelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/school`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/schools/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {
@@ -29,7 +29,7 @@ $(document).ready(function() {
   gradeLevelSelect.autocomplete({
     appendTo: "#gradeLevelSelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/gradeLevel`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/gradeLevels/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {
@@ -53,7 +53,7 @@ $(document).ready(function() {
   projectSelect.autocomplete({
     appendTo: "#projectSelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/project`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/projects/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {

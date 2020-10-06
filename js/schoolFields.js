@@ -5,7 +5,7 @@ $(document).ready(function() {
   countySelect.autocomplete({
     appendTo: "#countySelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/county`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/counties/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {

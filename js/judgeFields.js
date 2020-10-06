@@ -29,4 +29,30 @@ $(document).ready(function() {
       return false;
     }
   });
+
+  let categoryPrefs = $('#judgeCategoryPrefs');
+  let categoryPrefsParent = $('#judgeCategoryPrefsDiv');
+
+  categoryPrefs.select2({
+    allowClear: true,
+    minimumInputLength: 1,
+    dropdownParent: categoryPrefsParent,
+    theme: 'hsef',
+    placeholder: 'Search for categories',
+    language: {
+      inputTooShort: function() {
+        return 'Start typing to search for categories';
+      }
+    },
+    ajax: {
+      url: '/hsef/api/categories/fuzzyMatch',
+      delay: 500,
+      dataType: 'json',
+      processResults: function (data) {
+        return {
+          results: data.map(item => ({id: item.value, text: item.label}))
+        }
+      }
+    }
+  })
 });

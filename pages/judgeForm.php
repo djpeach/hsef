@@ -130,6 +130,29 @@
             </div>
           </div>
         </div>
+        <div class="row mt-3">
+          <div class="col">
+          </div>
+        </div>
+        <div class="row no-gutters mt-3">
+          <div class="col-10">
+            <div class="floating-label-group--select pr-5" id="judgeCategoryPrefsDiv">
+              <p class="group-label">Select All Category Preferences</p>
+              <select name="categoryPrefs[]" id="judgeCategoryPrefs" multiple>
+<!--                --><?php //foreach ($post->judgeCategoryPrefs as $categoryPref) : ?>
+<!--                  <option value="--><?php //echo $categoryPref->value ?><!--" selected></option>-->
+<!--                --><?php //endforeach; ?>
+              </select>
+              <p class="form-error"><?php echo $errors->judgeCategoryPrefs; ?></p>
+            </div>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <button class="btn btn-sm btn-outline-darkgreen" type="button" data-toggle="modal" data-target="#categoryFormModal">
+              <i class="fas fa-plus mr-1"></i>
+              New Category
+            </button>
+          </div>
+        </div>
         <?php if (!$readonly) : ?>
           <div class="row mt-3">
             <div class="col text-right">
@@ -164,3 +187,4 @@
   </article>
 </main>
 <?php JS::get()->add('judgeFields'); ?>
+<?php ModalLoader::get()->add('newCategory'); ?>

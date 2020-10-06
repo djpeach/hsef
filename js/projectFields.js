@@ -5,7 +5,7 @@ $(document).ready(function() {
   boothSelect.autocomplete({
     appendTo: "#boothSelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/booth`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/booths/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {
@@ -29,7 +29,7 @@ $(document).ready(function() {
   categorySelect.autocomplete({
     appendTo: "#categorySelectDiv",
     position: { my : "right top", at: "right bottom" },
-    source: `/hsef/api/users/fuzzyMatch/category`, // sends get to api with ?term=<user input>
+    source: `/hsef/api/categories/fuzzyMatch`, // sends get to api with ?term=<user input>
     delay: 500,
     select: function (event, ui) {
       if (ui.item) {

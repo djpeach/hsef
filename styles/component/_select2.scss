@@ -1,0 +1,49 @@
+.select2-container--hsef {
+  .select2-selection {
+    border: none;
+    padding: 2.5rem 1.5rem 1.5rem;
+    font-weight: 400;
+    border-bottom: 1px solid map-get($theme-colors, border);
+    width: 100%;
+    outline: none;
+    font-size: 1.8rem;
+
+    .select2-selection__clear {
+      float: none;
+      margin-right: 0;
+      position: absolute !important;
+      top: 45%;
+      right: 0.7rem;
+      color: map-get($theme-colors, darkgreen);
+      font-size: 2rem;
+    }
+
+    .select2-selection__rendered {
+      .select2-selection__choice {
+        color: map-get($theme-colors, darkgreen);
+        border: 1px solid map-get($theme-colors, border);
+        border-radius: 0.3rem;
+        padding: 0 5px 0 0;
+        cursor: pointer;
+        float: left;
+        margin-top: 0.3em;
+        margin-right: 5px;
+
+        .select2-selection__choice__remove {
+          border: none;
+          background-color: transparent;
+          color: #bdc6d0;
+          font-weight: bold;
+          margin-left: 3px;
+          margin-right: 1px;
+          padding-right: 3px;
+          padding-left: 3px;
+          float: left;
+        }
+      }
+    }
+  }
+  .select2-dropdown {
+    font-size: 1.8rem;
+  }
+}

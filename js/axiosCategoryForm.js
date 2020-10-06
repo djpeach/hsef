@@ -14,8 +14,17 @@ $(document).ready(function() {
 
           let categorySelect = $('#categorySelect');
           let categoryId = $('#categoryId');
-          categorySelect.val(res.data.createdCategory.name);
-          categoryId.val(res.data.createdCategory.id);
+          if (categorySelect.length !== 0 && categoryId.length !== 0) {
+            categorySelect.val(res.data.createdCategory.name);
+            categoryId.val(res.data.createdCategory.id);
+          }
+
+          let categoryPrefs = $('#judgeCategoryPrefs');
+          if (categoryPrefs.length !== 0 ) {
+            console.log('got judge category prefs');
+            let newOption = new Option(res.data.createdCategory.name, res.data.createdCategory.id, true, true);
+            categoryPrefs.append(newOption).trigger('change');
+          }
           categoryFormErrors.html('');
         } else if (res.data.error) {
           categoryFormErrors.html(`<li>${res.data.error}</li>`);

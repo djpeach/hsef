@@ -7,179 +7,8 @@ use Phrame\App as App;
 
 $app = new App();
 
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_USERS_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query, $query]);
-  $users = array_map(function($user) {
-    return [
-      "label" => $user->FirstName.' '.$user->LastName,
-      "value" => $user->UserId
-    ];
-  }, $sql->fetchAll());
-  $res->json($users);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/promote-to-admin', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::GET_USERS_TO_PROMOTE_TO_ADMIN);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query, $query]);
-  $users = array_map(function($user) {
-    return [
-      "label" => $user->FirstName.' '.$user->LastName,
-      "value" => $user->UserId
-    ];
-  }, $sql->fetchAll());
-  $res->json($users);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/promote-to-judge', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::GET_USERS_TO_PROMOTE_TO_JUDGE);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query, $query]);
-  $users = array_map(function($user) {
-    return [
-      "label" => $user->FirstName.' '.$user->LastName,
-      "value" => $user->UserId
-    ];
-  }, $sql->fetchAll());
-  $res->json($users);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/school', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_SCHOOLS_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $schools = array_map(function($school) {
-    return [
-      "label" => $school->Name,
-      "value" => $school->SchoolId
-    ];
-  }, $sql->fetchAll());
-  $res->json($schools);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/county', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_COUNTIES_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $counties = array_map(function($county) {
-    return [
-      "label" => $county->Name,
-      "value" => $county->CountyId
-    ];
-  }, $sql->fetchAll());
-  $res->json($counties);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/booth', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_BOOTHS_BY_NUMBER);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $booths = array_map(function($booth) {
-    return [
-      "label" => $booth->Number,
-      "value" => $booth->BoothId
-    ];
-  }, $sql->fetchAll());
-  $res->json($booths);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/category', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_CATEGORIES_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $categories = array_map(function($category) {
-    return [
-      "label" => $category->Name,
-      "value" => $category->CategoryId
-    ];
-  }, $sql->fetchAll());
-  $res->json($categories);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/gradeLevel', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_GRADELEVELS_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $categories = array_map(function($category) {
-    return [
-      "label" => $category->Name,
-      "value" => $category->GradeLevelId
-    ];
-  }, $sql->fetchAll());
-  $res->json($categories);
-});
-
-/**
- * params:
- *    query => The query string to fuzzy match against
- * return:
- *    {UserId: int, FirstName: string, LastName: string}
- */
-$app->get('/users/fuzzyMatch/project', function ($req, $res) {
-  $sql = DB::get()->prepare(Queries::QUERY_PROJECTS_BY_NAME);
-  $query = "%{$req->params['term']}%";
-  $sql->execute([$query]);
-  $categories = array_map(function($category) {
-    return [
-      "label" => $category->Name,
-      "value" => $category->ProjectId
-    ];
-  }, $sql->fetchAll());
-  $res->json($categories);
-});
-
+// CREATE
 $app->post('/school', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_SCHOOL);
   $body = $req->body();
   try {
@@ -195,7 +24,6 @@ $app->post('/school', function($req, $res) {
 });
 
 $app->post('/county', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_COUNTY);
   $body = $req->body();
   try {
@@ -210,7 +38,6 @@ $app->post('/county', function($req, $res) {
 });
 
 $app->post('/booth', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_BOOTH);
   $body = $req->body();
   try {
@@ -225,7 +52,6 @@ $app->post('/booth', function($req, $res) {
 });
 
 $app->post('/category', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_CATEGORY);
   $body = $req->body();
   try {
@@ -240,7 +66,6 @@ $app->post('/category', function($req, $res) {
 });
 
 $app->post('/gradeLevel', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_GRADELEVEL);
   $body = $req->body();
   try {
@@ -255,7 +80,6 @@ $app->post('/gradeLevel', function($req, $res) {
 });
 
 $app->post('/project', function($req, $res) {
-  // TODO: Create new school
   $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
   $body = $req->body();
   try {
@@ -271,4 +95,121 @@ $app->post('/project', function($req, $res) {
   } catch (PDOException $e) {
     $res->json(["error"=>$e->getMessage()]);
   }
+});
+
+$app->get('/users/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_USERS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query, $query]);
+  $users = array_map(function($user) {
+    return [
+      "label" => $user->FirstName.' '.$user->LastName,
+      "value" => $user->UserId
+    ];
+  }, $sql->fetchAll());
+  $res->json($users);
+});
+
+$app->get('/users/fuzzyMatch/promote-to-admin', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::GET_USERS_TO_PROMOTE_TO_ADMIN);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query, $query]);
+  $users = array_map(function($user) {
+    return [
+      "label" => $user->FirstName.' '.$user->LastName,
+      "value" => $user->UserId
+    ];
+  }, $sql->fetchAll());
+  $res->json($users);
+});
+
+$app->get('/users/fuzzyMatch/promote-to-judge', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::GET_USERS_TO_PROMOTE_TO_JUDGE);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query, $query]);
+  $users = array_map(function($user) {
+    return [
+      "label" => $user->FirstName.' '.$user->LastName,
+      "value" => $user->UserId
+    ];
+  }, $sql->fetchAll());
+  $res->json($users);
+});
+
+$app->get('/schools/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_SCHOOLS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $schools = array_map(function($school) {
+    return [
+      "label" => $school->Name,
+      "value" => $school->SchoolId
+    ];
+  }, $sql->fetchAll());
+  $res->json($schools);
+});
+
+$app->get('/counties/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_COUNTIES_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $counties = array_map(function($county) {
+    return [
+      "label" => $county->Name,
+      "value" => $county->CountyId
+    ];
+  }, $sql->fetchAll());
+  $res->json($counties);
+});
+
+$app->get('/booths/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_BOOTHS_BY_NUMBER);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $booths = array_map(function($booth) {
+    return [
+      "label" => $booth->Number,
+      "value" => $booth->BoothId
+    ];
+  }, $sql->fetchAll());
+  $res->json($booths);
+});
+
+$app->get('/categories/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_CATEGORIES_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->CategoryId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
+});
+
+$app->get('/gradeLevels/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_GRADELEVELS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->GradeLevelId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
+});
+
+$app->get('/projects/fuzzyMatch', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::QUERY_PROJECTS_BY_NAME);
+  $query = "%{$req->params['term']}%";
+  $sql->execute([$query]);
+  $categories = array_map(function($category) {
+    return [
+      "label" => $category->Name,
+      "value" => $category->ProjectId
+    ];
+  }, $sql->fetchAll());
+  $res->json($categories);
 });
