@@ -69,46 +69,35 @@ class Queries {
   // TODO: Strategize management of judging sessions
 
   // Operators
-  const CREATE_NEW_OPERATOR_WITH_UID = "INSERT INTO Operator(UserId, Title, HighestDegree) VALUES (?, ?, ?)";
-  const GET_OPERATOR_BY_UID = "SELECT * FROM Operator WHERE UserId = ?";
+  const CREATE_NEW_OPERATOR_WITH_UID = "INSERT INTO Operator(UserYearId, Title, HighestDegree) VALUES (?, ?, ?)";
+  const GET_OPERATOR_BY_UID = "SELECT * FROM Operator WHERE UserYearId = (SELECT UserYearId FROM UserYear WHERE UserId = ? AND Year = YEAR(CURRENT_TIMESTAMP))";
   const GET_OPERATOR_BY_ID = "SELECT * FROM Operator WHERE OperatorId = ?";
-  const GET_ALL_ADMINS =
-    "SELECT 
-       O.OperatorId, 
-       U.UserId,
-       U.FirstName, 
-       U.LastName, 
-       U.Suffix, 
-       U.Email, 
-       U.CheckedIn 
+  const GET_CURRENT_ACTIVE_ADMINS = "SELECT O.OperatorId,  U.UserId, U.FirstName, U.LastName, U.Suffix, U.Email, U.CheckedIn 
 FROM Operator O 
-    JOIN OperatorEntitlement OE 
-        on O.OperatorId = OE.OperatorId 
-    JOIN Entitlement E 
-        on OE.EntitlementId = E.EntitlementId
-    JOIN User U 
-        on O.UserId = U.UserId
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId
+    JOIN User U on U.UserId = UY.UserId
 WHERE E.Name = 'admin'
 AND U.Status = 'active'
-GROUP BY O.OperatorId;";
-  const GET_ALL_JUDGES =
-    "SELECT 
-       O.OperatorId, 
-       U.UserId,
-       U.FirstName, 
-       U.LastName, 
-       U.Suffix, 
-       U.Email, 
-       U.CheckedIn 
+AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
+  const GET_CURRENT_ACTIVE_JUDGES = "SELECT  O.OperatorId, U.UserId, U.FirstName, U.LastName, U.Suffix, U.Email, U.CheckedIn 
 FROM Operator O 
-    JOIN OperatorEntitlement OE 
-        on O.OperatorId = OE.OperatorId 
-    JOIN Entitlement E 
-        on OE.EntitlementId = E.EntitlementId
-    JOIN User U 
-        on O.UserId = U.UserId
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId
+    JOIN User U on U.UserId = UY.UserId
 WHERE E.Name = 'judge'
 AND U.Status = 'active'
+AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
+  const GET_JUDGES_BY_YEAR = "SELECT O.OperatorId, U.UserId, U.FirstName, U.LastName, U.Suffix, U.Email, U.CheckedIn 
+FROM Operator O 
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId 
+    JOIN Entitlement E  on OE.EntitlementId = E.EntitlementId
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId
+    JOIN User U on U.UserId = UY.UserId
+WHERE E.Name = 'judge'
+AND UY.Year = ?
 GROUP BY O.OperatorId;";
   const UPDATE_OPERATOR_BY_UID = "UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE UserId = ?";
   const UPDATE_OPERATOR_BY_ID = "UPDATE Operator SET Title=?, HIGHESTDEGREE=? WHERE OperatorId = ?";

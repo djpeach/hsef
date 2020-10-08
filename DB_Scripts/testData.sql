@@ -27,14 +27,14 @@ INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (6, '$2y$10$
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (7, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 7);
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (8, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 8);
 
-INSERT INTO Operator(OperatorId, UserId) VALUES (1, 1);
-INSERT INTO Operator(OperatorId, UserId) VALUES (2, 2);
-INSERT INTO Operator(OperatorId, UserId) VALUES (3, 3);
-INSERT INTO Operator(OperatorId, UserId) VALUES (4, 4);
-INSERT INTO Operator(OperatorId, UserId) VALUES (5, 5);
-INSERT INTO Operator(OperatorId, UserId) VALUES (6, 6);
-INSERT INTO Operator(OperatorId, UserId) VALUES (7, 7);
-INSERT INTO Operator(OperatorId, UserId) VALUES (8, 8);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (1, 1);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (2, 2);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (3, 3);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (4, 4);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (5, 5);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (6, 6);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (7, 7);
+INSERT INTO Operator(OperatorId, UserYearId) VALUES (8, 8);
 
 INSERT INTO Entitlement(EntitlementId, Name) VALUES (1, 'owner');
 INSERT INTO Entitlement(EntitlementId, Name) VALUES (3, 'admin');
@@ -324,16 +324,15 @@ INSERT INTO School(SchoolId, Name, CountyId) VALUES (18, 'Jasper High School', 1
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (19, 'Elkhart Central High School', 19);
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (20, 'Connersville High School', 20);
 
-
 # ----- Downs ----- #
-SET FOREIGN_KEY_CHECKS = 0;
-DELETE FROM User WHERE UserId BETWEEN 1 AND 15;
-DELETE FROM AuthAccount WHERE AuthAccountId BETWEEN 1 AND 6;
-DELETE FROM Operator WHERE OperatorId BETWEEN 1 AND 6;
-DELETE FROM Entitlement WHERE EntitlementId BETWEEN 1 AND 5;
-DELETE FROM OperatorEntitlement WHERE OperatorId BETWEEN 1 AND 6;
-DELETE FROM Student WHERE UserId BETWEEN 1 AND 15;
-DELETE FROM Booth WHERE BoothId BETWEEN 1 AND 6;
-DELETE FROM County WHERE CountyId BETWEEN 1 AND 7;
-DELETE FROM School WHERE SchoolId BETWEEN 1 AND 8;
-SET FOREIGN_KEY_CHECKS = 1;
+# SET FOREIGN_KEY_CHECKS = 0;
+# DELETE FROM User WHERE UserId BETWEEN 1 AND 15;
+# DELETE FROM AuthAccount WHERE AuthAccountId BETWEEN 1 AND 6;
+# DELETE FROM Operator WHERE OperatorId BETWEEN 1 AND 6;
+# DELETE FROM Entitlement WHERE EntitlementId BETWEEN 1 AND 5;
+# DELETE FROM OperatorEntitlement WHERE OperatorId BETWEEN 1 AND 6;
+# DELETE FROM Student WHERE UserId BETWEEN 1 AND 15;
+# DELETE FROM Booth WHERE BoothId BETWEEN 1 AND 6;
+# DELETE FROM County WHERE CountyId BETWEEN 1 AND 7;
+# DELETE FROM School WHERE SchoolId BETWEEN 1 AND 8;
+# SET FOREIGN_KEY_CHECKS = 1;

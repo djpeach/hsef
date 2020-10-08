@@ -1,3 +1,6 @@
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2020-10-08 17:37:46.998
+
 -- tables
 -- Table: AuthAccount
 CREATE TABLE AuthAccount (
@@ -63,7 +66,7 @@ CREATE TABLE GradeLevel (
 -- Table: JudgingSession
 CREATE TABLE JudgingSession (
     JudgingSessionId int unsigned NOT NULL AUTO_INCREMENT,
-    RawScore int NULL,
+    RawScore decimal(5,2) NULL,
     ProjectId int unsigned NULL,
     OperatorId int unsigned NULL,
     StartTime time NOT NULL,
@@ -86,10 +89,11 @@ CREATE TABLE OneTimeToken (
 -- Table: Operator
 CREATE TABLE Operator (
     OperatorId int unsigned NOT NULL AUTO_INCREMENT,
-    UserId int unsigned NOT NULL,
     Title varchar(255) NULL,
     HighestDegree varchar(255) NULL,
-    UNIQUE INDEX fak_Operator_User_UserId (UserId),
+    Employer varchar(255) NULL,
+    UserYearId int unsigned NOT NULL,
+    UNIQUE INDEX ak_Operator_UserYearId (UserYearId),
     CONSTRAINT Operator_pk PRIMARY KEY (OperatorId)
 );
 
@@ -127,7 +131,7 @@ CREATE TABLE Project (
     Name char(128) NOT NULL,
     Abstract varchar(600) NULL,
     BoothId int unsigned NULL,
-    CourseNetworkingId int unsigned NULL,
+    CourseNetworkingId varchar(128) NULL,
     CategoryId int unsigned NULL,
     CONSTRAINT Project_pk PRIMARY KEY (ProjectId)
 );
@@ -189,6 +193,10 @@ CREATE TABLE UserYear (
 );
 
 -- foreign keys
+-- Reference: Operator_UserYear (table: Operator)
+ALTER TABLE Operator ADD CONSTRAINT Operator_UserYear FOREIGN KEY Operator_UserYear (UserYearId)
+    REFERENCES UserYear (UserYearId);
+
 -- Reference: fk_AuthSession_AuthAccount_AuthAccountId (table: AuthSession)
 ALTER TABLE AuthSession ADD CONSTRAINT fk_AuthSession_AuthAccount_AuthAccountId FOREIGN KEY fk_AuthSession_AuthAccount_AuthAccountId (AuthAccountId)
     REFERENCES AuthAccount (AuthAccountId)
@@ -242,12 +250,6 @@ ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_GradeLevel_G
 -- Reference: fk_OperatorGradeLevel_Operator_OperatorId (table: OperatorGradeLevel)
 ALTER TABLE OperatorGradeLevel ADD CONSTRAINT fk_OperatorGradeLevel_Operator_OperatorId FOREIGN KEY fk_OperatorGradeLevel_Operator_OperatorId (OperatorId)
     REFERENCES Operator (OperatorId)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
-
--- Reference: fk_Operator_User_UserId (table: Operator)
-ALTER TABLE Operator ADD CONSTRAINT fk_Operator_User_UserId FOREIGN KEY fk_Operator_User_UserId (UserId)
-    REFERENCES User (UserId)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
@@ -310,6 +312,13 @@ ALTER TABLE AuthAccount ADD CONSTRAINT fk_User_AuthAccount_UserId FOREIGN KEY fk
     REFERENCES User (UserId)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
+
+# CREATE TRIGGER tr_userYear_creation
+# AFTER INSERT ON User
+# FOR EACH ROW
+# BEGIN
+#  REPLACE UserYear(UserId, Year) VALUES(NEW.UserId, YEAR(CURRENT_TIMESTAMP));
+# END;;
 
 -- End of file.
 

@@ -40,7 +40,7 @@
           <p class="font-weight-bold">Tools</p>
         </div>
       </div>
-      <?php $admins = DB::get()->query(Queries::GET_ALL_ADMINS)->fetchAll(); ?>
+      <?php $admins = DB::get()->query(Queries::GET_CURRENT_ACTIVE_ADMINS)->fetchAll(); ?>
       <?php foreach ($admins as $admin) : ?>
         <div class="row row-sliding no-gutters pl-3">
           <div class="col-1">

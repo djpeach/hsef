@@ -213,3 +213,9 @@ $app->get('/projects/fuzzyMatch', function ($req, $res) {
   }, $sql->fetchAll());
   $res->json($categories);
 });
+
+$app->get('/archives/judges', function ($req, $res) {
+  $sql = DB::get()->prepare(Queries::GET_JUDGES_BY_YEAR);
+  $sql->execute([$req->params['year']]);
+  $res->json($sql->fetchAll());
+});
