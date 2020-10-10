@@ -5,13 +5,6 @@
 <?php
 $post = new Post();
 $errors = new Errors();
-$delFormSubmitted = isset($_POST['JUDGE_DELETE_SUBMIT']);
-
-if ($delFormSubmitted) {
-  $judgeId = $post->operatorId;
-  $sql = DB::get()->prepare(Queries::REMOVE_JUDGE_BY_OPID);
-  $sql->execute([$judgeId]);
-}
 ?>
 <main>
   <article class="limit-width-md pt-5">
@@ -89,36 +82,23 @@ if ($delFormSubmitted) {
               <a :href="`/hsef/?page=judgeForm&id=${judge.OperatorId}&readonly=true`" class="col-4 tool-icon bg-primary">
                 <i class="fas fa-user text-white"></i>
               </a>
-              <button class="btn col-4 tool-icon btn-yellow" data-toggle="modal" :data-target="`#deletionModal-${judge.OperatorId}`">
+              <button class="btn col-4 tool-icon btn-yellow" data-toggle="modal" :data-target="`#invitationModal-${judge.OperatorId}`">
                 <i class="fas fa-envelope text-white"></i>
               </button>
             </div>
             <!-- Deletion Modal -->
-            <div class="modal fade deletion-modal" :id="`deletionModal-${judge.OperatorId}`" tabindex="-1">
+            <div class="modal fade deletion-modal" :id="`invitationModal-${judge.OperatorId}`" tabindex="-1">
               <div class="modal-dialog">
                 <form method="POST">
                   <div class="modal-content">
                     <div class="modal-header bg-light font-weight-bold">
-                      <h3 class="modal-title">Remove Judge</h3>
+                      <h3 class="modal-title">Invite Judge</h3>
                       <button type="button" class="close" data-dismiss="modal">
                         <i class="fas fa-times"></i>
                       </button>
                     </div>
-                    <div class="modal-body">
-                      <div class="alert alert-danger">
-                        <h4 class="alert-heading">
-                          <i class="fas fa-exclamation-circle"></i>
-                          Warning: this is a destructive action
-                        </h4>
-                      </div>
-                      <p class="additional-info mt-4 text-center">This will <span class="font-weight-bold">demote</span> the judge, and they will lose access to all judging tools immediately.</p>
-                    </div>
                     <div class="modal-footer">
-                      <label :for="`operatorNameConfirmation-${judge.OperatorId}`">Please type <span class="font-weight-bold">{{judge|fullName}}</span> to confirm.</label>
-                      <input type="text" name="deleteConfirm" :id="`operatorNameConfirmation-${judge.OperatorId}`">
-                      <input type="text" name="operatorId" :value="`${judge.OperatorId}`" hidden>
-                      <input type="text" name="deleteConfirmValue" :value="judge|fullName" hidden>
-                      <button type="submit" class="btn btn-outline-danger mx-auto" name="JUDGE_DELETE_SUBMIT" disabled>I understand, remove judge.</button>
+                      <button type="submit" class="btn btn-outline-yellow mx-auto" name="JUDGE_DELETE_SUBMIT">Send Invitation</button>
                     </div>
                   </div>
                 </form>
