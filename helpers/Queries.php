@@ -71,7 +71,7 @@ class Queries {
   // Operators
   const CREATE_NEW_OPERATOR_WITH_UID = "INSERT INTO Operator(UserYearId, Title, HighestDegree) VALUES (?, ?, ?)";
   const GET_OPERATOR_BY_UID = "SELECT * FROM Operator WHERE UserYearId = (SELECT UserYearId FROM UserYear WHERE UserId = ? AND Year = YEAR(CURRENT_TIMESTAMP))";
-  const GET_OPERATOR_BY_ID = "SELECT * FROM Operator WHERE OperatorId = ?";
+  const GET_OPERATOR_BY_ID = "SELECT O.*, UY.UserId FROM Operator O JOIN UserYear UY on O.UserYearId = UY.UserYearId WHERE OperatorId = ?";
   const GET_CURRENT_ACTIVE_ADMINS = "SELECT O.OperatorId,  U.UserId, U.FirstName, U.LastName, U.Suffix, U.Email, U.CheckedIn 
 FROM Operator O 
     JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId 
@@ -218,7 +218,7 @@ WHERE U.Status = 'active' AND StudentId = ?";
   // TODO: Strategize management of time slots
 
   // Users
-  const GET_ACTIVE_USER_BY_EMAIL = "SELECT * FROM User WHERE Email = ? AND Status = 'active'";
+  const GET_ACTIVE_USER_BY_EMAIL = "SELECT U.* FROM User U JOIN UserYear UY on U.UserId = UY.UserId WHERE U.Email = ? AND U.Status = 'active' AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
   const GET_USER_BY_ID = "SELECT * FROM User WHERE UserId = ?";
   const GET_USER_BY_OPID = "SELECT * FROM User WHERE UserId = (SELECT UserId FROM Operator WHERE OperatorId = ?)";
   const GET_USER_BY_AUTHID = "SELECT * FROM User WHERE UserId = (SELECT UserId FROM AuthAccount WHERE AuthAccountId = ?)";

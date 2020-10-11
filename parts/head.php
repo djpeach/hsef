@@ -5,12 +5,12 @@
    */
   require_once 'helpers/Session.php';
   require_once 'helpers/DB.php';
-  require_once 'helpers/JS.php';
+  require_once 'helpers/JSLoader.php';
   require_once 'helpers/ModalLoader.php';
   require_once 'helpers/Post.php';
-  require_once 'helpers/AuthAccount.php';
-  require_once 'helpers/User.php';
-  require_once 'helpers/Operator.php';
+  require_once 'helpers/entities/AuthAccount.php';
+  require_once 'helpers/entities/User.php';
+  require_once 'helpers/entities/Operator.php';
   require_once 'helpers/Errors.php';
   require_once 'helpers/Queries.php';
   require_once 'helpers/utils.php';
@@ -34,8 +34,7 @@
   }
 
   function urlGuard() {
-//    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
-    $publicPages = ['login'];
+    $publicPages = ['login', 'judgeRegistration', 'judgeAcceptance'];
 
     $newPage = isset($_GET['page']);
     $authenticated = AuthAccount::get()->isAuthenticated();

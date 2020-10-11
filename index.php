@@ -16,7 +16,18 @@
     </article>
   <?php unset(Session::get()->flashMessage); endif; ?>
 
-  <?php require "pages/".Session::get()->page.".php"; ?>
+  <?php $pagePath = getPagePath(Session::get()->page); ?>
+  <?php if ($pagePath !== '') : require $pagePath; ?>
+  <?php else : ?>
+    <article class="limit-width-sm mt-5">
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">Alert: </h4>
+        <p>
+          Could not find page <?php echo Session::get()->page; ?>
+        </p>
+      </div>
+    </article>
+  <?php endif; ?>
 
   <footer class="mt-5">
     <p>Made by Group 4 for N-342</p>

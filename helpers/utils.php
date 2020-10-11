@@ -63,3 +63,15 @@ function generateRandomString($length = 10) {
   }
   return $randomString;
 }
+
+function getPagePath($page) {
+  $root = $_SERVER['DOCUMENT_ROOT'].'/hsef';
+  $searchDirs = ['pages', 'pages/archives', 'pages/forms', 'pages/management'];
+  foreach ($searchDirs as $dir) {
+    $pagePath = "$root/$dir/$page.php";
+    if (file_exists($pagePath)) {
+      return $pagePath;
+    }
+  }
+  return "";
+}

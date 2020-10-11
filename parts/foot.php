@@ -23,10 +23,8 @@
 
 <!-- Custom Scripts -->
 <?php
-  $jsLoader = JS::get();
-  $globalScripts = ['utils'];
-  $globalScripts = ['rowSlider'];
-  $globalScripts = ['axiosBase'];
+  $jsLoader = JSLoader::get();
+  $globalScripts = ['utils', 'rowSlider', 'axiosBase'];
 
   foreach ($globalScripts as $globalScript) {
     $jsLoader->addGlobal($globalScript);

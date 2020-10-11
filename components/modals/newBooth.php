@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <ul id="boothFormErrors" class="text-danger ml-5"></ul>
-          <?php include 'components/form-fields/boothFields.php'; ?>
+          <?php include 'components/formFields/boothFields.php'; ?>
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -20,4 +20,4 @@
     </form>
   </div>
 </div>
-<?php JS::get()->add('axiosBoothForm'); ?>
+<?php JSLoader::get()->add('entityCreation/booths'); ?>

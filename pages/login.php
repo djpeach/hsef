@@ -38,6 +38,6 @@ if (isset(Post::get()->LOGIN)) {
   <article class="limit-width-md p-5">
     <h2 class="article-header">Judge & Admin Login Portal</h2>
     <?php include 'components/divider.php' ?>
-    <?php require 'components/login-form.php' ?>
+    <?php require 'components/formFields/loginFields.php' ?>
   </article>
 </main>

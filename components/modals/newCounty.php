@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <ul id="countyFormErrors" class="text-danger ml-5"></ul>
-          <?php include 'components/form-fields/countyFields.php'; ?>
+          <?php include 'components/formFields/countyFields.php'; ?>
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -20,4 +20,4 @@
     </form>
   </div>
 </div>
-<?php JS::get()->add('axiosCountyForm'); ?>
+<?php JSLoader::get()->add('entityCreation/counties'); ?>

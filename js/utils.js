@@ -11,3 +11,13 @@ const debounce = (cb, delay=500) => {
     timeout = setTimeout(later, delay);
   };
 };
+
+/**
+ * Takes a selected element and returns if it was found or not
+ * 
+ * @param el
+ * @returns {boolean}
+ */
+const exists = (el) => {
+  return el.length !== 0;
+}
