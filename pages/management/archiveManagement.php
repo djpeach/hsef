@@ -12,7 +12,6 @@
         </div>
         <div class="row">
             <div class="mt-3 col-12 col-sm-6 col-md-4">
-                <!--change ?page=judgeArchives to ?page=judgeArchives -->
                 <a href="/hsef/?page=judgeArchives" class="mgt-card card text-yellow bg-darkgreen">
                     <div class="card-body text-center">
                         <i class="fas fa-gavel p-5"></i>
