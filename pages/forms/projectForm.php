@@ -13,8 +13,8 @@
       $sql = DB::get()->prepare(Queries::GET_PROJECT_BY_ID);
       $sql->execute([$_GET['id']]);
       $project = $sql->fetch();
-      $post->number = $project->ProjectNumber;
-      $post->name = $project->ProjectName;
+      $post->projectNumber = $project->ProjectNumber;
+      $post->projectName = $project->ProjectName;
       $post->abstract = $project->Abstract;
       $post->boothId = $project->BoothId;
       $post->boothNumber = $project->BoothNumber;
@@ -48,14 +48,14 @@
           $boothId = isset($post->boothId) ? $post->boothId : null;
           $categoryId = isset($post->categoryId) ? $post->categoryId : null;
           $cnid = isset($post->cnid) ? $post->cnid : null;
-          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId, $id]);
+          $sql->execute([$post->projectNumber, $post->projectName, $abstract, $boothId, $cnid, $categoryId, $id]);
         } else {
           $sql = DB::get()->prepare(Queries::CREATE_NEW_PROJECT);
           $abstract = isset($post->abstract) ? $post->abstract : null;
           $boothId = isset($post->boothId) ? $post->boothId : null;
           $categoryId = isset($post->categoryId) ? $post->categoryId : null;
           $cnid = isset($post->cnid) ? $post->cnid : null;
-          $sql->execute([$post->number, $post->name, $abstract, $boothId, $cnid, $categoryId]);
+          $sql->execute([$post->projectNumber, $post->projectName, $abstract, $boothId, $cnid, $categoryId]);
           $id = DB::get()->lastInsertId();
         }
         redirect('projectForm', ['id'=>$id, 'readonly'=>true]);

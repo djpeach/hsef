@@ -36,8 +36,11 @@ if ($delFormSubmitted) {
         <div class="col-3">
           <p class="font-weight-bold">Name</p>
         </div>
-        <div class="col-4">
+        <div class="col-2">
           <p class="font-weight-bold">School</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold">Project</p>
         </div>
         <div class="col-2">
           <p class="font-weight-bold">Grade</p>
@@ -55,7 +58,7 @@ if ($delFormSubmitted) {
           <div class="col-3">
             <p><?php echo User::fullName($student); ?></p>
           </div>
-          <div class="col-4">
+          <div class="col-2">
             <p>
               <?php if ($student->SchoolId) : ?>
                 <a href="/hsef/?page=schoolForm&id=<?php echo $student->SchoolId; ?>&readonly=true">
@@ -67,8 +70,19 @@ if ($delFormSubmitted) {
             </p>
           </div>
           <div class="col-2">
+            <p>
+              <?php if ($student->ProjectId) : ?>
+                <a href="/hsef/?page=projectForm&id=<?php echo $student->ProjectId; ?>&readonly=true">
+                  <?php echo $student->ProjectName; ?>
+                </a>
+              <?php else : ?>
+                N/A
+              <?php endif; ?>
+            </p>
+          </div>
+          <div class="col-2">
             <?php if ($student->GradeLevelId) : ?>
-              <a href="/hsef/?page=gradeLevelForm&glid=<?php echo $student->GradeLevelId; ?>&readonly=true">
+              <a href="/hsef/?page=gradeLevelForm&id=<?php echo $student->GradeLevelId; ?>&readonly=true">
                 <?php echo $student->GradeLevelName; ?>
               </a>
             <?php else : ?>
@@ -135,4 +149,4 @@ if ($delFormSubmitted) {
     </div>
   </article>
 </main>
-<?php JSLoader::get()->add('deletionModal'); ?>
+<?php JSLoader::get()->add('modals/deletionModal'); ?>

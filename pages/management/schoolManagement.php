@@ -51,7 +51,7 @@ if ($delFormSubmitted) {
           <div class="col-5">
             <p>
               <?php if ($school->CountyName) : ?>
-                <a href="/hsef/?page=countyForm&cid=<?php echo $school->CountyId; ?>&readonly=true">
+                <a href="/hsef/?page=countyForm&id=<?php echo $school->CountyId; ?>&readonly=true">
                   <?php echo $school->CountyName; ?>
                 </a>
               <?php else : ?>
@@ -119,4 +119,4 @@ if ($delFormSubmitted) {
     </div>
   </article>
 </main>
-<?php JSLoader::get()->add('deletionModal'); ?>
+<?php JSLoader::get()->add('modals/deletionModal'); ?>

@@ -110,6 +110,6 @@ $errors = new Errors();
     </div>
   </article>
 </main>
-<?php JSLoader::get()->add('deletionModal'); ?>
+<?php JSLoader::get()->add('modals/deletionModal'); ?>
 <?php JSLoader::get()->add('vendors/vue'); ?>
 <?php JSLoader::get()->add('vue/judgeArchives'); ?>

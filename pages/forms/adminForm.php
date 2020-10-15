@@ -65,7 +65,7 @@
           } else { // new admin
             if ($didSelectUser) { // created new admin from existing user
               // make operator an admin
-              $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
               $sql->execute([$post->userId]);
               // update operator details
               $sql = $db->prepare(Queries::UPDATE_OPERATOR_BY_UID);
@@ -87,8 +87,8 @@
               $sql->execute([$uid, $title, $highestDegree]);
               $id = $db->lastInsertId();
               // make new operator an admin
-              $sql = $db->prepare(Queries::NEW_ADMIN_BY_UID);
-              $sql->execute([$uid]);
+              $sql = $db->prepare(Queries::NEW_ADMIN_BY_OPID);
+              $sql->execute([$id]);
             }
             // check for auth account
             $sql = $db->prepare(Queries::GET_AUTHACCOUNT_BY_OPID);

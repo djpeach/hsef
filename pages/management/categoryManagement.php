@@ -105,4 +105,4 @@ if ($delFormSubmitted) {
     </div>
   </article>
 </main>
-<?php JSLoader::get()->add('deletionModal'); ?>
+<?php JSLoader::get()->add('modals/deletionModal'); ?>

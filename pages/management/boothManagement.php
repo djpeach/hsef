@@ -43,7 +43,7 @@ if ($delFormSubmitted) {
             <p><?php echo $booth->BoothId; ?></p>
           </div>
           <div class="col">
-            <p><?php echo $booth->Number; ?></p>
+            <p><?php echo $booth->BoothNumber; ?></p>
           </div>
           <div class="col-2 d-md-none">
             <span class="tool-icon" data-toggle="row-slide" data-target="#tools-<?php echo $booth->BoothId; ?>">
@@ -80,7 +80,7 @@ if ($delFormSubmitted) {
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <label for="boothNameConfirmation-<?php echo $booth->BoothId ?>">Please type <span class="font-weight-bold"><?php echo $booth->Name; ?></span> to confirm.</label>
+                      <label for="boothNameConfirmation-<?php echo $booth->BoothId ?>">Please type <span class="font-weight-bold"><?php echo $booth->BoothNumber; ?></span> to confirm.</label>
                       <input type="text" name="deleteConfirm" id="boothNameConfirmation-<?php echo $booth->BoothId ?>">
                       <input type="text" name="boothId" value="<?php echo $booth->BoothId ?>" hidden>
                       <?php // TODO: figure out a way to pass the name confirm value to JS ?>
@@ -105,4 +105,4 @@ if ($delFormSubmitted) {
     </div>
   </article>
 </main>
-<?php JSLoader::get()->add('deletionModal'); ?>
+<?php JSLoader::get()->add('modals/deletionModal'); ?>

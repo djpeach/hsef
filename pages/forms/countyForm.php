@@ -13,7 +13,7 @@
       $sql = DB::get()->prepare(Queries::GET_COUNTY_BY_ID);
       $sql->execute([$_GET['id']]);
       $county = $sql->fetch();
-      $post->countyName = $county->Name;
+      $post->countyName = $county->CountyName;
     }
 
     $readonly = isset($_GET['readonly']) ? $_GET['readonly'] === 'true' : false;
@@ -35,14 +35,14 @@
         $db = DB::get();
         $id = $existingCounty ? $_GET["id"] : null;
         if ($existingCounty) {
-          $sql = $db->prepare(Queries::UPDATE_CATEGORY_BY_ID);
+          $sql = $db->prepare(Queries::UPDATE_COUNTY_BY_ID);
           $sql->execute([$post->countyName, $id]);
         } else {
-          $sql = $db->prepare(Queries::CREATE_NEW_CATEGORY);
+          $sql = $db->prepare(Queries::CREATE_NEW_COUNTY);
           $sql->execute([$post->countyName]);
           $id = $db->lastInsertId();
         }
-        redirect('countyForm', ['id'=>1, 'readonly'=>true]);
+        redirect('countyForm', ['id'=>$id, 'readonly'=>true]);
       }
     }
     ?>

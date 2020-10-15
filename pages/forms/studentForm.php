@@ -48,7 +48,7 @@
       if ($errors->isEmpty()) {
         $db = DB::get();
         $id = $existingUser ? $_GET['id'] : null;
-        $email = $post->email ? $post-email : null;
+        $email = $post->email ? $post->email : null;
         $schoolId = $post->schoolSelect ? $post->schoolId : null;
         $gradeLevelId = $post->gradeLevelSelect ? $post->gradeLevelId : null;
         $projectId = $post->projectSelect ? $post->projectId : null;

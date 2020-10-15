@@ -27,28 +27,20 @@ INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (6, '$2y$10$
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (7, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 7);
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (8, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 8);
 
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 1);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 1);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 1);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 2);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 2);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 2);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 3);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 3);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 3);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 4);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 4);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 4);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 5);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 5);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 5);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 6);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 6);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 6);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 7);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 7);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 7);
-INSERT INTO UserYear(Year, UserId) VALUES(2020, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 8);
 

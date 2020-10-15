@@ -1,3 +1,21 @@
+<?php
+
+$checkInFormSubmitted = isset($_POST['CHECK_IN']);
+
+if ($checkInFormSubmitted) {
+  $userIsCheckedIn = User::get()->CheckedIn;
+  if ($userIsCheckedIn) {
+    $sql = DB::get()->prepare(Queries::CHECKOUT_USER);
+    $sql->execute([User::get()->UserId]);
+  } else {
+    $sql = DB::get()->prepare(Queries::CHECKIN_USER);
+    $sql->execute([User::get()->UserId]);
+  }
+  User::get()->CheckedIn = !User::get()->CheckedIn;
+}
+
+?>
+
 <main>
   <article class="container pt-5">
     <div class="row">
@@ -54,10 +72,14 @@
       <div class="col-12 col-sm-6">
         <div class="row">
           <div class="col">
-            <div class="group-label font-weight-bold mb-5">Check In:</div>
-            <button class="btn btn-darkgreen ml-3">
-              I'm Here
-            </button>
+            <form method="POST">
+              <div class="group-label font-weight-bold mb-5">
+                <?php echo User::get()->CheckedIn ? "Check out" : "Check in" ?>
+              </div>
+              <button type="submit" class="btn btn-darkgreen ml-3" name="CHECK_IN">
+                <?php echo User::get()->CheckedIn ? "I'm Leaving" : "I'm Here" ?>
+              </button>
+            </form>
           </div>
         </div>
         <div class="row mt-5">
