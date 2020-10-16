@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__.'/../Slim/Slim/Middleware.php');
+require __DIR__.'/../Slim/Slim/Middleware.php';
 
 class CorsMiddleware extends \Slim\Middleware {
   public function call() {

@@ -2,7 +2,6 @@
 require 'Slim/Slim/Slim.php';
 require 'middleware/cors.php';
 
-
 \Slim\Slim::registerAutoloader();
 
 $app = new Slim\Slim();
