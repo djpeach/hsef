@@ -6,13 +6,16 @@ class ApiException extends ErrorException {
   public function __construct($message = "", $code = 0, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
     parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
     $this->data = [
-      "message" => $message,
       "code" => $code,
-      "severity" => $severity,
-      "filename" => $filename,
-      "lineno" => $lineno,
-      "stackTrace" => $this->getTraceAsString()
+      "error" => get_class($this),
+      "message" => $message,
     ];
+  }
+}
+
+class DatabaseError extends ApiException {
+  public function __construct($message = "Database Failed to connect", $code = 503, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+    parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
   }
 }
 
@@ -21,3 +24,16 @@ class UserNotFound extends ApiException {
     parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
   }
 }
+
+class BadRequest extends ApiException {
+  public function __construct($message = "The request was poorly formed", $code = 400, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+    parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+  }
+}
+
+class ResourceConflict extends ApiException {
+  public function __construct($message = "That resource already exists", $code = 409, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+    parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+  }
+}
+

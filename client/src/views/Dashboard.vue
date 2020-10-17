@@ -16,16 +16,28 @@ export default {
     }
   },
   created() {
-    axios.post('/create/individual/admin', {
-      firstName: 'Daniel',
-      lastName: 'Peach'
+    axios.post('/create/admin/newUser', {
+      user: {
+        firstName: "Daniel",
+        lastName: "Peach",
+        suffix: "Jr",
+        email: "daniel.peach@gmail.com",
+        gender: "male",
+        status: "active",
+        checkedIn: "false",
+      },
+      operator: {
+        title: "Dr.",
+        highestDegree: "Masters",
+        employer: "IU Health"
+      }
     }).then(res => {
       console.log(res);
       this.fetching_status = res.data;
     }).catch(err => {
-      console.log(err);
-      this.fetching_status = 'failed';
-    })
+      console.log(err.response.data);
+      this.fetching_status = err.response.data.message;
+    });
   }
 }
 </script>

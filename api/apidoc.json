@@ -7,7 +7,11 @@
   "sampleUrl": "http://corsair.cs.iupui.edu:24631/hsef/api",
   "order": [
     "Admin",
+    "AdminFromExisting",
+    "AdminWithNew",
     "Judge",
+    "JudgeFromExisting",
+    "JudgeWithNew",
     "Student",
     "School",
     "County",
@@ -16,13 +20,9 @@
     "Ranking",
     "Booth",
     "GradeLevel",
-    "Create[Individual]",
-    "Create[Bulk]",
-    "Read[Individual]",
-    "Read[Bulk]",
-    "Update[Individual]",
-    "Update[Bulk]",
-    "Delete[Individual]",
-    "Delete[Bulk]"
+    "Create",
+    "Read",
+    "Update",
+    "Delete"
   ]
 }

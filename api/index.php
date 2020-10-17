@@ -2,6 +2,7 @@
 require 'Slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 require_once 'exceptions.php';
+require_once 'DB.php';
 
 // require needed files
 $directories = [ "middleware", "routers"];
@@ -36,12 +37,23 @@ $app->error(function (Exception $e) use ($app) {
     $err = [
       "error" => get_class($e),
       "code" => $e->getCode(),
-      "message" => $e->getMessage(),
-      "stackTrace" => $e->getTraceAsString()
+      "message" => $e->getMessage()
     ];
     $app->response->setStatus($e->getCode());
     $app->response->setBody(json_encode($err));
+    $app->stop();
   }
+});
+
+$app->notFound(function() use ($app) {
+  $err = [
+    "error" => "ResourceNotFound",
+    "code" => 404,
+    "message" => "Could not find resource at {$app->request->getPath()}",
+  ];
+  $app->response->setStatus(404);
+  $app->response->setBody(json_encode($err));
+  $app->stop();
 });
 
 $app->run();
