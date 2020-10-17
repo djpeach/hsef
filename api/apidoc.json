@@ -1,0 +1,28 @@
+{
+  "name": "HSEF API",
+  "version": "0.1.0",
+  "description": "Documentation for endpoints in the HSEF API",
+  "title": "HSEF API",
+  "url" : "http://corsair.cs.iupui.edu:24631/hsef/api",
+  "sampleUrl": "http://corsair.cs.iupui.edu:24631/hsef/api",
+  "order": [
+    "Admin",
+    "Judge",
+    "Student",
+    "School",
+    "County",
+    "Project",
+    "Category",
+    "Ranking",
+    "Booth",
+    "GradeLevel",
+    "Create[Individual]",
+    "Create[Bulk]",
+    "Read[Individual]",
+    "Read[Bulk]",
+    "Update[Individual]",
+    "Update[Bulk]",
+    "Delete[Individual]",
+    "Delete[Bulk]"
+  ]
+}

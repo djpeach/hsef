@@ -16,7 +16,11 @@ export default {
     }
   },
   created() {
-    axios.get('/ping').then(res => {
+    axios.post('/create/individual/admin', {
+      firstName: 'Daniel',
+      lastName: 'Peach'
+    }).then(res => {
+      console.log(res);
       this.fetching_status = res.data;
     }).catch(err => {
       console.log(err);

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../Slim/Slim/Middleware.php';
+require_once __DIR__.'/../Slim/Slim/Middleware.php';
 
 class CorsMiddleware extends \Slim\Middleware {
   public function call() {
@@ -31,7 +31,12 @@ class CorsMiddleware extends \Slim\Middleware {
       $res->headers->set($key, $val);
     }
 
-    // Run inner middleware and application
+    // add options route handler for whatever the request may be
+    if ($app->request->isOptions()) {
+      $app->options('/:route+', function() {});
+    }
+
+
     $this->next->call();
   }
 }

@@ -1,0 +1,29 @@
+// Entities:
+
+/**
+ * Admins
+ * Judges
+ *
+ * Students
+ * - School
+ *    - County
+ * - Project
+ *    - Category
+ *    - Ranking
+ *    - Booth
+ * - GradeLevel
+ */
+
+// Endpoint Groups
+
+/**
+ * Create
+ * Read
+ * - details
+ * - list
+ *    - ?year default to YEAR(CURRENT_TIMESTAMP)
+ *    - ?status default to 'active'
+ * Update
+ * Delete
+ * Auth
+ */

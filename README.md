@@ -43,8 +43,10 @@ title can be optional, but makes organization easier
 
 Push branch, PR to `dev`, get at least 1 approval.
 
-## PHP Dev Practices
+## Generate API Docs:
 
-**SPA**
+In the api directory, run: `apidoc -i routers -o docs`
 
-TODO:// Explain how this all works, and how to use it.
+## Build Vue app:
+
+In the client directory, run: `npm run build`

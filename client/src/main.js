@@ -3,6 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import qs from 'qs';
 
 import axios from 'axios';
 axios.defaults.baseURL = process.env.NODE_ENV === 'production'
