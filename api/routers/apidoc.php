@@ -61,8 +61,8 @@
 
 /**
  * @apiDefine ListFields
- * @apiParam {Number} [limit] The max number of results to return
- * @apiParam {Number} [offset] Where to start the pagination
+ * @apiParam {Number} [limit=10] The max number of results to return
+ * @apiParam {Number} [offset=0] Where to start the pagination
  */
 
 /**

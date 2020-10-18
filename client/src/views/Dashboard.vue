@@ -16,27 +16,13 @@ export default {
     }
   },
   created() {
-    axios.post('/create/admin/newUser', {
-      user: {
-        firstName: "Daniel",
-        lastName: "Peach",
-        suffix: "Sr",
-        email: "danieles.pesacdhes@gmail.com",
-        gender: "female",
-        status: "archived",
-        checkedIn: true,
-      },
-      operator: {
-        title: "Dr.",
-        highestDegree: "Masters",
-        employer: "IU Health"
-      }
-    }).then(res => {
+    axios.get(`/list/admin?limit=${2}&offset=${4}`)
+    .then(res => {
       console.log(res);
       this.fetching_status = res.data;
     }).catch(err => {
       console.log(err.response.data);
-      this.fetching_status = err.response.data.message;
+      this.fetching_status = err.response.data;
     });
   }
 }

@@ -31,10 +31,8 @@ function listRouter($app) {
      * @apiUse BadRequest
      *
      * @apiExample {js} Axios Example Usage:
-     * axios.get('/list/admin', {
-     *  limit: 2,
-     *  offset: 4
-     * }).then(res => {
+     * axios.get(`/list/admin?limit=${2}&offset=${4}`)
+     * .then(res => {
      *  console.log(res);
      * }).catch(err => {
      *  console.log(err.response.data);
