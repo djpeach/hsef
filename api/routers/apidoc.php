@@ -58,3 +58,21 @@
  * @apiParam {Number} [student.projectId]
  * @apiParam {Number} [student.gradeLevelId]
  */
+
+/**
+ * @apiDefine ListFields
+ * @apiParam {Number} [limit] The max number of results to return
+ * @apiParam {Number} [offset] Where to start the pagination
+ */
+
+/**
+ * @apiDefine ListResults
+ * @apiSuccess {Object} links
+ * @apiSuccess {String} links.base The base url without a resource uri
+ * @apiSuccess {String} [links.next] If there are more resources, a url to find them is returned
+ * @apiSuccess {String} [links.prev] If there are previous resources, a url to find them is returned
+ * @apiSuccess {Number} limit The max number of resources requested
+ * @apiSuccess {Number} offset The offset used to fetch resources
+ * @apiSuccess {Number} count The number of results returned
+ * @apiSuccess {Object[]} results
+ */
