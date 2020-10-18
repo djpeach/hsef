@@ -20,11 +20,11 @@ export default {
       user: {
         firstName: "Daniel",
         lastName: "Peach",
-        suffix: "Jr",
-        email: "daniel.peach@gmail.com",
-        gender: "male",
-        status: "active",
-        checkedIn: "false",
+        suffix: "Sr",
+        email: "danieles.pesacdhes@gmail.com",
+        gender: "female",
+        status: "archived",
+        checkedIn: true,
       },
       operator: {
         title: "Dr.",

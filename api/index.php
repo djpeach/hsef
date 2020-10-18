@@ -33,6 +33,22 @@ $app->error(function (Exception $e) use ($app) {
   } catch (ApiException $e) {
     $app->response->setStatus($e->getCode());
     $app->response->setBody(json_encode($e->data));
+  } catch (PDOException $e) {
+    $err = [
+      "error" => get_class($e),
+      "code" => $e->errorInfo[1],
+      "message" => $e->getMessage()
+    ];
+    if ($err["code"] === 1062) { // duplicate entry
+      $app->response->setStatus(419);
+      $app->response->setBody(json_encode($err));
+    } else if ($err["code"] === 1048) { // missing data
+      $app->response->setStatus(400);
+      $app->response->setBody(json_encode($err));
+    } else {
+      $app->response->setStatus(500);
+      $app->response->setBody(json_encode($err));
+    }
   } catch (Exception $e) {
     $err = [
       "error" => get_class($e),
@@ -41,19 +57,7 @@ $app->error(function (Exception $e) use ($app) {
     ];
     $app->response->setStatus($e->getCode());
     $app->response->setBody(json_encode($err));
-    $app->stop();
   }
-});
-
-$app->notFound(function() use ($app) {
-  $err = [
-    "error" => "ResourceNotFound",
-    "code" => 404,
-    "message" => "Could not find resource at {$app->request->getPath()}",
-  ];
-  $app->response->setStatus(404);
-  $app->response->setBody(json_encode($err));
-  $app->stop();
 });
 
 $app->run();

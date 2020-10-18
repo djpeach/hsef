@@ -43,6 +43,13 @@ title can be optional, but makes organization easier
 
 Push branch, PR to `dev`, get at least 1 approval.
 
+## Run database locally:
+
+https://mariadb.com/kb/en/installing-mariadb-on-macos-using-homebrew/
+
+If already installed, run it with `mysql.server start`
+Make sure to have DB_USERNAME and DB_PWD set, as well as have a database named \`${DB_USERNAME}_db\`
+
 ## Generate API Docs:
 
 In the api directory, run: `apidoc -i routers -o docs`
