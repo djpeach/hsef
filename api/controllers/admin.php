@@ -8,11 +8,11 @@ function createNewAdmin($app) {
     $execute = $sql->execute([
       $user->firstName,
       $user->lastName,
-      $user->suffix,
-      $user->gender,
-      $user->status ? $user->status : 'active',
-      $user->checkedIn ? 1 : 0,
-      $user->email
+      isset($user->suffix) ? $user->suffix : null,
+      isset($user->gender) ? $user->gender : null,
+      isset($user->status) ? $user->status : 'active',
+      isset($user->checkedIn) ? ($user->checkedIn ? 1 : 0) : null,
+      isset($user->email) ? $user->email : null
     ]);
     if (!$execute) {
       throw new DatabaseError("Failed to execute", 500);

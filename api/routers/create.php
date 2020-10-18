@@ -14,6 +14,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Add admin entitlement to operator from an existing user. May need to create operator.
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Number} userId The id of an existing user to which to grant the 'admin' entitlements
        * @apiUse OperatorFields
        *
@@ -47,6 +49,8 @@ function createRouter($app) {
        * @apiName AdminWithNew
        * @apiVersion 0.1.0
        * @apiDescription Create a new user and operator with admin entitlement
+       *
+       * @apiHeader {String} Content-Type=application/json
        *
        * @apiUse UserFields
        * @apiUse OperatorFields
@@ -89,6 +93,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Add judge entitlement to operator from an existing user. May need to create operator.
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Number} userId The id of an existing user to which to grant the 'judge' entitlement.
        * @apiUse OperatorFields
        * @apiUse JudgeFields
@@ -127,6 +133,8 @@ function createRouter($app) {
        * @apiName JudgeWithNew
        * @apiVersion 0.1.0
        * @apiDescription Create a new user and operator with judge entitlement
+       *
+       * @apiHeader {String} Content-Type=application/json
        *
        * @apiUse UserFields
        * @apiUse OperatorFields
@@ -174,6 +182,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Create a new user and student
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiUse UserFields
        * @apiUse StudentFields
        *
@@ -214,6 +224,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Create a new school
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Object} school The school details
        * @apiParam {String{128}} school.name
        * @apiParam {Number} [school.countyId]
@@ -246,6 +258,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Create a new county
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Object} county The county details
        * @apiParam {String{64}} county.name
        *
@@ -274,6 +288,8 @@ function createRouter($app) {
        * @apiName Project
        * @apiVersion 0.1.0
        * @apiDescription Create a new project
+       *
+       * @apiHeader {String} Content-Type=application/json
        *
        * @apiParam {Object} project The project details
        * @apiParam {String{128}} project.name
@@ -314,6 +330,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Create a new category
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Object} category The category details
        * @apiParam {String{64}} category.name
        * @apiParam {Boolean} [category.active=true] Whether or not the category should be active
@@ -345,6 +363,8 @@ function createRouter($app) {
        * @apiVersion 0.1.0
        * @apiDescription Create a new booth
        *
+       * @apiHeader {String} Content-Type=application/json
+       *
        * @apiParam {Object} booth The booth details
        * @apiParam {Number} booth.number
        * @apiParam {Boolean} [booth.active=true] Whether or not the booth should be active
@@ -375,6 +395,8 @@ function createRouter($app) {
        * @apiName GradeLevel
        * @apiVersion 0.1.0
        * @apiDescription Create a new gradeLevel
+       *
+       * @apiHeader {String} Content-Type=application/json
        *
        * @apiParam {Object} gradeLevel The gradeLevel details
        * @apiParam {String{64}} gradeLevel.name
