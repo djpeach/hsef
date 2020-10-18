@@ -55,7 +55,6 @@ function createRouter($app) {
        * @apiUse UserFields
        * @apiUse OperatorFields
        *
-       * @apiSuccess {String[]} entitlements
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
