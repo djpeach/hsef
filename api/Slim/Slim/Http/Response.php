@@ -212,6 +212,10 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->write($content, true);
     }
 
+    public function json($content) {
+      $this->write(json_encode($content), true);
+    }
+
     /**
      * DEPRECATION WARNING! use `getBody` or `setBody` instead.
      *

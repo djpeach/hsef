@@ -3,6 +3,7 @@ require 'Slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 require_once 'exceptions.php';
 require_once 'DB.php';
+require_once 'utils.php';
 
 // require needed files
 $directories = [ "middleware", "routers"];
@@ -17,6 +18,7 @@ $app = new Slim\Slim([
 ]);
 $app->add(new \LoggerMiddleware());
 $app->add(new \CorsMiddleware());
+$app->add(new \JSONMiddleware());
 
 $app->get('/ping', function() {
   echo 'pong';
@@ -32,8 +34,8 @@ $app->error(function (Exception $e) use ($app) {
   try {
     throw $e;
   } catch (ApiException $e) {
-    $app->response->setStatus($e->getCode());
-    $app->response->setBody(json_encode($e->data));
+    $app->res->setStatus($e->getCode());
+    $app->res->json($e->data);
   } catch (PDOException $e) {
     $err = [
       "error" => get_class($e),
@@ -41,14 +43,14 @@ $app->error(function (Exception $e) use ($app) {
       "message" => $e->getMessage()
     ];
     if ($err["code"] === 1062) { // duplicate entry
-      $app->response->setStatus(419);
-      $app->response->setBody(json_encode($err));
+      $app->res->setStatus(419);
+      $app->res->json($err);
     } else if ($err["code"] === 1048) { // missing data
-      $app->response->setStatus(400);
-      $app->response->setBody(json_encode($err));
+      $app->res->setStatus(400);
+      $app->res->json($err);
     } else {
-      $app->response->setStatus(500);
-      $app->response->setBody(json_encode($err));
+      $app->res->setStatus(500);
+      $app->res->json($err);
     }
   } catch (Exception $e) {
     $err = [
@@ -56,8 +58,8 @@ $app->error(function (Exception $e) use ($app) {
       "code" => $e->getCode(),
       "message" => $e->getMessage()
     ];
-    $app->response->setStatus($e->getCode());
-    $app->response->setBody(json_encode($err));
+    $app->res->setStatus($e->getCode());
+    $app->res->json($err);
   }
 });
 

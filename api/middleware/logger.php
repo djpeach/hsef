@@ -24,11 +24,12 @@ class LoggerMiddleware extends \Slim\Middleware {
 
   public function call() {
     $app = $this->app;
-    $req = $app->request;
+    $req = $app->req;
     $paramUrl = $this->buildParamUrl($req);
     file_put_contents("php://stderr", "{$req->getMethod()} request: {$paramUrl} ");
     $body = $req->getBody();
     if ($body) {
+      $body = preg_replace("/\s+/", " ", $body);
       file_put_contents("php://stderr", "\n\t{$body}");
     }
     file_put_contents("php://stderr", "\n\t\t@ ");

@@ -5,8 +5,8 @@ require_once __DIR__.'/../Slim/Slim/Middleware.php';
 class CorsMiddleware extends \Slim\Middleware {
   public function call() {
     $app = $this->app;
-    $res = $app->response;
-    $req = $app->request;
+    $res = $app->res;
+    $req = $app->req;
 
     $allowedOrigins = [
       'http://localhost:8080',
@@ -32,7 +32,7 @@ class CorsMiddleware extends \Slim\Middleware {
     }
 
     // add options route handler for whatever the request may be
-    if ($app->request->isOptions()) {
+    if ($app->req->isOptions()) {
       $app->options('/:route+', function() {});
     }
 

@@ -44,7 +44,9 @@ if (!defined('MCRYPT_RIJNDAEL_256')) define('MCRYPT_RIJNDAEL_256', 0);
  *
  * @property \Slim\Environment   $environment
  * @property \Slim\Http\Response $response
+ * @property \Slim\Http\Response $res
  * @property \Slim\Http\Request  $request
+ * @property \Slim\Http\Request  $req
  * @property \Slim\Router        $router
  */
 class Slim
@@ -95,8 +97,19 @@ class Slim
         'slim.after.router' => array(array()),
         'slim.after' => array(array())
     );
+  /**
+   * @var Http\Response
+   */
+  public $res;
+  /**
+   * @var Http\Request
+   */
+  public $req;
+  /**
+   * @var Http\Response
+   */
 
-    /********************************************************************************
+  /********************************************************************************
     * PSR-0 Autoloader
     *
     * Do not use if you are using Composer to autoload dependencies.
@@ -225,6 +238,9 @@ class Slim
         if (is_null(static::getInstance())) {
             $this->setName('default');
         }
+
+        $this->res = $this->response;
+        $this->req = $this->request;
     }
 
     public function __get($name)
