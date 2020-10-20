@@ -2,12 +2,15 @@
 
 function createNewAdmin(Slim\Slim $app) {
   return function() use ($app) {
-    // initialize response and req parameters
+    // initialize response and request parameters
     $reqBody = json_decode($app->req->getBody());
     $user = $reqBody->user;
     $operator = valueOrDefault($reqBody->operator, new stdClass());
     $resBody = [];
 
+    // Additional request parameter validation if needed
+
+    // DB Logic (build response meanwhile if needed)
     // Create User
     $sql = DB::get()->prepare("INSERT INTO User(FirstName, LastName, Suffix, Gender, Status, CheckedIn, Email) VALUES(?, ?, ?, ?, ?, ?, ?)");
     execOrError($sql->execute([
@@ -50,6 +53,8 @@ function createNewAdmin(Slim\Slim $app) {
       "admin"
     ]), new DatabaseError("Failed to add admin entitlement to operator", 502));
 
+    // Finalize (build/transform/filter) response if needed
+
     // Send response
     $app->res->json($resBody);
   };
@@ -64,7 +69,7 @@ function createAdminFromExisting($app) {
 
 function listCurrentAdmins(Slim\Slim $app) {
   return function() use ($app) {
-    // initialize response and req parameters
+    // initialize response and request parameters
     $reqParams = json_decode(json_encode($app->req->params()));
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);
@@ -76,7 +81,7 @@ function listCurrentAdmins(Slim\Slim $app) {
       "offset" => $offset
     ];
 
-    // Validate request parameters
+    // Additional request parameter validation if needed
     if ($limit < 0) {
       throw new BadRequest("limit cannot be negative");
     }
@@ -99,6 +104,7 @@ WHERE E.Name = 'admin'
       valueOrError($offset, new ApiException("offset does not exist", 500)),
     ]), new DatabaseError("Failed to retrieve $limit admins with offset $offset", 502));
 
+    // Finalize (build/transform/filter) response if needed
     $admins = $sql->fetchAll();
     if ($admins) {
       if ($offset > 0) {
