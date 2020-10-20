@@ -2,7 +2,7 @@
 
 function readRouter($app) {
   return function() use ($app) {
-    $app->get('/admin', function() use ($app) {
+    $app->get('/admin/:id', function($id) use ($app) {
       echo 'Read admin';
     });
     $app->get('/judge', function() use ($app) {
