@@ -38,7 +38,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/admin', listCurrentAdmins($app));
+    $app->get('/admin', listAdmins($app));
 
     $app->get('/judge', function() use ($app) {
       echo 'List judges';

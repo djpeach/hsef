@@ -117,7 +117,7 @@ WHERE E.Name = 'admin'
 // DELETE
 
 // LIST
-function listCurrentAdmins(Slim\Slim $app) {
+function listAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
