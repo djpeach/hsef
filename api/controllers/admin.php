@@ -1,9 +1,10 @@
 <?php
 
+// CREATE
 function createNewAdmin(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqBody = json_decode($app->req->getBody());
+    $reqBody = $app->req->jsonBody();
     $user = $reqBody->user;
     $operator = valueOrDefault($reqBody->operator, new stdClass());
     $resBody = [];
@@ -67,10 +68,30 @@ function createAdminFromExisting($app) {
   };
 }
 
+// READ
+function readAdmin(Slim\Slim $app) {
+  return function($id) use ($app) {
+    // Initialize response and request parameters
+
+    // Additional request parameter validation if needed
+
+    // DB Logic (build response meanwhile if needed)
+
+    // Finalize (build/transform/filter) response if needed
+
+    // Send response
+  };
+}
+
+// UPDATE
+
+// DELETE
+
+// LIST
 function listCurrentAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqParams = json_decode(json_encode($app->req->params()));
+    $reqParams = $app->req->jsonParams();
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);
     $resBody = [
