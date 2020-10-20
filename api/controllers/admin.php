@@ -123,6 +123,7 @@ function listAdmins(Slim\Slim $app) {
     $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
     $year = valueOrDefault($reqParams->year, date("Y"));
     $status = valueOrDefault($reqParams->status, 'active');
+    $searchTerm = valueOrNull($reqParams->t);
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);
     $resBody = [
@@ -151,17 +152,27 @@ FROM Operator O
     JOIN User U on UY.UserId = U.UserId 
 WHERE E.Name = 'admin'
   AND U.Status = ?
-  AND UY.Year = ? 
-  LIMIT ? OFFSET ?";
+  AND UY.Year = ?";
+
+    $sqlParams = [
+      valueOrError($status, new ApiException("status does not exist", 500)),
+      valueOrError($year, new ApiException("year does not exist", 500))
+    ];
+
+    if ($searchTerm) {
+      $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
+      array_push($sqlParams, "%$searchTerm%");
+      array_push($sqlParams, "%$searchTerm%");
+    }
+
+    $query .= " LIMIT ? OFFSET ?";
+    // get $limit+1 results to determine if more can be fetched after this
+    array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
+    array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
+
     $sql = DB::get()->prepare($query);
 
-    // get $limit+1 results to determine if more can be fetched after this
-    execOrError($sql->execute([
-      valueOrError($status, new ApiException("status does not exist", 500)),
-      valueOrError($year, new ApiException("year does not exist", 500)),
-      valueOrError($limit+1, new ApiException("limit does not exist", 500)),
-      valueOrError($offset, new ApiException("offset does not exist", 500)),
-    ]), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
+    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
 
     // Finalize (build/transform/filter) response if needed
     $admins = $sql->fetchAll();

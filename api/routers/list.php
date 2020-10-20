@@ -15,6 +15,9 @@ function listRouter($app) {
      * @apiDescription Get a list of lightweight admins, with a limit and offset
      *
      * @apiUse ListFields
+     * @apiParam {Number{4}} [year]
+     * @apiParam {String=active,registered,invited,archived} [status]
+     * @apiParam {String} [t] the search term to look up admins by name
      *
      * @apiUse ListResults
      * @apiSuccess {Number} results.operatorId
