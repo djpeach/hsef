@@ -51,6 +51,15 @@ INSERT INTO UserYear(Year, UserId) VALUES(2018, 7);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 8);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 9);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 10);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 11);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 12);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 13);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 14);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 15);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 16);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 17);
 
 INSERT INTO Operator(UserYearId) VALUES (1);
 INSERT INTO Operator(UserYearId) VALUES (2);
