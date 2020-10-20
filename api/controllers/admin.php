@@ -121,6 +121,8 @@ function listCurrentAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $year = valueOrDefault($reqParams->year, date("Y"));
+    $status = valueOrDefault($reqParams->status, 'active');
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);
     $resBody = [
@@ -139,17 +141,24 @@ function listCurrentAdmins(Slim\Slim $app) {
       throw new BadRequest("offset cannot be negative");
     }
 
-    $query = "SELECT O.OperatorId, U.UserId, U.FirstName, U.LastName, U.Suffix, U.CheckedIn, U.Email, O.Title, O.HighestDegree, O.Employer FROM Operator O 
-    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId 
-    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId 
+    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree, 
+       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix, 
+       U.Gender, U.Status, U.CheckedIn, U.Email 
+FROM Operator O 
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId
+    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
     JOIN UserYear UY on O.UserYearId = UY.UserYearId 
     JOIN User U on UY.UserId = U.UserId 
-WHERE E.Name = 'admin' 
-  AND UY.Year = YEAR(CURRENT_TIMESTAMP) LIMIT ? OFFSET ?";
+WHERE E.Name = 'admin'
+  AND U.Status = ?
+  AND UY.Year = ? 
+  LIMIT ? OFFSET ?";
     $sql = DB::get()->prepare($query);
 
     // get $limit+1 results to determine if more can be fetched after this
     execOrError($sql->execute([
+      valueOrError($status, new ApiException("status does not exist", 500)),
+      valueOrError($year, new ApiException("year does not exist", 500)),
       valueOrError($limit+1, new ApiException("limit does not exist", 500)),
       valueOrError($offset, new ApiException("offset does not exist", 500)),
     ]), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
@@ -170,6 +179,8 @@ WHERE E.Name = 'admin'
         $nextOffset = $offset + $limit;
         $resBody["links"]["next"] = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$limit&offset=$nextOffset";
       }
+    } else {
+      throw new UserNotFound("No admins with the year: $year, and status: '$status' could be found");
     }
     $resBody["count"] = count($admins);
     $resBody["results"] = array_map(function($admin) {
