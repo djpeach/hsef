@@ -14,7 +14,7 @@ class ApiException extends ErrorException {
 }
 
 class DatabaseError extends ApiException {
-  public function __construct($message = "Database Failed to connect", $code = 503, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+  public function __construct($message = "Database Failed to connect", $code = 502, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
     parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
   }
 }

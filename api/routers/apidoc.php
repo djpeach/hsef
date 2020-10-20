@@ -17,6 +17,14 @@
  */
 
 /**
+ * @apiDefine DatabaseError
+ * @apiError {Object} DatabaseError
+ * @apiError {Number} DatabaseError.code <code>502</code>
+ * @apiError {String} DatabaseError.error DatabaseError
+ * @apiError {String} DatabaseError.message There was an error communicating with the database
+ */
+
+/**
  * @apiDefine ResourceConflict
  * @apiError {Object} ResourceConflict
  * @apiError {Number} ResourceConflict.code <code>409</code>

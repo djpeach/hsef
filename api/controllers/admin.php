@@ -69,17 +69,46 @@ function createAdminFromExisting($app) {
 }
 
 // READ
-function readAdmin(Slim\Slim $app) {
+function getAdminByOpId(Slim\Slim $app) {
   return function($id) use ($app) {
     // Initialize response and request parameters
+    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $year = valueOrDefault($reqParams->year, date("Y"));
+    $status = valueOrDefault($reqParams->status, 'active');
+    $resBody = [];
 
-    // Additional request parameter validation if needed
+    // Additional request validation if needed
 
     // DB Logic (build response meanwhile if needed)
+    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree, 
+       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix, 
+       U.Gender, U.Status, U.CheckedIn, U.Email 
+FROM Operator O 
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId
+    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId 
+    JOIN User U on UY.UserId = U.UserId 
+WHERE E.Name = 'admin'
+  AND U.Status = ?
+  AND UY.Year = ? 
+  AND O.OperatorId = ?";
+    $sql = DB::get()->prepare($query);
+    execOrError($sql->execute([
+      valueOrError($status, new ApiException("status does not exist", 500)),
+      valueOrError($year, new ApiException("year does not exist", 500)),
+      valueOrError($id,  new ApiException("id does not exist", 500))
+    ]), new DatabaseError("Error while trying to find admin with id: $id", 502));
 
     // Finalize (build/transform/filter) response if needed
+    $admin = $sql->fetch();
+    if (!$admin) {
+      throw new UserNotFound("An admin with the id: $id, year: $year, and status: '$status' could not be found");
+    }
+
+    $resBody["admin"] = filterNullCamelCaseKeys($admin);
 
     // Send response
+    $app->res->json($resBody);
   };
 }
 
@@ -91,7 +120,7 @@ function readAdmin(Slim\Slim $app) {
 function listCurrentAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqParams = $app->req->jsonParams();
+    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);
     $resBody = [
@@ -123,7 +152,7 @@ WHERE E.Name = 'admin'
     execOrError($sql->execute([
       valueOrError($limit+1, new ApiException("limit does not exist", 500)),
       valueOrError($offset, new ApiException("offset does not exist", 500)),
-    ]), new DatabaseError("Failed to retrieve $limit admins with offset $offset", 502));
+    ]), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
 
     // Finalize (build/transform/filter) response if needed
     $admins = $sql->fetchAll();
@@ -144,14 +173,7 @@ WHERE E.Name = 'admin'
     }
     $resBody["count"] = count($admins);
     $resBody["results"] = array_map(function($admin) {
-      // filter out null values and camelCase keys
-      foreach ($admin as $key => $value) {
-        unset($admin[$key]);
-        if ($value !== null) {
-          $admin[lcfirst($key)] = $value;
-        }
-      }
-      return $admin;
+      return filterNullCamelCaseKeys($admin);
     }, $admins);
 
     // Send response

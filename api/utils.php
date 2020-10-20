@@ -43,3 +43,13 @@ function execOrError($exec, $err) {
     throw $err;
   }
 }
+
+function filterNullCamelCaseKeys($el) {
+  foreach ($el as $key => $value) {
+    unset($el[$key]);
+    if ($value !== null) {
+      $el[lcfirst($key)] = $value;
+    }
+  }
+  return $el;
+}
