@@ -1,19 +1,36 @@
 <?php
 
 // CREATE
+function createAdminFromExisting($app) {
+  return function() use ($app) {
+    echo "Added admin entitlement to existing user";
+  };
+}
+
 function createNewAdmin(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
     $user = $reqBody->user;
+    file_put_contents("php://stderr", "fName: {$user->firstName}");
     $operator = valueOrDefault($reqBody->operator, new stdClass());
     $resBody = [];
 
     // Additional request parameter validation if needed
 
     // DB Logic (build response meanwhile if needed)
+    // Check for existing user with email
+    $sql = DB::get()->prepare("SELECT 1 FROM User JOIN UserYear UY on User.UserId = UY.UserId WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP)");
+    execOrError($sql->execute([
+      valueOrError($user->email, new BadRequest("email cannot be null or blank")),
+    ]), new DatabaseError("Failed to lookup user with email: {$user->email}", 502));
+    if ($sql->fetch()) {
+      throw new ResourceConflict("A user this year with that email: {$user->email} already exists");
+    }
+
     // Create User
     $sql = DB::get()->prepare("INSERT INTO User(FirstName, LastName, Suffix, Gender, Status, CheckedIn, Email) VALUES(?, ?, ?, ?, ?, ?, ?)");
+    file_put_contents("php://stderr", "fName: {$user->firstName}");
     execOrError($sql->execute([
       valueOrError($user->firstName, new BadRequest("firstName cannot be null or blank")),
       valueOrError($user->lastName, new BadRequest("lastName cannot be null or blank")),
@@ -21,7 +38,7 @@ function createNewAdmin(Slim\Slim $app) {
       valueOrNull($user->gender),
       valueOrDefault($user->suffix, 'active'),
       funcOrNull($user->suffix, function($el) { return $el ? 1 : 0; }),
-      valueOrNull($user->email),
+      valueOrError($user->email, new BadRequest("email cannot be null or blank")),
     ]), new DatabaseError("Failed to create new user", 502));
 
     $userId = DB::get()->lastInsertId();
@@ -60,12 +77,6 @@ function createNewAdmin(Slim\Slim $app) {
     $app->res->json($resBody);
   };
 
-}
-
-function createAdminFromExisting($app) {
-  return function() use ($app) {
-    echo "Added admin entitlement to existing user";
-  };
 }
 
 // READ
@@ -113,8 +124,18 @@ WHERE E.Name = 'admin'
 }
 
 // UPDATE
+function updateAdminByOpId(Slim\Slim $app) {
+  return function() use ($app) {
+    echo "updated admin";
+  };
+}
 
 // DELETE
+function deleteAdminByOpId(Slim\Slim $app) {
+  return function() use ($app) {
+    echo "deleted admin";
+  };
+}
 
 // LIST
 function listAdmins(Slim\Slim $app) {

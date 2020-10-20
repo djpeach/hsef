@@ -8,7 +8,7 @@ foreach(glob(__DIR__."/../controllers/*.php") as $file) {
 function listRouter($app) {
   return function() use ($app) {
     /**
-     * @api {get} /list/admin List Admins
+     * @api {get} /list/admins List Admins
      * @apiGroup List
      * @apiName Admin
      * @apiVersion 0.1.0
@@ -35,7 +35,7 @@ function listRouter($app) {
      * @apiUse UserNotFound
      *
      * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/admin`, {
+     * axios.get(`/list/admins`, {
      *  params: {
      *    limit: 2,
      *    offset: 4,
@@ -50,9 +50,10 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/admin', listAdmins($app));
+    $app->get('/admins', listAdmins($app));
+
     /**
-     * @api {get} /list/admin/potential List potential Admins
+     * @api {get} /list/admins/potential List potential Admins
      * @apiGroup List
      * @apiName PotentialAdmins
      * @apiVersion 0.1.0
@@ -79,7 +80,7 @@ function listRouter($app) {
      * @apiUse UserNotFound
      *
      * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/admin/potential`, {
+     * axios.get(`/list/admins/potential`, {
      *  params: {
      *    limit: 2,
      *    offset: 4,
@@ -94,30 +95,30 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/admin/potential', listPotentialAdmins($app));
+    $app->get('/admins/potential', listPotentialAdmins($app));
 
-    $app->get('/judge', function() use ($app) {
+    $app->get('/judges', function() use ($app) {
       echo 'List judges';
     });
-    $app->get('/student', function() use ($app) {
+    $app->get('/students', function() use ($app) {
       echo 'List students';
     });
-    $app->get('/school', function() use ($app) {
+    $app->get('/schools', function() use ($app) {
       echo 'List schools';
     });
-    $app->get('/county', function() use ($app) {
+    $app->get('/counties', function() use ($app) {
       echo 'List countys';
     });
-    $app->get('/project', function() use ($app) {
+    $app->get('/projects', function() use ($app) {
       echo 'List projects';
     });
-    $app->get('/category', function() use ($app) {
+    $app->get('/categories', function() use ($app) {
       echo 'List categorys';
     });
-    $app->get('/booth', function() use ($app) {
+    $app->get('/booths', function() use ($app) {
       echo 'List booths';
     });
-    $app->get('/gradeLevel', function() use ($app) {
+    $app->get('/gradeLevels', function() use ($app) {
       echo 'List gradeLevels';
     });
   };

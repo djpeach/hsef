@@ -2,31 +2,31 @@
 
 function updateRouter($app) {
   return function() use ($app) {
-    $app->put('/admin', function() use ($app) {
+    $app->put('/admins', function() use ($app) {
       echo 'Update admin';
     });
-    $app->put('/judge', function() use ($app) {
+    $app->put('/judges', function() use ($app) {
       echo 'Update judge';
     });
-    $app->put('/student', function() use ($app) {
+    $app->put('/students', function() use ($app) {
       echo 'Update student';
     });
-    $app->put('/school', function() use ($app) {
+    $app->put('/schools', function() use ($app) {
       echo 'Update school';
     });
-    $app->put('/county', function() use ($app) {
+    $app->put('/counties', function() use ($app) {
       echo 'Update county';
     });
-    $app->put('/project', function() use ($app) {
+    $app->put('/projects', function() use ($app) {
       echo 'Update project';
     });
-    $app->put('/category', function() use ($app) {
+    $app->put('/categories', function() use ($app) {
       echo 'Update category';
     });
-    $app->put('/booth', function() use ($app) {
+    $app->put('/booths', function() use ($app) {
       echo 'Update booth';
     });
-    $app->put('/gradeLevel', function() use ($app) {
+    $app->put('/gradeLevels', function() use ($app) {
       echo 'Update gradeLevel';
     });
   };

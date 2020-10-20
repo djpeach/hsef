@@ -16,7 +16,7 @@ export default {
     }
   },
   created() {
-    axios.get(`/list/admin?limit=${2}&offset=${4}`)
+    axios.get(`/list/admins?limit=${2}&offset=${4}`)
     .then(res => {
       console.log(res);
       this.fetching_status = res.data;

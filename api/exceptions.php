@@ -19,6 +19,12 @@ class DatabaseError extends ApiException {
   }
 }
 
+class ResourceNotFound extends ApiException {
+  public function __construct($message = "Could not find resource", $code = 404, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+    parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+  }
+}
+
 class UserNotFound extends ApiException {
   public function __construct($message = "A user with that id could not be found", $code = 404, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
     parent::__construct($message, $code, $severity, $filename, $lineno, $previous);

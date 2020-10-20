@@ -2,31 +2,31 @@
 
 function deleteRouter($app) {
   return function() use ($app) {
-    $app->delete('/admin', function() use ($app) {
+    $app->delete('/admins', function() use ($app) {
       echo 'Delete admin';
     });
-    $app->delete('/judge', function() use ($app) {
+    $app->delete('/judges', function() use ($app) {
       echo 'Delete judge';
     });
-    $app->delete('/student', function() use ($app) {
+    $app->delete('/students', function() use ($app) {
       echo 'Delete student';
     });
-    $app->delete('/school', function() use ($app) {
+    $app->delete('/schools', function() use ($app) {
       echo 'Delete school';
     });
-    $app->delete('/county', function() use ($app) {
+    $app->delete('/counties', function() use ($app) {
       echo 'Delete county';
     });
-    $app->delete('/project', function() use ($app) {
+    $app->delete('/projects', function() use ($app) {
       echo 'Delete project';
     });
-    $app->delete('/category', function() use ($app) {
+    $app->delete('/categories', function() use ($app) {
       echo 'Delete category';
     });
-    $app->delete('/booth', function() use ($app) {
+    $app->delete('/booths', function() use ($app) {
       echo 'Delete booth';
     });
-    $app->delete('/gradeLevel', function() use ($app) {
+    $app->delete('/gradeLevels', function() use ($app) {
       echo 'Delete gradeLevel';
     });
   };
