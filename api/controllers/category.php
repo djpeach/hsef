@@ -23,7 +23,7 @@ function createNewCategory(Slim\Slim $app) {
     $sql = DB::get()->prepare("INSERT INTO Category(Name, Active) VALUES(?, ?)");
     execOrError($sql->execute([
       valueOrError($category->name, new BadRequest("Category name cannot be missing or blank")),
-      valueOrNull($category->active)
+      valueOrDefault($category->active, true)
     ]), new DatabaseError("Failed to create new category", 502));
 
     $categoryId = DB::get()->lastInsertId();

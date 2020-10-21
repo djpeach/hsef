@@ -227,7 +227,7 @@ function createRouter($app) {
       $app->post('/students', createNewStudent($app));
 
       /**
-       * @api {post} /schools New School
+       * @api {post} /create/schools New School
        * @apiGroup Create
        * @apiName School
        * @apiVersion 0.1.0
@@ -259,7 +259,7 @@ function createRouter($app) {
       $app->post('/schools', createNewSchool($app));
 
       /**
-       * @api {post} /counties New County
+       * @api {post} /create/counties New County
        * @apiGroup Create
        * @apiName County
        * @apiVersion 0.1.0
@@ -289,7 +289,7 @@ function createRouter($app) {
       $app->post('/counties', createNewCounty($app));
 
       /**
-       * @api {post} /projects New Project
+       * @api {post} /create/projects New Project
        * @apiGroup Create
        * @apiName Project
        * @apiVersion 0.1.0
@@ -330,7 +330,7 @@ function createRouter($app) {
       $app->post('/projects', createNewProject($app));
 
       /**
-       * @api {post} /categories New Category
+       * @api {post} /create/categories New Category
        * @apiGroup Create
        * @apiName Category
        * @apiVersion 0.1.0
@@ -363,7 +363,7 @@ function createRouter($app) {
       $app->post('/categories', createNewCategory($app));
 
       /**
-       * @api {post} /counties New Booth
+       * @api {post} /create/booths New Booth
        * @apiGroup Create
        * @apiName Booth
        * @apiVersion 0.1.0
@@ -396,7 +396,7 @@ function createRouter($app) {
       $app->post('/booths', createNewBooth($app));
 
       /**
-       * @api {post} /counties New GradeLevel
+       * @api {post} /create/gradeLevels New GradeLevel
        * @apiGroup Create
        * @apiName GradeLevel
        * @apiVersion 0.1.0

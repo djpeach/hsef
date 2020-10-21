@@ -23,7 +23,7 @@ function createNewGradeLevel(Slim\Slim $app) {
     $sql = DB::get()->prepare("INSERT INTO GradeLevel(Name, Active) VALUES(?, ?)");
     execOrError($sql->execute([
       valueOrError($gradeLevel->name, new BadRequest("GradeLevel name cannot be missing or blank")),
-      valueOrNull($gradeLevel->active)
+      valueOrDefault($gradeLevel->active, true)
     ]), new DatabaseError("Failed to create new gradeLevel", 502));
 
     $gradeLevelId = DB::get()->lastInsertId();

@@ -11,6 +11,13 @@ function createNewSchool(Slim\Slim $app) {
     // Additional request parameter validation if needed
 
     // Check for existing resource
+    $sql = DB::get()->prepare("SELECT 1 FROM School WHERE Name = ?");
+    execOrError($sql->execute([
+      valueOrError($school->name, new BadRequest("School name cannot be missing or blank")),
+    ]), new DatabaseError("Failed when trying to fetch existing school with name: {$school->name}"));
+    if ($sql->fetch()) {
+      throw new ResourceConflict("A school with name {$school->name} already exists");
+    }
 
     // DB Logic (build response meanwhile if needed)
     $sql = DB::get()->prepare("INSERT INTO School(Name, CountyId) VALUES(?, ?)");

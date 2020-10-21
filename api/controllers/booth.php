@@ -23,7 +23,7 @@ function createNewBooth(Slim\Slim $app) {
     $sql = DB::get()->prepare("INSERT INTO Booth(Number, Active) VALUES(?, ?)");
     execOrError($sql->execute([
       valueOrError($booth->number, new BadRequest("Booth number cannot be missing or blank")),
-      valueOrNull($booth->active)
+      valueOrDefault($booth->active, true)
     ]), new DatabaseError("Failed to create new booth", 502));
 
     $boothId = DB::get()->lastInsertId();
