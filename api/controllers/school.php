@@ -3,7 +3,29 @@
 // CREATE
 function createNewSchool(Slim\Slim $app) {
   return function() use ($app) {
-    echo "Created new school";
+    // Initialize response and request parameters
+    $reqBody = $app->req->jsonBody();
+    $school = valueOrError($reqBody->school, new BadRequest("You must provide a school object on the request body"));
+    $resBody = [];
+
+    // Additional request parameter validation if needed
+
+    // Check for existing resource
+
+    // DB Logic (build response meanwhile if needed)
+    $sql = DB::get()->prepare("INSERT INTO School(Name, CountyId) VALUES(?, ?)");
+    execOrError($sql->execute([
+      valueOrError($school->name, new BadRequest("School name cannot be missing or blank")),
+      valueOrNull($school->countyId)
+    ]), new DatabaseError("Failed to create new school", 502));
+
+    $schoolId = DB::get()->lastInsertId();
+    $resBody["schoolId"] = $schoolId;
+
+    // Finalize (build/transform/filter) response if needed
+
+    // Send response
+    $app->res->json($resBody);
   };
 }
 

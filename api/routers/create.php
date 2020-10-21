@@ -240,8 +240,6 @@ function createRouter($app) {
        * @apiParam {Number} [school.countyId]
        *
        * @apiSuccess {Number} schoolId
-       * @apiSuccess {String} name
-       * @apiSuccess {Number} countyId
        *
        * @apiUse ResourceConflict
        * @apiUse BadRequest
@@ -273,7 +271,6 @@ function createRouter($app) {
        * @apiParam {String{64}} county.name
        *
        * @apiSuccess {Number} countyId
-       * @apiSuccess {String} name
        *
        * @apiUse ResourceConflict
        * @apiUse BadRequest
@@ -333,7 +330,7 @@ function createRouter($app) {
       $app->post('/projects', createNewProject($app));
 
       /**
-       * @api {post} /counties New Category
+       * @api {post} /categories New Category
        * @apiGroup Create
        * @apiName Category
        * @apiVersion 0.1.0

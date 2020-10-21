@@ -5,7 +5,7 @@ function createNewStudent(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = valueOrError($reqBody->user, new BadRequest("You must provide a body object on the request body"));
+    $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
     $student = valueOrDefault($reqBody->student, new stdClass());
     $resBody = [];
 

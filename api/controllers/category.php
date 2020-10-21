@@ -3,7 +3,36 @@
 // CREATE
 function createNewCategory(Slim\Slim $app) {
   return function() use ($app) {
-    echo "Created new category";
+    // Initialize response and request parameters
+    $reqBody = $app->req->jsonBody();
+    $category = valueOrError($reqBody->category, new BadRequest("You must provide a category object on the request body"));
+    $resBody = [];
+
+    // Additional request parameter validation if needed
+
+    // Check for existing resource
+    $sql = DB::get()->prepare("SELECT 1 FROM Category WHERE Name = ?");
+    execOrError($sql->execute([
+      valueOrError($category->name, new BadRequest("Category name cannot be missing or blank")),
+    ]), new DatabaseError("Failed when trying to fetch existing category with name: {$category->name}"));
+    if ($sql->fetch()) {
+      throw new ResourceConflict("A category with name {$category->name} already exists");
+    }
+
+    // DB Logic (build response meanwhile if needed)
+    $sql = DB::get()->prepare("INSERT INTO Category(Name, Active) VALUES(?, ?)");
+    execOrError($sql->execute([
+      valueOrError($category->name, new BadRequest("Category name cannot be missing or blank")),
+      valueOrNull($category->active)
+    ]), new DatabaseError("Failed to create new category", 502));
+
+    $categoryId = DB::get()->lastInsertId();
+    $resBody["categoryId"] = $categoryId;
+
+    // Finalize (build/transform/filter) response if needed
+
+    // Send response
+    $app->res->json($resBody);
   };
 }
 
