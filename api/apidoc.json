@@ -13,6 +13,7 @@
     "Judge",
     "JudgeFromExisting",
     "JudgeWithNew",
+    "PotentialJudges",
     "Student",
     "School",
     "County",

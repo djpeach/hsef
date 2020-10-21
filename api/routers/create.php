@@ -22,8 +22,9 @@ function createRouter($app) {
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        * @apiUse UserNotFound
        *
        * @apiExample {js} Axios Example Usage:
@@ -64,8 +65,9 @@ function createRouter($app) {
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/admins/newUser', {
@@ -107,8 +109,9 @@ function createRouter($app) {
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        * @apiUse UserNotFound
        *
        * @apiExample {js} Axios Example Usage:
@@ -155,6 +158,7 @@ function createRouter($app) {
        * @apiSuccess {Number} operatorId
        *
        * @apiUse BadRequest
+       * @apiUse DatabaseError
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/judges/newUser', {
@@ -199,8 +203,9 @@ function createRouter($app) {
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} studentId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/students', {
@@ -241,8 +246,9 @@ function createRouter($app) {
        *
        * @apiSuccess {Number} schoolId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/schools', {
@@ -272,8 +278,9 @@ function createRouter($app) {
        *
        * @apiSuccess {Number} countyId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/counties', {
@@ -308,8 +315,9 @@ function createRouter($app) {
        * @apiSuccess {Number} projectId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/counties', {
@@ -345,8 +353,9 @@ function createRouter($app) {
        * @apiSuccess {Number} categoryId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/categories', {
@@ -378,8 +387,9 @@ function createRouter($app) {
        * @apiSuccess {Number} boothId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/booths', {
@@ -411,8 +421,9 @@ function createRouter($app) {
        * @apiSuccess {Number} gradeLevelId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
        * axios.post('/create/gradeLevels', {

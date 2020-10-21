@@ -82,5 +82,4 @@
  * @apiSuccess {Number} limit The max number of resources requested
  * @apiSuccess {Number} offset The offset used to fetch resources
  * @apiSuccess {Number} count The number of results returned
- * @apiSuccess {Object[]} results
  */

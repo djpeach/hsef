@@ -3,7 +3,7 @@
 function readRouter($app) {
   return function() use ($app) {
     /**
-     * @api {get} /read/admins/:id Get Admin by OpId
+     * @api {get} /read/admins/:id Admin by OpId
      * @apiGroup Read
      * @apiName Admin
      * @apiVersion 0.1.0
@@ -28,8 +28,8 @@ function readRouter($app) {
      * @apiSuccess {String} admin.email
      *
      * @apiUse BadRequest
-     * @apiUse UserNotFound
      * @apiUse DatabaseError
+     * @apiUse UserNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get('/read/admins/25').then(res => {
@@ -41,7 +41,7 @@ function readRouter($app) {
     $app->get('/admins/:id', getAdminByOpId($app));
 
     /**
-     * @api {get} /read/judges/:id Get Judge by OpId
+     * @api {get} /read/judges/:id Judge by OpId
      * @apiGroup Read
      * @apiName Judge
      * @apiVersion 0.1.0
@@ -72,8 +72,8 @@ function readRouter($app) {
      * @apiSuccess {String} judge.gradeLevelPreferences.name
      *
      * @apiUse BadRequest
-     * @apiUse UserNotFound
      * @apiUse DatabaseError
+     * @apiUse UserNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get('/read/judges/25').then(res => {
@@ -83,6 +83,7 @@ function readRouter($app) {
      * });
      */
     $app->get('/judges/:id', getJudgeByOpId($app));
+
     $app->get('/students', function() use ($app) {
       echo 'Read student';
     });
