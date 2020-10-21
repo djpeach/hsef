@@ -185,7 +185,7 @@ function createRouter($app) {
       $app->post('/judges/newUser', createNewJudge($app));
 
       /**
-       * @api {post} /create/students/newUser Student with New User
+       * @api {post} /create/students New Student
        * @apiGroup Create
        * @apiName Student
        * @apiVersion 0.1.0
@@ -203,7 +203,7 @@ function createRouter($app) {
        * @apiUse BadRequest
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/students/newUser', {
+       * axios.post('/create/students', {
        *  user: {
        *    firstName: "Daniel",
        *    lastName: "Peach",
@@ -224,7 +224,7 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/students/newUser', createNewStudent($app));
+      $app->post('/students', createNewStudent($app));
 
       /**
        * @api {post} /schools New School

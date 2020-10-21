@@ -8,6 +8,8 @@ function genericHandler(Slim\Slim $app) {
 
     // Additional request parameter validation if needed
 
+    // Check for existing resource
+
     // DB Logic (build response meanwhile if needed)
 
     // Finalize (build/transform/filter) response if needed

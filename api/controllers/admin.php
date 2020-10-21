@@ -11,8 +11,7 @@ function createNewAdmin(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = $reqBody->user;
-    file_put_contents("php://stderr", "fName: {$user->firstName}");
+    $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
     $operator = valueOrDefault($reqBody->operator, new stdClass());
     $resBody = [];
 

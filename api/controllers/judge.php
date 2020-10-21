@@ -11,7 +11,7 @@ function createNewJudge(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = $reqBody->user;
+    $user = valueOrError($reqBody->user, "You must provide a user object on the request object");
     $operator = valueOrDefault($reqBody->operator, new stdClass());
     $judge = valueOrDefault($reqBody->judge, new stdClass());
     $resBody = [];
