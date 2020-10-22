@@ -289,7 +289,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/schools`, {
@@ -328,7 +328,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/counties`, {
@@ -383,7 +383,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/projects`, {
@@ -422,7 +422,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/categories`, {
@@ -459,7 +459,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/booths`, {
@@ -496,7 +496,7 @@ function listRouter($app) {
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
-     * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get(`/list/gradeLevels`, {
