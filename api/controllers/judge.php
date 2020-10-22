@@ -97,9 +97,6 @@ function createNewJudge(Slim\Slim $app) {
 function getJudgeByOpId(Slim\Slim $app) {
   return function($id) use ($app) {
     // Initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
-    $year = valueOrDefault($reqParams->year, date("Y"));
-    $status = valueOrDefault($reqParams->status, 'active');
     $resBody = [];
 
     // Additional request validation if needed
@@ -114,24 +111,19 @@ FROM Operator O
     JOIN UserYear UY on O.UserYearId = UY.UserYearId 
     JOIN User U on UY.UserId = U.UserId 
 WHERE E.Name = 'judge'
-  AND U.Status = ?
-  AND UY.Year = ? 
   AND O.OperatorId = ?";
     $sql = DB::get()->prepare($query);
     execOrError($sql->execute([
-      valueOrError($status, new ApiException("status does not exist", 500)),
-      valueOrError($year, new ApiException("year does not exist", 500)),
       valueOrError($id,  new ApiException("id does not exist", 500))
     ]), new DatabaseError("Error while trying to find judge with id: $id", 502));
 
     $judge = $sql->fetch();
     if (!$judge) {
-      throw new UserNotFound("An judge with the id: $id, year: $year, and status: '$status' could not be found");
+      throw new UserNotFound("An judge with the id: $id could not be found");
     }
     $opid = $judge['OperatorId'];
-    file_put_contents("php://stderr", $opid);
 
-    $resBody["judge"] = filterNullCamelCaseKeys($judge);
+    $resBody["result"] = filterNullCamelCaseKeys($judge);
 
     // get categoryPreferences
     $sql = DB::get()->prepare("SELECT C.CategoryId, C.Name FROM Category C 

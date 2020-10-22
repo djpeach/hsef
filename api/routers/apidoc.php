@@ -68,14 +68,6 @@
  */
 
 /**
- * @apiDefine StudentFields
- * @apiParam {Object} [student] The student details
- * @apiParam {Number} [student.schoolId]
- * @apiParam {Number} [student.projectId]
- * @apiParam {Number} [student.gradeLevelId]
- */
-
-/**
  * @apiDefine ListFields
  * @apiParam {Number} [limit=10] The max number of results to return
  * @apiParam {Number} [offset=0] Where to start the pagination

@@ -82,9 +82,6 @@ function createNewAdmin(Slim\Slim $app) {
 function getAdminByOpId(Slim\Slim $app) {
   return function($id) use ($app) {
     // Initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
-    $year = valueOrDefault($reqParams->year, date("Y"));
-    $status = valueOrDefault($reqParams->status, 'active');
     $resBody = [];
 
     // Additional request validation if needed
@@ -99,23 +96,19 @@ FROM Operator O
     JOIN UserYear UY on O.UserYearId = UY.UserYearId 
     JOIN User U on UY.UserId = U.UserId 
 WHERE E.Name = 'admin'
-  AND U.Status = ?
-  AND UY.Year = ? 
   AND O.OperatorId = ?";
     $sql = DB::get()->prepare($query);
     execOrError($sql->execute([
-      valueOrError($status, new ApiException("status does not exist", 500)),
-      valueOrError($year, new ApiException("year does not exist", 500)),
       valueOrError($id,  new ApiException("id does not exist", 500))
     ]), new DatabaseError("Error while trying to find admin with id: $id", 502));
 
     // Finalize (build/transform/filter) response if needed
     $admin = $sql->fetch();
     if (!$admin) {
-      throw new UserNotFound("An admin with the id: $id, year: $year, and status: '$status' could not be found");
+      throw new UserNotFound("An admin with the id: $id could not be found");
     }
 
-    $resBody["admin"] = filterNullCamelCaseKeys($admin);
+    $resBody["result"] = filterNullCamelCaseKeys($admin);
 
     // Send response
     $app->res->json($resBody);
@@ -185,7 +178,7 @@ WHERE E.Name = 'admin'
       valueOrError($year, new ApiException("year does not exist", 500))
     ];
 
-    if ($searchTerm) {
+    if (isset($searchTerm)) {
       $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
       array_push($sqlParams, "%$searchTerm%");
       array_push($sqlParams, "%$searchTerm%");
@@ -207,14 +200,22 @@ WHERE E.Name = 'admin'
         // add prev url
         $prevOffset = max(0, $offset - $limit);
         $prevLimit = min($limit, $offset);
-        $resBody["links"]["prev"] = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$prevLimit&offset=$prevOffset";
+        $prevUrl = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$prevLimit&offset=$prevOffset";
+        $prevUrl .= isset($searchTerm) ? "&t=$searchTerm" : "";
+        $prevUrl .= isset($year) ? "&year=$year" : "";
+        $prevUrl .= isset($status) ? "&status=$status" : "";
+        $resBody["links"]["prev"] = $prevUrl;
       }
       if (count($admins) > $limit) {
         // remove last [sentry] admin and return $limit admins only
         // add next url
         array_pop($admins);
         $nextOffset = $offset + $limit;
-        $resBody["links"]["next"] = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$limit&offset=$nextOffset";
+        $nextUrl = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$limit&offset=$nextOffset";
+        $nextUrl .= isset($searchTerm) ? "&t=$searchTerm" : "";
+        $nextUrl .= isset($year) ? "&year=$year" : "";
+        $nextUrl .= isset($status) ? "&status=$status" : "";
+        $resBody["links"]["next"] = $nextUrl;
       }
     } else {
       throw new UserNotFound("No admins with the year: $year, status: '$status', and query: $searchTerm could be found");
@@ -279,7 +280,7 @@ AND UY.Year = ?";
       valueOrError($year, new ApiException("year does not exist", 500))
     ];
 
-    if ($searchTerm) {
+    if (isset($searchTerm)) {
       $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
       array_push($sqlParams, "%$searchTerm%");
       array_push($sqlParams, "%$searchTerm%");

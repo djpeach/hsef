@@ -92,11 +92,12 @@ function readRouter($app) {
      * @apiSuccess {Object} result The student object
      * @apiSuccess {Number} result.studentId
      * @apiSuccess {Object} result.user
+     * @apiSuccess {Number} result.user.id
      * @apiSuccess {String} result.user.firstName
      * @apiSuccess {String} result.user.lastName
      * @apiSuccess {String} [result.user.suffix]
-     * @apiSuccess {String=male,female,other} [result.gender]
-     * @apiSuccess {String=active,registered,invited,archived} result.status
+     * @apiSuccess {String=male,female,other} [result.user.gender]
+     * @apiSuccess {String=active,registered,invited,archived} result.user.status
      * @apiSuccess {Object} [result.school]
      * @apiSuccess {Number} result.school.id
      * @apiSuccess {String} result.school.name
@@ -116,6 +117,7 @@ function readRouter($app) {
      * @apiUse BadRequest
      * @apiUse DatabaseError
      * @apiUse UserNotFound
+     * @apiUse ResourceNotFound
      *
      * @apiExample {js} Axios Example Usage:
      * axios.get('/read/students/25').then(res => {
@@ -124,9 +126,7 @@ function readRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/students/:id', function() use ($app) {
-      echo 'Read student';
-    });
+    $app->get('/students/:id', getStudentById($app));
 
     /**
      * @api {get} /read/schools/:id School by Id

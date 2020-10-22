@@ -198,7 +198,10 @@ function createRouter($app) {
        * @apiHeader {String} Content-Type=application/json
        *
        * @apiUse UserFields
-       * @apiUse StudentFields
+       * @apiParam {Object} student The student details
+       * @apiParam {Number} [student.schoolId]
+       * @apiParam {Number} [student.projectId]
+       * @apiParam {Number} [student.gradeLevelId]
        *
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} studentId

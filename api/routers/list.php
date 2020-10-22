@@ -223,7 +223,8 @@ function listRouter($app) {
      * @apiParam {Number} [gradeLevelId]
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
+     * @apiSuccess {Object[]} results A list of student objects
+     * @apiSuccess {Number} results.studentId
      * @apiSuccess {Object} results.user
      * @apiSuccess {Number} results.user.id
      * @apiSuccess {String} results.user.firstName
@@ -263,9 +264,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/students', function() use ($app) {
-      echo 'List students';
-    });
+    $app->get('/students', listStudents($app));
 
     /**
      * @api {get} /list/schools Schools
@@ -276,12 +275,10 @@ function listRouter($app) {
      *
      * @apiUse ListFields
      * @apiParam {String} [t] the search term to look up schools by name
-     * @apiParam {Number{4}} [year=date("Y")]
-     * @apiParam {Number} [countyId]
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of school objects
+     * @apiSuccess {Number} results.schoolId
      * @apiSuccess {String} results.name
      * @apiSuccess {Object} [results.county]
      * @apiSuccess {Number} results.county.id
@@ -296,9 +293,7 @@ function listRouter($app) {
      *  params: {
      *    limit: 2,
      *    offset: 4,
-     *    year: 2020,
-     *    t: 'Da',
-     *    countyId: 12,
+     *    t: 'Da'
      *  }
      * })
      * .then(res => {
@@ -307,9 +302,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/schools', function() use ($app) {
-      echo 'List schools';
-    });
+    $app->get('/schools', listSchools($app));
 
     /**
      * @api {get} /list/counties Counties
@@ -322,8 +315,8 @@ function listRouter($app) {
      * @apiParam {String} [t] the search term to look up counties by name
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of county objects
+     * @apiSuccess {Number} results.countyId
      * @apiSuccess {String} results.name
      *
      * @apiUse BadRequest
@@ -342,9 +335,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/counties', function() use ($app) {
-      echo 'List countys';
-    });
+    $app->get('/counties', listCounties($app));
 
     /**
      * @api {get} /list/projects Projects
@@ -360,8 +351,8 @@ function listRouter($app) {
      * @apiParam {Number} [gradeLevelId]
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of project objects
+     * @apiSuccess {Number} results.projectId
      * @apiSuccess {String} results.name
      * @apiSuccess {Number} [results.number]
      * @apiSuccess {Object} [results.booth]
@@ -416,9 +407,10 @@ function listRouter($app) {
      * @apiParam {Boolean} [active] Use if you want to filter only active or inactive
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of category objects
+     * @apiSuccess {Number} results.categoryId
      * @apiSuccess {String} results.name
+     * @apiSuccess {Boolean} results.active This will be returned as <code>1</code> for true and <code>0</code> for false
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
@@ -437,9 +429,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/categories', function() use ($app) {
-      echo 'List categorys';
-    });
+    $app->get('/categories', listCategories($app));
 
     /**
      * @api {get} /list/booths Booths
@@ -453,9 +443,10 @@ function listRouter($app) {
      * @apiParam {Boolean} [active] Use if you want to filter only booths or inactive
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of booth objects
+     * @apiSuccess {Number} results.boothId
      * @apiSuccess {String} results.name
+     * @apiSuccess {Boolean} results.active This will be returned as <code>1</code> for true and <code>0</code> for false
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
@@ -474,9 +465,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/booths', function() use ($app) {
-      echo 'List booths';
-    });
+    $app->get('/booths', listBooths($app));
 
     /**
      * @api {get} /list/gradeLevels GradeLevels
@@ -490,8 +479,8 @@ function listRouter($app) {
      * @apiParam {Boolean} [active] Use if you want to filter only booths or inactive
      *
      * @apiUse ListResults
-     * @apiSuccess {Object[]} results
-     * @apiSuccess {Number} results.id
+     * @apiSuccess {Object[]} results A list of gradeLevel objects
+     * @apiSuccess {Number} results.gradeLevelId
      * @apiSuccess {String} results.name
      *
      * @apiUse BadRequest
@@ -511,8 +500,6 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/gradeLevels', function() use ($app) {
-      echo 'List gradeLevels';
-    });
+    $app->get('/gradeLevels', listGradeLevels($app));
   };
 }

@@ -124,8 +124,6 @@ INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 4);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 5);
 
-INSERT INTO Student(UserId) VALUES (7);
-INSERT INTO Student(UserId) VALUES (8);
 INSERT INTO Student(UserId) VALUES (9);
 INSERT INTO Student(UserId) VALUES (10);
 INSERT INTO Student(UserId) VALUES (11);
@@ -133,6 +131,8 @@ INSERT INTO Student(UserId) VALUES (12);
 INSERT INTO Student(UserId) VALUES (13);
 INSERT INTO Student(UserId) VALUES (14);
 INSERT INTO Student(UserId) VALUES (15);
+INSERT INTO Student(UserId) VALUES (16);
+INSERT INTO Student(UserId) VALUES (17);
 
 INSERT INTO Booth(Number) VALUES (100);
 INSERT INTO Booth(Number) VALUES (101);

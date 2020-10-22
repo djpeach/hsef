@@ -45,6 +45,9 @@ function execOrError($exec, $err) {
 }
 
 function filterNullCamelCaseKeys($el) {
+  if (!$el) {
+    return null;
+  }
   foreach ($el as $key => $value) {
     unset($el[$key]);
     if ($value !== null) {
