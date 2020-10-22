@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * @apiDefine ResourceNotFound
+ * @apiError {Object} ResourceNotFound
+ * @apiError {Number} ResourceNotFound.code <code>404</code>
+ * @apiError {String} ResourceNotFound.error ResourceNotFound
+ * @apiError {String} ResourceNotFound.message Could not find resource
+ */
+
+/**
  * @apiDefine UserNotFound
  * @apiError {Object} UserNotFound
  * @apiError {Number} UserNotFound.code <code>404</code>
