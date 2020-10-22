@@ -7,11 +7,9 @@ function readRouter($app) {
      * @apiGroup Read
      * @apiName Admin
      * @apiVersion 0.1.0
-     * @apiDescription Get an admin, given an operator id, year, and status
+     * @apiDescription Get an admin, given an operator id
      *
      * @apiParam {Number} id The operator id to find the admin with
-     * @apiParam {Number{4}} [year=date("Y")] The year you want to find an admin for
-     * @apiParam {String=active,registered,invited,archived} [status=active] The status you want to find an admin for
      *
      * @apiSuccess {Object} result The admin object
      * @apiSuccess {Number} result.operatorId
@@ -45,11 +43,9 @@ function readRouter($app) {
      * @apiGroup Read
      * @apiName Judge
      * @apiVersion 0.1.0
-     * @apiDescription Get a judge given an operator id, year, and status
+     * @apiDescription Get a judge given an operator id
      *
      * @apiParam {Number} id The operator id to find the judge with
-     * @apiParam {Number{4}} [year=date("Y")] The year you want to find a judge for
-     * @apiParam {String=active,registered,invited,archived} [status=active] The status you want to find a judge for
      *
      * @apiSuccess {Object} result The judge object
      * @apiSuccess {Number} result.operatorId
@@ -89,11 +85,9 @@ function readRouter($app) {
      * @apiGroup Read
      * @apiName Student
      * @apiVersion 0.1.0
-     * @apiDescription Get a student given an id, year, and status
+     * @apiDescription Get a student given an id
      *
      * @apiParam {Number} id The student id to find the student with
-     * @apiParam {Number{4}} [year=date("Y")] The year you want to find a student for
-     * @apiParam {String=active,registered,invited,archived} [status=active] The status you want to find a student for
      *
      * @apiSuccess {Object} result The student object
      * @apiSuccess {Number} result.studentId
