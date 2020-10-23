@@ -171,12 +171,194 @@ function deleteJudgeByOpId(Slim\Slim $app) {
 // LIST
 function listJudges(Slim\Slim $app) {
   return function() use ($app) {
-    echo "got judges";
+    // initialize response and request parameters
+    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $year = valueOrDefault($reqParams->year, date("Y"));
+    $status = valueOrDefault($reqParams->status, 'active');
+    $searchTerm = valueOrNull($reqParams->t);
+    $limit = valueOrDefault($reqParams->limit, 10);
+    $offset = valueOrDefault($reqParams->offset, 0);
+    $resBody = [
+      "links" => [
+        "base" => $app->req->getUrl().$app->req->getPath(),
+      ],
+      "limit" => $limit,
+      "offset" => $offset
+    ];
+
+    // Additional request parameter validation if needed
+    if ($limit < 0) {
+      throw new BadRequest("limit cannot be negative");
+    }
+    if ($offset < 0) {
+      throw new BadRequest("offset cannot be negative");
+    }
+    if (strlen($year) !== 4) {
+      throw new BadRequest("year must be in the format YYYY");
+    }
+    if (!in_array($status, ['active', 'registered', 'invited', 'archived'])) {
+      throw new BadRequest("status must be one of ['active', 'registered', 'invited', 'archived']");
+    }
+
+    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree, 
+       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix, 
+       U.Gender, U.Status, U.CheckedIn, U.Email 
+FROM Operator O 
+    JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId
+    JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId 
+    JOIN User U on UY.UserId = U.UserId 
+WHERE E.Name = 'judge'
+  AND U.Status = ?
+  AND UY.Year = ?";
+
+    $sqlParams = [
+      valueOrError($status, new ApiException("status does not exist", 500)),
+      valueOrError($year, new ApiException("year does not exist", 500))
+    ];
+
+    if (isset($searchTerm)) {
+      $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
+      array_push($sqlParams, "%$searchTerm%");
+      array_push($sqlParams, "%$searchTerm%");
+    }
+
+    $query .= " LIMIT ? OFFSET ?";
+    // get $limit+1 results to determine if more can be fetched after this
+    array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
+    array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
+
+    $sql = DB::get()->prepare($query);
+
+    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
+
+    // Finalize (build/transform/filter) response if needed
+    $admins = $sql->fetchAll();
+    if ($admins) {
+      if ($offset > 0) {
+        // add prev url
+        $prevOffset = max(0, $offset - $limit);
+        $prevLimit = min($limit, $offset);
+        $prevUrl = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$prevLimit&offset=$prevOffset";
+        $prevUrl .= isset($searchTerm) ? "&t=$searchTerm" : "";
+        $prevUrl .= isset($year) ? "&year=$year" : "";
+        $prevUrl .= isset($status) ? "&status=$status" : "";
+        $resBody["links"]["prev"] = $prevUrl;
+      }
+      if (count($admins) > $limit) {
+        // remove last [sentry] admin and return $limit admins only
+        // add next url
+        array_pop($admins);
+        $nextOffset = $offset + $limit;
+        $nextUrl = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$limit&offset=$nextOffset";
+        $nextUrl .= isset($searchTerm) ? "&t=$searchTerm" : "";
+        $nextUrl .= isset($year) ? "&year=$year" : "";
+        $nextUrl .= isset($status) ? "&status=$status" : "";
+        $resBody["links"]["next"] = $nextUrl;
+      }
+    } else {
+      throw new UserNotFound("No admins with the year: $year, status: '$status', and query: $searchTerm could be found");
+    }
+    $resBody["count"] = count($admins);
+    $resBody["results"] = array_map(function($admin) {
+      return filterNullCamelCaseKeys($admin);
+    }, $admins);
+
+    // Send response
+    $app->res->json($resBody);
   };
 }
 
 function listPotentialJudges(Slim\Slim $app) {
   return function() use ($app) {
-    echo "got judges";
+    // initialize response and request parameters
+    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $year = valueOrDefault($reqParams->year, date("Y"));
+    $status = valueOrDefault($reqParams->status, 'active');
+    $searchTerm = valueOrNull($reqParams->t);
+    $limit = valueOrDefault($reqParams->limit, 10);
+    $offset = valueOrDefault($reqParams->offset, 0);
+    $resBody = [
+      "links" => [
+        "base" => $app->req->getUrl().$app->req->getPath(),
+      ],
+      "limit" => $limit,
+      "offset" => $offset
+    ];
+
+    // Additional request parameter validation if needed
+    if ($limit < 0) {
+      throw new BadRequest("limit cannot be negative");
+    }
+    if ($offset < 0) {
+      throw new BadRequest("offset cannot be negative");
+    }
+    if (strlen($year) !== 4) {
+      throw new BadRequest("year must be in the format YYYY");
+    }
+    if (!in_array($status, ['active', 'registered', 'invited', 'archived'])) {
+      throw new BadRequest("status must be one of ['active', 'registered', 'invited', 'archived']");
+    }
+
+    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree, 
+       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix, 
+       U.Gender, U.Status, U.CheckedIn, U.Email
+FROM User U
+    JOIN UserYear UY on U.UserId = UY.UserId
+    LEFT JOIN Operator O on UY.UserYearId = O.UserYearId
+WHERE (O.OperatorId IS NULL
+OR O.OperatorId NOT IN (SELECT O2.OperatorId FROM Operator O2
+        JOIN OperatorEntitlement OE on O2.OperatorId = OE.OperatorId
+        JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
+    WHERE E.Name = 'judge'))
+AND U.Status = ?
+AND UY.Year = ?";
+
+    $sqlParams = [
+      valueOrError($status, new ApiException("status does not exist", 500)),
+      valueOrError($year, new ApiException("year does not exist", 500))
+    ];
+
+    if (isset($searchTerm)) {
+      $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
+      array_push($sqlParams, "%$searchTerm%");
+      array_push($sqlParams, "%$searchTerm%");
+    }
+
+    $query .= " LIMIT ? OFFSET ?";
+    // get $limit+1 results to determine if more can be fetched after this
+    array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
+    array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
+
+    $sql = DB::get()->prepare($query);
+
+    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to retrieve $limit admins with offset $offset"));
+
+    // Finalize (build/transform/filter) response if needed
+    $admins = $sql->fetchAll();
+    if ($admins) {
+      if ($offset > 0) {
+        // add prev url
+        $prevOffset = max(0, $offset - $limit);
+        $prevLimit = min($limit, $offset);
+        $resBody["links"]["prev"] = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$prevLimit&offset=$prevOffset";
+      }
+      if (count($admins) > $limit) {
+        // remove last [sentry] admin and return $limit admins only
+        // add next url
+        array_pop($admins);
+        $nextOffset = $offset + $limit;
+        $resBody["links"]["next"] = "{$app->req->getUrl()}{$app->req->getPath()}?limit=$limit&offset=$nextOffset";
+      }
+    } else {
+      throw new UserNotFound("No potential admins with the year: $year, status: '$status', and query: $searchTerm could be found");
+    }
+    $resBody["count"] = count($admins);
+    $resBody["results"] = array_map(function($admin) {
+      return filterNullCamelCaseKeys($admin);
+    }, $admins);
+
+    // Send response
+    $app->res->json($resBody);
   };
 }

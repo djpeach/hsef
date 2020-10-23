@@ -154,9 +154,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/judges', function() use ($app) {
-      echo 'List judges';
-    });
+    $app->get('/judges', listJudges($app));
 
     /**
      * @api {get} /list/judges/potential Potential Judges
@@ -203,9 +201,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/judges/potential', function() use ($app) {
-      echo 'List potential judges';
-    });
+    $app->get('/judges/potential', listPotentialJudges($app));
 
     /**
      * @api {get} /list/students Students
@@ -346,9 +342,6 @@ function listRouter($app) {
      *
      * @apiUse ListFields
      * @apiParam {String} [t] the search term to look up projects by name
-     * @apiParam {Number{4}} [year=date("Y")]
-     * @apiParam {Number} [categoryId]
-     * @apiParam {Number} [gradeLevelId]
      *
      * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of project objects
@@ -361,16 +354,6 @@ function listRouter($app) {
      * @apiSuccess {Object} [results.category]
      * @apiSuccess {Number} results.category.id
      * @apiSuccess {String} results.category.name
-     * @apiSuccess {Object[]} [results.students]
-     * @apiSuccess {Number} results.students.id
-     * @apiSuccess {String} results.students.firstName
-     * @apiSuccess {String} results.students.lastName
-     * @apiSuccess {Object} [results.students.school]
-     * @apiSuccess {Number} results.students.school.id
-     * @apiSuccess {String} results.students.school.name
-     * @apiSuccess {Object} [results.students.gradeLevel]
-     * @apiSuccess {Number} results.students.gradeLevel.id
-     * @apiSuccess {String} results.students.gradeLevel.name
      *
      * @apiUse BadRequest
      * @apiUse DatabaseError
@@ -391,9 +374,7 @@ function listRouter($app) {
      *  console.log(err.response.data);
      * });
      */
-    $app->get('/projects', function() use ($app) {
-      echo 'List projects';
-    });
+    $app->get('/projects', listProjects($app));
 
     /**
      * @api {get} /list/categories Categories

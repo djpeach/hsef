@@ -3,7 +3,16 @@
 // CREATE
 function createAdminFromExisting($app) {
   return function() use ($app) {
-    echo "Added admin entitlement to existing user";
+    $reqBody = $app->req->jsonBody();
+    $operator = valueOrDefault($reqBody->operator, new stdClass());
+    $resBody = [];
+
+    $sql = DB::get()->prepare("REPLACE INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
+    execOrError($sql->execute([
+      valueOrError($reqBody->userId, new BadRequest("You must provide a userId on the request body"))
+    ]), new DatabaseError("Error when trying to replace user year record"));
+
+    echo "Still in dev";
   };
 }
 
