@@ -21,7 +21,7 @@
               <v-dialog v-model="createDialog" max-width="500px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="yellow accent-4"
+                    color="amber"
                     dark
                     class="mb-2"
                     v-bind="attrs"
