@@ -143,7 +143,7 @@ function listAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqParams = valueOrDefault($app->req->jsonParams(), new EmptyObject());
-    $year = valueOrDefault($reqParams->year, date("Y"));
+    $year = valueOrNull($reqParams->year);
     $status = valueOrDefault($reqParams->status, 'active');
     $searchTerm = valueOrNull($reqParams->t);
     $limit = valueOrDefault($reqParams->limit, 10);
@@ -163,7 +163,7 @@ function listAdmins(Slim\Slim $app) {
     if ($offset < 0) {
       throw new BadRequest("offset cannot be negative");
     }
-    if (strlen($year) !== 4) {
+    if ($year && strlen($year) !== 4) {
       throw new BadRequest("year must be in the format YYYY");
     }
     if (!in_array($status, ['active', 'registered', 'invited', 'archived'])) {
@@ -179,13 +179,16 @@ FROM Operator O
     JOIN UserYear UY on O.UserYearId = UY.UserYearId 
     JOIN User U on UY.UserId = U.UserId 
 WHERE E.Name = 'admin'
-  AND U.Status = ?
-  AND UY.Year = ?";
+  AND U.Status = ?";
 
     $sqlParams = [
-      valueOrError($status, new ApiException("status does not exist", 500)),
-      valueOrError($year, new ApiException("year does not exist", 500))
+      valueOrError($status, new ApiException("status does not exist", 500))
     ];
+
+    if (isset($year)) {
+      $query .= " AND YEAR = ?";
+      array_push($sqlParams, $year);
+    }
 
     if (isset($searchTerm)) {
       $query .= " AND U.FirstName LIKE ? OR U.LastName LIKE ?";
@@ -193,8 +196,14 @@ WHERE E.Name = 'admin'
       array_push($sqlParams, "%$searchTerm%");
     }
 
+    $sql = DB::get()->prepare($query);
+
+    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to fetch all admins"));
+
+    $admins = $sql->fetchAll();
+    $resBody["total"] = count($admins);
+
     $query .= " LIMIT ? OFFSET ?";
-    // get $limit+1 results to determine if more can be fetched after this
     array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
     array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
 

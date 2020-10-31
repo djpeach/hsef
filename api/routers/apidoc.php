@@ -82,4 +82,5 @@
  * @apiSuccess {Number} limit The max number of resources requested
  * @apiSuccess {Number} offset The offset used to fetch resources
  * @apiSuccess {Number} count The number of results returned
+ * @apiSuccess {Number} totoal The total number of results in the database
  */

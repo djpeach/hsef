@@ -15,7 +15,7 @@ function listRouter($app) {
      * @apiDescription Get a list of admins
      *
      * @apiUse ListFields
-     * @apiParam {Number{4}} [year=date("Y")]
+     * @apiParam {Number{4}} [year]
      * @apiParam {String=active,registered,invited,archived} [status=active]
      * @apiParam {String} [t] the search term to look up admins by name
      *
