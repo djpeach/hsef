@@ -9,6 +9,7 @@
             :options.sync="options"
             :server-items-length="totalAdmins"
             :loading="loading"
+            :mobile-breakpoint="0"
             class="elevation-1 mt-8"
             loading-text="Fetching admins"
             no-data-text="No Admins to show"
@@ -18,7 +19,7 @@
             <v-toolbar flat>
               <v-toolbar-title>Admins</v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-dialog v-model="createDialog" max-width="500px">
+              <v-dialog v-model="formDialog" max-width="500px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="amber"
@@ -47,6 +48,21 @@
               </v-dialog>
             </v-toolbar>
           </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                @click="editItem(item)"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon
+                small
+                @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -64,12 +80,21 @@ export default {
       {text: 'LastName', value: 'lastName'},
       {text: 'Email', value: 'email'},
       {text: 'Gender', value: 'gender'},
+      {text: 'Actions', value: 'actions'}
     ],
     admins: [],
     loading: false,
     options: {},
     totalAdmins: 0,
-    createDialog: false
+    formDialog: false,
+    editedIndex: -1,
+    editedItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
   }),
   mounted() {
     this.fetchAdmins();
@@ -84,7 +109,7 @@ export default {
   },
   computed: {
     formTitle () {
-      return 'New Admin'
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     }
   },
   methods: {
@@ -107,6 +132,16 @@ export default {
       }).finally(() => {
         this.loading = false;
       })
+    },
+    editItem (item) {
+      this.editedIndex = this.admins.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.formDialog = true
+    },
+    deleteItem (item) {
+      this.editedIndex = this.admins.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete = true
     }
   }
 }
