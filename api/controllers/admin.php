@@ -4,7 +4,7 @@
 function createAdminFromExisting($app) {
   return function() use ($app) {
     $reqBody = $app->req->jsonBody();
-    $operator = valueOrDefault($reqBody->operator, new stdClass());
+    $operator = valueOrDefault($reqBody->operator, new EmptyObject());
     $resBody = [];
 
     $sql = DB::get()->prepare("REPLACE INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
@@ -21,7 +21,7 @@ function createNewAdmin(Slim\Slim $app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
     $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
-    $operator = valueOrDefault($reqBody->operator, new stdClass());
+    $operator = valueOrDefault($reqBody->operator, new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed
@@ -142,7 +142,7 @@ function deleteAdminByOpId(Slim\Slim $app) {
 function listAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $reqParams = valueOrDefault($app->req->jsonParams(), new EmptyObject());
     $year = valueOrDefault($reqParams->year, date("Y"));
     $status = valueOrDefault($reqParams->status, 'active');
     $searchTerm = valueOrNull($reqParams->t);
@@ -242,7 +242,7 @@ WHERE E.Name = 'admin'
 function listPotentialAdmins(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $reqParams = valueOrDefault($app->req->jsonParams(), new EmptyObject());
     $year = valueOrDefault($reqParams->year, date("Y"));
     $status = valueOrDefault($reqParams->status, 'active');
     $searchTerm = valueOrNull($reqParams->t);

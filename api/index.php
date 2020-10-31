@@ -5,6 +5,13 @@ require_once 'exceptions.php';
 require_once 'DB.php';
 require_once 'utils.php';
 
+// so we can use __get() unlike stdClass
+class EmptyObject {
+  public function __get($propName) {
+    return null;
+  }
+}
+
 // require needed files
 $directories = [ "middleware", "routers"];
 foreach ($directories as $directory) {
@@ -40,7 +47,9 @@ $app->error(function (Exception $e) use ($app) {
     $err = [
       "error" => get_class($e),
       "code" => $e->errorInfo[1],
-      "message" => $e->getMessage()
+      "message" => $e->getMessage(),
+      "file" => $e->getFile(),
+      "line" => $e->getLine(),
     ];
     if ($err["code"] === 1062) { // duplicate entry
       $app->res->setStatus(419);
@@ -56,7 +65,9 @@ $app->error(function (Exception $e) use ($app) {
     $err = [
       "error" => get_class($e),
       "code" => $e->getCode(),
-      "message" => $e->getMessage()
+      "message" => $e->getMessage(),
+      "file" => $e->getFile(),
+      "line" => $e->getLine(),
     ];
     $app->res->setStatus($e->getCode());
     $app->res->json($err);

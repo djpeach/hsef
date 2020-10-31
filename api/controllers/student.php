@@ -6,7 +6,7 @@ function createNewStudent(Slim\Slim $app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
     $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
-    $student = valueOrDefault($reqBody->student, new stdClass());
+    $student = valueOrDefault($reqBody->student, new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed
@@ -177,7 +177,7 @@ function deleteStudentById(Slim\Slim $app) {
 function listStudents(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $reqParams = valueOrDefault($app->req->jsonParams(), new EmptyObject());
     $year = valueOrDefault($reqParams->year, date("Y"));
     $status = valueOrDefault($reqParams->status, 'active');
     $searchTerm = valueOrNull($reqParams->t);

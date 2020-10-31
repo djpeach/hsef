@@ -10,6 +10,7 @@ class CorsMiddleware extends \Slim\Middleware {
 
     $allowedOrigins = [
       'http://localhost:8080',
+      'http://localhost:9000',
       'http://corsair.cs.iupui.edu:24631',
     ];
 

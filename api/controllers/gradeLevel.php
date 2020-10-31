@@ -61,7 +61,7 @@ function deleteGradeLevelById(Slim\Slim $app) {
 function listGradeLevels(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
-    $reqParams = valueOrDefault($app->req->jsonParams(), new stdClass());
+    $reqParams = valueOrDefault($app->req->jsonParams(), new EmptyObject());
     $searchTerm = valueOrNull($reqParams->t);
     $limit = valueOrDefault($reqParams->limit, 10);
     $offset = valueOrDefault($reqParams->offset, 0);

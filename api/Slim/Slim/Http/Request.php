@@ -88,11 +88,17 @@ class Request
     }
 
     public function jsonBody() {
-      return json_decode($this->getBody());
+      if ($this->getBody()) {
+        return json_decode($this->getBody());
+      }
+      return null;
     }
 
     public function jsonParams() {
-      return json_decode(json_encode($this->params()));
+      if ($this->params()) {
+        return json_decode(json_encode($this->params()));
+      }
+      return null;
     }
 
     /**
