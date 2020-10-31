@@ -1,18 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
+import Dashboard from "@/views/Dashboard";
+import AdminManagement from "@/views/AdminManagement";
+import EventManagement from "@/views/EventManagement";
+import JudgeSchedule from "@/views/JudgeSchedule";
+import FinalScores from "@/views/FinalScores";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Dashboard',
-    component: Dashboard
-  },
+  { path: '/', name: 'dashboard', component: Dashboard },
+  { path: '/admin-management', name: 'admin-management', component: AdminManagement },
+  { path: '/event-management', name: 'event-management', component: EventManagement },
+  { path: '/judge-schedule', name: 'judge-schedule', component: JudgeSchedule },
+  { path: '/final-scores', name: 'final-scores', component: FinalScores },
 ]
 
 const router = new VueRouter({
+  base: '/hsef/',
   routes,
   mode: 'history'
 })

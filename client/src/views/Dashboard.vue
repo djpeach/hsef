@@ -1,8 +1,12 @@
 <template>
-  <div class="home">
-    <p>Welcome to the dashboard!</p>
-    <p>{{fetching_status}}</p>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <p>Welcome to the dashboard!</p>
+        <p>{{fetching_status}}</p>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -10,11 +14,9 @@ import axios from 'axios';
 
 export default {
   name: 'Dashboard',
-  data() {
-    return {
-      fetching_status: ""
-    }
-  },
+  data: () => ({
+      fetching_status: "",
+  }),
   created() {
     axios.get(`/list/admins`)
     .then(res => {
