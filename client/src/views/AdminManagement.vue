@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row justify="center">
+      <v-col cols="12" md="10" lg="8">
         <v-data-table
             :headers="headers"
             :items="admins"
