@@ -36,6 +36,7 @@ $app->group('/read', readRouter($app));
 $app->group('/update', updateRouter($app));
 $app->group('/delete', deleteRouter($app));
 $app->group('/list', listRouter($app));
+$app->group('/auth', authRouter($app));
 
 $app->error(function (Exception $e) use ($app) {
   try {
