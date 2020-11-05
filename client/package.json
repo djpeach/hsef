@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/compiler-sfc": "^3.0.2",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "qs": "^6.9.4",
@@ -17,6 +18,7 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-plugin-pwa": "^4.5.0",
     "@vue/cli-plugin-router": "^4.5.0",
