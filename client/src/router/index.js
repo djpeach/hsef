@@ -5,8 +5,30 @@ import AdminManagement from "@/views/AdminManagement";
 import EventManagement from "@/views/EventManagement";
 import JudgeSchedule from "@/views/JudgeSchedule";
 import FinalScores from "@/views/FinalScores";
+import UploadCSV from "@/views/UploadCSV";
+import store from '../store';
+import LogIn from "@/views/LogIn";
 
 Vue.use(VueRouter)
+
+const publicOnlyRoutes = [
+  'login',
+];
+
+const publicRoutes = [
+  ...publicOnlyRoutes,
+];
+
+function authGuard(to, from, next) {
+  if (!publicRoutes.includes(to.name) && !store.state.common.isAuthenticated) {
+    next({ name: 'login' });
+  } else if (publicOnlyRoutes.includes(to.name) && store.state.common.isAuthenticated) {
+    console.log('go to dashboard')
+    next({ name: 'dashboard' })
+  } else {
+    next();
+  }
+}
 
 const routes = [
   { path: '/', name: 'dashboard', component: Dashboard },
@@ -15,6 +37,7 @@ const routes = [
   { path: '/judge-schedule', name: 'judge-schedule', component: JudgeSchedule },
   { path: '/final-scores', name: 'final-scores', component: FinalScores },
   { path: '/upload-csv', name: 'upload-csv', component: UploadCSV },
+  { path: '/login', name: 'login', component: LogIn },
 ]
 
 const router = new VueRouter({
@@ -22,5 +45,7 @@ const router = new VueRouter({
   routes,
   mode: 'history'
 })
+
+router.beforeEach(authGuard);
 
 export default router
