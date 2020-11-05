@@ -8,7 +8,7 @@ foreach(glob(__DIR__."/../controllers/*.php") as $file) {
 function createRouter($app) {
   return function() use ($app) {
       /**
-       * @api {post} /create/admin/existingUser Admin from Existing User
+       * @api {post} /create/admins/existingUser Admin from Existing User
        * @apiGroup Create
        * @apiName AdminFromExisting
        * @apiVersion 0.1.0
@@ -19,16 +19,16 @@ function createRouter($app) {
        * @apiParam {Number} userId The id of an existing user to which to grant the 'admin' entitlements
        * @apiUse OperatorFields
        *
-       * @apiSuccess {String[]} entitlements
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        * @apiUse UserNotFound
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/admin/existingUser', {
+       * axios.post('/create/admins/existingUser', {
        *  userId: 1234,
        *  operator: {
        *    title: "Dr.",
@@ -41,10 +41,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/admin/existingUser', createAdminFromExisting($app));
+      $app->post('/admins/existingUser', createAdminFromExisting($app));
 
       /**
-       * @api {post} /create/admin/newUser Admin with New User
+       * @api {post} /create/admins/newUser Admin with New User
        * @apiGroup Create
        * @apiName AdminWithNew
        * @apiVersion 0.1.0
@@ -52,17 +52,25 @@ function createRouter($app) {
        *
        * @apiHeader {String} Content-Type=application/json
        *
-       * @apiUse UserFields
+       * @apiParam {Object} user The user details
+       * @apiParam {String{128}} user.firstName
+       * @apiParam {String{128}} user.lastName
+       * @apiParam {String{64}} [user.suffix]
+       * @apiParam {String{128}} user.email
+       * @apiParam {String=male,female,other} [user.gender]
+       * @apiParam {String=active,registered,invited,archived} [user.status=active]
+       * @apiParam {Boolean} [user.checkedIn=false]
        * @apiUse OperatorFields
        *
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/admin/newUser', {
+       * axios.post('/create/admins/newUser', {
        *  user: {
        *    firstName: "Daniel",
        *    lastName: "Peach",
@@ -83,10 +91,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/admin/newUser', createNewAdmin($app));
+      $app->post('/admins/newUser', createNewAdmin($app));
 
       /**
-       * @api {post} /create/judge/existingUser Judge from Existing User
+       * @api {post} /create/judges/existingUser Judge from Existing User
        * @apiGroup Create
        * @apiName JudgeFromExisting
        * @apiVersion 0.1.0
@@ -98,16 +106,16 @@ function createRouter($app) {
        * @apiUse OperatorFields
        * @apiUse JudgeFields
        *
-       * @apiSuccess {String[]} entitlements
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        * @apiUse UserNotFound
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/judge/existingUser', {
+       * axios.post('/create/judges/existingUser', {
        *  userId: 1234,
        *  operator: {
        *    title: "Dr.",
@@ -124,10 +132,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/judge/existingUser', createNewJudge($app));
+      $app->post('/judges/existingUser', createJudgeFromExisting($app));
 
       /**
-       * @api {post} /create/judge/newUser Judge with New User
+       * @api {post} /create/judges/newUser Judge with New User
        * @apiGroup Create
        * @apiName JudgeWithNew
        * @apiVersion 0.1.0
@@ -135,19 +143,25 @@ function createRouter($app) {
        *
        * @apiHeader {String} Content-Type=application/json
        *
-       * @apiUse UserFields
+       * @apiParam {Object} user The user details
+       * @apiParam {String{128}} user.firstName
+       * @apiParam {String{128}} user.lastName
+       * @apiParam {String{64}} [user.suffix]
+       * @apiParam {String{128}} user.email
+       * @apiParam {String=male,female,other} [user.gender]
+       * @apiParam {String=active,registered,invited,archived} [user.status=active]
+       * @apiParam {Boolean} [user.checkedIn=false]
        * @apiUse OperatorFields
        * @apiUse JudgeFields
        *
-       * @apiSuccess {String[]} entitlements
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/judge/newUser', {
+       * axios.post('/create/judges/newUser', {
        *  user: {
        *    firstName: "Daniel",
        *    lastName: "Peach",
@@ -172,10 +186,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/judge/newUser', createJudgeFromExisting($app));
+      $app->post('/judges/newUser', createNewJudge($app));
 
       /**
-       * @api {post} /create/student/newUser Student with New User
+       * @api {post} /create/students New Student
        * @apiGroup Create
        * @apiName Student
        * @apiVersion 0.1.0
@@ -184,16 +198,20 @@ function createRouter($app) {
        * @apiHeader {String} Content-Type=application/json
        *
        * @apiUse UserFields
-       * @apiUse StudentFields
+       * @apiParam {Object} student The student details
+       * @apiParam {Number} [student.schoolId]
+       * @apiParam {Number} [student.projectId]
+       * @apiParam {Number} [student.gradeLevelId]
        *
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} studentId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/student/newUser', {
+       * axios.post('/create/students', {
        *  user: {
        *    firstName: "Daniel",
        *    lastName: "Peach",
@@ -214,10 +232,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/student/newUser', createNewStudent($app));
+      $app->post('/students', createNewStudent($app));
 
       /**
-       * @api {post} /school New School
+       * @api {post} /create/schools New School
        * @apiGroup Create
        * @apiName School
        * @apiVersion 0.1.0
@@ -230,14 +248,13 @@ function createRouter($app) {
        * @apiParam {Number} [school.countyId]
        *
        * @apiSuccess {Number} schoolId
-       * @apiSuccess {String} name
-       * @apiSuccess {Number} countyId
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/school', {
+       * axios.post('/create/schools', {
        *  school: {
        *    name: "Adams Central High School",
        *    countyId: 12
@@ -248,10 +265,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/school', createNewSchool($app));
+      $app->post('/schools', createNewSchool($app));
 
       /**
-       * @api {post} /county New County
+       * @api {post} /create/counties New County
        * @apiGroup Create
        * @apiName County
        * @apiVersion 0.1.0
@@ -263,13 +280,13 @@ function createRouter($app) {
        * @apiParam {String{64}} county.name
        *
        * @apiSuccess {Number} countyId
-       * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/county', {
+       * axios.post('/create/counties', {
        *  county: {
        *    name: "Marion County"
        *  },
@@ -279,10 +296,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/county', createNewCounty($app));
+      $app->post('/counties', createNewCounty($app));
 
       /**
-       * @api {post} /project New Project
+       * @api {post} /create/projects New Project
        * @apiGroup Create
        * @apiName Project
        * @apiVersion 0.1.0
@@ -301,11 +318,12 @@ function createRouter($app) {
        * @apiSuccess {Number} projectId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/county', {
+       * axios.post('/create/counties', {
        *  project: {
        *    name: "Volcanoes!",
        *    number: 12,
@@ -320,10 +338,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/project', createNewProject($app));
+      $app->post('/projects', createNewProject($app));
 
       /**
-       * @api {post} /county New Category
+       * @api {post} /create/categories New Category
        * @apiGroup Create
        * @apiName Category
        * @apiVersion 0.1.0
@@ -338,11 +356,12 @@ function createRouter($app) {
        * @apiSuccess {Number} categoryId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/category', {
+       * axios.post('/create/categories', {
        *  county: {
        *    name: "Botany",
        *    active: true
@@ -353,10 +372,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/category', createNewCategory($app));
+      $app->post('/categories', createNewCategory($app));
 
       /**
-       * @api {post} /county New Booth
+       * @api {post} /create/booths New Booth
        * @apiGroup Create
        * @apiName Booth
        * @apiVersion 0.1.0
@@ -371,11 +390,12 @@ function createRouter($app) {
        * @apiSuccess {Number} boothId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/booth', {
+       * axios.post('/create/booths', {
        *  county: {
        *    number: 109,
        *    active: true
@@ -386,10 +406,10 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/booth', createNewBooth($app));
+      $app->post('/booths', createNewBooth($app));
 
       /**
-       * @api {post} /county New GradeLevel
+       * @api {post} /create/gradeLevels New GradeLevel
        * @apiGroup Create
        * @apiName GradeLevel
        * @apiVersion 0.1.0
@@ -404,11 +424,12 @@ function createRouter($app) {
        * @apiSuccess {Number} gradeLevelId
        * @apiSuccess {String} name
        *
-       * @apiUse ResourceConflict
        * @apiUse BadRequest
+       * @apiUse DatabaseError
+       * @apiUse ResourceConflict
        *
        * @apiExample {js} Axios Example Usage:
-       * axios.post('/create/gradeLevel', {
+       * axios.post('/create/gradeLevels', {
        *  county: {
        *    name: "9th Grade",
        *    active: true
@@ -419,6 +440,6 @@ function createRouter($app) {
        *  console.log(err.response.data);
        * });
        */
-      $app->post('/gradeLevel', createNewGradeLevel($app));
+      $app->post('/gradeLevels', createNewGradeLevel($app));
     };
 }

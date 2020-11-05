@@ -87,6 +87,20 @@ class Request
         $this->cookies = new \Slim\Helper\Set(\Slim\Http\Util::parseCookieHeader($env['HTTP_COOKIE']));
     }
 
+    public function jsonBody() {
+      if ($this->getBody()) {
+        return json_decode($this->getBody());
+      }
+      return null;
+    }
+
+    public function jsonParams() {
+      if ($this->params()) {
+        return json_decode(json_encode($this->params()));
+      }
+      return null;
+    }
+
     /**
      * Get HTTP method
      * @return string

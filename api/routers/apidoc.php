@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * @apiDefine ResourceNotFound
+ * @apiError {Object} ResourceNotFound
+ * @apiError {Number} ResourceNotFound.code <code>404</code>
+ * @apiError {String} ResourceNotFound.error ResourceNotFound
+ * @apiError {String} ResourceNotFound.message Could not find resource
+ */
+
+/**
  * @apiDefine UserNotFound
  * @apiError {Object} UserNotFound
  * @apiError {Number} UserNotFound.code <code>404</code>
@@ -14,6 +22,14 @@
  * @apiError {Number} BadRequest.code <code>400</code>
  * @apiError {String} BadRequest.error BadRequest
  * @apiError {String} BadRequest.message The request was poorly formed
+ */
+
+/**
+ * @apiDefine DatabaseError
+ * @apiError {Object} DatabaseError
+ * @apiError {Number} DatabaseError.code <code>502</code>
+ * @apiError {String} DatabaseError.error DatabaseError
+ * @apiError {String} DatabaseError.message There was an error communicating with the database
  */
 
 /**
@@ -52,14 +68,6 @@
  */
 
 /**
- * @apiDefine StudentFields
- * @apiParam {Object} [student] The student details
- * @apiParam {Number} [student.schoolId]
- * @apiParam {Number} [student.projectId]
- * @apiParam {Number} [student.gradeLevelId]
- */
-
-/**
  * @apiDefine ListFields
  * @apiParam {Number} [limit=10] The max number of results to return
  * @apiParam {Number} [offset=0] Where to start the pagination
@@ -74,5 +82,5 @@
  * @apiSuccess {Number} limit The max number of resources requested
  * @apiSuccess {Number} offset The offset used to fetch resources
  * @apiSuccess {Number} count The number of results returned
- * @apiSuccess {Object[]} results
+ * @apiSuccess {Number} totoal The total number of results in the database
  */

@@ -51,6 +51,15 @@ INSERT INTO UserYear(Year, UserId) VALUES(2018, 7);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 8);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 9);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 10);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 11);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 12);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 13);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 14);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 15);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 16);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 17);
 
 INSERT INTO Operator(UserYearId) VALUES (1);
 INSERT INTO Operator(UserYearId) VALUES (2);
@@ -115,8 +124,6 @@ INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 4);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 5);
 
-INSERT INTO Student(UserId) VALUES (7);
-INSERT INTO Student(UserId) VALUES (8);
 INSERT INTO Student(UserId) VALUES (9);
 INSERT INTO Student(UserId) VALUES (10);
 INSERT INTO Student(UserId) VALUES (11);
@@ -124,6 +131,8 @@ INSERT INTO Student(UserId) VALUES (12);
 INSERT INTO Student(UserId) VALUES (13);
 INSERT INTO Student(UserId) VALUES (14);
 INSERT INTO Student(UserId) VALUES (15);
+INSERT INTO Student(UserId) VALUES (16);
+INSERT INTO Student(UserId) VALUES (17);
 
 INSERT INTO Booth(Number) VALUES (100);
 INSERT INTO Booth(Number) VALUES (101);
