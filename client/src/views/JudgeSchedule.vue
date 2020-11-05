@@ -6,8 +6,6 @@
             align-top
             dense
         >
-
-          <!-- BASIC TIMELINE ITEM  -->
           <v-timeline-item
               color="amber"
               small
@@ -76,9 +74,6 @@
               </v-col>
             </v-row>
           </v-timeline-item>
-          <!-- BASIC TIMELINE ITEM END -->
-
-
         </v-timeline>
       </v-col>
     </v-row>
@@ -86,13 +81,8 @@
 </template>
 
 <script>
-
-
-
-
 export default {
   name: 'JudgeSchedule',
-  el: '#app',
   data: () => ({
       dialog: false,
   }),
