@@ -40,6 +40,9 @@
           <v-list-item to="final-scores">
             <v-list-item-title>Final Scores</v-list-item-title>
           </v-list-item>
+          <v-list-item to="upload-csv">
+            <v-list-item-title>Upload Student Information</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

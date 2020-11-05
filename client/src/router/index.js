@@ -14,6 +14,7 @@ const routes = [
   { path: '/event-management', name: 'event-management', component: EventManagement },
   { path: '/judge-schedule', name: 'judge-schedule', component: JudgeSchedule },
   { path: '/final-scores', name: 'final-scores', component: FinalScores },
+  { path: '/upload-csv', name: 'upload-csv', component: UploadCSV },
 ]
 
 const router = new VueRouter({
