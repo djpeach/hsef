@@ -34,6 +34,9 @@
           <v-list-item to="event-management">
             <v-list-item-title>Event Management</v-list-item-title>
           </v-list-item>
+          <v-list-item to="upload-csv">
+            <v-list-item-title>Upload CSV</v-list-item-title>
+          </v-list-item>
           <v-list-item to="judge-schedule">
             <v-list-item-title>Judge Schedule</v-list-item-title>
           </v-list-item>
