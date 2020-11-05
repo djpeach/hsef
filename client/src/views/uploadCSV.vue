@@ -1,8 +1,9 @@
 <template>
-    <v-container>
-    <v-row>
+ <v-container>
+    <v-row align="center"
+      justify="space-around">
       <v-col>
-        <p>Upload Student and Project Information</p>
+        <p>Upload Student and Project Info</p>
       </v-col>
       <div id="app">
   <v-app id="inspire">
@@ -10,21 +11,16 @@
       accept="image/*"
       label="File input"
     ></v-file-input>
-    <v-row
-      align="center"
-      justify="space-around"
-    >
-      <v-row>
+      
       <v-btn color="amber" depressed>
         Upload
       </v-btn>
-       </v-row>
-    </v-row>
   </v-app>
 </div>
       
     </v-row>
-  </v-container> 
+  </v-container>   
+
 </template>
 
 <script>
