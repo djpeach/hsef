@@ -1,3 +1,4 @@
+
 <template>
   <v-container>
     <v-row>
@@ -14,8 +15,16 @@
           >
             <v-row class="pt-1">
               <v-col cols="3">
-                <strong>5pm</strong>
+                <strong>{{sessions.sessionTime}}</strong>
               </v-col>
+              <v-col>
+                <strong>{{sessions.projectName}}</strong>
+                <div class="caption">
+                  {{sessions.boothNumber}}
+                </div>
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col>
                 <v-dialog
                     v-model="dialog"
@@ -25,15 +34,15 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                      Session Number
+                    v-bind="attrs"
+                    v-on="on"
+                    small>
+                      Enter Score
                     </v-btn>
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">Session #</span>
+                      <span class="headline">{{sessions.projectName}}</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -44,6 +53,7 @@
                             <v-text-field
                                 label="Score"
                                 color="amber"
+                                v-model="score"
                                 required
                             ></v-text-field>
                           </v-col>
@@ -70,9 +80,6 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-                <div class="caption">
-                  Booth Number
-                </div>
               </v-col>
             </v-row>
           </v-timeline-item>
@@ -87,14 +94,19 @@
 
 <script>
 
-
-
-
 export default {
   name: 'JudgeSchedule',
-  el: '#app',
+  //el: '#app',
   data: () => ({
       dialog: false,
+      score: '',
+      sessions: [
+        {
+          projectName: "Volcanoes!",
+          boothNumber: 23,
+          sessionTime: "5:30pm"
+        },
+      ],
   }),
 }
 </script>
