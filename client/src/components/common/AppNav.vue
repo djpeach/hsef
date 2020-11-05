@@ -2,7 +2,7 @@
   <div>
     <v-app-bar
         app
-        color="green darken-4"
+        color="teal darken-4"
         dark
     >
       <v-toolbar-title>HSEF System</v-toolbar-title>
@@ -10,7 +10,7 @@
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar>
     <v-navigation-drawer
-        color="green darken-4"
+        color="teal darken-4"
         dark
         v-model="drawer"
         absolute
@@ -23,7 +23,7 @@
       >
         <v-list-item-group
             v-model="group"
-            active-class="green darken-4"
+            active-class="teal darken-4"
         >
           <v-list-item to="/">
             <v-list-item-title>Dashboard</v-list-item-title>
