@@ -443,5 +443,7 @@ function createRouter($app) {
       $app->post('/gradeLevels', createNewGradeLevel($app));
 
       $app->post('/studentBulk', uploadCSV($app));
+
+      $app->post('/generate-schedules', generateSchedules($app));
     };
 }
