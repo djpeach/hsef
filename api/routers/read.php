@@ -80,6 +80,8 @@ function readRouter($app) {
      */
     $app->get('/judges/:id', getJudgeByOpId($app));
 
+    $app->get('/judges/:id/schedule', getJudgeScheduleByOpid($app));
+
     /**
      * @api {get} /read/students/:id Student by Id
      * @apiGroup Read

@@ -198,6 +198,33 @@ WHERE E.Name = 'judge'
   };
 }
 
+function getJudgeScheduleByOpid(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    $resBody = [
+      "sessions" => [],
+    ];
+
+    $query = "SELECT 
+       JS.StartTime as startTime, 
+       B.Number as boothNumber, 
+       P.Name as projectName, 
+       P.ProjectId as projectId, 
+       JS.RawScore as currentScore
+FROM JudgingSession JS 
+    JOIN Project P on JS.ProjectId = P.ProjectId 
+    JOIN Booth B on B.BoothId = P.BoothId 
+WHERE JS.OperatorId = ?";
+    $sql = DB::get()->prepare($query);
+    $sql->execute([$opid]);
+
+    $sessions = $sql->fetchAll();
+
+    $resBody["sessions"] = $sessions;
+
+    $app->res->json($resBody);
+  };
+}
+
 // UPDATE
 function updateJudgeByOpId(Slim\Slim $app) {
   return function() use ($app) {
