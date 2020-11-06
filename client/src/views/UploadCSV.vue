@@ -7,10 +7,11 @@
             accept="image/*"
             label="File input"
         ></v-file-input>
-
+    <form action="import_file.php" method="post">
         <v-btn color="amber" id = "submit" depressed>
           Upload
         </v-btn>
+      </form>
       </v-col>
       
     </v-row>
