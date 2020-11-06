@@ -10,15 +10,16 @@
           <v-timeline-item
               color="amber"
               small
+              v-for="judgeSchedule in judgeSchedules"
           >
             <v-row class="pt-1">
               <v-col cols="3">
-                <strong>{{sessions.sessionTime}}</strong>
+                <strong>{{session.sessionTime}}</strong>
               </v-col>
               <v-col>
-                <strong>{{sessions.projectName}}</strong>
+                <strong>{{session.projectName}}</strong>
                 <div class="caption">
-                  {{sessions.boothNumber}}
+                  {{session.boothNumber}}
                 </div>
               </v-col>
             </v-row>
@@ -40,7 +41,7 @@
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">{{sessions.projectName}}</span>
+                      <span class="headline">{{session.projectName}}</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'JudgeSchedule',
@@ -96,10 +97,28 @@ export default {
       dialog: false,
       score: '',
   }),
+
+
   computed: {
     ...mapState({
-      sessions: function(state) { return state.sessions; }
+      judgeSchedules: function(state) { return state.judgeSchedules; }
     })
   },
+
+  methods: {
+    ...mapActions({
+      getJudgeSchedule: 'refreshJudgeSchedule'
+    })
+  },
+  mounted() {
+    this.getJudgeSchedule({
+      limit: 10,
+      offset: 0
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }
 </script>
