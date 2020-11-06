@@ -18,6 +18,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/judges"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -35,6 +36,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/students"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -52,6 +54,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/projects"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -72,6 +75,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/schools"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -89,6 +93,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/categories"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -106,6 +111,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/scores"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -126,6 +132,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/booths"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -143,6 +150,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/counties"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -160,6 +168,7 @@
             max-width="344"
             shaped
             color="teal darken-4"
+            to="/grade-levels"
         >
           <!-- Added Icon, needs to be centered-->
           <v-icon large color="amber">
@@ -173,12 +182,13 @@
     </v-row>
     <v-spacer></v-spacer>
     <v-col>
-      <v-row>
+      <v-row justify="center">
         <v-btn
             class="ma-2"
+            x-large
             :loading="loading"
             :disabled="loading"
-            color="secondary"
+            color="amber"
             @click="loader = 'loading'"
         >
           Generate Judge Schedule
@@ -192,8 +202,22 @@
 <script>
 export default {
   name: 'EventManagement',
-  data: () => ({
+  data () {
+    return {
+      loader: null,
+      loading: false,
 
-  }),
+    }
+  },
+  watch: {
+    loader () {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 1500)
+
+      this.loader = null
+    },
+  },
 }
 </script>
