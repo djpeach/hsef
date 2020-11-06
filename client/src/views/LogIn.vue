@@ -53,7 +53,7 @@ export default {
         this.err = err;
       })
     },
-    ...mapActions('common', {
+    ...mapActions({
       loginUser: 'login'
     })
   }

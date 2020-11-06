@@ -8,6 +8,7 @@ import FinalScores from "@/views/FinalScores";
 import UploadCSV from "@/views/UploadCSV";
 import store from '../store';
 import LogIn from "@/views/LogIn";
+import TempStudents from "@/views/TempStudents";
 
 Vue.use(VueRouter)
 
@@ -20,9 +21,9 @@ const publicRoutes = [
 ];
 
 function authGuard(to, from, next) {
-  if (!publicRoutes.includes(to.name) && !store.state.common.isAuthenticated) {
+  if (!publicRoutes.includes(to.name) && !store.state.isAuthenticated) {
     next({ name: 'login' });
-  } else if (publicOnlyRoutes.includes(to.name) && store.state.common.isAuthenticated) {
+  } else if (publicOnlyRoutes.includes(to.name) && store.state.isAuthenticated) {
     console.log('go to dashboard')
     next({ name: 'dashboard' })
   } else {
@@ -38,6 +39,7 @@ const routes = [
   { path: '/final-scores', name: 'final-scores', component: FinalScores },
   { path: '/upload-csv', name: 'upload-csv', component: UploadCSV },
   { path: '/login', name: 'login', component: LogIn },
+  { path: '/temp-students', name: 'temp-students', component: TempStudents },
 ]
 
 const router = new VueRouter({

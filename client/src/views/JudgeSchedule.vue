@@ -7,8 +7,6 @@
             align-top
             dense
         >
-
-          <!-- BASIC TIMELINE ITEM  -->
           <v-timeline-item
               color="amber"
               small
@@ -83,9 +81,6 @@
               </v-col>
             </v-row>
           </v-timeline-item>
-          <!-- BASIC TIMELINE ITEM END -->
-
-
         </v-timeline>
       </v-col>
     </v-row>
@@ -93,20 +88,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   name: 'JudgeSchedule',
-  //el: '#app',
   data: () => ({
       dialog: false,
       score: '',
-      sessions: [
-        {
-          projectName: "Volcanoes!",
-          boothNumber: 23,
-          sessionTime: "5:30pm"
-        },
-      ],
   }),
+  computed: {
+    ...mapState({
+      sessions: function(state) { return state.sessions; }
+    })
+  },
 }
 </script>
