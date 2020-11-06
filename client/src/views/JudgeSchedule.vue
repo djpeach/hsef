@@ -10,20 +10,18 @@
           <v-timeline-item
               color="amber"
               small
-              v-for="judgeSchedule in judgeSchedules"
+
           >
             <v-row class="pt-1">
               <v-col cols="3">
-                <strong>{{session.sessionTime}}</strong>
+                <strong>{{session.startTime}}</strong>
               </v-col>
               <v-col>
                 <strong>{{session.projectName}}</strong>
                 <div class="caption">
-                  {{session.boothNumber}}
+                  Booth: #{{session.booth}}
                 </div>
               </v-col>
-            </v-row>
-            <v-row>
               <v-col>
                 <v-dialog
                     v-model="dialog"
@@ -96,6 +94,11 @@ export default {
   data: () => ({
       dialog: false,
       score: '',
+      session: {
+        projectName: 'Volcanoes!',
+        booth: 25,
+        startTime: '11:30am'
+      }
   }),
 
 
