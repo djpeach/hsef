@@ -26,6 +26,7 @@ class CorsMiddleware extends \Slim\Middleware {
       "Access-Control-Allow-Methods" => "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers" => "X-Requested-With, content-type, Authorization",
       "Access-Control-Max-Age" => "86400",
+      "Access-Control-Allow-Credentials" => 'true',
     ];
 
     foreach ($headers as $key => $val) {
