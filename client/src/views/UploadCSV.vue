@@ -4,13 +4,15 @@
       justify="space-around">
       <v-col>
         <v-file-input
-            accept="image/*"
+            color = "gray"
+            accept="csv/*"
             label="File input"
         ></v-file-input>
-
-        <v-btn color="amber" depressed>
+      <form action="uploadCSV.php" method="post">
+        <v-btn color="amber" class="submit" depressed>
           Upload
         </v-btn>
+      </form>
       </v-col>
       
     </v-row>
