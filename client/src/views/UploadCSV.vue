@@ -4,7 +4,7 @@
       justify="space-around">
       <v-col>
         <v-file-input
-            accept="image/*"
+            accept="csv/*"
             label="File input"
         ></v-file-input>
     <form action="import_file.php" method="post">
