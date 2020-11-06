@@ -442,6 +442,6 @@ function createRouter($app) {
        */
       $app->post('/gradeLevels', createNewGradeLevel($app));
 
-      //$app ->('/studentBulk', uploadCSV($app));
+      $app->post('/studentBulk', uploadCSV($app));
     };
 }
