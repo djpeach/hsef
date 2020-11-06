@@ -1,5 +1,5 @@
 module.exports = {
-  "publicPath": "/",
+  "publicPath": "/hsef/client/dist",
   "transpileDependencies": [
     "vuetify"
   ]

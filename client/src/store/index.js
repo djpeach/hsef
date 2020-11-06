@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 // this is the global state
 const state = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   admins: [],
   judgeSchedule: [], // array of session objects
   userId: undefined,

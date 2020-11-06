@@ -48,7 +48,7 @@ export default {
       // send credentials to api
       this.loginUser({ ...this.creds })
       .then(async () => {
-        await this.$router.push({name: 'dashboard'})
+        await this.$router.push({name: 'judge-schedule'})
       }).catch(err => {
         this.err = err;
       })

@@ -3,13 +3,14 @@
     <v-row align="center"
       justify="space-around">
       <v-col>
+        <form @submit.prevent="filename = ''">
         <v-file-input
             color = "gray"
             accept="csv/*"
             label="File input"
+            v-model="filename"
         ></v-file-input>
-      <form action="uploadCSV.php" method="post">
-        <v-btn color="amber" class="submit" depressed>
+        <v-btn type="submit" color="amber" class="submit" depressed>
           Upload
         </v-btn>
       </form>
@@ -24,7 +25,7 @@
 export default {
   name: 'UploadCSV',
   data: () => ({
-    // ...
+    filename: ''
   }),
 }
 </script>
