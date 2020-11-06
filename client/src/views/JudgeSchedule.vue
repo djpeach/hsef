@@ -10,7 +10,7 @@
           <v-timeline-item
               color="amber"
               small
-
+              v-for="session in judgeSchedules"
           >
             <v-row class="pt-1">
               <v-col cols="3">
@@ -19,7 +19,7 @@
               <v-col>
                 <strong>{{session.projectName}}</strong>
                 <div class="caption">
-                  Booth: #{{session.booth}}
+                  @Booth: #{{session.boothNumber}}
                 </div>
               </v-col>
               <v-col>
@@ -27,7 +27,6 @@
                     v-model="dialog"
                     persistent
                     max-width="300px"
-                    id="app"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -50,7 +49,7 @@
                             <v-text-field
                                 label="Score"
                                 color="amber"
-                                v-model="score"
+                                v-model="session.currentScore"
                                 required
                             ></v-text-field>
                           </v-col>
@@ -94,17 +93,14 @@ export default {
   data: () => ({
       dialog: false,
       score: '',
-      session: {
-        projectName: 'Volcanoes!',
-        booth: 25,
-        startTime: '11:30am'
-      }
   }),
 
 
   computed: {
     ...mapState({
-      judgeSchedules: function(state) { return state.judgeSchedules; }
+      judgeSchedules: function(state) {
+        return state.judgeSchedule && state.judgeSchedule.map(d => ({ ...d, modalOpen: false }));
+      }
     })
   },
 
@@ -114,10 +110,7 @@ export default {
     })
   },
   mounted() {
-    this.getJudgeSchedule({
-      limit: 10,
-      offset: 0
-    }).then(res => {
+    this.getJudgeSchedule().then(res => {
       console.log(res)
     }).catch(err => {
       console.log(err)

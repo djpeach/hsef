@@ -90,12 +90,8 @@ const actions = {
     commit('UPDATE_ADMINS', admins);
   },
   /* CANT FIND THE URL FOR SESSIONS */
-  async refreshJudgeSchedule({ commit }, { limit, offset }) {
-    const { body: { results: judgeSchedule }} = await Vue.http.get('list/THIS IS NOT IN THE DOCS(:', {
-      params: {
-        limit, offset
-      }
-    });
+  async refreshJudgeSchedule({ commit }) {
+    const { body: { sessions: judgeSchedule }} = await Vue.http.get('read/judges/7/schedule');
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
   },
   async refreshStudents({ commit }, { limit, offset }) {
