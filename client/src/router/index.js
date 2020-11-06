@@ -5,6 +5,7 @@ import AdminManagement from "@/views/AdminManagement";
 import EventManagement from "@/views/EventManagement";
 import JudgeSchedule from "@/views/JudgeSchedule";
 import FinalScores from "@/views/FinalScores";
+import UploadCSV from '@/views/UploadCSV';
 
 Vue.use(VueRouter)
 
