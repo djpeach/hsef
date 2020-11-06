@@ -2,7 +2,14 @@
   <v-container>
     <v-row>
       <v-col>
-        <p>Welcome to the Judges</p>
+          <v-title
+          class="teal--text text--darken-4
+                 font-weight-bold
+                 text-center   
+                 my-10 
+                 ">
+        <h2>Welcome to the Judges</h2>
+   </v-title>
       </v-col>
     </v-row>
   </v-container>

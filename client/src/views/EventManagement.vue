@@ -1,7 +1,14 @@
 <template>
   <v-container>
     <v-col>
-      <p>Welcome to the Event Management</p>
+        <v-title
+          class="teal--text text--darken-4
+                 font-weight-bold
+                 text-center   
+                 my-10 
+                 ">
+        <h2>Event Management</h2>
+   </v-title>
     </v-col>
     <v-row>
       <v-col>
