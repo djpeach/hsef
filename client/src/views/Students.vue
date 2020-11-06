@@ -160,6 +160,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'StudentManagement',
@@ -188,6 +189,14 @@ export default {
   }),
   mounted() {
     this.fetchStudents();
+    this.getStudents({
+      limit: 10,
+      offset: 0
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
   },
   watch: {
     options: {
@@ -205,7 +214,10 @@ export default {
   computed: {
     formTitle () {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
+    },
+    ...mapState({
+      students: state => state.students
+    })
   },
   methods: {
     fetchStudents() {
@@ -237,7 +249,10 @@ export default {
       this.editedIndex = this.students.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
-    }
+    },
+    ...mapActions({
+      getStudents: 'refreshStudents'
+    })
   },
   filters: {
     fullname: (val) => {
