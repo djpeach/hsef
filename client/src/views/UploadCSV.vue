@@ -8,7 +8,7 @@
             label="File input"
         ></v-file-input>
 
-        <v-btn color="amber" depressed>
+        <v-btn color="amber" id = "submit" depressed>
           Upload
         </v-btn>
       </v-col>
