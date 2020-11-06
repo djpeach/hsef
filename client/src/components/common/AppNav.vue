@@ -34,14 +34,14 @@
           <v-list-item to="event-management">
             <v-list-item-title>Event Management</v-list-item-title>
           </v-list-item>
+          <v-list-item to="upload-csv">
+            <v-list-item-title>Upload CSV</v-list-item-title>
+          </v-list-item>
           <v-list-item to="judge-schedule">
             <v-list-item-title>Judge Schedule</v-list-item-title>
           </v-list-item>
           <v-list-item to="final-scores">
             <v-list-item-title>Final Scores</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="upload-csv">
-            <v-list-item-title>Upload Student Information</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>

@@ -164,6 +164,20 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-spacer></v-spacer>
+    <v-col>
+      <v-row>
+        <v-btn
+            class="ma-2"
+            :loading="loading"
+            :disabled="loading"
+            color="secondary"
+            @click="loader = 'loading'"
+        >
+          Generate Judge Schedule
+        </v-btn>
+      </v-row>
+    </v-col>
   </v-container>
 </template>
 
