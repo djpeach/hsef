@@ -16,7 +16,7 @@ const state = {
 
   // tables
   students: [],
-  project: [],
+  projects: [],
   activeJudges: [],
   pendingJudges: [],
   invitedJudges: [],
@@ -36,15 +36,67 @@ const mutations = {
   UPDATE_AUTH_STATUS(state, authStatus) {
     state.isAuthenticated = authStatus;
   },
+  UPDATE_ADMINS(state, admins) {
+    state.admins = admins;
+  },
+  UPDATE_JUDGE_SCHEDULE(state, judgeSchedule) {
+    state.judgeSchedule = judgeSchedule;
+  },
+
+
+
   UPDATE_STUDENTS(state, students) {
     state.students = students;
-  }
+  },
+
+  UPDATE_PROJECTS(state, projects) {
+    state.projects = projects;
+  },
+  UPDATE_ACTIVE_JUDGES(state, activeJudges) {
+    state.activeJudges = activeJudges;
+  },
+  /* pending Judges */
+  /* invited Judges */
+  UPDATE_SCHOOLS(state, schools) {
+    state.schools = schools;
+  },
+  UPDATE_CATEGORIES(state, categories) {
+    state.categories = categories;
+  },
+  /* scores */
+  UPDATE_BOOTHS(state, booths) {
+    state.booths = booths;
+  },
+  UPDATE_COUNTIES(state, counties) {
+    state.counties = counties;
+  },
+  UPDATE_GRADE_LEVELS(state, gradeLevels) {
+    state.gradeLevels = gradeLevels;
+  },
+
 };
 
 const actions = {
   async login({commit, dispatch}, { email, password }) {
     const authRes = await Vue.http.post(api.auth.login, { email, password});
     commit('UPDATE_AUTH_STATUS', true);
+  },
+  async refreshAdmins({ commit }, { limit, offset }) {
+    const { body: { results: admins }} = await Vue.http.get('list/admins', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_ADMINS', admins);
+  },
+  /* CANT FIND THE URL FOR SESSIONS */
+  async refreshJudgeSchedule({ commit }, { limit, offset }) {
+    const { body: { results: judgeSchedule }} = await Vue.http.get('list/THIS IS NOT IN THE DOCS(:', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
   },
   async refreshStudents({ commit }, { limit, offset }) {
     const { body: { results: students }} = await Vue.http.get('list/students', {
@@ -53,7 +105,67 @@ const actions = {
       }
     });
     commit('UPDATE_STUDENTS', students);
-  }
+  },
+  async refreshProjects({ commit }, { limit, offset }) {
+    const { body: { results: projects }} = await Vue.http.get('list/projects', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_PROJECTS', projects);
+  },
+  async refreshActiveJudges({ commit }, { limit, offset }) {
+    const { body: { results: activeJudges }} = await Vue.http.get('list/judges', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_ACTIVE_JUDGES', activeJudges);
+  },
+  /* pending Judges */
+  /* invited Judges */
+  async refreshSchools({ commit }, { limit, offset }) {
+    const { body: { results: schools }} = await Vue.http.get('list/schools', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_SCHOOLS', schools);
+  },
+  async refreshCategories({ commit }, { limit, offset }) {
+    const { body: { results: categories }} = await Vue.http.get('list/categories', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_CATEGORIES', categories);
+  },
+  /* scores */
+  async refreshBooths({ commit }, { limit, offset }) {
+    const { body: { results: booths }} = await Vue.http.get('list/booths', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_BOOTHS', booths);
+  },
+  async refreshCounties({ commit }, { limit, offset }) {
+    const { body: { results: counties }} = await Vue.http.get('list/counties', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_COUNTIES', counties);
+  },
+  async refreshGradeLevels({ commit }, { limit, offset }) {
+    const { body: { results: gradeLevels }} = await Vue.http.get('list/gradeLevels', {
+      params: {
+        limit, offset
+      }
+    });
+    commit('UPDATE_GRADE_LEVELS', gradeLevels);
+  },
+
 };
 
 export default new Vuex.Store({

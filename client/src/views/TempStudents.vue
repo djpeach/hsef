@@ -18,16 +18,16 @@ export default {
   }),
   computed: {
     ...mapState({
-      students: state => state.students
+      booths: state => state.booths
     })
   },
   methods: {
     ...mapActions({
-      getStudents: 'refreshStudents'
+      getBooths: 'refreshBooths'
     })
   },
   mounted() {
-    this.getStudents({
+    this.getBooths({
       limit: 10,
       offset: 0
     }).then(res => {
