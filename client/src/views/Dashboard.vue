@@ -15,20 +15,21 @@
             block
             elevation="2"
         >
-          button
+          CSV file upload
         </v-btn>
         <v-btn
             block
             elevation="2"
         >
-          button
+          judge information
         </v-btn>
         <v-btn
             block
             elevation="2"
         >
-          button
+          schedule builder
         </v-btn>
+
       </v-col>
     </v-row>
   </v-container>
