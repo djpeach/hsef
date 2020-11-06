@@ -11,6 +11,24 @@
         <h2>Welcome to the Dashboard</h2>
    </v-title>
         <p>{{fetching_status}}</p>
+        <v-btn
+            block
+            elevation="2"
+        >
+          button
+        </v-btn>
+        <v-btn
+            block
+            elevation="2"
+        >
+          button
+        </v-btn>
+        <v-btn
+            block
+            elevation="2"
+        >
+          button
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>

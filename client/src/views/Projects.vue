@@ -16,10 +16,32 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: 'Projects',
   data: () => ({
-    // ...
+
   }),
+  computed: {
+    ...mapState({
+      projects: state => state.projects
+    })
+  },
+  methods: {
+    ...mapActions({
+      getProjects: 'refreshProjects'
+    })
+  },
+  mounted() {
+    this.getProjects({
+      limit: 10,
+      offset: 0
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }
 </script>
