@@ -73,9 +73,6 @@ function listCounties(Slim\Slim $app) {
     ];
 
     // Additional request parameter validation if needed
-    if ($limit < 0) {
-      throw new BadRequest("limit cannot be negative");
-    }
     if ($offset < 0) {
       throw new BadRequest("offset cannot be negative");
     }
@@ -90,10 +87,12 @@ function listCounties(Slim\Slim $app) {
       array_push($sqlParams, "%$searchTerm%");
     }
 
-    $query .= " LIMIT ? OFFSET ?";
-    // get $limit+1 results to determine if more can be fetched after this
-    array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
-    array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
+    if ($limit > 0) {
+      $query .= " LIMIT ? OFFSET ?";
+      // get $limit+1 results to determine if more can be fetched after this
+      array_push($sqlParams, valueOrError($limit+1, new ApiException("limit does not exist", 500)));
+      array_push($sqlParams, valueOrError($offset, new ApiException("offset does not exist", 500)));
+    }
 
     $sql = DB::get()->prepare($query);
 

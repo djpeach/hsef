@@ -1,5 +1,5 @@
 module.exports = {
-  "publicPath": "/hsef/client/dist",
+  "publicPath": process.env.NODE_ENV === 'production' ? "/hsef/client/dist" : '/',
   "transpileDependencies": [
     "vuetify"
   ]
