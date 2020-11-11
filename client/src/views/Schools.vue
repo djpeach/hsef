@@ -38,7 +38,7 @@
                       v-bind="attrs"
                       v-on="on"
                   >
-                    New Admin
+                    New Schools
                   </v-btn>
                 </template>
                 <v-card>
