@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getJudges: 'refreshActiveJudges'
+      getJudges: 'refreshJudges'
     })
   },
   mounted() {
