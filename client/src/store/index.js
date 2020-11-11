@@ -48,8 +48,8 @@ const mutations = {
   UPDATE_PROJECTS(state, projects) {
     state.projects = projects;
   },
-  UPDATE_ACTIVE_JUDGES(state, activeJudges) {
-    state.activeJudges = activeJudges;
+  UPDATE_JUDGES(state, judges) {
+    state.judges = judges;
   },
   /* pending Judges */
   /* invited Judges */
@@ -83,13 +83,12 @@ const actions = {
   async refreshAdmins({ commit }, { limit, offset }) {
     const {
       body: { results: admins },
-    } = await Vue.http.get('list/admins', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_ADMINS', admins);
+    } = await Vue.http.get('list/admins');
+    if (admins) {
+      commit('UPDATE_ADMINS', admins);
+    } else {
+      throw new Error("No admins found")
+    }
   },
   /* CANT FIND THE URL FOR SESSIONS */
   async refreshJudgeSchedule({ commit }) {
@@ -98,94 +97,88 @@ const actions = {
     } = await Vue.http.get('read/judges/7/schedule');
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
   },
-  async refreshStudents({ commit }, { limit, offset }) {
+  async refreshStudents({ commit }) {
     const {
       body: { results: students },
-    } = await Vue.http.get('list/students', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_STUDENTS', students);
+    } = await Vue.http.get('list/students');
+    if (students) {
+      commit('UPDATE_STUDENTS', students);
+    } else {
+      throw new Error("No students found")
+    }
   },
-  async refreshProjects({ commit }, { limit, offset }) {
+  async refreshProjects({ commit }) {
     const {
       body: { results: projects },
-    } = await Vue.http.get('list/projects', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_PROJECTS', projects);
+    } = await Vue.http.get('list/projects');
+    if (projects) {
+      commit('UPDATE_PROJECTS', projects);
+    } else {
+      throw new Error("No projects found")
+    }
   },
-  async refreshActiveJudges({ commit }, { limit, offset }) {
+  async refreshJudges({ commit }) {
     const {
-      body: { results: activeJudges },
-    } = await Vue.http.get('list/judges', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_ACTIVE_JUDGES', activeJudges);
+      body: { results: judges },
+    } = await Vue.http.get('list/judges');
+    if (judges) {
+      commit('UPDATE_JUDGES', judges);
+    } else {
+      throw new Error("No Judges found")
+    }
   },
   /* pending Judges */
   /* invited Judges */
   async refreshSchools({ commit }) {
     const {
       body: { results: schools },
-    } = await Vue.http.get('list/schools', {
-      params: {
-        limit: -1,
-      },
-    });
-    commit('UPDATE_SCHOOLS', schools);
+    } = await Vue.http.get('list/schools');
+    if (schools) {
+      commit('UPDATE_SCHOOLS', schools);
+    } else {
+      throw new Error("No schools found")
+    }
   },
-  async refreshCategories({ commit }, { limit, offset }) {
+  async refreshCategories({ commit }) {
     const {
       body: { results: categories },
-    } = await Vue.http.get('list/categories', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_CATEGORIES', categories);
+    } = await Vue.http.get('list/categories');
+    if (categories) {
+      commit('UPDATE_CATEGORIES', categories);
+    } else {
+      throw new Error("No categories found")
+    }
   },
   /* scores */
-  async refreshBooths({ commit }, { limit, offset }) {
+  async refreshBooths({ commit }) {
     const {
       body: { results: booths },
-    } = await Vue.http.get('list/booths', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_BOOTHS', booths);
+    } = await Vue.http.get('list/booths');
+    if (booths) {
+      commit('UPDATE_BOOTHS', booths);
+    } else {
+      throw new Error("No booths found")
+    }
   },
   async refreshCounties({ commit }) {
     const {
       body: { results: counties },
-    } = await Vue.http.get('list/counties', {
-      params: {
-        limit: -1,
-      },
-    });
-    commit('UPDATE_COUNTIES', counties);
+    } = await Vue.http.get('list/counties');
+    if (counties) {
+      commit('UPDATE_COUNTIES', counties);
+    } else {
+      throw new Error("No counties found")
+    }
   },
-  async refreshGradeLevels({ commit }, { limit, offset }) {
+  async refreshGradeLevels({ commit }) {
     const {
       body: { results: gradeLevels },
-    } = await Vue.http.get('list/gradeLevels', {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    commit('UPDATE_GRADE_LEVELS', gradeLevels);
+    } = await Vue.http.get('list/gradeLevels');
+    if (gradeLevels) {
+      commit('UPDATE_GRADE_LEVELS', gradeLevels);
+    } else {
+      throw new Error("No gradeLevels found")
+    }
   },
 };
 
