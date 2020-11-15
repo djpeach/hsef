@@ -1,27 +1,23 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="err">
       <v-col>
-          <v-title
-          class="teal--text text--darken-4
-                 font-weight-bold
-                 text-center
-                 my-10
-                 "
-          >
-        <h2>Welcome to the Students</h2>
-          </v-title>
+        <v-alert
+            dense
+            outlined
+            type="error"
+        >
+          {{ err.body.message }}
+        </v-alert>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row>
       <v-col>
         <v-data-table
             :headers="headers"
             :items="students"
             show-expand
-            item-key="email"
-            :options.sync="options"
-            :server-items-length="totalStudents"
+            item-key="studentId"
             :loading="loading"
             :mobile-breakpoint="0"
             class="elevation-1 mt-8"
@@ -42,7 +38,7 @@
                       v-bind="attrs"
                       v-on="on"
                   >
-                    New Student
+                    New Students
                   </v-btn>
                 </template>
                 <v-card>
@@ -54,56 +50,28 @@
                       <v-row>
                         <v-col
                             cols="12"
-                            sm="5"
                         >
                           <v-text-field
-                              v-model="editedStudent.firstName"
-                              label="First Name *"
+                              v-model="editedStudent.name"
+                              label="Name *"
                           ></v-text-field>
                         </v-col>
-                        <v-col
-                            cols="12"
-                            sm="5"
-                        >
-                          <v-text-field
-                              v-model="editedStudent.lastName"
-                              label="Last Name *"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            sm="2"
-                        >
-                          <v-text-field
-                              v-model="editedStudent.suffix"
-                              label="Suffix"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                        >
-                          <v-text-field
-                              v-model="editedStudent.email"
-                              label="Email"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                        >
-                          <v-text-field
-                              v-model="editedStudent.title"
-                              label="Title"
-                          ></v-text-field>
-                        </v-col>
-
                         <v-col
                             cols="12"
                         >
                           <v-select
-                              :items="[{text: 'Male', value: 'male'},{text: 'Female', value: 'female'},{text: 'Other', value: 'other'}]"
-                              v-model="editedStudent.gender"
-                              label="Gender"
+                              :items="schools"
+                              v-model="editedStudent.schoolId"
+                              label="School"
+                          ></v-select>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-select
+                              :items="projects"
+                              v-model="editedStudent.projectId"
+                              label="Project"
                           ></v-select>
                         </v-col>
                       </v-row>
@@ -112,9 +80,6 @@
                 </v-card>
               </v-dialog>
             </v-toolbar>
-          </template>
-          <template v-slot:item.email="{ item }">
-            <a :href="`mailto:${item.email}`">{{item.email}}</a>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -126,7 +91,7 @@
             </v-icon>
             <v-icon
                 small
-                @click="deleteItem(item)"
+                @click="deleteStudent(item)"
             >
               mdi-delete
             </v-icon>
@@ -136,20 +101,18 @@
               <v-container>
                 <v-row>
                   <v-col class="headline">
-                    {{ item | fullname }}
+                    {{ item.name }}
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Email:</span> {{ item.email }}
+                    <span class="font-weight-bold">Student Id:</span> {{ item.studentId }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Gender:</span> {{ item.gender }}
+                    <span class="font-weight-bold">School:</span> {{ item.school.name }}
                   </v-col>
-                </v-row>
-                <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Title:</span> {{ item.title }}
+                    <span class="font-weight-bold">Project:</span> {{ item.project.name }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -162,107 +125,74 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'StudentManagement',
+  name: 'Students',
   data: () => ({
-    headers : [
-      {text: 'FirstName', value: 'firstName'},
-      {text: 'LastName', value: 'lastName'},
-      {text: 'Email', value: 'email'},
+    headers: [
+      { text: 'Student Name', value: 'name' },
+      { text: 'School', value: 'school.name' },
+      { text: 'Project', value: 'project.name' },
       {text: 'Actions', value: 'actions'},
       { text: '', value: 'data-table-expand' },
     ],
-    students: [],
     loading: false,
-    options: {},
-    totalStudents: 0,
     formDialog: false,
     editedIndex: -1,
     editedStudent: {
-      firstName: '',
-      lastName: '',
-      suffix: '',
-      title: '',
-      email: '',
-      gender: '',
+      name: '',
+      studentId: '',
     },
+    err: null
   }),
-  mounted() {
-    this.fetchStudents();
-    this.getStudents({
-      limit: 10,
-      offset: 0
-    }).then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
+  computed: {
+    ...mapState({
+      students: state => state.students,
+      schools: state => state.schools.map(school => ({ text: school.name, value: school.schoolId })),
+      projects: state => state.projects.map(project => ({text: project.name, value: project.projectId})),
+    }),
+    formTitle () {
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    },
   },
   watch: {
-    options: {
-      handler() {
-        this.fetchStudents();
-      },
-      deep: true,
-    },
     formDialog: (val) => {
       if (val === false) {
         this.editedIndex = -1;
       }
-    }
-  },
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
-    ...mapState({
-      students: state => state.students
-    })
   },
   methods: {
-    fetchStudents() {
-      if (this.loading) return;
-      this.loading = true;
-      const { page, itemsPerPage } = this.options;
-      axios.get('/list/students', {
-        params: {
-          year: 2020,
-          offset: (page - 1) * itemsPerPage,
-          limit: itemsPerPage
-        }
-      }).then(res => {
-        console.log(res.data);
-        this.students = res.data.results;
-        this.totalStudents = res.data.total;
-      }).catch(err => {
-
-      }).finally(() => {
-        this.loading = false;
-      })
-    },
-    editStudent (student) {
-      this.editedIndex = this.students.indexOf(student)
-      this.editedStudent = Object.assign({}, student)
+    ...mapActions({
+      refreshStudents: 'refreshStudents',
+      refreshSchools: 'refreshSchools',
+      refreshProjects: 'refreshProjects',
+    }),
+    editStudent (item) {
+      this.editedIndex = this.students.indexOf(item)
+      this.editedStudent = { name: item.name, schoolId: item.school.id, projectId: item.project.id }
       this.formDialog = true
     },
-    deleteItem (item) {
+    deleteStudent (item) {
       this.editedIndex = this.students.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedStudent = Object.assign({}, item)
       this.dialogDelete = true
-    },
-    ...mapActions({
-      getStudents: 'refreshStudents'
-    })
-  },
-  filters: {
-    fullname: (val) => {
-      let name = `${val.firstName} ${val.lastName}`;
-      name += val.suffix ? ` ${val.suffix}` : ``;
-      return name;
     }
+  },
+  mounted() {
+    this.loading = true;
+    this.refreshStudents().then(() => {
+      this.refreshSchools().then(() => {
+        this.refreshProjects().catch(err => {
+          this.err = err;
+        })
+      })
+    }).catch(err => {
+      this.err = err;
+    }).finally(() => {
+      this.loading = false;
+    })
   }
 }
 </script>

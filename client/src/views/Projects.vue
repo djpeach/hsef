@@ -184,7 +184,7 @@ export default {
     this.loading = true;
     this.refreshProjects().then(() => {
       this.refreshBooths().then(() => {
-        this.refreshBooths().catch(err => {
+        this.refreshCategories().catch(err => {
           this.err = err;
         })
       })
