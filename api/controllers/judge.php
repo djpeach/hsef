@@ -205,6 +205,7 @@ function getJudgeScheduleByOpid(Slim\Slim $app) {
     ];
 
     $query = "SELECT 
+       JS.JudgingSessionId as sessionId,
        JS.StartTime as startTime, 
        B.Number as boothNumber, 
        P.Name as projectName, 

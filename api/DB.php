@@ -25,7 +25,7 @@ class DB {
       self::$instance = new PDO($dsn, $user, $pass, $options);
     } catch (\PDOException $e) {
       // TODO: list admin email, or auto-send email.
-      throw new DatabaseError("Could not connect to ".getenv('DB_USERNAME')."_db using username: ".getenv('DB_USERNAME')." and pwd: ".getenv('DB_PWD'), 503);
+      throw new DatabaseError("Could not connect to database", 503);
     }
   }
 

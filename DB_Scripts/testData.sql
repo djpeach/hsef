@@ -374,16 +374,3 @@ INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (14, 1, 5,
 INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (15, 1, 6, 2);
 INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (16, 1, 7, 6);
 INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (17, 1, 8, 5);
-
-# ----- Downs ----- #
-# SET FOREIGN_KEY_CHECKS = 0;
-# DELETE FROM User WHERE UserId BETWEEN 1 AND 15;
-# DELETE FROM AuthAccount WHERE AuthAccountId BETWEEN 1 AND 6;
-# DELETE FROM Operator WHERE OperatorId BETWEEN 1 AND 6;
-# DELETE FROM Entitlement WHERE EntitlementId BETWEEN 1 AND 5;
-# DELETE FROM OperatorEntitlement WHERE OperatorId BETWEEN 1 AND 6;
-# DELETE FROM Student WHERE UserId BETWEEN 1 AND 15;
-# DELETE FROM Booth WHERE BoothId BETWEEN 1 AND 6;
-# DELETE FROM County WHERE CountyId BETWEEN 1 AND 7;
-# DELETE FROM School WHERE SchoolId BETWEEN 1 AND 8;
-# SET FOREIGN_KEY_CHECKS = 1;
