@@ -10,7 +10,7 @@
           <v-timeline-item
               color="amber"
               small
-              v-for="session in judgeSchedules"
+              v-for="session in judgeSchedule"
           >
             <v-row class="pt-1">
               <v-col cols="3">
@@ -24,7 +24,7 @@
               </v-col>
               <v-col>
                 <v-dialog
-                    v-model="dialog"
+                    v-model="session.dialog"
                     persistent
                     max-width="300px"
                 >
@@ -98,8 +98,8 @@ export default {
 
   computed: {
     ...mapState({
-      judgeSchedules: function(state) {
-        return state.judgeSchedule && state.judgeSchedule.map(d => ({ ...d, modalOpen: false }));
+      judgeSchedule: function(state) {
+        return state.judgeSchedule && state.judgeSchedule.map(d => ({ ...d, dialog: false }));
       }
     })
   },

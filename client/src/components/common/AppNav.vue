@@ -43,6 +43,9 @@
           <v-list-item to="upload-csv">
             <v-list-item-title>Upload Student Information</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="logout">
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -50,6 +53,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'AppNav',
 
@@ -57,5 +62,19 @@ export default {
     drawer: false,
     group: null,
   }),
+  methods: {
+    logout() {
+      this.logoutStore().then(res => {
+        window.sessionStorage.clear()
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => {
+        this.$router.push({ name: 'login' })
+      })
+    },
+    ...mapActions({
+      logoutStore: 'logout'
+    })
+  }
 };
 </script>

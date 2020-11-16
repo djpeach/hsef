@@ -29,3 +29,9 @@ WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP) AND U.Status = 'active'";
     }
   };
 }
+
+function logout(Slim\Slim $app) {
+  return function() use ($app) {
+    $app->res->json(["success" => true]);
+  };
+}
