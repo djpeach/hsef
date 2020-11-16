@@ -3,7 +3,7 @@
 class ApiException extends ErrorException {
   public $data = [];
 
-  public function __construct($message = "", $code = 0, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
+  public function __construct($message = "", $code = 500, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) {
     parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
     $this->data = [
       "code" => $code,

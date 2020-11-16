@@ -3,11 +3,14 @@
     <v-row align="center"
       justify="space-around">
       <v-col>
+        <form @submit.prevent="filename = ''">
         <v-file-input
             color = "gray"
             accept="csv/*"
             label="File input"
+            v-model="filename"
         ></v-file-input>
+        </form>
       </v-col>
     </v-row>
 
@@ -40,7 +43,7 @@
 export default {
   name: 'UploadCSV',
   data: () => ({
-    // ...
+    filename: ''
   }),
 }
 </script>

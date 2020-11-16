@@ -1,5 +1,16 @@
 <template>
    <v-container>
+     <v-row v-if="err">
+       <v-col>
+         <v-alert
+             dense
+             outlined
+             type="error"
+         >
+           {{ err.body.message }}
+         </v-alert>
+       </v-col>
+     </v-row>
     <v-row align="center"
       justify="space-around">
       <v-col>
@@ -29,23 +40,18 @@
 <script>
 import { mapActions } from 'vuex';
 
-const myObj = { firstName: 'Ashley' }
-
 export default {
   name: 'LogIn',
   data: () => ({
     creds: {
       email: '',
       password: '',
-      username: 'test',
     },
     err: null,
   }),
   methods: {
     submitLogin() {
-      // form validation
-        // check that email is actually an email
-      // send credentials to api
+      // TODO: form validation
       this.loginUser({ ...this.creds })
       .then(async () => {
         await this.$router.push({name: 'dashboard'})
