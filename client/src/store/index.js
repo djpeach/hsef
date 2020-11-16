@@ -2,11 +2,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import api from '@/store/apiRoutes';
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
 // this is the global state
-const state = {
+const clearedState = {
   isAuthenticated: false,
   admins: [],
   judgeSchedule: [], // array of session objects
@@ -28,9 +29,19 @@ const state = {
   gradeLevels: [],
 };
 
+const state = {}
+for (const [key, value] of Object.entries(clearedState)) {
+  state[key] = value;
+}
+
 const getters = {};
 
 const mutations = {
+  RESET_DATA(state) {
+    for (const [key, value] of Object.entries(clearedState)) {
+      state[key] = value;
+    }
+  },
   UPDATE_AUTH_STATUS(state, authStatus) {
     state.isAuthenticated = authStatus;
   },
@@ -77,8 +88,9 @@ const actions = {
     commit('UPDATE_AUTH_STATUS', true);
   },
   async logout({ commit, state }) {
-    await Vue.http.post(api.auth.logout, { userId: state.userId});
-    commit('UPDATE_AUTH_STATUS', false);
+    let res = await Vue.http.post(api.auth.logout);
+    await commit('RESET_DATA');
+    return res;
   },
   async refreshAdmins({ commit }, { limit, offset }) {
     const {
@@ -186,10 +198,13 @@ const actions = {
       },
     });
     commit('UPDATE_GRADE_LEVELS', gradeLevels);
-  },
+  }
 };
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({
+    storage: window.sessionStorage
+  })],
   state,
   actions,
   mutations,
