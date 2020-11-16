@@ -9,7 +9,9 @@ Vue.use(VueResource);
 
 Vue.config.productionTip = false
 Vue.http.options.credentials = true;
-Vue.http.options.root = 'http://localhost:9000/api'
+Vue.http.options.root = process.env.NODE_ENV === 'production'
+  ? "http://corsair.cs.iupui.edu:24361/hsef/api"
+  : 'http://localhost:9000/api'
 
 
 import vuetify from './plugins/vuetify';
