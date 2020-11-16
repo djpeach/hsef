@@ -93,6 +93,50 @@ function createNewJudge(Slim\Slim $app) {
   };
 }
 
+function generateSchedules(Slim\Slim $app) {
+  return function() use ($app) {
+    $resBody = [];
+
+    $query = "SELECT * FROM Operator 
+    JOIN UserYear UY on Operator.UserYearId = UY.UserYearId 
+    JOIN User U on UY.UserId = U.UserId 
+    JOIN OperatorEntitlement OE on Operator.OperatorId = OE.OperatorId 
+    JOIN Entitlement E on E.EntitlementId = OE.EntitlementId 
+WHERE UY.Year = YEAR(CURRENT_TIMESTAMP) 
+  AND E.Name = 'judge'
+  AND U.Status = 'active'";
+    $judges = DB::get()->query($query)->fetchAll();
+    $query = "SELECT * FROM Project 
+    JOIN Booth B on B.BoothId = Project.BoothId 
+    JOIN Student S on Project.ProjectId = S.ProjectId 
+    JOIN Category C on Project.CategoryId = C.CategoryId 
+    JOIN GradeLevel GL on S.GradeLevelId = GL.GradeLevelId 
+    JOIN User U on S.UserId = U.UserId
+    JOIN UserYear UY on S.UserId = UY.UserId";
+    $projects = DB::get()->query($query)->fetchAll();
+
+    $ji = 0;
+    $maxJudgeIndex = count($judges) - 1;
+    $startTime = DateTime::createFromFormat('H:i:s', '09:00:00');
+    $endTime = DateTime::createFromFormat('H:i:s', '09:10:00');
+
+    foreach ($projects as $project) {
+      if ($ji > $maxJudgeIndex) {
+        $ji = 0;
+      }
+      $sql = DB::get()->prepare("INSERT INTO JudgingSession(ProjectId, OperatorId, StartTime, EndTime) VALUES (?, ?, ?, ?)");
+
+      $sql->execute([$project["ProjectId"], $judges[$ji]["OperatorId"], $startTime->format('H:i:s'), $endTime->format('H:i:s')]);
+      $startTime->modify('+15 minutes');
+      $endTime->modify('+15 minutes');
+
+      $ji += 1;
+    }
+
+    $app->res->json($resBody);
+  };
+}
+
 // READ
 function getJudgeByOpId(Slim\Slim $app) {
   return function($id) use ($app) {
@@ -150,6 +194,33 @@ WHERE E.Name = 'judge'
     // Finalize (build/transform/filter) response if needed
 
     // Send response
+    $app->res->json($resBody);
+  };
+}
+
+function getJudgeScheduleByOpid(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    $resBody = [
+      "sessions" => [],
+    ];
+
+    $query = "SELECT 
+       JS.StartTime as startTime, 
+       B.Number as boothNumber, 
+       P.Name as projectName, 
+       P.ProjectId as projectId, 
+       JS.RawScore as currentScore
+FROM JudgingSession JS 
+    JOIN Project P on JS.ProjectId = P.ProjectId 
+    JOIN Booth B on B.BoothId = P.BoothId 
+WHERE JS.OperatorId = ?";
+    $sql = DB::get()->prepare($query);
+    $sql->execute([$opid]);
+
+    $sessions = $sql->fetchAll();
+
+    $resBody["sessions"] = $sessions;
+
     $app->res->json($resBody);
   };
 }

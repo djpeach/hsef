@@ -7,7 +7,8 @@
                  font-weight-bold
                  text-center
                  my-10
-                 ">
+                 "
+          >
         <h2>Welcome to the Students</h2>
           </v-title>
       </v-col>
