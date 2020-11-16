@@ -10,7 +10,7 @@
           <v-timeline-item
               color="amber"
               small
-              v-for="(session, index) in judgeSchedule"
+              v-for="session in judgeSchedule"
           >
             <v-row class="pt-1">
               <v-col cols="3">
@@ -24,15 +24,15 @@
               </v-col>
               <v-col>
                 <v-dialog
-                    :v-model="`dialog${index + 1}`"
-                    persistent
+                    v-model="session.dialog"
                     max-width="300px"
                 >
-                  <template v-slot:activator="{ on, attrs }">
+                  <template v-slot:activator="{on, attrs}">
                     <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    small>
+                        v-on="on"
+                        small
+                        v-bind="attrs"
+                    >
                       Enter Score
                     </v-btn>
                   </template>
@@ -46,6 +46,7 @@
                           <v-col
                               cols="12"
                           >
+                            <p>Enter a score between 0-100</p>
                             <v-text-field
                                 label="Score"
                                 color="amber"
@@ -61,7 +62,7 @@
 
                       <v-btn
                           text
-                          @click="dialog = false"
+                          @click="session.dialog = false"
                       >
                         CANCEL
                       </v-btn>
@@ -69,7 +70,7 @@
                       <v-btn
                           color="amber"
                           text
-                          @click="dialog = false"
+                          @click="saveCurrentScore(session.sessionId)"
                       >
                         Save
                       </v-btn>
@@ -90,32 +91,29 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'JudgeSchedule',
-  data: () => ({
-      dialog: false,
-      score: '',
-      dialog1: false,
-      dialog2: false,
-      dialog3: false,
-  }),
+  data: () => ({}),
 
 
   computed: {
     ...mapState({
-      judgeSchedule: function(state) {
-        return state.judgeSchedule && state.judgeSchedule.map(d => ({ ...d, dialog: false }));
-      }
+      judgeSchedule: state => state.judgeSchedule
     })
   },
 
   methods: {
+    saveCurrentScore(id) {
+      const session = this.judgeSchedule.find(s => s.sessionId === id);
+      this.saveScore({score: session.currentScore, id}).then(() => {
+        session.dialog = false;
+      })
+    },
     ...mapActions({
-      getJudgeSchedule: 'refreshJudgeSchedule'
+      getJudgeSchedule: 'refreshJudgeSchedule',
+      saveScore: 'saveScore',
     })
   },
   mounted() {
-    this.getJudgeSchedule().then(res => {
-      console.log(res)
-    }).catch(err => {
+    this.getJudgeSchedule().catch(err => {
       console.log(err)
     })
   }
