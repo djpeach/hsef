@@ -10,9 +10,9 @@ class DB {
   private function __construct() {
     try {
       $host = '127.0.0.1';
-      $db   = getenv('DB_USERNAME').'_db';
-      $user = getenv('DB_USERNAME');
-      $pass = getenv('DB_PWD');
+      $db   = 'harris16_db';
+      $user = 'ashleyharris';
+      $pass = 'qwerty';
       $charset = 'utf8mb4';
 
       $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
