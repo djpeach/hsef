@@ -23,14 +23,21 @@
         </v-btn>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <a :href="temp" download="temp.xlsx">Download</a>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-import axios from 'axios';
+import temp from '../assets/temp.xlsx'
 
 export default {
   name: 'Dashboard',
-  data: () => ({}),
+  data: () => ({
+    temp
+  }),
 }
 </script>

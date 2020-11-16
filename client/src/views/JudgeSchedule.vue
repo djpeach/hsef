@@ -10,7 +10,7 @@
           <v-timeline-item
               color="amber"
               small
-              v-for="session in judgeSchedule"
+              v-for="(session, index) in judgeSchedule"
           >
             <v-row class="pt-1">
               <v-col cols="3">
@@ -24,7 +24,7 @@
               </v-col>
               <v-col>
                 <v-dialog
-                    v-model="session.dialog"
+                    :v-model="`dialog${index + 1}`"
                     persistent
                     max-width="300px"
                 >
@@ -93,6 +93,9 @@ export default {
   data: () => ({
       dialog: false,
       score: '',
+      dialog1: false,
+      dialog2: false,
+      dialog3: false,
   }),
 
 
