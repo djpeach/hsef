@@ -13,7 +13,6 @@ class CorsMiddleware extends \Slim\Middleware {
       'http://localhost:9000',
       'http://corsair.cs.iupui.edu:24631',
       'http://10.0.0.183:8080',
-
     ];
 
     $reqOrigin = $req->headers->get('origin');
