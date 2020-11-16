@@ -74,6 +74,15 @@
                               label="Project"
                           ></v-select>
                         </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-select
+                              :items="gradeLevel"
+                              v-model="editedStudent.gradeLevelId"
+                              label="Grade Level"
+                          ></v-select>
+                        </v-col>
                       </v-row>
                     </v-container>
                   </v-card-text>
@@ -112,7 +121,10 @@
                     <span class="font-weight-bold">School:</span> {{ item.school.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Project:</span> {{ item.project.name }}
+                    <span class="font-weight-bold">Project:</span> {{ item.projectName }}
+                  </v-col>
+                  <v-col>
+                    <span class="font-weight-bold">Grade Level:</span> {{ item.gradeLevel.name }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -134,6 +146,7 @@ export default {
       { text: 'Student Name', value: 'name' },
       { text: 'School', value: 'school.name' },
       { text: 'Project', value: 'project.name' },
+      {text: 'GradeLevel', value: 'gradeLevel.name'},
       {text: 'Actions', value: 'actions'},
       { text: '', value: 'data-table-expand' },
     ],
@@ -143,6 +156,7 @@ export default {
     editedStudent: {
       name: '',
       studentId: '',
+      projectName: '',
     },
     err: null
   }),
@@ -151,6 +165,7 @@ export default {
       students: state => state.students,
       schools: state => state.schools.map(school => ({ text: school.name, value: school.schoolId })),
       projects: state => state.projects.map(project => ({text: project.name, value: project.projectId})),
+      gradeLevel: state => state.gradeLevels.map(gradeLevel => ({text: gradeLevel.name, value: gradeLevel.gradeLevelId})),
     }),
     formTitle () {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
@@ -168,10 +183,11 @@ export default {
       refreshStudents: 'refreshStudents',
       refreshSchools: 'refreshSchools',
       refreshProjects: 'refreshProjects',
+      refreshGradeLevels: 'refreshGradeLevels',
     }),
     editStudent (item) {
       this.editedIndex = this.students.indexOf(item)
-      this.editedStudent = { name: item.name, schoolId: item.school.id, projectId: item.project.id }
+      this.editedStudent = { name: item.name, schoolId: item.school.id, projectId: item.project.id, gradeLevelId:  item.gradeLevel.id  }
       this.formDialog = true
     },
     deleteStudent (item) {
@@ -184,8 +200,10 @@ export default {
     this.loading = true;
     this.refreshStudents().then(() => {
       this.refreshSchools().then(() => {
-        this.refreshProjects().catch(err => {
-          this.err = err;
+        this.refreshSchools().then(() => {
+          this.refreshProjects().catch(err => {
+            this.err = err;
+          })
         })
       })
     }).catch(err => {
