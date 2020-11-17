@@ -202,9 +202,12 @@ export default {
       },
       deep: true,
     },
-    formDialog: (val) => {
+    formDialog(val) {
       if (val === false) {
         this.editedIndex = -1;
+        for (const key in this.editedAdmin) {
+          this.editedAdmin[key] = '';
+        }
       }
     }
   },

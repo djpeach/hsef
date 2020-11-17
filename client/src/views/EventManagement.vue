@@ -177,6 +177,28 @@
     </v-row>
     <v-spacer></v-spacer>
     <v-col>
+      <v-row v-if="scheduleGenerationError">
+        <v-col>
+          <v-alert
+              dense
+              outlined
+              type="error"
+          >
+            {{ scheduleGenerationError }}
+          </v-alert>
+        </v-col>
+      </v-row>
+      <v-row v-else-if="scheduleGenerationSuccess">
+        <v-col>
+          <v-alert
+              dense
+              outlined
+              type="success"
+          >
+            {{ scheduleGenerationSuccess }}
+          </v-alert>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-btn
             class="ma-2"
@@ -184,7 +206,7 @@
             :loading="loading"
             :disabled="loading"
             color="amber"
-            @click="loader = 'loading'"
+            @click="generateSchedulesClicked"
         >
           Generate Judge Schedule
         </v-btn>
@@ -195,24 +217,33 @@
 
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'EventManagement',
   data() {
     return {
-      loader: null,
       loading: false,
-
+      scheduleGenerationSuccess: '',
+      scheduleGenerationError: '',
     }
   },
-  watch: {
-    loader() {
-      const l = this.loader
-      this[l] = !this[l]
-
-      setTimeout(() => (this[l] = false), 1500)
-
-      this.loader = null
+  methods: {
+    generateSchedulesClicked() {
+      this.loading = true;
+      this.generateSchedules().then(() => {
+        this.scheduleGenerationError = '';
+        this.scheduleGenerationSuccess = 'Judge schedules successfully generated. Go to the judge table to view each judge\'s schedule';
+      }).catch(err => {
+        this.scheduleGenerationSuccess = '';
+        this.scheduleGenerationError = !!err.body ? err.body.message : ( !!err.message ? err.message : err);
+      }).finally(() => {
+        this.loading = false;
+      })
     },
-  },
+    ...mapActions({
+      generateSchedules: 'generateSchedules'
+    })
+  }
 }
 </script>

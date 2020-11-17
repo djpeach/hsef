@@ -159,6 +159,9 @@ const actions = {
       throw new Error('No Judges found');
     }
   },
+  async generateSchedules(ctx) {
+    return Vue.http.post('create/generate-schedules');
+  },
   async refreshRegisteredJudges({ commit }) {
     const {
       body: { results: judges },
