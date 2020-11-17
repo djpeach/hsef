@@ -141,8 +141,11 @@ function createPublicJudge(Slim\Slim $app) {
         valueOrNull($reqBody["employer"]),
         valueOrError($userYearId, new DatabaseError("Could not get userYearId for newly created user year record"))
       ]), new DatabaseError("Error while attempting to create new operator record during public judge registration"));
+      $opid = DB::get()->lastInsertId();
 
-      //
+      // add judge entitlement
+      $sql = DB::get()->prepare("REPLACE INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (?, (SELECT EntitlementId FROM Entitlement WHERE Name = 'judge'))");
+      execOrError($sql->execute([$opid]), new DatabaseError("Error while adding judge entitlement to operator during judge approval"));
     }
 
 
@@ -155,33 +158,31 @@ function createPublicJudge(Slim\Slim $app) {
 
 function approveJudge(Slim\Slim $app) {
   return function($opid) use ($app) {
-    // add judge entitlement
-    $sql = DB::get()->prepare("INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (?, (SELECT EntitlementId FROM Entitlement WHERE Name = 'judge'))");
-    execOrError($sql->execute([$opid]), new DatabaseError("Error while adding judge entitlement to operator during judge approval"));
 
+    file_put_contents("php://stderr", "test");
     // get user for opid
-    $sql = DB::get()->prepare("SELECT UserId, Email FROM User Where UserId = (Select UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+    $sql = DB::get()->prepare("SELECT UserId, Email FROM User Where UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
     execOrError($sql->execute([$opid]), new DatabaseError("Error while getting user by operator id during judge approval"));
 
-    $userId = valueOrError($sql->fetch()->UserId, new UserNotFound("Could not find a user for that operator id"));
-    $email = valueOrError($sql->fetch()->Email, new UserNotFound("Could not find a user for that operator id"));
+    $user = valueOrError($sql->fetch(PDO::FETCH_OBJ), new UserNotFound("Could not find a user for that operator id"));
+    file_put_contents("php://stderr", $user->UserId);
 
     // set status to active
     $sql = DB::get()->prepare("UPDATE User SET Status = 'active' WHERE UserId = ?");
-    execOrError($sql->execute([$userId]), new DatabaseError("Error while making user active during judge approval"));
+    execOrError($sql->execute([$user->UserId]), new DatabaseError("Error while making user active during judge approval"));
 
     // create auth account
-    $sql = DB::get()->prepare("INSERT INTO AuthAccount(PasswordHash, UserId) VALUES (?, ?)");
-    execOrError($sql->execute([generateRandomString(), $userId]), new DatabaseError("Error while creating auth account for judge during judge approval"));
+    $sql = DB::get()->prepare("REPLACE INTO AuthAccount(PasswordHash, UserId) VALUES (?, ?)");
+    execOrError($sql->execute([generateRandomString(), $user->UserId]), new DatabaseError("Error while creating auth account for judge during judge approval"));
     $authAccountId = valueOrError(DB::get()->lastInsertId(), new DatabaseError("Could not get auth account id for newly created auth account during judge approval"));
 
     // create one time token for pwd reset
-    $sql = DB::get()->prepare("INSERT INTO OneTimeToken(Token, AuthAccountId) VALUES (?, ?)");
+    $sql = DB::get()->prepare("REPLACE INTO OneTimeToken(Token, AuthAccountId) VALUES (?, ?)");
     $randKey = generateRandomString(10);
     $sql->execute([$randKey, $authAccountId]);
 
     // email judge
-    $to = $email; // note the comma
+    $to = $user->Email; // note the comma
     $subject = 'HSEF judging approval!';
     $message = "
 <html>
@@ -197,11 +198,11 @@ function approveJudge(Slim\Slim $app) {
 ";
 
     $headers = array("From: webmaster@hsef.org",
-      "Reply-To: webmaster@hsef.org",
+      "Reply-To: djpeach@iu.edu",
       "X-Mailer: PHP/" . PHP_VERSION,
       'Content-type: text/html; charset=iso-8859-1',
       'MIME-Version: 1.0',
-      "To: {$email}"
+      "To: {$user->Email}"
     );
 
     if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
@@ -216,11 +217,11 @@ function denyJudge(Slim\Slim $app) {
     $sql = DB::get()->prepare("SELECT UserId FROM User Where UserId = (Select UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
     execOrError($sql->execute([$opid]), new DatabaseError("Error while getting user by operator id during judge denial"));
 
-    $userId = valueOrError($sql->fetch()->UserId, new UserNotFound("Could not find a user for that operator id"));
+    $user = valueOrError($sql->fetch(PDO::FETCH_OBJ), new UserNotFound("Could not find a user for that operator id"));
 
     // set status to archived
     $sql = DB::get()->prepare("UPDATE User SET Status = 'archived' WHERE UserId = ?");
-    execOrError($sql->execute([$userId]), new DatabaseError("Error while making user active during judge denial"));
+    execOrError($sql->execute([$user->UserId]), new DatabaseError("Error while making user active during judge denial"));
   };
 }
 

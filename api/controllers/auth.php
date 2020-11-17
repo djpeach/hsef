@@ -70,7 +70,7 @@ function resetPwdEmail(Slim\Slim $app) {
 ";
 
     $headers = array("From: webmaster@hsef.org",
-      "Reply-To: webmaster@hsef.org",
+      "Reply-To: djpeach@iu.edu",
       "X-Mailer: PHP/" . PHP_VERSION,
       'Content-type: text/html; charset=iso-8859-1',
       'MIME-Version: 1.0',

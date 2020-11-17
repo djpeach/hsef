@@ -91,10 +91,10 @@ const mutations = {
 
 const actions = {
   async approveJudge(ctx, { operatorId }) {
-    return Vue.http.put(`update/judges/${data.operatorId}/approve`);
+    return Vue.http.put(`update/judges/${operatorId}/approve`);
   },
   async denyJudge(ctx, { operatorId }) {
-    return Vue.http.put(`update/judges/${data.operatorId}/deny`);
+    return Vue.http.put(`update/judges/${operatorId}/deny`);
   },
   async registerJudge(ctx, data) {
     return Vue.http.post(`create/judges/public`, data);
@@ -172,17 +172,26 @@ const actions = {
     return Vue.http.post('create/generate-schedules');
   },
   async refreshPendingJudges({ commit }) {
-    const {
-      body: { results: judges },
-    } = await Vue.http.get('list/judges', {
-      params: {
-        status: 'registered',
-      },
-    });
-    if (judges) {
-      commit('UPDATE_PENDING_JUDGES', judges);
-    } else {
-      throw new Error('No Judges found');
+    try {
+      const {
+        body: { results: judges },
+      } = await Vue.http.get('list/judges', {
+        params: {
+          status: 'registered',
+        },
+      });
+      if (judges) {
+        commit('UPDATE_PENDING_JUDGES', judges);
+      } else {
+        commit('UPDATE_PENDING_JUDGES', []);
+      }
+    } catch (e) {
+      // no pending judges found is not an error
+      if (e.body.error !== "UserNotFound") {
+        throw e;
+      } else {
+        commit('UPDATE_PENDING_JUDGES', []);
+      }
     }
   },
   /* pending Judges */
