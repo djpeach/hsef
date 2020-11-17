@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-row>
-      <h1>HSEF Judge & Admin Login</h1>
+      <v-col class="text-center">
+        <h1>HSEF Judge & Admin Login</h1>
+      </v-col>
     </v-row>
     <v-row v-if="err">
       <v-col>
@@ -16,7 +18,7 @@
     </v-row>
     <v-row align="center"
            justify="space-around">
-      <v-col>
+      <v-col cols="11">
         <form @submit.prevent="submitLogin">
           <p>Email</p>
           <v-text-field
@@ -99,7 +101,7 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <v-btn type="submit" color="amber" depressed>
+          <v-btn type="submit" color="amber" depressed style="float:right" class="mt-2 ml-auto">
             Log In
           </v-btn>
         </form>
