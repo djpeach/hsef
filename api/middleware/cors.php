@@ -13,7 +13,6 @@ class CorsMiddleware extends \Slim\Middleware {
       'http://localhost:9000',
       'http://corsair.cs.iupui.edu:24631',
       'http://10.0.0.183:8080',
-
     ];
 
     $reqOrigin = $req->headers->get('origin');
@@ -25,7 +24,7 @@ class CorsMiddleware extends \Slim\Middleware {
 
     $headers = [
       "Access-Control-Allow-Origin" => $origin,
-      "Access-Control-Allow-Methods" => "GET, POST, OPTIONS",
+      "Access-Control-Allow-Methods" => "GET, POST, OPTIONS, PUT, DELETE",
       "Access-Control-Allow-Headers" => "X-Requested-With, content-type, Authorization",
       "Access-Control-Max-Age" => "86400",
       "Access-Control-Allow-Credentials" => 'true',

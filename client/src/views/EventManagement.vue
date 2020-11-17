@@ -1,8 +1,10 @@
 <template>
   <v-container>
+
     <v-col>
       <h2>Event Management</h2>
     </v-col>
+
     <v-row>
       <v-col>
         <!-- Card 1-->

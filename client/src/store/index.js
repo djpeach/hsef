@@ -49,7 +49,7 @@ const mutations = {
     state.admins = admins;
   },
   UPDATE_JUDGE_SCHEDULE(state, judgeSchedule) {
-    state.judgeSchedule = judgeSchedule;
+    state.judgeSchedule = judgeSchedule.map(s => ({...s, dialog: false}));
   },
 
   UPDATE_STUDENTS(state, students) {
@@ -80,11 +80,19 @@ const mutations = {
   UPDATE_GRADE_LEVELS(state, gradeLevels) {
     state.gradeLevels = gradeLevels;
   },
+  UPDATE_IDS(state, ids) {
+    state.userId = ids.userId;
+    state.operatorId = ids.operatorId;
+  }
 };
 
 const actions = {
+  async saveScore(ctx, { score, id }) {
+    await Vue.http.put(`update/sessions/${id}`, { score })
+  },
   async login({ commit, dispatch }, { email, password }) {
-    await Vue.http.post(api.auth.login, { email, password });
+    const { body: data } = await Vue.http.post(api.auth.login, { email, password });
+    commit('UPDATE_IDS', data);
     commit('UPDATE_AUTH_STATUS', true);
   },
   async logout({ commit, state }) {
@@ -103,10 +111,10 @@ const actions = {
     }
   },
   /* CANT FIND THE URL FOR SESSIONS */
-  async refreshJudgeSchedule({ commit }) {
+  async refreshJudgeSchedule({ commit, state }) {
     const {
       body: { sessions: judgeSchedule },
-    } = await Vue.http.get('read/judges/7/schedule');
+    } = await Vue.http.get(`read/judges/${state.operatorId}/schedule`);
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
   },
   async refreshStudents({ commit }) {

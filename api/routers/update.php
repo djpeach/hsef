@@ -348,5 +348,7 @@ function updateRouter($app) {
     $app->put('/gradeLevels/:id', function() use ($app) {
       echo 'Update gradeLevel';
     });
+
+    $app->put('/sessions/:id', saveScore($app));
   };
 }

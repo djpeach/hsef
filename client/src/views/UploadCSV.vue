@@ -43,7 +43,6 @@
 </template>
 
 <script>
-//import temp from '../assets/temp.xlsx'
 import studentBulkUpload from "@/assets/studentBulkUpload.xls";
 
 export default {

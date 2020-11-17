@@ -8,6 +8,7 @@ function loginWithEmailPassword(Slim\Slim $app) {
     $query = "SELECT * FROM User U
     JOIN AuthAccount AA on U.UserId = AA.UserId 
     JOIN UserYear UY on U.UserId = UY.UserId 
+    JOIN Operator O on UY.UserYearId = O.UserYearId
 WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP) AND U.Status = 'active'";
     $sql = DB::get()->prepare($query);
     execOrError($sql->execute([
@@ -20,6 +21,8 @@ WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP) AND U.Status = 'active'";
         valueOrError($reqBody->password, new BadRequest("No password on request")),
         valueOrError($user->PasswordHash, new ApiException("No password on auth account"))
       )) {
+        $resBody["userId"] = $user->UserId;
+        $resBody["operatorId"] = $user->OperatorId;
         $app->res->json($resBody);
       } else {
         throw new ApiException("Incorrect password, try again");
