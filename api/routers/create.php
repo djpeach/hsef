@@ -227,7 +227,7 @@ function createRouter($app) {
       $app->post('/pwdReset', resetPwdEmail($app));
 
     /**
-     * @api {post} /create/judge/public Public Judge Registration
+     * @api {post} /create/judges/public Public Judge Registration
      * @apiGroup Create
      * @apiName Judge Registration
      * @apiVersion 0.1.0
@@ -247,6 +247,6 @@ function createRouter($app) {
      * @apiSuccess {Number} gradeLevelId
      * @apiSuccess {String} name
      */
-      $app->post('/judge/public', createPublicJudge($app));
+      $app->post('/judges/public', createPublicJudge($app));
     };
 }

@@ -210,6 +210,20 @@ function approveJudge(Slim\Slim $app) {
   };
 }
 
+function denyJudge(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    // get user for opid
+    $sql = DB::get()->prepare("SELECT UserId FROM User Where UserId = (Select UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+    execOrError($sql->execute([$opid]), new DatabaseError("Error while getting user by operator id during judge denial"));
+
+    $userId = valueOrError($sql->fetch()->UserId, new UserNotFound("Could not find a user for that operator id"));
+
+    // set status to archived
+    $sql = DB::get()->prepare("UPDATE User SET Status = 'archived' WHERE UserId = ?");
+    execOrError($sql->execute([$userId]), new DatabaseError("Error while making user active during judge denial"));
+  };
+}
+
 function updateCheckedIn(Slim\Slim $app) {
   return function($opid) use ($app) {
     $reqBody = $app->req->jsonBody();

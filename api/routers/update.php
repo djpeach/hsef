@@ -259,6 +259,7 @@ function updateRouter($app) {
     $app->put('/pwdReset', resetPwdEmailSubmit($app));
 
     $app->put('/judges/:id/approve', approveJudge($app));
+    $app->put('/judges/:id/deny', denyJudge($app));
 
     /**
      * @api {put} /update/judges/:id/updateCheckedIn Judge Check in and out
