@@ -90,23 +90,12 @@ const mutations = {
 };
 
 const actions = {
-  async approveJudge(ctx, { operatorId }) {
-    return Vue.http.put(`update/judges/${operatorId}/approve`);
-  },
-  async denyJudge(ctx, { operatorId }) {
-    return Vue.http.put(`update/judges/${operatorId}/deny`);
-  },
+  // create
   async registerJudge(ctx, data) {
     return Vue.http.post(`create/judges/public`, data);
   },
-  async resetPwdSubmit(ctx, { key, pwd }) {
-    return Vue.http.put(`update/pwdReset`, { key, pwd });
-  },
   async resetPwd(ctx, { email }) {
     return Vue.http.post(`create/pwdReset`, { email });
-  },
-  async saveScore(ctx, { score, id }) {
-    await Vue.http.put(`update/sessions/${id}`, { score });
   },
   async login({ commit, dispatch }, { email, password }) {
     const { body: data } = await Vue.http.post(api.auth.login, {
@@ -121,6 +110,22 @@ const actions = {
     await commit('RESET_DATA');
     return res;
   },
+
+  // update
+  async approveJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${operatorId}/approve`);
+  },
+  async denyJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${operatorId}/deny`);
+  },
+  async resetPwdSubmit(ctx, { key, pwd }) {
+    return Vue.http.put(`update/pwdReset`, { key, pwd });
+  },
+  async saveScore(ctx, { score, id }) {
+    await Vue.http.put(`update/sessions/${id}`, { score });
+  },
+
+  // lists
   async refreshAdmins({ commit }, { limit, offset }) {
     const {
       body: { results: admins },
@@ -131,7 +136,6 @@ const actions = {
       throw new Error('No admins found');
     }
   },
-  /* CANT FIND THE URL FOR SESSIONS */
   async refreshJudgeSchedule({ commit, state }) {
     const {
       body: { sessions: judgeSchedule },
@@ -194,8 +198,6 @@ const actions = {
       }
     }
   },
-  /* pending Judges */
-  /* invited Judges */
   async refreshSchools({ commit }) {
     const {
       body: { results: schools },
@@ -216,7 +218,6 @@ const actions = {
       throw new Error('No categories found');
     }
   },
-  /* scores */
   async refreshBooths({ commit }) {
     const {
       body: { results: booths },
