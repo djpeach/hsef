@@ -89,7 +89,7 @@ function createNewJudge(Slim\Slim $app) {
 
     // email judge
     $to = $reqBody['email'];
-    $subject = 'HSEF judging approval!';
+    $subject = 'HSEF judging assignment';
     $message = "
 <html>
 <head>

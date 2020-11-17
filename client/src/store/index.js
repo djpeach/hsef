@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'lodash';
 
 import api from '@/store/apiRoutes';
 import createPersistedState from 'vuex-persistedstate';
@@ -138,19 +139,24 @@ const actions = {
   },
   async updateJudge(ctx, data) {
     const { operatorId, ...rest } = data;
-    return Vue.http.post(`update/judges/${operatorId}`, rest);
+    const reqBody = {
+      user: _.pick(rest, ['firstName', 'lastName', 'email']),
+      operator: _.pick(rest, ['title', 'highestDegree', 'employer']),
+      authAccount: _.pick(rest, ['passwordHash']),
+    }
+    return Vue.http.put(`update/judges/${operatorId}`, reqBody);
   },
   async updateAdmin(ctx, data) {
     const { operatorId, ...rest } = data;
-    return Vue.http.post(`update/admins/${operatorId}`, rest);
+    return Vue.http.put(`update/admins/${operatorId}`, rest);
   },
   async updateSchool(ctx, data) {
     const { operatorId, ...rest } = data;
-    return Vue.http.post(`update/schools/${operatorId}`, rest);
+    return Vue.http.put(`update/schools/${operatorId}`, rest);
   },
   async updateStudent(ctx, data) {
     const { operatorId, ...rest } = data;
-    return Vue.http.post(`update/students/${operatorId}`, rest);
+    return Vue.http.put(`update/students/${operatorId}`, rest);
   },
 
   // lists

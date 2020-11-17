@@ -286,9 +286,14 @@ export default {
     pendingJudgeUpdateError: "",
     pendingJudgeUpdateSuccess: "",
     editedJudge: {
+      operatorId: '',
       firstName: '',
       lastName: '',
-      judgeEmail:'',
+      email: '',
+      title: '',
+      highestDegree: '',
+      gender: '',
+      employer: '',
     },
     crudJudgeError: '',
     crudJudgeSuccess: '',
@@ -305,6 +310,8 @@ export default {
   },
   watch: {
     formDialog(val) {
+      this.crudJudgeSuccess = '';
+      this.crudJudgeError = '';
       this.reloadJudgesTable();
       if (val === false) {
         this.editedIndex = -1;
@@ -326,7 +333,7 @@ export default {
     saveJudgeForm() {
       if (this.editedIndex >= 0) {
         // updating
-        this.updateJudge({operatorId: this.editedJudge.operatorId}).then(res => {
+        this.updateJudge(this.editedJudge).then(res => {
           this.crudJudgeError = '';
           this.crudJudgeSuccess = 'Judge updated';
         }).catch(err => {
@@ -349,6 +356,7 @@ export default {
     editJudge(item) {
       this.editedIndex = this.judges.indexOf(item)
       this.editedJudge = {
+        operatorId: item.operatorId,
         firstName: item.firstName,
         lastName: item.lastName,
         email: item.email,
