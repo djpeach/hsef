@@ -5,7 +5,7 @@ function saveScore(Slim\Slim $app) {
     $reqBody = $app->req->jsonBody();
     $resBody = [];
     $sessionId = $id;
-    $score = $reqBody->score;
+    $score = $reqBody['score'];
 
     $sql = DB::get()->prepare("UPDATE JudgingSession SET RawScore = ? WHERE JudgingSessionId = ?");
     $sql->execute([$score, $sessionId]);

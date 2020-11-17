@@ -24,17 +24,6 @@ function readRouter($app) {
      * @apiSuccess {String=active,registered,invited,archived} result.status
      * @apiSuccess {Boolean} result.checkedIn This will return <code>0</code> for false and <code>1</code> for true
      * @apiSuccess {String} result.email
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/admins/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/admins/:id', getAdminByOpId($app));
 
@@ -66,17 +55,6 @@ function readRouter($app) {
      * @apiSuccess {Object[]} [result.gradeLevelPreferences] A list of gradeLevels the judge prefers to be matched with
      * @apiSuccess {Number} result.gradeLevelPreferences.id
      * @apiSuccess {String} result.gradeLevelPreferences.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/judges/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/judges/:id', getJudgeByOpId($app));
 
@@ -115,18 +93,6 @@ function readRouter($app) {
      * @apiSuccess {Object} [result.gradeLevel]
      * @apiSuccess {Number} result.gradeLevel.id
      * @apiSuccess {String} result.gradeLevel.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/students/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/students/:id', getStudentById($app));
 
@@ -145,17 +111,6 @@ function readRouter($app) {
      * @apiSuccess {Object} [result.county]
      * @apiSuccess {Number} result.county.id
      * @apiSuccess {String} result.county.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/schools/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/schools/:id', function() use ($app) {
       echo 'Read school';
@@ -173,17 +128,6 @@ function readRouter($app) {
      * @apiSuccess {Object} result The county object
      * @apiSuccess {Number} result.countyId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/counties/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/counties/:id', function() use ($app) {
       echo 'Read county';
@@ -210,17 +154,6 @@ function readRouter($app) {
      * @apiSuccess {Object} [result.category]
      * @apiSuccess {Number} result.category.id
      * @apiSuccess {Name} result.category.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/projects/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/projects/:id', function() use ($app) {
       echo 'Read project';
@@ -238,17 +171,6 @@ function readRouter($app) {
      * @apiSuccess {Object} result The category object
      * @apiSuccess {Number} result.categoryId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/categories/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/categories/:id', function() use ($app) {
       echo 'Read category';
@@ -266,17 +188,6 @@ function readRouter($app) {
      * @apiSuccess {Object} result The booth object
      * @apiSuccess {Number} result.boothId
      * @apiSuccess {Number} result.number
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/booths/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/booths/:id', function() use ($app) {
       echo 'Read booth';
@@ -294,17 +205,6 @@ function readRouter($app) {
      * @apiSuccess {Object} result The gradeLevel object
      * @apiSuccess {Number} result.gradeLevelId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/read/gradeLevels/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/gradeLevels/:id', function() use ($app) {
       echo 'Read gradeLevel';

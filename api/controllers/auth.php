@@ -4,7 +4,7 @@ require_once __DIR__."/../utils.php";
 
 function loginWithEmailPassword(Slim\Slim $app) {
   return function() use ($app) {
-    $reqBody = valueOrDefault($app->req->jsonBody(), new EmptyObject());
+    $reqBody = $app->req->jsonBody();
     $resBody = [];
     // find user with email and current year that is active
     $query = "SELECT * FROM User U
@@ -14,12 +14,12 @@ function loginWithEmailPassword(Slim\Slim $app) {
 WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP) AND U.Status = 'active'";
     $sql = DB::get()->prepare($query);
     execOrError($sql->execute([
-      valueOrError($reqBody->email, new BadRequest("No email on request"))
-    ]), new DatabaseError("Failed while trying to fetch user with email {$reqBody->email}"));
+      valueOrError($reqBody["email"], new BadRequest("No email on request"))
+    ]), new DatabaseError("Failed while trying to fetch user with email {$reqBody['email']}"));
 
     $user = $sql->fetch(PDO::FETCH_OBJ);
     if ($user) {
-      if ($reqBody->password === $user->PasswordHash) {
+      if ($reqBody["password"] === $user->PasswordHash) {
         $resBody["userId"] = $user->UserId;
         $resBody["operatorId"] = $user->OperatorId;
         $app->res->json($resBody);
@@ -27,7 +27,7 @@ WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP) AND U.Status = 'active'";
         throw new ApiException("Incorrect password, try again");
       }
     } else {
-      throw new UserNotFound("No active user with email {$reqBody->email} for this year could be found");
+      throw new UserNotFound("No active user with email {$reqBody['email']} for this year could be found");
     }
   };
 }
@@ -44,7 +44,7 @@ function resetPwdEmail(Slim\Slim $app) {
     $reqBody = $app->req->jsonBody();
 
     $sql = DB::get()->prepare("SELECT AuthAccountId FROM AuthAccount AA JOIN User U on AA.UserId = U.UserId WHERE U.Email = ?");
-    $sql->execute([$reqBody->email]);
+    $sql->execute([$reqBody['email']]);
     $authAccount = $sql->fetch(PDO::FETCH_OBJ);
 
     if (!$authAccount) {
@@ -55,10 +55,8 @@ function resetPwdEmail(Slim\Slim $app) {
     $randKey = generateRandomString(10);
     $sql->execute([$randKey, $authAccount->AuthAccountId]);
 
-    $to = $reqBody->email; // note the comma
-
+    $to = $reqBody['email']; // note the comma
     $subject = 'HSEF password reset';
-
     $message = "
 <html>
 <head>
@@ -71,21 +69,17 @@ function resetPwdEmail(Slim\Slim $app) {
 </html>
 ";
 
-
     $headers = array("From: webmaster@hsef.org",
-      "Reply-To: djpeach@iu.edu",
+      "Reply-To: webmaster@hsef.org",
       "X-Mailer: PHP/" . PHP_VERSION,
       'Content-type: text/html; charset=iso-8859-1',
       'MIME-Version: 1.0',
-      "To: {$reqBody->email}"
+      "To: {$reqBody['email']}"
     );
 
-// Mail it
-    if (mail($to, $subject, $message, implode("\r\n", $headers))) {
-      echo "success";
-    } else {
+    if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
       throw new ApiException("Failed to send password reset email");
-    };
+    }
 
   };
 }
@@ -94,7 +88,7 @@ function resetPwdEmailSubmit(Slim\Slim $app) {
   return function() use ($app) {
     $reqBody = $app->req->jsonBody();
     $sql = DB::get()->prepare("SELECT * FROM OneTimeToken WHERE Token = ?");
-    $sql->execute([$reqBody->key]);
+    $sql->execute([$reqBody['key']]);
 
     $ott = $sql->fetch(PDO::FETCH_OBJ);
     if (!$ott) {
@@ -102,7 +96,7 @@ function resetPwdEmailSubmit(Slim\Slim $app) {
     }
 
     $sql = DB::get()->prepare("UPDATE AuthAccount SET PasswordHash = ? WHERE AuthAccountId = ?");
-    $sql->execute([$reqBody->pwd, $ott->AuthAccountId]);
+    $sql->execute([$reqBody['pwd'], $ott->AuthAccountId]);
 
     $sql = DB::get()->prepare("DELETE FROM OneTimeToken WHERE OneTimeTokenId = ?");
     $sql->execute([$ott->OneTimeTokenId]);
