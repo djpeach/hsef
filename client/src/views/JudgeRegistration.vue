@@ -90,6 +90,7 @@
                   color="amber"
                   class="mr-4"
                   @click="validate"
+                  type="submit"
 
               >
                 Submit
