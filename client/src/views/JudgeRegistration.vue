@@ -5,6 +5,28 @@
         <h1>Public Judge Registration</h1>
       </v-col>
     </v-row>
+    <v-row v-if="registrationError">
+      <v-col>
+        <v-alert
+            dense
+            outlined
+            type="error"
+        >
+          {{ pendingJudgeUpdateError }}
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row v-else-if="registrationSuccess">
+      <v-col>
+        <v-alert
+            dense
+            outlined
+            type="success"
+        >
+          {{ pendingJudgeUpdateSuccess }}
+        </v-alert>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="12" md="8">
         <v-form
@@ -19,7 +41,7 @@
                 md="6"
             >
               <v-text-field
-                  v-model="firstName"
+                  v-model="form.firstName"
                   :rules="nameRules"
                   label="First name"
                   required
@@ -30,7 +52,7 @@
                 md="6"
             >
               <v-text-field
-                  v-model="lastName"
+                  v-model="form.lastName"
                   :rules="nameRules"
                   label="Last name"
                   required
@@ -45,7 +67,7 @@
             >
               <v-select
                   :items="titles"
-                  v-model="title"
+                  v-model="form.title"
                   label="Title"
               ></v-select>
             </v-col>
@@ -56,7 +78,7 @@
             >
               <v-select
                   :items="degrees"
-                  v-model="highestDegree"
+                  v-model="form.highestDegree"
                   label="Highest Degree Earned"
               ></v-select>
             </v-col>
@@ -69,7 +91,7 @@
             >
               <v-select
                   :items="genders"
-                  v-model="gender"
+                  v-model="form.gender"
                   label="Gender"
               ></v-select>
             </v-col>
@@ -79,7 +101,7 @@
                 sm="6"
             >
               <v-text-field
-                  v-model="employer"
+                  v-model="form.employer"
                   label="Employer"
               ></v-text-field>
             </v-col>
@@ -89,7 +111,7 @@
                 cols="12"
             >
               <v-text-field
-                  v-model="email"
+                  v-model="form.email"
                   :rules="emailRules"
                   label="E-mail"
                   required
@@ -124,12 +146,14 @@ export default {
     genders: ['male', 'female', 'other'],
     degrees: ['High School Diploma', 'Some College', 'Associates Degree', 'Bachelors Degree', 'Masters', 'PhD'],
     valid: false,
-    firstName: '',
-    lastName: '',
-    title: '',
-    gender: '',
-    employer: '',
-    highestDegree: '',
+    form: {
+      firstName: '',
+      lastName: '',
+      title: '',
+      gender: '',
+      employer: '',
+      highestDegree: '',
+    },
     nameRules: [
       v => !!v || 'Name is required',
       v => v.length <= 20 || 'Name must be less than 20 characters',
@@ -147,10 +171,13 @@ export default {
       this.$refs.form.validate()
     },
     submitForm() {
-      const { firstName, lastName, title, highestDegree, email, gender, employer } = this;
+      const { firstName, lastName, title, highestDegree, email, gender, employer } = this.form;
       this.registerJudge({ firstName, lastName, title, highestDegree, email, gender, employer }).then(() => {
         this.registrationError = '';
         this.registrationSuccess = 'You have been registered. When an admin approves you, you will be sent an email with instructions to set your password as well as your category and grade level judging preferences'
+        for (const key in this.form) {
+          this.form[key] = '';
+        }
       }).catch(err => {
         this.registrationSuccess = '';
         this.registrationError = !!err.body ? err.body.message : ( !!err.message ? err.message : err);
