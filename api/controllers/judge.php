@@ -182,7 +182,7 @@ function approveJudge(Slim\Slim $app) {
     $sql->execute([$randKey, $authAccountId]);
 
     // email judge
-    $to = $user->Email; // note the comma
+    $to = $user->Email;
     $subject = 'HSEF judging approval!';
     $message = "
 <html>
@@ -192,7 +192,7 @@ function approveJudge(Slim\Slim $app) {
 <body>
   <p>Your judge registration has been approved</p>
   <p>Click the link below to set your password, then you can log in with this email and password to select your judging category and grade level preferences</p>
-  <a href='http://localhost:8080/pwdReset?k=".$randKey."'>Reset Password</a>
+  <a href='http://corsair.cs.iupui.edu:24631/hsef?page=password-reset&k=".$randKey."'>Set Password</a>
 </body>
 </html>
 ";
@@ -206,7 +206,9 @@ function approveJudge(Slim\Slim $app) {
     );
 
     if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
-      throw new ApiException("Failed to send password reset email");
+      throw new ApiException("Failed to send judge welcome email");
+    } else {
+      echo "sent email to {$user->Email}";
     }
   };
 }
