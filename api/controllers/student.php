@@ -179,7 +179,7 @@ function listStudents(Slim\Slim $app) {
     // initialize response and request parameters
     $resBody = [];
 
-    $query = "SELECT S.StudentId, S.SchoolId, S.UserId, S.ProjectId, S.GradeLevelId
+    $query = "SELECT S.StudentId, S.SchoolId, S.UserId, S.ProjectId, S.GradeLevelId, U.FirstName, U.LastName
 FROM Student S
     JOIN User U on S.UserId = U.UserId
     JOIN UserYear UY on U.UserId = UY.UserId
