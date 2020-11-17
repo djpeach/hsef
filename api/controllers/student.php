@@ -183,14 +183,12 @@ function listStudents(Slim\Slim $app) {
 FROM Student S
     JOIN User U on S.UserId = U.UserId
     JOIN UserYear UY on U.UserId = UY.UserId
-  WHERE U.Status = ?
-  AND UY.Year = ?";
-
-    $sqlParams = [];
+  WHERE U.Status = 'active'
+  AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
 
     $sql = DB::get()->prepare($query);
 
-    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to retrieve students"));
+    execOrError($sql->execute([]), new DatabaseError("Failed to retrieve students"));
 
     // Finalize (build/transform/filter) response if needed
     $students = $sql->fetchAll();
