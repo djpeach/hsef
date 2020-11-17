@@ -24,6 +24,7 @@
         <v-list-item-group
             v-model="group"
             active-class="teal darken-4"
+            v-if="loggedIn"
         >
           <v-list-item to="/">
             <v-list-item-title>Dashboard</v-list-item-title>
@@ -47,13 +48,21 @@
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
+        <v-list-item-group v-else>
+          <v-list-item to="/login">
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/judge-registration">
+            <v-list-item-title>Judge Registration</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'AppNav',
@@ -62,6 +71,11 @@ export default {
     drawer: false,
     group: null,
   }),
+  computed: {
+    ...mapState({
+      loggedIn: state => state.isAuthenticated
+    })
+  },
   methods: {
     logout() {
       this.logoutStore().then(res => {
