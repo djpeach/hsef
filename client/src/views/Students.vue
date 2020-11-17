@@ -190,7 +190,7 @@ export default {
     },
   },
   watch: {
-    formDialog: (val) => {
+    formDialog(val){
       if (val === false) {
         this.editedIndex = -1;
         for (const key in this.editedStudent) {

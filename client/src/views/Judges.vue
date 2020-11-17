@@ -114,6 +114,130 @@
         </v-data-table>
       </v-col>
     </v-row>
+    <v-row v-if="pendingJudgeUpdateError">
+      <v-col>
+        <v-alert
+            dense
+            outlined
+            type="error"
+        >
+          {{ pendingJudgeUpdateError }}
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row v-else-if="pendingJudgeUpdateSuccess">
+      <v-col>
+        <v-alert
+            dense
+            outlined
+            type="success"
+        >
+          {{ pendingJudgeUpdateSuccess }}
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-data-table
+            :headers="pendingHeaders"
+            :items="pendingJudges"
+            show-expand
+            item-key="email"
+            :loading="pendingLoading"
+            :mobile-breakpoint="0"
+            class="elevation-1 mt-8"
+            loading-text="Fetching Judges Pending Approval"
+            no-data-text="No Judges Pending Approval"
+            :footer-props="{itemsPerPageOptions: [10, 25, 50]}"
+        >
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-toolbar-title>Judges Pending Approval</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="formDialog" max-width="500px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      color="amber"
+                      dark
+                      class="mb-2"
+                      v-bind="attrs"
+                      v-on="on"
+                  >
+                    New Judges
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">{{ formTitle }}</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-text-field
+                              v-model="editedJudge.firstName"
+                              label="First Name *"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-text-field
+                              v-model="editedJudge.lastName"
+                              label="Last Name *"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-text-field
+                              v-model="editedJudge.email"
+                              label="Email *"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon
+              small
+              @click="approveJudgeClicked(item)"
+              >
+              mdi-thumb-up
+            </v-icon>
+            <v-icon
+              small
+              @click="denyJudgeClicked(item)"
+              >
+              mdi-thumb-down
+            </v-icon>
+          </template>
+          <template v-slot:expanded-item="{ item, headers }">
+            <td :colspan="headers.length">
+              <v-container>
+                <v-row>
+                  <v-col class="headline">
+                    {{ item.firstName }} {{ item.lastName}}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <span class="font-weight-bold">Judge Email:</span>
+                    {{ item.email }}
+                  </v-col>
+                </v-row>
+              </v-container>
+            </td>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -131,9 +255,19 @@ export default {
       {text: 'Actions', value: 'actions'},
       {text: '', value: 'data-table-expand'},
     ],
+    pendingHeaders: [
+      {text: 'First Name', value: 'firstName'},
+      {text: 'Last Name', value: 'lastName'},
+      {text: 'Email', value: 'email'},
+      {text: 'Actions', value: 'actions'},
+      {text: '', value: 'data-table-expand'},
+    ],
     loading: false,
+    pendingLoading: false,
     formDialog: false,
     editedIndex: -1,
+    pendingJudgeUpdateError: "",
+    pendingJudgeUpdateSuccess: "",
     editedJudge: {
       firstName: '',
       lastName: '',
@@ -144,6 +278,7 @@ export default {
   computed: {
     ...mapState({
       judges: state => state.judges,
+      pendingJudges: state => state.pendingJudges,
     }),
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
@@ -159,6 +294,9 @@ export default {
   methods: {
     ...mapActions({
       refreshJudges: 'refreshJudges',
+      refreshPendingJudges: 'refreshPendingJudges',
+      denyJudge: 'denyJudge',
+      approveJudge: 'approveJudge',
     }),
     editJudge(item) {
       this.editedIndex = this.judges.indexOf(item)
@@ -173,6 +311,9 @@ export default {
       this.editedIndex = this.judges.indexOf(item)
       this.editedJudge = Object.assign({}, item)
       this.dialogDelete = true
+    },
+    approveJudgeClicked(item) {
+      this.approveJudge({operatorId: item.operatorId})
     },
   },
   filters: {
