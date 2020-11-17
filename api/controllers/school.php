@@ -5,7 +5,7 @@ function createNewSchool(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $school = valueOrError($reqBody->school, new BadRequest("You must provide a school object on the request body"));
+    $school = valueOrError($reqBody['school'], new BadRequest("You must provide a school object on the request body"));
     $resBody = [];
 
     // Additional request parameter validation if needed

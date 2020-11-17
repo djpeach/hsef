@@ -12,16 +12,6 @@ function deleteRouter($app) {
      * @apiParam {Number} id The operator id to find the admin with
      *
      * @apiSuccess {Number} id The OpId of the deleted admin
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/delete/admins/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->delete('/admins', function() use ($app) {
       echo 'Delete admin';
@@ -37,16 +27,6 @@ function deleteRouter($app) {
      * @apiParam {Number} id The operator id to find the judge with
      *
      * @apiSuccess {Number} id The OpId of the deleted judge
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/delete/judges/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->delete('/judges', function() use ($app) {
       echo 'Delete judge';
@@ -62,16 +42,6 @@ function deleteRouter($app) {
      * @apiParam {Number} id The student id to find the student with
      *
      * @apiSuccess {Number} id The Id of the deleted student
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/delete/students/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->delete('/students', function() use ($app) {
       echo 'Delete student';

@@ -5,8 +5,8 @@ function createNewStudent(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
-    $student = valueOrDefault($reqBody->student, new EmptyObject());
+    $user = valueOrError($reqBody['user'], new BadRequest("You must provide a user object on the request body"));
+    $student = valueOrDefault($reqBody['student'], new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed
@@ -179,18 +179,16 @@ function listStudents(Slim\Slim $app) {
     // initialize response and request parameters
     $resBody = [];
 
-    $query = "SELECT S.StudentId, S.SchoolId, S.UserId, S.ProjectId, S.GradeLevelId
+    $query = "SELECT S.StudentId, S.SchoolId, S.UserId, S.ProjectId, S.GradeLevelId, U.FirstName, U.LastName
 FROM Student S
     JOIN User U on S.UserId = U.UserId
     JOIN UserYear UY on U.UserId = UY.UserId
-  WHERE U.Status = ?
-  AND UY.Year = ?";
-
-    $sqlParams = [];
+  WHERE U.Status = 'active'
+  AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
 
     $sql = DB::get()->prepare($query);
 
-    execOrError($sql->execute($sqlParams), new DatabaseError("Failed to retrieve students"));
+    execOrError($sql->execute([]), new DatabaseError("Failed to retrieve students"));
 
     // Finalize (build/transform/filter) response if needed
     $students = $sql->fetchAll();
