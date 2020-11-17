@@ -11,6 +11,7 @@
               color="amber"
               small
               v-for="session in judgeSchedule"
+              :key="session.sessionId"
           >
             <v-row class="pt-1">
               <v-col cols="3">
