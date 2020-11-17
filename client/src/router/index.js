@@ -18,12 +18,14 @@ import Booths from "@/views/Booths";
 import Counties from "@/views/Counties";
 import GradeLevels from "@/views/GradeLevels";
 import Judges from "@/views/Judges";
+import JudgeRegistration from "@/views/JudgeRegistration";
 
 
 Vue.use(VueRouter)
 
 const publicOnlyRoutes = [
   'login',
+  'judge-registration',
 ];
 
 const publicRoutes = [
@@ -59,6 +61,7 @@ const routes = [
   { path: '/upload-csv', name: 'upload-csv', component: UploadCSV },
   { path: '/login', name: 'login', component: LogIn },
   { path: '/temp-students', name: 'temp-students', component: TempStudents },
+  { path: '/judge-registration', name: 'judge-registration', component: JudgeRegistration },
 ]
 
 const router = new VueRouter({

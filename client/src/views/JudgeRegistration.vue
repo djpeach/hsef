@@ -1,73 +1,141 @@
 <template>
-  <div id="app">
+  <!--<div id="app">-->
     <v-app id="inspire">
       <v-form
           ref="form"
           v-model="valid"
           lazy-validation
       >
-        <v-text-field
-            v-model="name"
-            :counter="10"
-            :rules="nameRules"
-            label="Name"
-            required
-        ></v-text-field>
+        <v-container
+            style = "width:50%"
+          >
+          <v-row>
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="firstname"
+                  :rules="nameRules"
+                  label="First name"
+                  required
+              ></v-text-field>
+            </v-col>
 
-        <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-        ></v-text-field>
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="middlename"
+                  :rules="nameRules"
+                  label="Middle name"
 
-        <v-select
-            v-model="select"
-            :items="items"
-            :rules="[v => !!v || 'Item is required']"
-            label="Item"
-            required
-        ></v-select>
+              ></v-text-field>
+            </v-col>
 
-        <v-checkbox
-            v-model="checkbox"
-            :rules="[v => !!v || 'You must agree to continue!']"
-            label="Do you agree?"
-            required
-        ></v-checkbox>
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="lastname"
+                  :rules="nameRules"
+                  label="Last name"
+                  required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row align="center">
+            <v-col
+                  class="d-flex"
+                  cols="12"
+                  sm="6"
+              >
+                <v-select
+                    :items="title"
+                    label="Title"
+                ></v-select>
+              </v-col>
+            <v-col
+                class="d-flex"
+                cols="12"
+                sm="6"
+            >
+              <v-select
+                  :items="degree"
+                  label="Highest Degree Earned"
+              ></v-select>
+            </v-col>
 
-        <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="validate"
-        >
-          Validate
-        </v-btn>
+          </v-row>
+          <v-row>
+            <v-col
 
-        <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-        >
-          Reset Form
-        </v-btn>
+            >
+              <v-text-field
+                  v-model="email"
+                  :rules="emailRules"
+                  label="E-mail"
+                  required
+              ></v-text-field>
+            </v-col>
 
-        <v-btn
-            color="warning"
-            @click="resetValidation"
-        >
-          Reset Validation
-        </v-btn>
+            <v-col
+
+                >
+              <v-btn
+                  style="float:right"
+                  :disabled="!valid"
+                  color="amber"
+                  class="mr-4"
+                  @click="validate"
+                  type="submit"
+
+              >
+                Submit
+              </v-btn>
+            </v-col>
+          </v-row>
+
+        </v-container>
+
+
+
+
       </v-form>
     </v-app>
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
 export default {
-name: "JudgeRegistration"
+  name: "JudgeRegistration",
+  data: () => ({
+    title:['Mr.', 'Mrs.', 'Miss', 'Dr.'],
+    degree:['High School Diploma','Some College','Associates Degree','Bachelors Degree','Masters','PhD'],
+    valid: false,
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => v.length <= 20 || 'Name must be less than 20 characters',
+    ],
+    email: '',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+/.test(v) || 'E-mail must be valid',
+    ],
+
+  }),
+  methods: {
+    validate() {
+      this.$refs.form.validate()
+    },
+  },
 }
+
 </script>
 
 <style scoped>
