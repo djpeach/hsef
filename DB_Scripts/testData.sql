@@ -8,14 +8,14 @@ INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (6, 
 INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (7, 'Ethan', 'Netsch', 'male', 'active', 'enetsch@iu.edu'); # 6
 INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (8, 'Robert', 'Yost', 'male', 'active', 'ryost@iupui.edu'); # 6
 
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (1, '$2y$10$EEhxG.T6J7nCu5ieTllTsuvvOdF606zuGfZdur/RcTvfxpg/vxZfW', 1);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (2, '$2y$10$oDxFkCtEjgAmJb7VQrpJTeq6DU5ICU1O3xBl1uWyteAh2ngusNns6', 2);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (3, '$2y$10$QEGvUI8tmr8JiBvqd6BRfel4QlSGJNadsEmtVnm5rfILLIEg0CMUi', 3);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (4, '$2y$10$PP7DCm/dqE7fPjRYyPyjDeMzuBB7hG6LDdw8v0d5ypbIyfDRXv/HC', 4);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (5, '$2y$10$qPYniUF.xnAqQLS0c9hRLeyrCURFfQ/fBS2foss9BBB88sxFNQVRC', 5);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (6, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 6);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (7, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 7);
-INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (8, '$2y$10$FvhE/RIh5WAvzsydAj0mte8U6e3dDogK6SP.dY/PuvuG6E9k3KvWS', 8);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (1, 'qwerty', 1);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (2, 'qwerty', 2);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (3, 'qwerty', 3);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (4, 'qwerty', 4);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (5, 'qwerty', 5);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (6, 'qwerty', 6);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (7, 'qwerty', 7);
+INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (8, 'qwerty', 8);
 
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 1);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 1);
