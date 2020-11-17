@@ -3,54 +3,55 @@
     <v-row align="center"
       justify="space-around">
       <v-col>
-        <form @submit.prevent="filename = ''">
         <v-file-input
             color = "gray"
             accept="csv/*"
-            label="File input"
-            v-model="filename"
+            label="Upload the CSV"
+            v-model="file"
         ></v-file-input>
-        </form>
       </v-col>
     </v-row>
-
-    <v-row align="center"
-      justify="space-around">
+    <v-row>
       <v-col>
-        <!--<form method="get" action="client/src/assets/studentBulkUpload.xls">
-          <v-btn type="submit">Sample CSV Download</v-btn>
-        </form>
-        <a href='client/src/assets/studentBulkUpload.xls' target="_blank">Download</a>-->
         <a style="text-decoration-line: none" :href="studentBulkUpload" download="studentBulkUpload.xls">
           <v-btn>Sample CSV Download</v-btn>
         </a>
-          <!--<a style="text-decoration-line: none" href="client/src/assets/studentBulkUpload.xls" download>
-
-          </a>-->
       </v-col>
-      <v-spacer> </v-spacer>
       <v-col>
-        <form action="uploadCSV.php" method="post">
-          <v-btn color = "amber" style="float: right" class="submit" depressed>
-            Upload
-          </v-btn>
-        </form>
+        <v-btn style="float: right" type="button" @click="uploadFile()" class="submit" color="amber" depressed>
+          Upload
+        </v-btn>
       </v-col>
-      
     </v-row>
   </v-container>   
 
 </template>
 
 <script>
-import studentBulkUpload from "@/assets/studentBulkUpload.xls";
+import axios from 'axios'
+import studentBulkUpload from "@/assets/studentBulkUpload.csv";
 
 export default {
   name: 'UploadCSV',
   data: () => ({
-    filename: '',
-    //studentBulkUploadLocation: studentBulkUpload
-    studentBulkUpload
+    file: undefined,
+    studentBulkUpload,
   }),
+  methods: {
+     uploadFile: function(){
+       console.log(this.file)
+       const formData = new FormData();
+       formData.append('csv', this.file);
+       axios.post('/create/studentBulk', formData, {
+         headers: {
+           'Content-Type': 'multipart/form-data'
+         }
+       }).then(res => {
+         console.log(res)
+       }).catch(err => {
+         console.log(err)
+       })
+     }
+   }
 }
 </script>

@@ -10,9 +10,9 @@ class DB {
   private function __construct() {
     try {
       $host = '127.0.0.1';
-      $db   = 'harris16_db';
-      $user = 'ashleyharris';
-      $pass = 'qwerty';
+      $db   = getenv('DB_USERNAME').'_db';
+      $user = getenv('DB_USERNAME');
+      $pass = getenv('DB_PWD');
       $charset = 'utf8mb4';
 
       $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -25,7 +25,7 @@ class DB {
       self::$instance = new PDO($dsn, $user, $pass, $options);
     } catch (\PDOException $e) {
       // TODO: list admin email, or auto-send email.
-      throw new DatabaseError("Could not connect to ".getenv('DB_USERNAME')."_db using username: ".getenv('DB_USERNAME')." and pwd: ".getenv('DB_PWD'), 503);
+      throw new DatabaseError("Could not connect to database", 503);
     }
   }
 
