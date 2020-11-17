@@ -22,13 +22,8 @@
           Upload
         </v-btn>
       </v-col>
-      <v-col>
-        
-      </v-col>
     </v-row>
   </v-container>
-
-  
 
 </template>
 
