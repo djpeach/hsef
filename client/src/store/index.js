@@ -18,7 +18,7 @@ const clearedState = {
   // tables
   students: [],
   projects: [],
-  activeJudges: [],
+  judges: [],
   pendingJudges: [],
   invitedJudges: [],
   schools: [],
@@ -61,6 +61,9 @@ const mutations = {
   },
   UPDATE_JUDGES(state, judges) {
     state.judges = judges;
+  },
+  UPDATE_PENDING_JUDGES(state, judges) {
+    state.pendingJudges = judges;
   },
   /* pending Judges */
   /* invited Judges */
@@ -162,7 +165,7 @@ const actions = {
   async generateSchedules(ctx) {
     return Vue.http.post('create/generate-schedules');
   },
-  async refreshRegisteredJudges({ commit }) {
+  async refreshPendingJudges({ commit }) {
     const {
       body: { results: judges },
     } = await Vue.http.get('list/judges', {
@@ -171,7 +174,7 @@ const actions = {
       },
     });
     if (judges) {
-      commit('UPDATE_JUDGES', judges);
+      commit('UPDATE_PENDING_JUDGES', judges);
     } else {
       throw new Error('No Judges found');
     }
