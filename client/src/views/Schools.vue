@@ -49,7 +49,7 @@
                     <v-container>
                       <v-row>
                         <v-col
-                          cols="12"
+                            cols="12"
                         >
                           <v-text-field
                               v-model="editedSchool.name"
@@ -97,10 +97,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">School Id:</span> {{ item.schoolId }}
+                    <span class="font-weight-bold">School Id:</span>
+                    {{ item.schoolId }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">County:</span> {{ item.county.name }}
+                    <span class="font-weight-bold">County:</span>
+                    {{ item.county.name }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -113,16 +115,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'Schools',
   data: () => ({
     headers: [
-      { text: 'School Name', value: 'name' },
-      { text: 'County', value: 'county.name' },
+      {text: 'School Name', value: 'name'},
+      {text: 'County', value: 'county.name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -136,9 +138,9 @@ export default {
   computed: {
     ...mapState({
       schools: state => state.schools,
-      counties: state => state.counties.map(county => ({ text: county.name, value: county.countyId })),
+      counties: state => state.counties.map(county => ({text: county.name, value: county.countyId})),
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -154,12 +156,12 @@ export default {
       refreshSchools: 'refreshSchools',
       refreshCounties: 'refreshCounties',
     }),
-    editSchool (item) {
+    editSchool(item) {
       this.editedIndex = this.schools.indexOf(item)
-      this.editedSchool = { name: item.name, countyId: item.county.id }
+      this.editedSchool = {name: item.name, countyId: item.county.id}
       this.formDialog = true
     },
-    deleteSchool (item) {
+    deleteSchool(item) {
       this.editedIndex = this.schools.indexOf(item)
       this.editedSchool = Object.assign({}, item)
       this.dialogDelete = true

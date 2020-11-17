@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li
-      v-for="student in students"
+        v-for="student in students"
     >
       {{ student.user.firstName }}
     </li>
@@ -9,13 +9,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'TempStudents',
-  data: () => ({
-
-  }),
+  data: () => ({}),
   computed: {
     ...mapState({
       booths: state => state.booths

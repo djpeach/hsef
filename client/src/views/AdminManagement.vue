@@ -23,11 +23,11 @@
               <v-dialog v-model="formDialog" max-width="500px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="amber"
-                    dark
-                    class="mb-2"
-                    v-bind="attrs"
-                    v-on="on"
+                      color="amber"
+                      dark
+                      class="mb-2"
+                      v-bind="attrs"
+                      v-on="on"
                   >
                     New Admin
                   </v-btn>
@@ -40,12 +40,12 @@
                     <v-container>
                       <v-row>
                         <v-col
-                          cols="12"
-                          sm="5"
+                            cols="12"
+                            sm="5"
                         >
                           <v-text-field
-                            v-model="editedAdmin.firstName"
-                            label="First Name *"
+                              v-model="editedAdmin.firstName"
+                              label="First Name *"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -96,9 +96,9 @@
                             cols="12"
                         >
                           <v-select
-                            :items="[{text: 'Male', value: 'male'},{text: 'Female', value: 'female'},{text: 'Other', value: 'other'}]"
-                            v-model="editedAdmin.gender"
-                            label="Gender"
+                              :items="[{text: 'Male', value: 'male'},{text: 'Female', value: 'female'},{text: 'Other', value: 'other'}]"
+                              v-model="editedAdmin.gender"
+                              label="Gender"
                           ></v-select>
                         </v-col>
                       </v-row>
@@ -109,7 +109,7 @@
             </v-toolbar>
           </template>
           <template v-slot:item.email="{ item }">
-            <a :href="`mailto:${item.email}`">{{item.email}}</a>
+            <a :href="`mailto:${item.email}`">{{ item.email }}</a>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -136,18 +136,22 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Email:</span> {{ item.email }}
+                    <span class="font-weight-bold">Email:</span>
+                    {{ item.email }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Gender:</span> {{ item.gender }}
+                    <span class="font-weight-bold">Gender:</span>
+                    {{ item.gender }}
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Title:</span> {{ item.title }}
+                    <span class="font-weight-bold">Title:</span>
+                    {{ item.title }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Highest Degree:</span> {{ item.highestDegree }}
+                    <span class="font-weight-bold">Highest Degree:</span>
+                    {{ item.highestDegree }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -165,12 +169,12 @@ import axios from 'axios';
 export default {
   name: 'AdminManagement',
   data: () => ({
-    headers : [
+    headers: [
       {text: 'FirstName', value: 'firstName'},
       {text: 'LastName', value: 'lastName'},
       {text: 'Email', value: 'email'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     admins: [],
     loading: false,
@@ -198,14 +202,17 @@ export default {
       },
       deep: true,
     },
-    formDialog: (val) => {
+    formDialog(val) {
       if (val === false) {
         this.editedIndex = -1;
+        for (const key in this.editedAdmin) {
+          this.editedAdmin[key] = '';
+        }
       }
     }
   },
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     }
   },
@@ -213,7 +220,7 @@ export default {
     fetchAdmins() {
       if (this.loading) return;
       this.loading = true;
-      const { page, itemsPerPage } = this.options;
+      const {page, itemsPerPage} = this.options;
       axios.get('/list/admins', {
         params: {
           year: 2020,
@@ -230,19 +237,19 @@ export default {
         this.loading = false;
       })
     },
-    editAdmin (admin) {
+    editAdmin(admin) {
       this.editedIndex = this.admins.indexOf(admin)
       this.editedAdmin = Object.assign({}, admin)
       this.formDialog = true
     },
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.admins.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     }
   },
   filters: {
-    fullname: (val) => {
+    fullName: (val) => {
       let name = `${val.firstName} ${val.lastName}`;
       name += val.suffix ? ` ${val.suffix}` : ``;
       return name;

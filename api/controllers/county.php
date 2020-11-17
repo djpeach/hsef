@@ -5,7 +5,7 @@ function createNewCounty(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $county = valueOrError($reqBody->county, new BadRequest("You must provide a county object on the request body"));
+    $county = valueOrError($reqBody['county'], new BadRequest("You must provide a county object on the request body"));
     $resBody = [];
 
     // Additional request parameter validation if needed

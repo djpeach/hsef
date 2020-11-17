@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'lodash';
 
 import api from '@/store/apiRoutes';
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
@@ -18,7 +19,7 @@ const clearedState = {
   // tables
   students: [],
   projects: [],
-  activeJudges: [],
+  judges: [],
   pendingJudges: [],
   invitedJudges: [],
   schools: [],
@@ -29,7 +30,7 @@ const clearedState = {
   gradeLevels: [],
 };
 
-const state = {}
+const state = {};
 for (const [key, value] of Object.entries(clearedState)) {
   state[key] = value;
 }
@@ -49,7 +50,7 @@ const mutations = {
     state.admins = admins;
   },
   UPDATE_JUDGE_SCHEDULE(state, judgeSchedule) {
-    state.judgeSchedule = judgeSchedule.map(s => ({...s, dialog: false}));
+    state.judgeSchedule = judgeSchedule.map((s) => ({ ...s, dialog: false }));
   },
 
   UPDATE_STUDENTS(state, students) {
@@ -61,6 +62,9 @@ const mutations = {
   },
   UPDATE_JUDGES(state, judges) {
     state.judges = judges;
+  },
+  UPDATE_PENDING_JUDGES(state, judges) {
+    state.pendingJudges = judges;
   },
   /* pending Judges */
   /* invited Judges */
@@ -83,15 +87,22 @@ const mutations = {
   UPDATE_IDS(state, ids) {
     state.userId = ids.userId;
     state.operatorId = ids.operatorId;
-  }
+  },
 };
 
 const actions = {
-  async saveScore(ctx, { score, id }) {
-    await Vue.http.put(`update/sessions/${id}`, { score })
+  // create
+  async registerJudge(ctx, data) {
+    return Vue.http.post(`create/judges/public`, data);
+  },
+  async resetPwd(ctx, { email }) {
+    return Vue.http.post(`create/pwdReset`, { email });
   },
   async login({ commit, dispatch }, { email, password }) {
-    const { body: data } = await Vue.http.post(api.auth.login, { email, password });
+    const { body: data } = await Vue.http.post(api.auth.login, {
+      email,
+      password,
+    });
     commit('UPDATE_IDS', data);
     commit('UPDATE_AUTH_STATUS', true);
   },
@@ -100,6 +111,55 @@ const actions = {
     await commit('RESET_DATA');
     return res;
   },
+  async createJudge(ctx, data) {
+    return Vue.http.post(`create/judges/newUser`, data);
+  },
+  async createAdmin(ctx, data) {
+    return Vue.http.post(`create/admins/newUser`, data);
+  },
+  async createSchool(ctx, data) {
+    return Vue.http.post(`create/schools`, data);
+  },
+  async createStudent(ctx, data) {
+    return Vue.http.post(`create/students`, data);
+  },
+
+  // update
+  async approveJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${operatorId}/approve`);
+  },
+  async denyJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${operatorId}/deny`);
+  },
+  async resetPwdSubmit(ctx, { key, pwd }) {
+    return Vue.http.put(`update/pwdReset`, { key, pwd });
+  },
+  async saveScore(ctx, { score, id }) {
+    await Vue.http.put(`update/sessions/${id}`, { score });
+  },
+  async updateJudge(ctx, data) {
+    const { operatorId, ...rest } = data;
+    const reqBody = {
+      user: _.pick(rest, ['firstName', 'lastName', 'email']),
+      operator: _.pick(rest, ['title', 'highestDegree', 'employer']),
+      authAccount: _.pick(rest, ['passwordHash']),
+    }
+    return Vue.http.put(`update/judges/${operatorId}`, reqBody);
+  },
+  async updateAdmin(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.put(`update/admins/${operatorId}`, rest);
+  },
+  async updateSchool(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.put(`update/schools/${operatorId}`, rest);
+  },
+  async updateStudent(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.put(`update/students/${operatorId}`, rest);
+  },
+
+  // lists
   async refreshAdmins({ commit }, { limit, offset }) {
     const {
       body: { results: admins },
@@ -107,15 +167,17 @@ const actions = {
     if (admins) {
       commit('UPDATE_ADMINS', admins);
     } else {
-      throw new Error("No admins found")
+      throw new Error('No admins found');
     }
   },
-  /* CANT FIND THE URL FOR SESSIONS */
   async refreshJudgeSchedule({ commit, state }) {
     const {
       body: { sessions: judgeSchedule },
     } = await Vue.http.get(`read/judges/${state.operatorId}/schedule`);
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
+  },
+  async getJudgeScheduleByOpId(ctx, { operatorId }) {
+    return Vue.http.get(`read/judges/${operatorId}/schedule`);
   },
   async refreshStudents({ commit }) {
     const {
@@ -124,7 +186,7 @@ const actions = {
     if (students) {
       commit('UPDATE_STUDENTS', students);
     } else {
-      throw new Error("No students found")
+      throw new Error('No students found');
     }
   },
   async refreshProjects({ commit }) {
@@ -134,7 +196,7 @@ const actions = {
     if (projects) {
       commit('UPDATE_PROJECTS', projects);
     } else {
-      throw new Error("No projects found")
+      throw new Error('No projects found');
     }
   },
   async refreshJudges({ commit }) {
@@ -144,11 +206,35 @@ const actions = {
     if (judges) {
       commit('UPDATE_JUDGES', judges);
     } else {
-      throw new Error("No Judges found")
+      throw new Error('No Judges found');
     }
   },
-  /* pending Judges */
-  /* invited Judges */
+  async generateSchedules(ctx) {
+    return Vue.http.post('create/generate-schedules');
+  },
+  async refreshPendingJudges({ commit }) {
+    try {
+      const {
+        body: { results: judges },
+      } = await Vue.http.get('list/judges', {
+        params: {
+          status: 'registered',
+        },
+      });
+      if (judges) {
+        commit('UPDATE_PENDING_JUDGES', judges);
+      } else {
+        commit('UPDATE_PENDING_JUDGES', []);
+      }
+    } catch (e) {
+      // no pending judges found is not an error
+      if (e.body.error !== "UserNotFound") {
+        throw e;
+      } else {
+        commit('UPDATE_PENDING_JUDGES', []);
+      }
+    }
+  },
   async refreshSchools({ commit }) {
     const {
       body: { results: schools },
@@ -156,7 +242,7 @@ const actions = {
     if (schools) {
       commit('UPDATE_SCHOOLS', schools);
     } else {
-      throw new Error("No schools found")
+      throw new Error('No schools found');
     }
   },
   async refreshCategories({ commit }) {
@@ -166,10 +252,9 @@ const actions = {
     if (categories) {
       commit('UPDATE_CATEGORIES', categories);
     } else {
-      throw new Error("No categories found")
+      throw new Error('No categories found');
     }
   },
-  /* scores */
   async refreshBooths({ commit }) {
     const {
       body: { results: booths },
@@ -177,7 +262,7 @@ const actions = {
     if (booths) {
       commit('UPDATE_BOOTHS', booths);
     } else {
-      throw new Error("No booths found")
+      throw new Error('No booths found');
     }
   },
   async refreshCounties({ commit }) {
@@ -187,7 +272,7 @@ const actions = {
     if (counties) {
       commit('UPDATE_COUNTIES', counties);
     } else {
-      throw new Error("No counties found")
+      throw new Error('No counties found');
     }
   },
   async refreshGradeLevels({ commit }) {
@@ -197,15 +282,17 @@ const actions = {
     if (gradeLevels) {
       commit('UPDATE_GRADE_LEVELS', gradeLevels);
     } else {
-      throw new Error("No gradeLevels found")
+      throw new Error('No gradeLevels found');
     }
   },
 };
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({
-    storage: window.sessionStorage
-  })],
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   state,
   actions,
   mutations,

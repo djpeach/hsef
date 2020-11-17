@@ -5,7 +5,7 @@ function createNewProject(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $project = valueOrError($reqBody->project, new BadRequest("You must provide a project object on the request body"));
+    $project = valueOrError($reqBody["project"], new BadRequest("You must provide a project object on the request body"));
     $resBody = [];
 
     // Additional request parameter validation if needed

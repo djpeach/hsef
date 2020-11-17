@@ -1,10 +1,12 @@
 <template>
   <v-container>
+
     <v-col>
       <h2>Event Management</h2>
     </v-col>
+
     <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -18,12 +20,12 @@
             fas fa-gavel p-5
           </v-icon>
           <v-card-title class="amber--text">
-              Judges
+            Judges
           </v-card-title>
         </v-card>
       </v-col>
-        <!-- Card 2 -->
-      <v-col>
+      <!-- Card 2 -->
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -41,7 +43,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -58,10 +60,8 @@
           </v-card-title>
         </v-card>
       </v-col>
-    </v-row>
     <!-- row 2-->
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -80,7 +80,7 @@
         </v-card>
       </v-col>
       <!-- Card 2 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -98,7 +98,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -115,10 +115,8 @@
           </v-card-title>
         </v-card>
       </v-col>
-    </v-row>
     <!-- row 3-->
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -137,7 +135,7 @@
         </v-card>
       </v-col>
       <!-- Card 2 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -155,7 +153,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -175,6 +173,28 @@
     </v-row>
     <v-spacer></v-spacer>
     <v-col>
+      <v-row v-if="scheduleGenerationError">
+        <v-col>
+          <v-alert
+              dense
+              outlined
+              type="error"
+          >
+            {{ scheduleGenerationError }}
+          </v-alert>
+        </v-col>
+      </v-row>
+      <v-row v-else-if="scheduleGenerationSuccess">
+        <v-col>
+          <v-alert
+              dense
+              outlined
+              type="success"
+          >
+            {{ scheduleGenerationSuccess }}
+          </v-alert>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-btn
             class="ma-2"
@@ -182,7 +202,7 @@
             :loading="loading"
             :disabled="loading"
             color="amber"
-            @click="loader = 'loading'"
+            @click="generateSchedulesClicked"
         >
           Generate Judge Schedule
         </v-btn>
@@ -193,24 +213,33 @@
 
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'EventManagement',
-  data () {
+  data() {
     return {
-      loader: null,
       loading: false,
-
+      scheduleGenerationSuccess: '',
+      scheduleGenerationError: '',
     }
   },
-  watch: {
-    loader () {
-      const l = this.loader
-      this[l] = !this[l]
-
-      setTimeout(() => (this[l] = false), 1500)
-
-      this.loader = null
+  methods: {
+    generateSchedulesClicked() {
+      this.loading = true;
+      this.generateSchedules().then(() => {
+        this.scheduleGenerationError = '';
+        this.scheduleGenerationSuccess = 'Judge schedules successfully generated. Go to the judge table to view each judge\'s schedule';
+      }).catch(err => {
+        this.scheduleGenerationSuccess = '';
+        this.scheduleGenerationError = !!err.body ? err.body.message : ( !!err.message ? err.message : err);
+      }).finally(() => {
+        this.loading = false;
+      })
     },
-  },
+    ...mapActions({
+      generateSchedules: 'generateSchedules'
+    })
+  }
 }
 </script>

@@ -4,12 +4,12 @@
 function createAdminFromExisting($app) {
   return function() use ($app) {
     $reqBody = $app->req->jsonBody();
-    $operator = valueOrDefault($reqBody->operator, new EmptyObject());
+    $operator = valueOrDefault($reqBody["operator"], new EmptyObject());
     $resBody = [];
 
     $sql = DB::get()->prepare("REPLACE INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
     execOrError($sql->execute([
-      valueOrError($reqBody->userId, new BadRequest("You must provide a userId on the request body"))
+      valueOrError($reqBody["userId"], new BadRequest("You must provide a userId on the request body"))
     ]), new DatabaseError("Error when trying to replace user year record"));
 
     echo "Still in dev";
@@ -20,8 +20,8 @@ function createNewAdmin(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = valueOrError($reqBody->user, new BadRequest("You must provide a user object on the request body"));
-    $operator = valueOrDefault($reqBody->operator, new EmptyObject());
+    $user = valueOrError($reqBody["user"], new BadRequest("You must provide a user object on the request body"));
+    $operator = valueOrDefault($reqBody["operator"], new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed

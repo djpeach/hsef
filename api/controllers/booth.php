@@ -5,7 +5,7 @@ function createNewBooth(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $booth = valueOrError($reqBody->booth, new BadRequest("You must provide a booth object on the request body"));
+    $booth = valueOrError($reqBody['booth'], new BadRequest("You must provide a booth object on the request body"));
     $resBody = [];
 
     // Additional request parameter validation if needed

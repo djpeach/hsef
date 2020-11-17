@@ -52,8 +52,16 @@
                             cols="12"
                         >
                           <v-text-field
-                              v-model="editedStudent.name"
-                              label="Name *"
+                              v-model="editedStudent.firstName"
+                              label="First  Name *"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-text-field
+                              v-model="editedStudent.lastName"
+                              label="Last Name *"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -110,21 +118,25 @@
               <v-container>
                 <v-row>
                   <v-col class="headline">
-                    {{ item.name }}
+                    {{ item.firstName }} {{ item.lastName}}
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Student Id:</span> {{ item.studentId }}
+                    <span class="font-weight-bold">Student Id:</span>
+                    {{ item.studentId }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">School:</span> {{ item.school.name }}
+                    <span class="font-weight-bold">School:</span>
+                    {{ item.school.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Project:</span> {{ item.projectName }}
+                    <span class="font-weight-bold">Project:</span>
+                    {{ item.project.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Grade Level:</span> {{ item.gradeLevel.name }}
+                    <span class="font-weight-bold">Grade Level:</span>
+                    {{ item.gradeLevel.name }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -137,46 +149,55 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'Students',
   data: () => ({
     headers: [
-      { text: 'Student Name', value: 'name' },
-      { text: 'School', value: 'school.name' },
-      { text: 'Project', value: 'project.name' },
+      {text: 'FirstName', value: 'firstName'},
+      {text: 'LastName', value: 'lastName'},
+      {text: 'School', value: 'school.name'},
+      {text: 'Project', value: 'project.name'},
       {text: 'GradeLevel', value: 'gradeLevel.name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
     editedIndex: -1,
     editedStudent: {
-      name: '',
+      firstName: '',
+      lastName: '',
       studentId: '',
       projectName: '',
+      gradeLevel: '',
     },
     err: null
   }),
   computed: {
     ...mapState({
       students: state => state.students,
-      schools: state => state.schools.map(school => ({ text: school.name, value: school.schoolId })),
+      schools: state => state.schools.map(school => ({text: school.name, value: school.schoolId})),
       projects: state => state.projects.map(project => ({text: project.name, value: project.projectId})),
-      gradeLevel: state => state.gradeLevels.map(gradeLevel => ({text: gradeLevel.name, value: gradeLevel.gradeLevelId})),
+      gradeLevel: state => state.gradeLevels.map(gradeLevel => ({
+        text: gradeLevel.name,
+        value: gradeLevel.gradeLevelId
+      })),
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
   watch: {
-    formDialog: (val) => {
+    formDialog(val){
       if (val === false) {
         this.editedIndex = -1;
+        for (const key in this.editedStudent) {
+          this.editedStudent[key] = '';
+        }
       }
-    },
+    }
   },
   methods: {
     ...mapActions({
@@ -185,15 +206,29 @@ export default {
       refreshProjects: 'refreshProjects',
       refreshGradeLevels: 'refreshGradeLevels',
     }),
-    editStudent (item) {
+    editStudent(item) {
+
       this.editedIndex = this.students.indexOf(item)
-      this.editedStudent = { name: item.name, schoolId: item.school.id, projectId: item.project.id, gradeLevelId:  item.gradeLevel.id  }
+      this.editedStudent = {
+        firstName: item.firstName,
+        lastName: item.lastName,
+        schoolId: item.school.id,
+        projectId: item.project.id,
+        gradeLevelId: item.gradeLevel.id
+      }
       this.formDialog = true
     },
-    deleteStudent (item) {
+    deleteStudent(item) {
       this.editedIndex = this.students.indexOf(item)
       this.editedStudent = Object.assign({}, item)
       this.dialogDelete = true
+    }
+  },
+  filters: {
+    fullName: (val) => {
+      let name = `${val.firstName} ${val.lastName}`;
+      name += val.suffix ? ` ${val.suffix}` : ``;
+      return name;
     }
   },
   mounted() {

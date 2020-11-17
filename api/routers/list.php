@@ -14,12 +14,6 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of admins
      *
-     * @apiUse ListFields
-     * @apiParam {Number{4}} [year]
-     * @apiParam {String=active,registered,invited,archived} [status=active]
-     * @apiParam {String} [t] the search term to look up admins by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results
      * @apiSuccess {Number} results.operatorId
      * @apiSuccess {Number} results.userId
@@ -31,26 +25,6 @@ function listRouter($app) {
      * @apiSuccess {String} [results.title]
      * @apiSuccess {String} [results.highestDegree]
      * @apiSuccess {String} [results.employer]
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/admins`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    year: 2020,
-     *    status: 'active'
-     *    t: 'Da'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/admins', listAdmins($app));
 
@@ -61,12 +35,6 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of users which can be made into an admin
      *
-     * @apiUse ListFields
-     * @apiParam {Number{4}} [year=date("Y")]
-     * @apiParam {String=active,registered,invited,archived} [status=active]
-     * @apiParam {String} [t] the search term to look up admins by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results
      * @apiSuccess {Number} results.operatorId
      * @apiSuccess {Number} results.userId
@@ -78,26 +46,6 @@ function listRouter($app) {
      * @apiSuccess {String} [results.title]
      * @apiSuccess {String} [results.highestDegree]
      * @apiSuccess {String} [results.employer]
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/admins/potential`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    year: 2020,
-     *    status: 'active'
-     *    t: 'Da'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/admins/potential', listPotentialAdmins($app));
 
@@ -108,12 +56,8 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of judges
      *
-     * @apiUse ListFields
-     * @apiParam {Number{4}} [year=date("Y")]
      * @apiParam {String=active,registered,invited,archived} [status=active]
-     * @apiParam {String} [t] the search term to look up admins by name
      *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results
      * @apiSuccess {Number} results.operatorId
      * @apiSuccess {String} [results.title]
@@ -127,32 +71,13 @@ function listRouter($app) {
      * @apiSuccess {String=active,registered,invited,archived} results.status
      * @apiSuccess {Boolean} results.checkedIn This will return <code>0</code> for false and <code>1</code> for true
      * @apiSuccess {String} results.email
+     * @apiSuccess {String} results.passwordHash
      * @apiSuccess {Object[]} [results.categoryPreferences] A list of categories the judge prefers to be matched with
      * @apiSuccess {Number} results.categoryPreferences.id
      * @apiSuccess {String} results.categoryPreferences.name
      * @apiSuccess {Object[]} [results.gradeLevelPreferences] A list of gradeLevels the judge prefers to be matched with
      * @apiSuccess {Number} results.gradeLevelPreferences.id
      * @apiSuccess {String} results.gradeLevelPreferences.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/judges`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    year: 2020,
-     *    status: 'active'
-     *    t: 'Da'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/judges', listJudges($app));
 
@@ -163,12 +88,6 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of users which can be made into an judge
      *
-     * @apiUse ListFields
-     * @apiParam {Number{4}} [year=date("Y")]
-     * @apiParam {String=active,registered,invited,archived} [status=active]
-     * @apiParam {String} [t] the search term to look up judges by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results
      * @apiSuccess {Number} results.operatorId
      * @apiSuccess {Number} results.userId
@@ -180,26 +99,6 @@ function listRouter($app) {
      * @apiSuccess {String} [results.title]
      * @apiSuccess {String} [results.highestDegree]
      * @apiSuccess {String} [results.employer]
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/admins/potential`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    year: 2020,
-     *    status: 'active'
-     *    t: 'Da'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/judges/potential', listPotentialJudges($app));
 
@@ -210,15 +109,6 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of judges
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up judges by name
-     * @apiParam {String=active,registered,invited,archived} [status=active]
-     * @apiParam {Number{4}} [year=date("Y")]
-     * @apiParam {Number} [schoolId]
-     * @apiParam {Number} [projectId]
-     * @apiParam {Number} [gradeLevelId]
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of student objects
      * @apiSuccess {Number} results.studentId
      * @apiSuccess {Object} results.user
@@ -236,29 +126,6 @@ function listRouter($app) {
      * @apiSuccess {Object} [results.gradeLevel]
      * @apiSuccess {Number} results.gradeLevel.id
      * @apiSuccess {String} results.gradeLevel.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/judges`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    year: 2020,
-     *    status: 'active'
-     *    t: 'Da',
-     *    schoolId: 12,
-     *    projectId: 42,
-     *    gradeLevelId: 9,
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/students', listStudents($app));
 
@@ -269,34 +136,12 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of schools
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up schools by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of school objects
      * @apiSuccess {Number} results.schoolId
      * @apiSuccess {String} results.name
      * @apiSuccess {Object} [results.county]
      * @apiSuccess {Number} results.county.id
      * @apiSuccess {String} results.county.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/schools`, {
-     *  params: {
-     *    limit: 2,
-     *    offset: 4,
-     *    t: 'Da'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/schools', listSchools($app));
 
@@ -307,29 +152,9 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of counties
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up counties by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of county objects
      * @apiSuccess {Number} results.countyId
      * @apiSuccess {String} results.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/counties`, {
-     *  params: {
-     *    t: 'Ma'
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/counties', listCounties($app));
 
@@ -340,10 +165,6 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of projects
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up projects by name
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of project objects
      * @apiSuccess {Number} results.projectId
      * @apiSuccess {String} results.name
@@ -354,25 +175,6 @@ function listRouter($app) {
      * @apiSuccess {Object} [results.category]
      * @apiSuccess {Number} results.category.id
      * @apiSuccess {String} results.category.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/projects`, {
-     *  params: {
-     *    t: 'Ma'
-     *    year: 2020,
-     *    categoryId: 12,
-     *    gradeLevelId: 9
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/projects', listProjects($app));
 
@@ -383,32 +185,10 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of categories
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up categories by name
-     * @apiParam {Boolean} [active] Use if you want to filter only active or inactive
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of category objects
      * @apiSuccess {Number} results.categoryId
      * @apiSuccess {String} results.name
      * @apiSuccess {Boolean} results.active This will be returned as <code>1</code> for true and <code>0</code> for false
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/categories`, {
-     *  params: {
-     *    t: 'Ma',
-     *    active: true
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/categories', listCategories($app));
 
@@ -419,32 +199,10 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of booths
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up booths by name
-     * @apiParam {Boolean} [active] Use if you want to filter only booths or inactive
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of booth objects
      * @apiSuccess {Number} results.boothId
      * @apiSuccess {String} results.name
      * @apiSuccess {Boolean} results.active This will be returned as <code>1</code> for true and <code>0</code> for false
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/booths`, {
-     *  params: {
-     *    t: 'Ma',
-     *    active: true
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/booths', listBooths($app));
 
@@ -455,31 +213,9 @@ function listRouter($app) {
      * @apiVersion 0.1.0
      * @apiDescription Get a list of gradeLevels
      *
-     * @apiUse ListFields
-     * @apiParam {String} [t] the search term to look up gradeLevels by name
-     * @apiParam {Boolean} [active] Use if you want to filter only booths or inactive
-     *
-     * @apiUse ListResults
      * @apiSuccess {Object[]} results A list of gradeLevel objects
      * @apiSuccess {Number} results.gradeLevelId
      * @apiSuccess {String} results.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get(`/list/gradeLevels`, {
-     *  params: {
-     *    t: 'Ma',
-     *    active: true
-     *  }
-     * })
-     * .then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->get('/gradeLevels', listGradeLevels($app));
   };

@@ -5,12 +5,7 @@ require_once 'exceptions.php';
 require_once 'DB.php';
 require_once 'utils.php';
 
-// so we can use __get() unlike stdClass
-class EmptyObject {
-  public function __get($propName) {
-    return null;
-  }
-}
+error_reporting(E_ALL & ~E_NOTICE);
 
 // require needed files
 $directories = [ "middleware", "routers"];

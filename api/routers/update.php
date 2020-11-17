@@ -1,5 +1,9 @@
 <?php
 
+foreach(glob(__DIR__."/../controllers/*.php") as $file) {
+  require_once $file;
+}
+
 function updateRouter($app) {
   return function() use ($app) {
 
@@ -36,68 +40,31 @@ function updateRouter($app) {
      * @apiSuccess {String=active,registered,invited,archived} result.status
      * @apiSuccess {Boolean} result.checkedIn This will return <code>0</code> for false and <code>1</code> for true
      * @apiSuccess {String} result.email
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/admins/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/admins/:id', getAdminByOpId($app));
 
     /**
-     * @api {get} /update/judges/:id Judge by OpId
+     * @api {put} /update/judges/:id Judge by OpId
      * @apiGroup Update
      * @apiName Judge
      * @apiVersion 0.1.0
      * @apiDescription Update judge by OpId
      *
+     * @apiHeader {String} Content-Type=application/json
+     *
      * @apiParam {Number} id The operator id to find the judge with
-     * @apiParam {String} [title]
-     * @apiParam {String} [highestDegree]
-     * @apiParam {String} [employer]
-     * @apiParam {Object} [user]
+     * @apiParam {Object} operator
+     * @apiParam {String} [operator.title]
+     * @apiParam {String} [operator.highestDegree]
+     * @apiParam {String} [operator.employer]
+     * @apiParam {Object} user
      * @apiParam {String} [user.firstName]
      * @apiParam {String} [user.lastName]
-     * @apiParam {String} [user.suffix]
-     * @apiParam {String=male,female,other} [user.gender]
-     * @apiParam {String=active,registered,invited,archived} [user.status]
-     * @apiParam {Boolean} [user.checkedIn]
      * @apiParam {String} [user.email]
-     * @apiParam {Number[]} [categoryPreferenceIds]
-     * @apiParam {Number[]} [gradeLevelPreferenceIds]
-     *
-     * @apiSuccess {Object} result The judge object
-     * @apiSuccess {Number} result.operatorId
-     * @apiSuccess {String} [result.title]
-     * @apiSuccess {String} [result.highestDegree]
-     * @apiSuccess {String} [result.employer]
-     * @apiSuccess {Number} result.userId
-     * @apiSuccess {String} result.firstName
-     * @apiSuccess {String} result.lastName
-     * @apiSuccess {String} [result.suffix]
-     * @apiSuccess {String=male,female,other} [result.gender]
-     * @apiSuccess {String=active,registered,invited,archived} result.status
-     * @apiSuccess {Boolean} result.checkedIn This will return <code>0</code> for false and <code>1</code> for true
-     * @apiSuccess {String} result.email
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/judges/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
+     * @apiParam {Object} authAccount
+     * @apiParam {String} [authAccount.passwordHash]
      */
-    $app->put('/judges/:id', getJudgeByOpId($app));
+    $app->put('/judges/:id', updateJudgeByOpId($app));
 
     /**
      * @api {get} /update/students/:id Student
@@ -141,17 +108,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} [result.gradeLevel]
      * @apiSuccess {Number} result.gradeLevel.id
      * @apiSuccess {String} result.gradeLevel.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse UserNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/students/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/students/:id', function() use ($app) {
       echo 'Update student';
@@ -174,17 +130,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} [result.county]
      * @apiSuccess {Number} result.county.id
      * @apiSuccess {String} result.county.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/students/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/schools/:id', function() use ($app) {
       echo 'Update school';
@@ -203,17 +148,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} result The county object
      * @apiSuccess {Number} result.countyId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/counties/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/counties/:id', function() use ($app) {
       echo 'Update county';
@@ -246,17 +180,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} [result.category]
      * @apiSuccess {Number} result.category.id
      * @apiSuccess {Name} result.category.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/projects/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/projects/:id', function() use ($app) {
       echo 'Update project';
@@ -275,17 +198,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} result The category object
      * @apiSuccess {Number} result.categoryId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/categories/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/categories/:id', function() use ($app) {
       echo 'Update category';
@@ -304,17 +216,6 @@ function updateRouter($app) {
      * @apiSuccess {Object} result The booth object
      * @apiSuccess {Number} result.boothId
      * @apiSuccess {Number} result.number
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/booths/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/booths/:id', function() use ($app) {
       echo 'Update booth';
@@ -333,22 +234,27 @@ function updateRouter($app) {
      * @apiSuccess {Object} result The gradeLevel object
      * @apiSuccess {Number} result.gradeLevelId
      * @apiSuccess {String} result.name
-     *
-     * @apiUse BadRequest
-     * @apiUse DatabaseError
-     * @apiUse ResourceNotFound
-     *
-     * @apiExample {js} Axios Example Usage:
-     * axios.get('/update/gradeLevels/25').then(res => {
-     *  console.log(res);
-     * }).catch(err => {
-     *  console.log(err.response.data);
-     * });
      */
     $app->put('/gradeLevels/:id', function() use ($app) {
       echo 'Update gradeLevel';
     });
 
     $app->put('/sessions/:id', saveScore($app));
+
+    $app->put('/pwdReset', resetPwdEmailSubmit($app));
+
+    $app->put('/judges/:id/approve', approveJudge($app));
+    $app->put('/judges/:id/deny', denyJudge($app));
+
+    /**
+     * @api {put} /update/judges/:id/updateCheckedIn Judge Check in and out
+     * @apiGroup Update
+     * @apiName UpdateJudgeCheckin
+     * @apiVersion 0.1.0
+     * @apiDescription Update the value of a judge's checkedin status
+     *
+     * @apiParam {Boolean} checkedIn
+     */
+    $app->put('/judges/:id/updateCheckedIn', updateCheckedIn($app));
   };
 }

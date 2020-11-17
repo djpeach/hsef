@@ -106,13 +106,16 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Project Id:</span> {{ item.projectId }}
+                    <span class="font-weight-bold">Project Id:</span>
+                    {{ item.projectId }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Booth:</span> {{ item.booth.number }}
+                    <span class="font-weight-bold">Booth:</span>
+                    {{ item.booth.number }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Category:</span> {{ item.category.name }}
+                    <span class="font-weight-bold">Category:</span>
+                    {{ item.category.name }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -125,17 +128,17 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'Projects',
   data: () => ({
     headers: [
-      { text: 'Project Name', value: 'name' },
-      { text: 'Booth', value: 'booth.number' },
-      { text: 'Category', value: 'category.name' },
+      {text: 'Project Name', value: 'name'},
+      {text: 'Booth', value: 'booth.number'},
+      {text: 'Category', value: 'category.name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -149,10 +152,10 @@ export default {
   computed: {
     ...mapState({
       projects: state => state.projects,
-      booths: state => state.booths.map(booth => ({ text: booth.number, value: booth.boothId })),
+      booths: state => state.booths.map(booth => ({text: booth.number, value: booth.boothId})),
       categories: state => state.categories.map(category => ({text: category.name, value: category.categoryId})),
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -169,12 +172,12 @@ export default {
       refreshBooths: 'refreshBooths',
       refreshCategories: 'refreshCategories',
     }),
-    editProject (item) {
+    editProject(item) {
       this.editedIndex = this.projects.indexOf(item)
-      this.editedProject = { number: item.number, boothId: item.booth.id, categoryId: item.category.id }
+      this.editedProject = {number: item.number, boothId: item.booth.id, categoryId: item.category.id}
       this.formDialog = true
     },
-    deleteProject (item) {
+    deleteProject(item) {
       this.editedIndex = this.projects.indexOf(item)
       this.editedProject = Object.assign({}, item)
       this.dialogDelete = true

@@ -2,7 +2,7 @@
 
 function valueOrDefault($el, $default = null) {
 	if (isset($el)) {
-		if (is_string($el) && $el === "") {
+		if (!$el || $el === "") {
 			return $default;
 		}
 		return $el;
@@ -12,7 +12,7 @@ function valueOrDefault($el, $default = null) {
 
 function funcOrDefault($el, $func, $default = null) {
   if (isset($param)) {
-    if (is_string($param) && $param === "") {
+    if (!$el || $param === "") {
       return $default;
     }
     return $func($el);
@@ -22,7 +22,7 @@ function funcOrDefault($el, $func, $default = null) {
 
 function valueOrError($el, $err) {
   if (isset($el)) {
-    if (is_string($el) && $el === "") {
+    if (!$el || $el === "") {
       throw $err;
     }
     return $el;
@@ -55,4 +55,14 @@ function filterNullCamelCaseKeys($el) {
     }
   }
   return $el;
+}
+
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
 }

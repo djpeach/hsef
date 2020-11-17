@@ -88,10 +88,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">GradeLevel:</span> {{ item.name }}
+                    <span class="font-weight-bold">GradeLevel:</span>
+                    {{ item.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">GradeLevel Id:</span> {{ item.gradeLevelId }}
+                    <span class="font-weight-bold">GradeLevel Id:</span>
+                    {{ item.gradeLevelId }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -104,15 +106,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'GradeLevel',
   data: () => ({
     headers: [
-      { text: 'GradeLevel', value: 'name' },
+      {text: 'GradeLevel', value: 'name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -127,7 +129,7 @@ export default {
     ...mapState({
       gradeLevels: state => state.gradeLevels,
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -142,12 +144,12 @@ export default {
     ...mapActions({
       refreshGradeLevels: 'refreshGradeLevels',
     }),
-    editGradeLevel (item) {
+    editGradeLevel(item) {
       this.editedIndex = this.gradeLevels.indexOf(item)
-      this.editedGradeLevel = { name: item.name}
+      this.editedGradeLevel = {name: item.name}
       this.formDialog = true
     },
-    deleteGradeLevel (item) {
+    deleteGradeLevel(item) {
       this.editedIndex = this.gradeLevels.indexOf(item)
       this.editedGradeLevel = Object.assign({}, item)
       this.dialogDelete = true

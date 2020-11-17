@@ -1,4 +1,3 @@
-
 <template>
   <v-container>
     <v-row>
@@ -11,15 +10,16 @@
               color="amber"
               small
               v-for="session in judgeSchedule"
+              :key="session.sessionId"
           >
             <v-row class="pt-1">
               <v-col cols="3">
-                <strong>{{session.startTime}}</strong>
+                <strong>{{ session.startTime }}</strong>
               </v-col>
               <v-col>
-                <strong>{{session.projectName}}</strong>
+                <strong>{{ session.projectName }}</strong>
                 <div class="caption">
-                  @Booth: #{{session.boothNumber}}
+                  @Booth: #{{ session.boothNumber }}
                 </div>
               </v-col>
               <v-col>
@@ -38,7 +38,7 @@
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">{{session.projectName}}</span>
+                      <span class="headline">{{ session.projectName }}</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'JudgeSchedule',
