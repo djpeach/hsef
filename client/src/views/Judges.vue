@@ -20,7 +20,7 @@
             item-key="email"
             :loading="loading"
             :mobile-breakpoint="0"
-            class="elevation-1 mt-8"
+            class="elevation-1 my-8"
             loading-text="Fetching Judges"
             no-data-text="No Judges to show"
             :footer-props="{itemsPerPageOptions: [10, 25, 50]}"
@@ -145,63 +145,14 @@
             item-key="email"
             :loading="pendingLoading"
             :mobile-breakpoint="0"
-            class="elevation-1 mt-8"
-            loading-text="Fetching Judges Pending Approval"
+            class="elevation-1"
+            :loading-text="pendingLoadingMessage"
             no-data-text="No Judges Pending Approval"
             :footer-props="{itemsPerPageOptions: [10, 25, 50]}"
         >
           <template v-slot:top>
             <v-toolbar flat>
               <v-toolbar-title>Judges Pending Approval</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-dialog v-model="formDialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                      color="amber"
-                      dark
-                      class="mb-2"
-                      v-bind="attrs"
-                      v-on="on"
-                  >
-                    New Judges
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">{{ formTitle }}</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col
-                            cols="12"
-                        >
-                          <v-text-field
-                              v-model="editedJudge.firstName"
-                              label="First Name *"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                        >
-                          <v-text-field
-                              v-model="editedJudge.lastName"
-                              label="Last Name *"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                        >
-                          <v-text-field
-                              v-model="editedJudge.email"
-                              label="Email *"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
             </v-toolbar>
           </template>
           <template v-slot:item.actions="{ item }">
@@ -264,6 +215,7 @@ export default {
     ],
     loading: false,
     pendingLoading: false,
+    pendingLoadingMessage: 'Fetching Judges Pending Approval',
     formDialog: false,
     editedIndex: -1,
     pendingJudgeUpdateError: "",
@@ -285,9 +237,12 @@ export default {
     },
   },
   watch: {
-    formDialog: (val) => {
+    formDialog(val) {
       if (val === false) {
         this.editedIndex = -1;
+        for (const key in this.editedJudge) {
+          this.editedJudge[key] = '';
+        }
       }
     },
   },
@@ -313,7 +268,49 @@ export default {
       this.dialogDelete = true
     },
     approveJudgeClicked(item) {
-      this.approveJudge({operatorId: item.operatorId})
+      this.pendingLoading = true;
+      this.pendingLoadingMessage = "Approving judge";
+      this.approveJudge({operatorId: item.operatorId}).then(() => {
+        this.pendingJudgeUpdateError = '';
+        this.pendingJudgeUpdateSuccess = 'Judge Approved!'
+      }).catch(err => {
+        this.pendingJudgeUpdateSuccess = '';
+        this.pendingJudgeUpdateError = 'Failed to approve judge';
+      }).finally(() => {
+        this.reloadPendingJudgesTable();
+        this.reloadJudgesTable();
+      })
+    },
+    denyJudgeClicked(item) {
+      this.pendingLoading = true;
+      this.pendingLoadingMessage = "Denying judge";
+      this.denyJudge({operatorId: item.operatorId}).then(() => {
+        this.pendingJudgeUpdateError = '';
+        this.pendingJudgeUpdateSuccess = 'Judge Denied.'
+      }).catch(err => {
+        console.log(err)
+        this.pendingJudgeUpdateSuccess = '';
+        this.pendingJudgeUpdateError = 'Failed to deny judge';
+      }).finally(() => {
+        this.reloadPendingJudgesTable();
+      })
+    },
+    reloadPendingJudgesTable() {
+      this.pendingLoading = true;
+      this.pendingLoadingMessage = "Fetching Judges Pending Approval";
+      this.refreshPendingJudges().catch(err => {
+        this.pendingJudgeUpdateError = err;
+      }).finally(() => {
+        this.pendingLoading = false;
+      })
+    },
+    reloadJudgesTable() {
+      this.loading = true;
+      this.refreshJudges().catch(err => {
+        this.err = err;
+      }).finally(() => {
+        this.loading = false;
+      })
     },
   },
   filters: {
@@ -324,12 +321,8 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
-    this.refreshJudges().catch(err => {
-      this.err = err;
-    }).finally(() => {
-      this.loading = false;
-    })
+    this.reloadJudgesTable();
+    this.reloadPendingJudgesTable();
   }
 }
 </script>

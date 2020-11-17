@@ -64,13 +64,13 @@ function resetPwdEmail(Slim\Slim $app) {
 </head>
 <body>
   <p>Click the link below to reset your password</p>
-  <a href='http://localhost:8080/pwdReset?k=".$randKey."'>Reset Password</a>
+  <a href='http://corsair.cs.iupui.edu:24631/hsef?page=password-reset&k=".$randKey."'>Reset Password</a>
 </body>
 </html>
 ";
 
     $headers = array("From: webmaster@hsef.org",
-      "Reply-To: webmaster@hsef.org",
+      "Reply-To: djpeach@iu.edu",
       "X-Mailer: PHP/" . PHP_VERSION,
       'Content-type: text/html; charset=iso-8859-1',
       'MIME-Version: 1.0',

@@ -35,7 +35,9 @@ const publicRoutes = [
 ];
 
 function authGuard(to, from, next) {
-  if (!publicRoutes.includes(to.name) && !store.state.isAuthenticated) {
+  if (to.query.page === 'password-reset') {
+    next({ name: 'password-reset', query: { k: to.query.k }})
+  } else if (!publicRoutes.includes(to.name) && !store.state.isAuthenticated) {
     next({name: 'login'});
   } else if (publicOnlyRoutes.includes(to.name) && store.state.isAuthenticated) {
     console.log('go to dashboard')
