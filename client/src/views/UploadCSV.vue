@@ -9,7 +9,16 @@
             label="Upload the CSV"
             v-model="file"
         ></v-file-input>
-        <v-btn type="button" @click="uploadFile()" class="submit" depressed>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <a style="text-decoration-line: none" :href="studentBulkUpload" download="studentBulkUpload.xls">
+          <v-btn>Sample CSV Download</v-btn>
+        </a>
+      </v-col>
+      <v-col>
+        <v-btn style="float: right" type="button" @click="uploadFile()" class="submit" color="amber" depressed>
           Upload
         </v-btn>
       </v-col>
@@ -20,11 +29,13 @@
 
 <script>
 import axios from 'axios'
+import studentBulkUpload from "@/assets/studentBulkUpload.csv";
 
 export default {
   name: 'UploadCSV',
   data: () => ({
-    file: undefined
+    file: undefined,
+    studentBulkUpload,
   }),
   methods: {
      uploadFile: function(){

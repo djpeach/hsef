@@ -6,6 +6,8 @@ function uploadCSV(Slim\Slim $app) {
         $file = fopen($tmp_loc, "r");
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
             // use $emapData[index] to insert data
+            $app->res->json([$emapData]);
+            break;
         }
         fclose($file);
   };
