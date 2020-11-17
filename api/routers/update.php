@@ -258,6 +258,17 @@ function updateRouter($app) {
 
     $app->put('/pwdReset', resetPwdEmailSubmit($app));
 
-    $app->put('/judge/:id/approve', approveJudge($app));
+    $app->put('/judges/:id/approve', approveJudge($app));
+
+    /**
+     * @api {put} /update/judges/:id/updateCheckedIn Judge Check in and out
+     * @apiGroup Update
+     * @apiName UpdateJudgeCheckin
+     * @apiVersion 0.1.0
+     * @apiDescription Update the value of a judge's checkedin status
+     *
+     * @apiParam {Boolean} checkedIn
+     */
+    $app->put('/judges/:id/updateCheckedIn', updateCheckedIn($app));
   };
 }

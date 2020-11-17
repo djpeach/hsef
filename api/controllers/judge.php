@@ -210,6 +210,16 @@ function approveJudge(Slim\Slim $app) {
   };
 }
 
+function updateCheckedIn(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    $reqBody = $app->req->jsonBody();
+    $checkedIn = valueOrError($reqBody["checkedIn"], new BadRequest("Must provide a value for checkedIn"));
+    $checkedIn = $checkedIn == "true" ? 1 : 0;
+    $sql = DB::get()->prepare("UPDATE User SET CheckedIn = ? WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+    execOrError($sql->execute([ $checkedIn, $opid ]), new DatabaseError("Error while updating checked in during updateCheckedIn"));
+  };
+}
+
 function generateSchedules(Slim\Slim $app) {
   return function() use ($app) {
     $resBody = [];
