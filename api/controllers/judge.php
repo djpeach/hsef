@@ -13,9 +13,6 @@ function createNewJudge(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = valueOrError($reqBody['user'], "You must provide a user object on the request object");
-    $operator = valueOrDefault($reqBody['operator'], new EmptyObject());
-    $judge = valueOrDefault($reqBody['judge'], new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed
@@ -24,22 +21,22 @@ function createNewJudge(Slim\Slim $app) {
     // Check for existing user with email
     $sql = DB::get()->prepare("SELECT 1 FROM User JOIN UserYear UY on User.UserId = UY.UserId WHERE Email = ? AND UY.Year = YEAR(CURRENT_TIMESTAMP)");
     execOrError($sql->execute([
-      valueOrError($user->email, new BadRequest("email cannot be null or blank")),
-    ]), new DatabaseError("Failed to lookup user with email: {$user->email}", 502));
+      valueOrError($reqBody['email'], new BadRequest("email cannot be null or blank")),
+    ]), new DatabaseError("Failed to lookup user with email: {$reqBody['email']}", 502));
     if ($sql->fetch()) {
-      throw new ResourceConflict("A user this year with that email: {$user->email} already exists");
+      throw new ResourceConflict("A user this year with that email: {$reqBody['email']} already exists");
     }
 
     // Create User
     $sql = DB::get()->prepare("INSERT INTO User(FirstName, LastName, Suffix, Gender, Status, CheckedIn, Email) VALUES(?, ?, ?, ?, ?, ?, ?)");
     execOrError($sql->execute([
-      valueOrError($user->firstName, new BadRequest("firstName cannot be null or blank")),
-      valueOrError($user->lastName, new BadRequest("lastName cannot be null or blank")),
-      valueOrNull($user->suffix),
-      valueOrNull($user->gender),
-      valueOrDefault($user->suffix, 'active'),
-      funcOrNull($user->suffix, function($el) { return $el ? 1 : 0; }),
-      valueOrError($user->email, new BadRequest("email cannot be null or blank")),
+      valueOrError($reqBody['firstName'], new BadRequest("firstName cannot be null or blank")),
+      valueOrError($reqBody['lastName'], new BadRequest("lastName cannot be null or blank")),
+      null,
+      valueOrNull($reqBody['gender']),
+      'active',
+      0,
+      valueOrError($reqBody['email'], new BadRequest("email cannot be null or blank")),
     ]), new DatabaseError("Failed to create new user", 502));
 
     $userId = DB::get()->lastInsertId();
@@ -56,9 +53,9 @@ function createNewJudge(Slim\Slim $app) {
     // Create Operator
     $sql = DB::get()->prepare("INSERT INTO Operator(Title, HighestDegree, Employer, UserYearId) VALUES(?, ?, ?, ?)");
     execOrError($sql->execute([
-      valueOrNull($operator->title),
-      valueOrNull($operator->highestDegree),
-      valueOrNull($operator->employer),
+      valueOrNull($reqBody['title']),
+      valueOrNull($reqBody['highestDegree']),
+      valueOrNull($reqBody['employer']),
       valueOrError($userYearId, new ApiException("Id for user year record not found", 500))
     ]), new DatabaseError("Failed to create new operator", 502));
 
@@ -73,22 +70,52 @@ function createNewJudge(Slim\Slim $app) {
     ]), new DatabaseError("Failed to add judge entitlement to operator", 502));
 
     // Add category preferences
-    if (isset($judge->categoryPreferenceIds)) {
-      foreach ($judge->categoryPreferenceIds as $catId) {
-        $sql = DB::get()->prepare("INSERT INTO OperatorCategory(OperatorId, CategoryId) VALUES(?, ?)");
-        execOrError($sql->execute([ $operatorId, $catId ]), new DatabaseError("Failed to add category id: $catId to operator"));
-      }
-    }
+//    if (isset($judge->categoryPreferenceIds)) {
+//      foreach ($judge->categoryPreferenceIds as $catId) {
+//        $sql = DB::get()->prepare("INSERT INTO OperatorCategory(OperatorId, CategoryId) VALUES(?, ?)");
+//        execOrError($sql->execute([ $operatorId, $catId ]), new DatabaseError("Failed to add category id: $catId to operator"));
+//      }
+//    }
 
     // Add grade level preferences
-    if (isset($judge->gradeLevelPreferenceIds)) {
-      foreach ($judge->gradeLevelPreferenceIds as $gradeLevelId) {
-        $sql = DB::get()->prepare("INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) VALUES(?, ?)");
-        execOrError($sql->execute([ $operatorId, $gradeLevelId ]), new DatabaseError("Failed to add category id: $gradeLevelId to operator"));
-      }
-    }
+//    if (isset($judge->gradeLevelPreferenceIds)) {
+//      foreach ($judge->gradeLevelPreferenceIds as $gradeLevelId) {
+//        $sql = DB::get()->prepare("INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) VALUES(?, ?)");
+//        execOrError($sql->execute([ $operatorId, $gradeLevelId ]), new DatabaseError("Failed to add category id: $gradeLevelId to operator"));
+//      }
+//    }
 
     // Finalize (build/transform/filter) response if needed
+
+    // email judge
+    $to = $reqBody['email'];
+    $subject = 'HSEF judging approval!';
+    $message = "
+<html>
+<head>
+  <title>Assigned to judge at HSEF</title>
+</head>
+<body>
+  <p>You have been made a judge as HSEF</p>
+  <p>Click the link below to go to the login form. Then select 'Forgot Password' in order to create your auth account and set a password.</p>
+  <a href='http://corsair.cs.iupui.edu:24631/hsef'>Login Page</a>
+</body>
+</html>
+";
+
+    $headers = array("From: webmaster@hsef.org",
+      "Reply-To: djpeach@iu.edu",
+      "X-Mailer: PHP/" . PHP_VERSION,
+      'Content-type: text/html; charset=iso-8859-1',
+      'MIME-Version: 1.0',
+      "To: {$reqBody['email']}"
+    );
+
+    if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
+      throw new ApiException("Failed to send judge welcome email");
+    } else {
+      echo "sent email to {$reqBody['email']}";
+    }
 
     // Send response
     $app->res->json($resBody);
@@ -372,8 +399,58 @@ WHERE JS.OperatorId = ?";
 
 // UPDATE
 function updateJudgeByOpId(Slim\Slim $app) {
-  return function() use ($app) {
-    echo "updated judge";
+  return function($opid) use ($app) {
+    $reqBody = $app->req->jsonBody();
+    $user = $reqBody["user"];
+    $operator = $reqBody["operator"];
+    $authAccount = $reqBody["authAccount"];
+
+    if (!empty($user)) {
+      $query = "UPDATE User SET ";
+      $queryArgs = [];
+      foreach ($user as $key => $value) {
+        $key = ucfirst($key);
+        $query .= "$key = ?, ";
+        array_push($queryArgs, $value);
+      }
+      $query = substr($query, 0, -2);
+      $query .= " WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))";
+      array_push($queryArgs, $opid);
+      $sql = DB::get()->prepare($query);
+      $sql->execute($queryArgs);
+    }
+
+    if (!empty($operator)) {
+      $query = "UPDATE Operator SET ";
+      $queryArgs = [];
+      foreach ($operator as $key => $value) {
+        $key = ucfirst($key);
+        $query .= "$key = ?, ";
+        array_push($queryArgs, $value);
+      }
+      $query = substr($query, 0, -2);
+      $query .= " WHERE OperatorId = ?";
+      array_push($queryArgs, $opid);
+      $sql = DB::get()->prepare($query);
+      $sql->execute($queryArgs);
+    }
+
+    if (!empty($authAccount)) {
+      $query = "UPDATE AuthAccount SET ";
+      $queryArgs = [];
+      foreach ($authAccount as $key => $value) {
+        $key = ucfirst($key);
+        $query .= "$key = ?, ";
+        array_push($queryArgs, $value);
+      }
+      $query = substr($query, 0, -2);
+      $query .= " WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))";
+      array_push($queryArgs, $opid);
+      $sql = DB::get()->prepare($query);
+      $sql->execute($queryArgs);
+    }
+
+    $app->res->json(["success" => true]);
   };
 }
 
@@ -398,12 +475,13 @@ function listJudges(Slim\Slim $app) {
 
     $query = "SELECT O.OperatorId, O.Title, O.HighestDegree,
        O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix,
-       U.Gender, U.Status, U.CheckedIn, U.Email
+       U.Gender, U.Status, U.CheckedIn, U.Email, AA.PasswordHash 
 FROM Operator O
     JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId
     JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
     JOIN UserYear UY on O.UserYearId = UY.UserYearId
     JOIN User U on UY.UserId = U.UserId
+    JOIN AuthAccount AA on U.UserId = AA.UserId
 WHERE E.Name = 'judge'
   AND U.Status = ?
   AND UY.Year = YEAR(CURRENT_TIMESTAMP)";

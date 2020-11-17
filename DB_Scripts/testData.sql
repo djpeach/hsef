@@ -511,15 +511,15 @@ INSERT INTO School(SchoolId, Name, CountyId) VALUES (19, 'Elkhart Central High S
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (20, 'Connersville High School', 20);
 
 # students
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (35, 'Jazmin', 'Roberson', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (36, 'Lindsey', 'Stone', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (37, 'Peggy', 'Finnegan', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (38, 'Sebastien', 'Glover', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (39, 'Darnell', 'Lennon', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (40, 'Aamir', 'Browning', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (41, 'Parker', 'Henderson', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (42, 'Beatrice', 'Ortega', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (43, 'Elysia', 'Driscoll', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Jazmin', 'Roberson', 'active'); #35
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Lindsey', 'Stone', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Peggy', 'Finnegan', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Sebastien', 'Glover', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Darnell', 'Lennon', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Aamir', 'Browning', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Parker', 'Henderson', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Beatrice', 'Ortega', 'active');
+INSERT INTO User(FirstName, LastName, Status) VALUES ('Elysia', 'Driscoll', 'active');
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Helenka', 'Follos', 'male', 'registered', 'hfollos0@ifeng.com');
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Hildegaard', 'Shorey', 'other', 'active', 'hshorey1@usatoday.com');
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Beck', 'Feasey', 'other', 'active', 'bfeasey2@squarespace.com');
@@ -548,6 +548,44 @@ insert into User (FirstName, LastName, Gender, Status, Email) values ('Zachariah
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Sybilla', 'Dyshart', 'female', 'archived', 'sdyshartp@timesonline.co.uk');
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Audra', 'Hutchin', 'male', 'invited', 'ahutchinq@tiny.cc');
 insert into User (FirstName, LastName, Gender, Status, Email) values ('Rebekah', 'McCuaig', 'female', 'registered', 'rmccuaigr@howstuffworks.com'); #71
+
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 35);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 36);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 37);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 38);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 39);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 40);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 41);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 42);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 43);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 44);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 45);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 46);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 47);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 48);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 49);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 50);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 51);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 52);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 53);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 54);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 55);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 56);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 57);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 58);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 59);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 60);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 61);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 62);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 63);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 64);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 65);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 66);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 67);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 68);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 69);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 70);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 71);
 
 INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (35, 1, 1, 1);
 INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (36, 1, 1, 2);

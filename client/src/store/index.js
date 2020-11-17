@@ -110,6 +110,18 @@ const actions = {
     await commit('RESET_DATA');
     return res;
   },
+  async createJudge(ctx, data) {
+    return Vue.http.post(`create/judges/newUser`, data);
+  },
+  async createAdmin(ctx, data) {
+    return Vue.http.post(`create/admins/newUser`, data);
+  },
+  async createSchool(ctx, data) {
+    return Vue.http.post(`create/schools`, data);
+  },
+  async createStudent(ctx, data) {
+    return Vue.http.post(`create/students`, data);
+  },
 
   // update
   async approveJudge(ctx, { operatorId }) {
@@ -123,6 +135,22 @@ const actions = {
   },
   async saveScore(ctx, { score, id }) {
     await Vue.http.put(`update/sessions/${id}`, { score });
+  },
+  async updateJudge(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.post(`update/judges/${operatorId}`, rest);
+  },
+  async updateAdmin(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.post(`update/admins/${operatorId}`, rest);
+  },
+  async updateSchool(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.post(`update/schools/${operatorId}`, rest);
+  },
+  async updateStudent(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.post(`update/students/${operatorId}`, rest);
   },
 
   // lists
@@ -141,6 +169,9 @@ const actions = {
       body: { sessions: judgeSchedule },
     } = await Vue.http.get(`read/judges/${state.operatorId}/schedule`);
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
+  },
+  async getJudgeScheduleByOpId(ctx, { operatorId }) {
+    return Vue.http.get(`read/judges/${operatorId}/schedule`);
   },
   async refreshStudents({ commit }) {
     const {
