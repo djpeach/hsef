@@ -64,7 +64,7 @@ function resetPwdEmail(Slim\Slim $app) {
 </head>
 <body>
   <p>Click the link below to reset your password</p>
-  <a href='http://localhost:8080/pwdReset?k=".$randKey."'>Reset Password</a>
+  <a href='http://corsair.cs.iupui.edu:24631/hsef?page=password-reset&k=".$randKey."'>Reset Password</a>
 </body>
 </html>
 ";
