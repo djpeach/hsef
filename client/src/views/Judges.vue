@@ -99,18 +99,10 @@
               <v-container>
                 <v-row>
                   <v-col class="headline">
-                    {{ item.firstName }}
+                    {{ item.firstName }} {{ item.lastName}}
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col>
-                    <span class="font-weight-bold">First Name:</span>
-                    {{ item.firstName }}
-                  </v-col>
-                  <v-col>
-                    <span class="font-weight-bold">Last Name:</span>
-                    {{ item.lastName }}
-                  </v-col>
                   <v-col>
                     <span class="font-weight-bold">Judge Email:</span>
                     {{ item.email }}
@@ -181,13 +173,6 @@ export default {
       this.editedIndex = this.judges.indexOf(item)
       this.editedJudge = Object.assign({}, item)
       this.dialogDelete = true
-    },
-    convertCheckIn(item) {
-      if (this.item = 0)  {
-        this.item = "Checked Out"
-      } else {
-        this.item = "Checked In"
-      }
     },
   },
   filters: {

@@ -118,7 +118,7 @@
               <v-container>
                 <v-row>
                   <v-col class="headline">
-                    {{ item.firstName }}
+                    {{ item.firstName }} {{ item.lastName}}
                   </v-col>
                 </v-row>
                 <v-row>
@@ -197,7 +197,7 @@ export default {
           this.editedStudent[key] = '';
         }
       }
-    },
+    }
   },
   methods: {
     ...mapActions({
