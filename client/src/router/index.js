@@ -19,6 +19,7 @@ import Counties from "@/views/Counties";
 import GradeLevels from "@/views/GradeLevels";
 import Judges from "@/views/Judges";
 import JudgeRegistration from "@/views/JudgeRegistration";
+import PasswordReset from "@/views/PasswordReset";
 
 
 Vue.use(VueRouter)
@@ -26,6 +27,7 @@ Vue.use(VueRouter)
 const publicOnlyRoutes = [
   'login',
   'judge-registration',
+  'password-reset',
 ];
 
 const publicRoutes = [
@@ -62,6 +64,7 @@ const routes = [
   { path: '/login', name: 'login', component: LogIn },
   { path: '/temp-students', name: 'temp-students', component: TempStudents },
   { path: '/judge-registration', name: 'judge-registration', component: JudgeRegistration },
+  { path: '/pwdReset', name: 'password-reset', component: PasswordReset },
 ]
 
 const router = new VueRouter({

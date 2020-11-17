@@ -1,5 +1,6 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-10-08 17:37:46.998
+-- Last modification date: 2020-11-17 03:24:06.013
+
 -- tables
 -- Table: AuthAccount
 CREATE TABLE AuthAccount (
@@ -81,7 +82,6 @@ CREATE TABLE OneTimeToken (
     OneTimeTokenId int unsigned NOT NULL AUTO_INCREMENT,
     Token varchar(255) NOT NULL,
     AuthAccountId int unsigned NOT NULL,
-    IsValid bool NOT NULL,
     CONSTRAINT OneTimeToken_pk PRIMARY KEY (OneTimeTokenId)
 );
 
@@ -172,7 +172,7 @@ CREATE TABLE User (
     Suffix char(64) NULL,
     Gender enum('male', 'female', 'other') NULL,
     Status enum('active', 'registered', 'invited', 'archived') NOT NULL,
-    CheckedIn bool NULL DEFAULT false,
+    CheckedIn bool NOT NULL DEFAULT false,
     Email char(128) NULL,
     UNIQUE INDEX ak_User_Email (Email),
     CONSTRAINT User_pk PRIMARY KEY (UserId)

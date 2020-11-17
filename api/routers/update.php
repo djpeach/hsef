@@ -1,5 +1,9 @@
 <?php
 
+foreach(glob(__DIR__."/../controllers/*.php") as $file) {
+  require_once $file;
+}
+
 function updateRouter($app) {
   return function() use ($app) {
 
@@ -350,5 +354,7 @@ function updateRouter($app) {
     });
 
     $app->put('/sessions/:id', saveScore($app));
+
+    $app->put('/pwdReset', resetPwdEmailSubmit($app));
   };
 }

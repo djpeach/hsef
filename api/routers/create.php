@@ -445,5 +445,7 @@ function createRouter($app) {
       $app->post('/studentBulk', uploadCSV($app));
 
       $app->post('/generate-schedules', generateSchedules($app));
+
+      $app->post('/pwdReset', resetPwdEmail($app));
     };
 }

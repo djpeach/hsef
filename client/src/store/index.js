@@ -87,6 +87,12 @@ const mutations = {
 };
 
 const actions = {
+  async resetPwdSubmit(ctx, {key, pwd}) {
+    return Vue.http.put(`update/pwdReset`, { key, pwd })
+  },
+  async resetPwd(ctx, {email}) {
+    return Vue.http.post(`create/pwdReset`, { email })
+  },
   async saveScore(ctx, { score, id }) {
     await Vue.http.put(`update/sessions/${id}`, { score })
   },
