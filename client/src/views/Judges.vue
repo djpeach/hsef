@@ -182,6 +182,10 @@
                     <span class="font-weight-bold">Judge Email:</span>
                     {{ item.email }}
                   </v-col>
+                  <v-col>
+                    <span class="font-weight-bold">View Judge Schedule:</span>
+
+                  </v-col>
                 </v-row>
               </v-container>
             </td>

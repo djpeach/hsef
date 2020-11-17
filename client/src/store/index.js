@@ -142,6 +142,9 @@ const actions = {
     } = await Vue.http.get(`read/judges/${state.operatorId}/schedule`);
     commit('UPDATE_JUDGE_SCHEDULE', judgeSchedule);
   },
+  async getJudgeSchedulebyOpId(ctx, { operatorId }) {
+    return Vue.http.get(`read/judges/${operatorId}/schedule`);
+  },
   async refreshStudents({ commit }) {
     const {
       body: { results: students },
