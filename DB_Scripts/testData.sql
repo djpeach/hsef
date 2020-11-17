@@ -1,12 +1,38 @@
 # ----- Ups ----- #
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (1, 'Daniel', 'Peach', 'male', 'active', 'djpeach@iu.edu'); # 1
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (2, 'Ashley', 'Harris', 'female', 'active', 'harris16@iu.edu'); # 2
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (3, 'Daniel', 'Northam', 'male', 'active', 'dnortham@iu.edu'); # 3
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (4, 'Kate', 'Davis', 'female', 'active', 'kadadavi@iu.edu'); # 4
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (5, 'Andy', 'Harris', 'male', 'active', 'ajharris@iupui.edu'); # 5
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (6, 'Lingma', 'Acheson', 'female', 'active', 'linglu@iupui.edu'); # 6
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (7, 'Ethan', 'Netsch', 'male', 'active', 'enetsch@iu.edu'); # 6
-INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (8, 'Robert', 'Yost', 'male', 'active', 'ryost@iupui.edu'); # 6
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (1, 'Daniel', 'Peach', 'male', 'active', 'djpeach@iu.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (2, 'Ashley', 'Harris', 'female', 'active', 'harris16@iu.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (3, 'Daniel', 'Northam', 'male', 'active', 'dnortham@iu.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (4, 'Kate', 'Davis', 'female', 'active', 'kadadavi@iu.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (5, 'Andy', 'Harris', 'male', 'active', 'ajharris@iupui.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (6, 'Lingma', 'Acheson', 'female', 'active', 'linglu@iupui.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (7, 'Ethan', 'Netsch', 'male', 'active', 'enetsch@iu.edu');
+INSERT INTO User(UserId, FirstName, LastName, Gender, Status, Email) VALUES (8, 'Robert', 'Yost', 'male', 'active', 'ryost@iupui.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Deanna', 'Maha', 'female', 'registered', 'dmaha0@illinois.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Farlie', 'Linsey', 'female', 'active', 'flinsey1@t.co');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Lani', 'Dwyr', 'female', 'active', 'ldwyr2@cbsnews.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Merralee', 'Druhan', 'male', 'registered', 'mdruhan3@berkeley.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Fons', 'Sawforde', 'other', 'invited', 'fsawforde4@woothemes.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Cherice', 'Butterick', 'female', 'active', 'cbutterick5@cargocollective.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Maybelle', 'Poutress', 'male', 'registered', 'mpoutress6@timesonline.co.uk');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Desmund', 'Pennock', 'male', 'invited', 'dpennock7@time.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Griselda', 'Edmand', 'other', 'active', 'gedmand8@patch.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Uta', 'Haddleton', 'other', 'active', 'uhaddleton9@homestead.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Wang', 'Benkhe', 'male', 'registered', 'wbenkhea@mozilla.org');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Yorke', 'Cramphorn', 'other', 'active', 'ycramphornb@sohu.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Flossi', 'Strover', 'other', 'registered', 'fstroverc@umn.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Ida', 'Hedin', 'other', 'registered', 'ihedind@washingtonpost.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Hunfredo', 'Gooding', 'female', 'active', 'hgoodinge@arizona.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Baily', 'Dorken', 'other', 'active', 'bdorkenf@over-blog.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Randene', 'MacArthur', 'female', 'invited', 'rmacarthurg@si.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Mollee', 'Toler', 'female', 'archived', 'mtolerh@latimes.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Eal', 'Elnor', 'male', 'archived', 'eelnori@vinaora.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Pearce', 'Dmitrovic', 'male', 'active', 'pdmitrovicj@so-net.ne.jp');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Camila', 'Coultish', 'female', 'archived', 'ccoultishk@friendfeed.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Shirl', 'Hinckesman', 'female', 'invited', 'shinckesmanl@stumbleupon.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Marilee', 'Tellesson', 'female', 'active', 'mtellessonm@cnbc.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Pooh', 'D''Ambrosi', 'female', 'registered', 'pdambrosin@barnesandnoble.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Harmonie', 'Davidsson', 'female', 'registered', 'hdavidssono@printfriendly.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Andrea', 'Buddles', 'male', 'invited', 'abuddlesp@state.gov');
 
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (1, 'qwerty', 1);
 INSERT INTO AuthAccount(AuthAccountId, PasswordHash, UserId) VALUES (2, 'qwerty', 2);
@@ -41,69 +67,107 @@ INSERT INTO UserYear(Year, UserId) VALUES(2018, 7);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2019, 8);
 INSERT INTO UserYear(Year, UserId) VALUES(2018, 8);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 9);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 10);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 11);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 12);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 13);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 14);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 15);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 16);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 17);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 18);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 19);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 20);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 21);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 22);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 23);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 24);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 25);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 26);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 27);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 28);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 29);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 30);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 31);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 32);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 33);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 34);
+INSERT INTO UserYear(Year, UserId) VALUES(2020, 35);
 
 INSERT INTO Operator(UserYearId) VALUES (1);
-INSERT INTO Operator(UserYearId) VALUES (2);
-INSERT INTO Operator(UserYearId) VALUES (3);
 INSERT INTO Operator(UserYearId) VALUES (4);
-INSERT INTO Operator(UserYearId) VALUES (5);
-INSERT INTO Operator(UserYearId) VALUES (6);
 INSERT INTO Operator(UserYearId) VALUES (7);
-INSERT INTO Operator(UserYearId) VALUES (8);
-INSERT INTO Operator(UserYearId) VALUES (9);
 INSERT INTO Operator(UserYearId) VALUES (10);
-INSERT INTO Operator(UserYearId) VALUES (11);
-INSERT INTO Operator(UserYearId) VALUES (12);
 INSERT INTO Operator(UserYearId) VALUES (13);
-INSERT INTO Operator(UserYearId) VALUES (14);
-INSERT INTO Operator(UserYearId) VALUES (15);
 INSERT INTO Operator(UserYearId) VALUES (16);
-INSERT INTO Operator(UserYearId) VALUES (17);
-INSERT INTO Operator(UserYearId) VALUES (18);
 INSERT INTO Operator(UserYearId) VALUES (19);
-INSERT INTO Operator(UserYearId) VALUES (20);
-INSERT INTO Operator(UserYearId) VALUES (21);
 INSERT INTO Operator(UserYearId) VALUES (22);
 INSERT INTO Operator(UserYearId) VALUES (23);
 INSERT INTO Operator(UserYearId) VALUES (24);
+INSERT INTO Operator(UserYearId) VALUES (25);
+INSERT INTO Operator(UserYearId) VALUES (26);
+INSERT INTO Operator(UserYearId) VALUES (27);
+INSERT INTO Operator(UserYearId) VALUES (28);
+INSERT INTO Operator(UserYearId) VALUES (29);
+INSERT INTO Operator(UserYearId) VALUES (30);
+INSERT INTO Operator(UserYearId) VALUES (31);
+INSERT INTO Operator(UserYearId) VALUES (32);
+INSERT INTO Operator(UserYearId) VALUES (33);
+INSERT INTO Operator(UserYearId) VALUES (34);
+INSERT INTO Operator(UserYearId) VALUES (35);
+INSERT INTO Operator(UserYearId) VALUES (36);
+INSERT INTO Operator(UserYearId) VALUES (37);
+INSERT INTO Operator(UserYearId) VALUES (38);
+INSERT INTO Operator(UserYearId) VALUES (39);
+INSERT INTO Operator(UserYearId) VALUES (40);
+INSERT INTO Operator(UserYearId) VALUES (41);
+INSERT INTO Operator(UserYearId) VALUES (42);
+INSERT INTO Operator(UserYearId) VALUES (43);
+INSERT INTO Operator(UserYearId) VALUES (44);
+INSERT INTO Operator(UserYearId) VALUES (45);
+INSERT INTO Operator(UserYearId) VALUES (45);
+INSERT INTO Operator(UserYearId) VALUES (47);
+INSERT INTO Operator(UserYearId) VALUES (48);
+INSERT INTO Operator(UserYearId) VALUES (49);
 
 INSERT INTO Entitlement(EntitlementId, Name) VALUES (1, 'owner');
-INSERT INTO Entitlement(EntitlementId, Name) VALUES (3, 'admin');
-INSERT INTO Entitlement(EntitlementId, Name) VALUES (4, 'judge');
-INSERT INTO Entitlement(EntitlementId, Name) VALUES (5, 'viewer');
+INSERT INTO Entitlement(EntitlementId, Name) VALUES (2, 'admin');
+INSERT INTO Entitlement(EntitlementId, Name) VALUES (3, 'judge');
+INSERT INTO Entitlement(EntitlementId, Name) VALUES (4, 'viewer');
 
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (1, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (1, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (1, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (1, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (1, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (2, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (2, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (2, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (2, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (2, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (3, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (3, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (3, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (3, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (3, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (4, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (4, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (4, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (4, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (4, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (5, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (5, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (5, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (5, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (5, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (6, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (6, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (6, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (6, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (6, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (7, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (7, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (7, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (7, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (7, 5);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 1);
+INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 2);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 3);
 INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 4);
-INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (8, 5);
 
 INSERT INTO Booth(Number) VALUES (100);
 INSERT INTO Booth(Number) VALUES (101);
@@ -121,6 +185,41 @@ INSERT INTO Booth(Number) VALUES (112);
 INSERT INTO Booth(Number) VALUES (113);
 INSERT INTO Booth(Number) VALUES (114);
 INSERT INTO Booth(Number) VALUES (115);
+INSERT INTO Booth(Number) VALUES (116);
+INSERT INTO Booth(Number) VALUES (117);
+INSERT INTO Booth(Number) VALUES (118);
+INSERT INTO Booth(Number) VALUES (119);
+INSERT INTO Booth(Number) VALUES (120);
+INSERT INTO Booth(Number) VALUES (121);
+INSERT INTO Booth(Number) VALUES (122);
+INSERT INTO Booth(Number) VALUES (123);
+INSERT INTO Booth(Number) VALUES (124);
+INSERT INTO Booth(Number) VALUES (125);
+INSERT INTO Booth(Number) VALUES (126);
+INSERT INTO Booth(Number) VALUES (127);
+INSERT INTO Booth(Number) VALUES (128);
+INSERT INTO Booth(Number) VALUES (129);
+INSERT INTO Booth(Number) VALUES (130);
+INSERT INTO Booth(Number) VALUES (131);
+INSERT INTO Booth(Number) VALUES (132);
+INSERT INTO Booth(Number) VALUES (133);
+INSERT INTO Booth(Number) VALUES (134);
+INSERT INTO Booth(Number) VALUES (135);
+INSERT INTO Booth(Number) VALUES (136);
+INSERT INTO Booth(Number) VALUES (137);
+INSERT INTO Booth(Number) VALUES (138);
+INSERT INTO Booth(Number) VALUES (139);
+INSERT INTO Booth(Number) VALUES (140);
+INSERT INTO Booth(Number) VALUES (141);
+INSERT INTO Booth(Number) VALUES (142);
+INSERT INTO Booth(Number) VALUES (143);
+INSERT INTO Booth(Number) VALUES (144);
+INSERT INTO Booth(Number) VALUES (145);
+INSERT INTO Booth(Number) VALUES (146);
+INSERT INTO Booth(Number) VALUES (147);
+INSERT INTO Booth(Number) VALUES (148);
+INSERT INTO Booth(Number) VALUES (149);
+INSERT INTO Booth(Number) VALUES (150);
 
 INSERT INTO Category(CategoryId, Name) VALUES (1, 'Science');
 INSERT INTO Category(CategoryId, Name) VALUES (2, 'Biology');
@@ -273,15 +372,15 @@ INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (3, 5);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (4, 4);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (4, 5);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (4, 6);
-INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (5, 5);
-INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (5, 6);
-INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (5, 7);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (6, 6);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (6, 7);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (6, 8);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (7, 7);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (7, 8);
 INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (7, 9);
+INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (8, 5);
+INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (8, 6);
+INSERT INTO OperatorGradeLevel(OperatorId, GradeLevelId) values (8, 7);
 
 INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
 VALUES (1, 1, 'Volcanoes',
@@ -323,6 +422,61 @@ INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworking
 VALUES (10, 10, 'Binary',
         'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
         13, 8010, 5);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (11, 11, 'Experiements',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        14, 8010, 1);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (12, 12, 'Regeneration',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        15, 8010, 2);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (13, 13, 'Strong Molecular Bonds',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        16, 8010, 3);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (14, 14, 'Strong Molecular Bonds',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        17, 8010, 3);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (15, 15, 'Solar Winds',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        18, 8010, 4);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (16, 16, 'Quantum Bits',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        1, 8010, 5);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (17, 17, 'RFID',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        2, 8010, 6);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (18, 18, 'Rocks for Granite',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        3, 8010, 7);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (19, 19, 'Fluid Density',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        19, 8010, 8);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (20, 20, 'Linear Combos',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        20, 8010, 9);
+INSERT INTO Project(ProjectId, Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId)
+VALUES (21, 21, 'Sunflowers',
+        'Sed dsajda aliquam ultrices mauris. Etiam sit amet orci eget eros faucibus tincidunt.',
+        21, 8010, 10);
+
+INSERT INTO Category(CategoryId, Name) VALUES (1, 'Science');
+INSERT INTO Category(CategoryId, Name) VALUES (2, 'Biology');
+INSERT INTO Category(CategoryId, Name) VALUES (3, 'Chemistry');
+INSERT INTO Category(CategoryId, Name) VALUES (4, 'Astronomy');
+INSERT INTO Category(CategoryId, Name) VALUES (5, 'Computers');
+INSERT INTO Category(CategoryId, Name) VALUES (6, 'Robotics');
+INSERT INTO Category(CategoryId, Name) VALUES (7, 'Geology');
+INSERT INTO Category(CategoryId, Name) VALUES (8, 'Physics');
+INSERT INTO Category(CategoryId, Name) VALUES (9, 'Math');
+INSERT INTO Category(CategoryId, Name) VALUES (10, 'Botany');
 
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (1, 'Adams Central High School', 1);
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (2, 'Blackhawk Christian School', 2);
@@ -346,15 +500,43 @@ INSERT INTO School(SchoolId, Name, CountyId) VALUES (19, 'Elkhart Central High S
 INSERT INTO School(SchoolId, Name, CountyId) VALUES (20, 'Connersville High School', 20);
 
 # students
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (9, 'Jazmin', 'Roberson', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (10, 'Lindsey', 'Stone', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (11, 'Peggy', 'Finnegan', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (12, 'Sebastien', 'Glover', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (13, 'Darnell', 'Lennon', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (14, 'Aamir', 'Browning', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (15, 'Parker', 'Henderson', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (16, 'Beatrice', 'Ortega', 'active');
-INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (17, 'Elysia', 'Driscoll', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (35, 'Jazmin', 'Roberson', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (36, 'Lindsey', 'Stone', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (37, 'Peggy', 'Finnegan', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (38, 'Sebastien', 'Glover', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (39, 'Darnell', 'Lennon', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (40, 'Aamir', 'Browning', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (41, 'Parker', 'Henderson', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (42, 'Beatrice', 'Ortega', 'active');
+INSERT INTO User(UserId, FirstName, LastName, Status) VALUES (43, 'Elysia', 'Driscoll', 'active');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Helenka', 'Follos', 'male', 'registered', 'hfollos0@ifeng.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Hildegaard', 'Shorey', 'other', 'active', 'hshorey1@usatoday.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Beck', 'Feasey', 'other', 'active', 'bfeasey2@squarespace.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Dorry', 'Vanichev', 'other', 'active', 'dvanichev3@unesco.org');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Avictor', 'Parry', 'other', 'invited', 'aparry4@google.com.br');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Angelica', 'Joselevitz', 'other', 'archived', 'ajoselevitz5@npr.org');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Ricky', 'Menlove', 'other', 'active', 'rmenlove6@senate.gov');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Thorsten', 'Comello', 'male', 'archived', 'tcomello7@biglobe.ne.jp');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Adriane', 'Thornton-Dewhirst', 'other', 'registered', 'athorntondewhirst8@hatena.ne.jp');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Tuckie', 'Belfit', 'male', 'invited', 'tbelfit9@technorati.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Clarie', 'Garrie', 'male', 'registered', 'cgarriea@about.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Meier', 'Hyndson', 'female', 'archived', 'mhyndsonb@zdnet.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Hilda', 'Shulem', 'female', 'active', 'hshulemc@behance.net');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Genevieve', 'Astlett', 'male', 'invited', 'gastlettd@addtoany.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Brook', 'Mangion', 'female', 'active', 'bmangione@gov.uk');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Laurie', 'Kerton', 'male', 'archived', 'lkertonf@alexa.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Donia', 'Sheen', 'other', 'active', 'dsheeng@dyndns.org');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Eugenie', 'Tildesley', 'other', 'active', 'etildesleyh@japanpost.jp');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Cathleen', 'McSporon', 'male', 'registered', 'cmcsporoni@4shared.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Gideon', 'Carek', 'other', 'registered', 'gcarekj@opensource.org');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Nicolle', 'Halkyard', 'other', 'registered', 'nhalkyardk@sciencedaily.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Muhammad', 'Spoor', 'female', 'active', 'mspoorl@upenn.edu');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Dallon', 'MacMenemy', 'other', 'invited', 'dmacmenemym@bloomberg.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Kinny', 'Josilevich', 'other', 'invited', 'kjosilevichn@naver.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Zachariah', 'Chellam', 'male', 'invited', 'zchellamo@cargocollective.com');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Sybilla', 'Dyshart', 'female', 'archived', 'sdyshartp@timesonline.co.uk');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Audra', 'Hutchin', 'male', 'invited', 'ahutchinq@tiny.cc');
+insert into User (FirstName, LastName, Gender, Status, Email) values ('Rebekah', 'McCuaig', 'female', 'registered', 'rmccuaigr@howstuffworks.com'); #71
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 9);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 10);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 11);
@@ -365,12 +547,40 @@ INSERT INTO UserYear(Year, UserId) VALUES(2020, 15);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 16);
 INSERT INTO UserYear(Year, UserId) VALUES(2020, 17);
 
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (9, 1, 1, 1);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (10, 1, 2, 2);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (11, 1, 3, 1);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (12, 1, 4, 5);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (13, 1, 5, 4);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (14, 1, 5, 3);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (15, 1, 6, 2);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (16, 1, 7, 6);
-INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (17, 1, 8, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (35, 1, 1, 1);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (36, 1, 1, 2);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (37, 1, 2, 1);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (38, 1, 2, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (39, 1, 3, 4);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (40, 1, 3, 3);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (41, 1, 4, 2);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (42, 1, 4, 6);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (43, 1, 5, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (44, 1, 5, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (45, 1, 6, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (46, 1, 6, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (47, 1, 7, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (48, 1, 7, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (49, 1, 8, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (50, 1, 8, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (51, 1, 9, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (52, 1, 9, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (53, 1, 10, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (54, 1, 10, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (55, 1, 11, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (56, 1, 11, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (57, 1, 12, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (58, 1, 12, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (59, 1, 13, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (60, 1, 14, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (61, 1, 14, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (62, 1, 15, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (63, 1, 15, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (64, 1, 15, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (65, 1, 18, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (66, 1, 18, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (67, 1, 19, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (68, 1, 19, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (69, 1, 20, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (70, 1, 21, 5);
+INSERT INTO Student(UserId, SchoolId, ProjectId, GradeLevelId) VALUES (71, 1, 13, 5);
