@@ -52,8 +52,16 @@
                             cols="12"
                         >
                           <v-text-field
-                              v-model="editedStudent.name"
-                              label="Name *"
+                              v-model="editedStudent.firstName"
+                              label="First  Name *"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                        >
+                          <v-text-field
+                              v-model="editedStudent.lastName"
+                              label="Last Name *"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -110,7 +118,7 @@
               <v-container>
                 <v-row>
                   <v-col class="headline">
-                    {{ item.name }}
+                    {{ item.firstName }}
                   </v-col>
                 </v-row>
                 <v-row>
@@ -124,7 +132,7 @@
                   </v-col>
                   <v-col>
                     <span class="font-weight-bold">Project:</span>
-                    {{ item.projectName }}
+                    {{ item.project.name }}
                   </v-col>
                   <v-col>
                     <span class="font-weight-bold">Grade Level:</span>
@@ -147,7 +155,8 @@ export default {
   name: 'Students',
   data: () => ({
     headers: [
-      {text: 'Student Name', value: 'name'},
+      {text: 'FirstName', value: 'firstName'},
+      {text: 'LastName', value: 'lastName'},
       {text: 'School', value: 'school.name'},
       {text: 'Project', value: 'project.name'},
       {text: 'GradeLevel', value: 'gradeLevel.name'},
@@ -158,9 +167,11 @@ export default {
     formDialog: false,
     editedIndex: -1,
     editedStudent: {
-      name: '',
+      firstName: '',
+      lastName: '',
       studentId: '',
       projectName: '',
+      gradeLevel: '',
     },
     err: null
   }),
@@ -182,6 +193,9 @@ export default {
     formDialog: (val) => {
       if (val === false) {
         this.editedIndex = -1;
+        for (const key in this.editedStudent) {
+          this.editedStudent[key] = '';
+        }
       }
     },
   },
@@ -193,9 +207,11 @@ export default {
       refreshGradeLevels: 'refreshGradeLevels',
     }),
     editStudent(item) {
+
       this.editedIndex = this.students.indexOf(item)
       this.editedStudent = {
-        name: item.name,
+        firstName: item.firstName,
+        lastName: item.lastName,
         schoolId: item.school.id,
         projectId: item.project.id,
         gradeLevelId: item.gradeLevel.id
@@ -206,6 +222,13 @@ export default {
       this.editedIndex = this.students.indexOf(item)
       this.editedStudent = Object.assign({}, item)
       this.dialogDelete = true
+    }
+  },
+  filters: {
+    fullName: (val) => {
+      let name = `${val.firstName} ${val.lastName}`;
+      name += val.suffix ? ` ${val.suffix}` : ``;
+      return name;
     }
   },
   mounted() {

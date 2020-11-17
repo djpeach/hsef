@@ -246,7 +246,7 @@ export default {
     }
   },
   filters: {
-    fullname: (val) => {
+    fullName: (val) => {
       let name = `${val.firstName} ${val.lastName}`;
       name += val.suffix ? ` ${val.suffix}` : ``;
       return name;

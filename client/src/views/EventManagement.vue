@@ -6,7 +6,7 @@
     </v-col>
 
     <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -25,7 +25,7 @@
         </v-card>
       </v-col>
       <!-- Card 2 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -43,7 +43,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -60,10 +60,8 @@
           </v-card-title>
         </v-card>
       </v-col>
-    </v-row>
     <!-- row 2-->
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -82,7 +80,7 @@
         </v-card>
       </v-col>
       <!-- Card 2 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -100,7 +98,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -117,10 +115,8 @@
           </v-card-title>
         </v-card>
       </v-col>
-    </v-row>
     <!-- row 3-->
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -139,7 +135,7 @@
         </v-card>
       </v-col>
       <!-- Card 2 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
@@ -157,7 +153,7 @@
         </v-card>
       </v-col>
       <!-- Card 3 -->
-      <v-col>
+      <v-col cols="12" md="4" sm="6">
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
             max-width="344"
