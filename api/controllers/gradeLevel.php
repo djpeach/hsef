@@ -5,7 +5,7 @@ function createNewGradeLevel(Slim\Slim $app) {
   return function() use ($app) {
     // Initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $gradeLevel = valueOrError($reqBody->gradeLevel, new BadRequest("You must provide a gradeLevel object on the request body"));
+    $gradeLevel = valueOrError($reqBody['gradeLevel'], new BadRequest("You must provide a gradeLevel object on the request body"));
     $resBody = [];
 
     // Additional request parameter validation if needed

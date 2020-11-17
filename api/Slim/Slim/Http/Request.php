@@ -89,14 +89,14 @@ class Request
 
     public function jsonBody() {
       if ($this->getBody()) {
-        return json_decode($this->getBody());
+        return json_decode($this->getBody(), true);
       }
       return null;
     }
 
     public function jsonParams() {
       if ($this->params()) {
-        return json_decode(json_encode($this->params()));
+        return json_decode(json_encode($this->params()), true);
       }
       return null;
     }

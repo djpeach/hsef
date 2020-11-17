@@ -11,9 +11,9 @@ function createNewJudge(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $reqBody = $app->req->jsonBody();
-    $user = valueOrError($reqBody->user, "You must provide a user object on the request object");
-    $operator = valueOrDefault($reqBody->operator, new EmptyObject());
-    $judge = valueOrDefault($reqBody->judge, new EmptyObject());
+    $user = valueOrError($reqBody['user'], "You must provide a user object on the request object");
+    $operator = valueOrDefault($reqBody['operator'], new EmptyObject());
+    $judge = valueOrDefault($reqBody['judge'], new EmptyObject());
     $resBody = [];
 
     // Additional request parameter validation if needed
@@ -90,6 +90,64 @@ function createNewJudge(Slim\Slim $app) {
 
     // Send response
     $app->res->json($resBody);
+  };
+}
+
+function createPublicJudge(Slim\Slim $app) {
+  return function() use ($app) {
+    $reqBody = json_decode($app->req->getBody(), true);
+
+    // see if judge from previous year exists. If so, create new userYear record and change status to pending
+    $sql = DB::get()->prepare("SELECT * FROM User U WHERE Email = ?");
+    $sql->execute([valueOrError($reqBody["email"], new BadRequest("must provide email"))]);
+    execOrError($sql->execute([
+      valueOrError($reqBody["email"], new BadRequest("must provide email")),
+    ]), new DatabaseError("Error while attempting to fetch existing user during public judge registration"));
+
+    $existingUser = $sql->fetch(PDO::FETCH_OBJ);
+    if ($existingUser) {
+      $sql = DB::get()->prepare("INSERT INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
+      execOrError($sql->execute([$existingUser->UserId]), new DatabaseError("Error while attempting to create new user year record during public judge registration"));
+
+      $sql = DB::get()->prepare("UPDATE User SET Status = 'pending' WHERE UserId = ?");
+      execOrError($sql->execute([$existingUser->UserId]), new DatabaseError("Error while attempting to change user status to pending during public judge registration"));
+    } else {
+      // create new user record
+      $sql = DB::get()->prepare("INSERT INTO User(FirstName, LastName, Suffix, Gender, Status, Email) VALUES (?, ?, ?, ?, ?, ?)");
+      execOrError($sql->execute([
+        valueOrError($reqBody["firstName"], new BadRequest("Must provide a value for firstName")),
+        valueOrError($reqBody["lastName"], new BadRequest("Must provide a value for lastName")),
+        valueOrNull($reqBody["suffix"]),
+        valueOrNull($reqBody["gender"]),
+        "registered",
+        valueOrError($reqBody["email"], new BadRequest("Must provide a value for email")),
+      ]), new DatabaseError("Error while attempting to create new user record during public judge registration"));
+      $userId = DB::get()->lastInsertId();
+
+      // create new user year record
+      $sql = DB::get()->prepare("INSERT INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
+      execOrError($sql->execute([
+        valueOrError($userId, new DatabaseError("Could not get userId for newly created user record")),
+      ]), new DatabaseError("Error while attempting to create new user year record during public judge registration"));
+      $userYearId = DB::get()->lastInsertId();
+
+      // create new operator record
+      $sql = DB::get()->prepare("INSERT INTO Operator(Title, HighestDegree, Employer, UserYearId) VALUES (?, ?, ?, ?)");
+      execOrError($sql->execute([
+        valueOrNull($reqBody["title"]),
+        valueOrNull($reqBody["highestDegree"]),
+        valueOrNull($reqBody["employer"]),
+        valueOrError($userYearId, new DatabaseError("Could not get userYearId for newly created user year record"))
+      ]), new DatabaseError("Error while attempting to create new operator record during public judge registration"));
+
+      //
+    }
+
+
+
+
+    // else, create a new user, and userYear record. set status to pending
+    echo 'hey';
   };
 }
 
@@ -245,29 +303,35 @@ function listJudges(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
     $resBody = [];
+    $reqParams = $app->req->jsonParams();
+    $status = valueOrDefault($reqParams["status"], "active");
 
-    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree, 
-       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix, 
-       U.Gender, U.Status, U.CheckedIn, U.Email 
-FROM Operator O 
+    if (!in_array($status, ['active', 'registered', 'invited', 'archived'])) {
+      throw new BadRequest("status must be one of ['active', 'registered', 'invited', 'archived']");
+    }
+
+    $query = "SELECT O.OperatorId, O.Title, O.HighestDegree,
+       O.Employer, U.UserId, U.FirstName, U.LastName, U.Suffix,
+       U.Gender, U.Status, U.CheckedIn, U.Email
+FROM Operator O
     JOIN OperatorEntitlement OE on O.OperatorId = OE.OperatorId
     JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
-    JOIN UserYear UY on O.UserYearId = UY.UserYearId 
-    JOIN User U on UY.UserId = U.UserId 
+    JOIN UserYear UY on O.UserYearId = UY.UserYearId
+    JOIN User U on UY.UserId = U.UserId
 WHERE E.Name = 'judge'
-  AND U.Status = 'active'
+  AND U.Status = ?
   AND UY.Year = YEAR(CURRENT_TIMESTAMP)";
 
     $sql = DB::get()->prepare($query);
 
-    execOrError($sql->execute([]), new DatabaseError("Failed to retrieve judges"));
+    execOrError($sql->execute([$status]), new DatabaseError("Failed to retrieve judges"));
 
     // Finalize (build/transform/filter) response if needed
     $judges = $sql->fetchAll();
     if (!$judges) {
       throw new UserNotFound("No judges could be found");
     }
-    $resBody["count"] = count($judges);
+
     $resBody["results"] = array_map(function($admin) {
       return filterNullCamelCaseKeys($admin);
     }, $judges);
