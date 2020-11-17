@@ -56,9 +56,7 @@ function resetPwdEmail(Slim\Slim $app) {
     $sql->execute([$randKey, $authAccount->AuthAccountId]);
 
     $to = $reqBody['email']; // note the comma
-
     $subject = 'HSEF password reset';
-
     $message = "
 <html>
 <head>
@@ -71,21 +69,17 @@ function resetPwdEmail(Slim\Slim $app) {
 </html>
 ";
 
-
     $headers = array("From: webmaster@hsef.org",
-      "Reply-To: djpeach@iu.edu",
+      "Reply-To: webmaster@hsef.org",
       "X-Mailer: PHP/" . PHP_VERSION,
       'Content-type: text/html; charset=iso-8859-1',
       'MIME-Version: 1.0',
       "To: {$reqBody['email']}"
     );
 
-// Mail it
-    if (mail($to, $subject, $message, implode("\r\n", $headers))) {
-      echo "success";
-    } else {
+    if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
       throw new ApiException("Failed to send password reset email");
-    };
+    }
 
   };
 }

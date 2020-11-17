@@ -257,5 +257,7 @@ function updateRouter($app) {
     $app->put('/sessions/:id', saveScore($app));
 
     $app->put('/pwdReset', resetPwdEmailSubmit($app));
+
+    $app->put('/judge/:id/approve', approveJudge($app));
   };
 }

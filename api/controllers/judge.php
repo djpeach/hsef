@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__."/../utils.php";
+
 // CREATE
 function createJudgeFromExisting($app) {
   return function() use ($app) {
@@ -148,6 +150,63 @@ function createPublicJudge(Slim\Slim $app) {
 
     // else, create a new user, and userYear record. set status to pending
     echo 'hey';
+  };
+}
+
+function approveJudge(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    // add judge entitlement
+    $sql = DB::get()->prepare("INSERT INTO OperatorEntitlement(OperatorId, EntitlementId) VALUES (?, (SELECT EntitlementId FROM Entitlement WHERE Name = 'judge'))");
+    execOrError($sql->execute([$opid]), new DatabaseError("Error while adding judge entitlement to operator during judge approval"));
+
+    // get user for opid
+    $sql = DB::get()->prepare("SELECT UserId, Email FROM User Where UserId = (Select UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+    execOrError($sql->execute([$opid]), new DatabaseError("Error while getting user by operator id during judge approval"));
+
+    $userId = valueOrError($sql->fetch()->UserId, new UserNotFound("Could not find a user for that operator id"));
+    $email = valueOrError($sql->fetch()->Email, new UserNotFound("Could not find a user for that operator id"));
+
+    // set status to active
+    $sql = DB::get()->prepare("UPDATE User SET Status = 'active' WHERE UserId = ?");
+    execOrError($sql->execute([$userId]), new DatabaseError("Error while making user active during judge approval"));
+
+    // create auth account
+    $sql = DB::get()->prepare("INSERT INTO AuthAccount(PasswordHash, UserId) VALUES (?, ?)");
+    execOrError($sql->execute([generateRandomString(), $userId]), new DatabaseError("Error while creating auth account for judge during judge approval"));
+    $authAccountId = valueOrError(DB::get()->lastInsertId(), new DatabaseError("Could not get auth account id for newly created auth account during judge approval"));
+
+    // create one time token for pwd reset
+    $sql = DB::get()->prepare("INSERT INTO OneTimeToken(Token, AuthAccountId) VALUES (?, ?)");
+    $randKey = generateRandomString(10);
+    $sql->execute([$randKey, $authAccountId]);
+
+    // email judge
+    $to = $email; // note the comma
+    $subject = 'HSEF judging approval!';
+    $message = "
+<html>
+<head>
+  <title>Approved to judge at HSEF</title>
+</head>
+<body>
+  <p>Your judge registration has been approved</p>
+  <p>Click the link below to set your password, then you can log in with this email and password to select your judging category and grade level preferences</p>
+  <a href='http://localhost:8080/pwdReset?k=".$randKey."'>Reset Password</a>
+</body>
+</html>
+";
+
+    $headers = array("From: webmaster@hsef.org",
+      "Reply-To: webmaster@hsef.org",
+      "X-Mailer: PHP/" . PHP_VERSION,
+      'Content-type: text/html; charset=iso-8859-1',
+      'MIME-Version: 1.0',
+      "To: {$email}"
+    );
+
+    if (!mail($to, $subject, $message, implode("\r\n", $headers))) {
+      throw new ApiException("Failed to send password reset email");
+    }
   };
 }
 
