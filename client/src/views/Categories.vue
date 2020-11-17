@@ -88,10 +88,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Category:</span> {{ item.name }}
+                    <span class="font-weight-bold">Category:</span>
+                    {{ item.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Category Id:</span> {{ item.categoryId }}
+                    <span class="font-weight-bold">Category Id:</span>
+                    {{ item.categoryId }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -104,15 +106,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'Category',
   data: () => ({
     headers: [
-      { text: 'Category', value: 'name' },
+      {text: 'Category', value: 'name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -127,7 +129,7 @@ export default {
     ...mapState({
       categories: state => state.categories,
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -142,12 +144,12 @@ export default {
     ...mapActions({
       refreshCategories: 'refreshCategories',
     }),
-    editCategory (item) {
+    editCategory(item) {
       this.editedIndex = this.categories.indexOf(item)
-      this.editedCategory = { name: item.name}
+      this.editedCategory = {name: item.name}
       this.formDialog = true
     },
-    deleteCategory (item) {
+    deleteCategory(item) {
       this.editedIndex = this.categories.indexOf(item)
       this.editedCategory = Object.assign({}, item)
       this.dialogDelete = true

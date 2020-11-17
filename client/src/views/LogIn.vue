@@ -1,18 +1,21 @@
 <template>
-   <v-container>
-     <v-row v-if="err">
-       <v-col>
-         <v-alert
-             dense
-             outlined
-             type="error"
-         >
-           {{ err.body.message }}
-         </v-alert>
-       </v-col>
-     </v-row>
+  <v-container>
+    <v-row>
+      <h1>HSEF Judge & Admin Login</h1>
+    </v-row>
+    <v-row v-if="err">
+      <v-col>
+        <v-alert
+            dense
+            outlined
+            type="error"
+        >
+          {{ err.body.message }}
+        </v-alert>
+      </v-col>
+    </v-row>
     <v-row align="center"
-      justify="space-around">
+           justify="space-around">
       <v-col>
         <form @submit.prevent="submitLogin">
           <p>Email</p>
@@ -28,8 +31,8 @@
               type="password"
           ></v-text-field>
           <v-dialog
-            max-width="400"
-            v-model="pwdResetDialog"
+              max-width="400"
+              v-model="pwdResetDialog"
           >
             <template v-slot:activator="{on, attrs}">
               <div>
@@ -38,8 +41,9 @@
                     text
                     v-on="on"
                     v-bind="attrs"
-                  color="primary"
-                >Reset Password</v-btn>
+                    color="primary"
+                >Reset Password
+                </v-btn>
               </div>
             </template>
             <v-card>
@@ -101,12 +105,11 @@
         </form>
       </v-col>
     </v-row>
-  </v-container>  
-
+  </v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
 
 export default {
   name: 'LogIn',
@@ -132,7 +135,7 @@ export default {
   },
   methods: {
     resetPwdClicked() {
-      this.resetPassword({ email: this.pwdResetEmail }).then(() => {
+      this.resetPassword({email: this.pwdResetEmail}).then(() => {
         this.pwdResetErr = null;
         this.pwdResetSucc = `Password reset email sent to ${this.pwdResetEmail}`;
       }).catch(err => {
@@ -142,10 +145,10 @@ export default {
     },
     submitLogin() {
       // TODO: form validation
-      this.loginUser({ ...this.creds })
-      .then(async () => {
-        await this.$router.push({name: 'dashboard'})
-      }).catch(err => {
+      this.loginUser({...this.creds})
+          .then(async () => {
+            await this.$router.push({name: 'dashboard'})
+          }).catch(err => {
         this.err = err;
       })
     },

@@ -88,10 +88,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">County:</span> {{ item.name }}
+                    <span class="font-weight-bold">County:</span>
+                    {{ item.name }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">County Id:</span> {{ item.countyId }}
+                    <span class="font-weight-bold">County Id:</span>
+                    {{ item.countyId }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -104,15 +106,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'County',
   data: () => ({
     headers: [
-      { text: 'County', value: 'name' },
+      {text: 'County', value: 'name'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -127,7 +129,7 @@ export default {
     ...mapState({
       counties: state => state.counties,
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -142,12 +144,12 @@ export default {
     ...mapActions({
       refreshCounties: 'refreshCounties',
     }),
-    editCounty (item) {
+    editCounty(item) {
       this.editedIndex = this.counties.indexOf(item)
-      this.editedCounty = { name: item.name}
+      this.editedCounty = {name: item.name}
       this.formDialog = true
     },
-    deleteCounty (item) {
+    deleteCounty(item) {
       this.editedIndex = this.counties.indexOf(item)
       this.editedCounty = Object.assign({}, item)
       this.dialogDelete = true

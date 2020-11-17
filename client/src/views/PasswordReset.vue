@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
 
 export default {
   name: 'LogIn',
@@ -51,11 +51,11 @@ export default {
     submitPwdResetClicked() {
       if (this.password !== this.passwordConfirmation) {
         this.err = {
-          body: { message: 'Passwords do not match' }
+          body: {message: 'Passwords do not match'}
         }
         return
       }
-      this.resetPasswordSubmit({ key: this.$route.query.k, pwd: this.password }).then(() => {
+      this.resetPasswordSubmit({key: this.$route.query.k, pwd: this.password}).then(() => {
         this.$router.push({name: 'login'})
       }).catch(err => {
         this.err = err;

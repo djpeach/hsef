@@ -88,10 +88,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <span class="font-weight-bold">Booth:</span> {{ item.number }}
+                    <span class="font-weight-bold">Booth:</span>
+                    {{ item.number }}
                   </v-col>
                   <v-col>
-                    <span class="font-weight-bold">Booth Id:</span> {{ item.boothId }}
+                    <span class="font-weight-bold">Booth Id:</span>
+                    {{ item.boothId }}
                   </v-col>
                 </v-row>
               </v-container>
@@ -104,15 +106,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   number: 'Booth',
   data: () => ({
     headers: [
-      { text: 'Booth', value: 'number' },
+      {text: 'Booth', value: 'number'},
       {text: 'Actions', value: 'actions'},
-      { text: '', value: 'data-table-expand' },
+      {text: '', value: 'data-table-expand'},
     ],
     loading: false,
     formDialog: false,
@@ -127,7 +129,7 @@ export default {
     ...mapState({
       booths: state => state.booths,
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
@@ -142,12 +144,12 @@ export default {
     ...mapActions({
       refreshBooths: 'refreshBooths',
     }),
-    editBooth (item) {
+    editBooth(item) {
       this.editedIndex = this.booths.indexOf(item)
-      this.editedBooth = { number: item.number}
+      this.editedBooth = {number: item.number}
       this.formDialog = true
     },
-    deleteBooth (item) {
+    deleteBooth(item) {
       this.editedIndex = this.booths.indexOf(item)
       this.editedBooth = Object.assign({}, item)
       this.dialogDelete = true

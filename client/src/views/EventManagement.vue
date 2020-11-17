@@ -20,11 +20,11 @@
             fas fa-gavel p-5
           </v-icon>
           <v-card-title class="amber--text">
-              Judges
+            Judges
           </v-card-title>
         </v-card>
       </v-col>
-        <!-- Card 2 -->
+      <!-- Card 2 -->
       <v-col>
         <v-card
             class="elevation-1 mt-3 col-12 col-sm-6 col-md-4"
@@ -197,7 +197,7 @@
 <script>
 export default {
   name: 'EventManagement',
-  data () {
+  data() {
     return {
       loader: null,
       loading: false,
@@ -205,7 +205,7 @@ export default {
     }
   },
   watch: {
-    loader () {
+    loader() {
       const l = this.loader
       this[l] = !this[l]
 

@@ -6,6 +6,7 @@ import store from './store'
 import axios from 'axios'
 
 import VueResource from 'vue-resource';
+
 Vue.use(VueResource);
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production'

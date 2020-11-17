@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   name: 'AppNav',
@@ -83,7 +83,7 @@ export default {
       }).catch(err => {
         console.log(err)
       }).finally(() => {
-        this.$router.push({ name: 'login' })
+        this.$router.push({name: 'login'})
       })
     },
     ...mapActions({
