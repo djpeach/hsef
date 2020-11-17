@@ -90,8 +90,14 @@ const mutations = {
 };
 
 const actions = {
+  async approveJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${data.operatorId}/approve`);
+  },
+  async denyJudge(ctx, { operatorId }) {
+    return Vue.http.put(`update/judges/${data.operatorId}/deny`);
+  },
   async registerJudge(ctx, data) {
-    return Vue.http.post(`create/judge/public`, data);
+    return Vue.http.post(`create/judges/public`, data);
   },
   async resetPwdSubmit(ctx, { key, pwd }) {
     return Vue.http.put(`update/pwdReset`, { key, pwd });
