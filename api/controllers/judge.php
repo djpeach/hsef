@@ -481,7 +481,7 @@ FROM Operator O
     JOIN Entitlement E on OE.EntitlementId = E.EntitlementId
     JOIN UserYear UY on O.UserYearId = UY.UserYearId
     JOIN User U on UY.UserId = U.UserId
-    JOIN AuthAccount AA on U.UserId = AA.UserId
+    LEFT JOIN AuthAccount AA on U.UserId = AA.UserId
 WHERE E.Name = 'judge'
   AND U.Status = ?
   AND UY.Year = YEAR(CURRENT_TIMESTAMP)";

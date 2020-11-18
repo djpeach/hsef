@@ -1,14 +1,13 @@
 <template>
   <v-container>
-
-
-        <h2
-            align="center">
-          Welcome to the Dashboard
-        </h2>
     <v-row>
-      <v-col
-          align="center">
+      <v-col class="text-center">
+        <h1>Welcome to Dashboard</h1>
+        <v-btn @click="showLinks = !showLinks" outlined color="amber">Show Presentation Links</v-btn>
+      </v-col>
+    </v-row>
+    <v-row v-show="showLinks">
+      <v-col>
         <h3>Judges</h3>
         <v-btn
             block
@@ -32,8 +31,7 @@
           Judge Schedule & Scoring
         </v-btn>
       </v-col>
-      <v-col
-          align="center">
+      <v-col>
         <h3>Admins</h3>
         <v-btn
             block
@@ -134,8 +132,7 @@
           View ranked scores
         </v-btn>
       </v-col>
-      <v-col
-          align="center">
+      <v-col>
         <h3>Session Chairs</h3>
         <v-btn
             block
@@ -182,43 +179,51 @@
       </v-col>
     </v-row>
     <v-row>
-        <v-col
-            align="center">
-          <h4>Judging Preferences</h4>
-          <v-form>
-
+      <v-col lg="10" offset-lg="1">
+        <v-card
+          class="px-4 pb-3"
+        >
+          <v-card-title class="mb-5">Judging Preferences</v-card-title>
+          <v-form @submit.prevent="savePreferencesHandler">
             <v-select
                 v-model="projectsValue"
                 :items="projects"
                 chips
-                label="Project categories I prefer to judge:"
+                label="Preferred Categories"
                 multiple
-                outlined
+                class="mb-8"
             ></v-select>
             <v-select
                 v-model="gradeLevelValue"
                 :items="gradeLevel"
                 chips
-                label="Grade levels I prefer to judge:"
+                label="Preferred Grade Levels"
                 multiple
-                outlined
             ></v-select>
-            <v-btn
-              color="amber"
-              type="submit">
-              Submit Preferences
-            </v-btn>
+            <div class="flex-row justify-end">
+              <v-btn
+                  color="amber"
+                  type="submit"
+                  :disabled="!canSavePreferences"
+                  class="d-block mt-2 ml-auto"
+              >
+                Save Preferences
+              </v-btn>
+            </div>
           </v-form>
-        </v-col>
-        <v-col
-          align="center">
-          <h4>Judge Check-in</h4>
-          <v-checkbox
-              v-model="checkbox"
-              :label="`Checked In: ${checkbox.toString()}`"
-          ></v-checkbox>
-        </v-col>
-      </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col md="6" lg="4" offset-lg="1">
+        <v-card
+          class="px-4 pb-3 text-center"
+        >
+          <v-card-title class="mb-5">Judge Check In and Out</v-card-title>
+          <v-btn :color="checkedIn ? 'amber' : 'teal darken-4'" :class="checkedIn ? '' : 'white--text'" @click="checkedIn = !checkedIn">{{ checkedIn ? 'Check Out' : 'Check In' }}</v-btn>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -228,11 +233,26 @@
 export default {
   name: 'Dashboard',
   data: () => ({
-    checkbox: false,
     projects: ['Computer Science', 'Astrology', 'Physics', 'Geology','Forensics','Engineering'],
     projectsValue: ['Computer Science', 'Astrology', 'Physics', 'Geology','Forensics','Engineering'],
     gradeLevelValue: ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Freshman','Sophomore','Junior','Senior'],
     gradeLevel: ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Freshman','Sophomore','Junior','Senior'],
+    canSavePreferences: false,
+    checkedIn: false,
+    showLinks: false,
   }),
+  watch: {
+    projectsValue() {
+      this.canSavePreferences = true;
+    },
+    gradeLevelValue() {
+      this.canSavePreferences = true;
+    }
+  },
+  methods: {
+    savePreferencesHandler() {
+      this.canSavePreferences = false;
+    }
+  }
 }
 </script>
