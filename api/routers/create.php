@@ -75,16 +75,13 @@ function createRouter($app) {
        *
        * @apiHeader {String} Content-Type=application/json
        *
-       * @apiParam {Object} user The user details
-       * @apiParam {String{128}} user.firstName
-       * @apiParam {String{128}} user.lastName
-       * @apiParam {String{64}} [user.suffix]
-       * @apiParam {String{128}} user.email
-       * @apiParam {String=male,female,other} [user.gender]
-       * @apiParam {String=active,registered,invited,archived} [user.status=active]
-       * @apiParam {Boolean} [user.checkedIn=false]
-       * @apiUse OperatorFields
-       * @apiUse JudgeFields
+       * @apiParam {String{128}} firstName
+       * @apiParam {String{128}} lastName
+       * @apiParam {String{128}} email
+       * @apiParam {String{128}} [title]
+       * @apiParam {String{128}} [highestDegree]
+       * @apiParam {String=male,female,other} [gender]
+       * @apiParam {String} [employer]
        *
        * @apiSuccess {Number} userId
        * @apiSuccess {Number} operatorId

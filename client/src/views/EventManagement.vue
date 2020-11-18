@@ -1,10 +1,10 @@
 <template>
   <v-container>
-
-    <v-col>
-      <h2>Event Management</h2>
-    </v-col>
-
+    <v-row>
+      <v-col class="text-center">
+        <h1>Event Management Center</h1>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12" md="4" sm="6">
         <!-- Card 1-->

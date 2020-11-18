@@ -38,7 +38,7 @@
                       v-bind="attrs"
                       v-on="on"
                   >
-                    New Judges
+                    New Judge
                   </v-btn>
                 </template>
                 <v-card>
@@ -47,6 +47,28 @@
                   </v-card-title>
                   <v-card-text>
                     <v-container>
+                      <v-row v-if="crudJudgeError">
+                        <v-col>
+                          <v-alert
+                              dense
+                              outlined
+                              type="error"
+                          >
+                            {{ crudJudgeError }}
+                          </v-alert>
+                        </v-col>
+                      </v-row>
+                      <v-row v-else-if="crudJudgeSuccess">
+                        <v-col>
+                          <v-alert
+                              dense
+                              outlined
+                              type="success"
+                          >
+                            {{ crudJudgeSuccess }}
+                          </v-alert>
+                        </v-col>
+                      </v-row>
                       <v-row>
                         <v-col
                             cols="12"
@@ -71,6 +93,49 @@
                               v-model="editedJudge.email"
                               label="Email *"
                           ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-select
+                            :items="['Mr.', 'Mrs.', 'Miss', 'Dr.']"
+                            v-model="editedJudge.title"
+                            label="Title"
+                          >
+                          </v-select>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-select
+                            :items="['High School Diploma', 'Some College', 'Associates Degree', 'Bachelors Degree', 'Masters', 'PhD']"
+                            v-model="editedJudge.highestDegree"
+                            label="Highest Degree Earned"
+                          >
+                          </v-select>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-select
+                            :items="['male', 'female', 'other']"
+                            v-model="editedJudge.gender"
+                            label="Gender"
+                          >
+                          </v-select>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="editedJudge.employer"
+                            label="Employer"
+                          >
+                          </v-text-field>
+                        </v-col>
+                        <v-spacer></v-spacer>
+                        <v-col>
+                          <v-btn
+                            color="amber"
+                            dark
+                            class="mb-2"
+                            style="float: right"
+                            @click="saveJudgeForm"
+                          >
+                            Submit
+                          </v-btn>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -225,10 +290,17 @@ export default {
     pendingJudgeUpdateError: "",
     pendingJudgeUpdateSuccess: "",
     editedJudge: {
+      operatorId: '',
       firstName: '',
       lastName: '',
-      judgeEmail:'',
+      email: '',
+      title: '',
+      highestDegree: '',
+      gender: '',
+      employer: '',
     },
+    crudJudgeError: '',
+    crudJudgeSuccess: '',
     err: null
   }),
   computed: {
@@ -237,11 +309,14 @@ export default {
       pendingJudges: state => state.pendingJudges,
     }),
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'New Judge' : 'Edit Judge'
     },
   },
   watch: {
     formDialog(val) {
+      this.crudJudgeSuccess = '';
+      this.crudJudgeError = '';
+      this.reloadJudgesTable();
       if (val === false) {
         this.editedIndex = -1;
         for (const key in this.editedJudge) {
@@ -256,13 +331,43 @@ export default {
       refreshPendingJudges: 'refreshPendingJudges',
       denyJudge: 'denyJudge',
       approveJudge: 'approveJudge',
+      createJudge: 'createJudge',
+      updateJudge: 'updateJudge',
     }),
+    saveJudgeForm() {
+      if (this.editedIndex >= 0) {
+        // updating
+        this.updateJudge(this.editedJudge).then(res => {
+          this.crudJudgeError = '';
+          this.crudJudgeSuccess = 'Judge updated';
+        }).catch(err => {
+          this.crudJudgeSuccess = '';
+          this.crudJudgeError = 'Failed to update judge';
+          console.log(err)
+        })
+      } else {
+        // create new
+        this.createJudge(this.editedJudge).then(res => {
+          this.crudJudgeError = '';
+          this.crudJudgeSuccess = 'Judge created';
+        }).catch(err => {
+          this.crudJudgeSuccess = '';
+          this.crudJudgeError = 'Failed to create judge';
+          console.log(err)
+        })
+      }
+    },
     editJudge(item) {
       this.editedIndex = this.judges.indexOf(item)
       this.editedJudge = {
+        operatorId: item.operatorId,
         firstName: item.firstName,
         lastName: item.lastName,
-        email: item.email
+        email: item.email,
+        title: item.title,
+        highestDegree: item.highestDegree,
+        gender: item.gender,
+        employer: item.employer,
       }
       this.formDialog = true
     },

@@ -71,6 +71,7 @@ function listRouter($app) {
      * @apiSuccess {String=active,registered,invited,archived} results.status
      * @apiSuccess {Boolean} results.checkedIn This will return <code>0</code> for false and <code>1</code> for true
      * @apiSuccess {String} results.email
+     * @apiSuccess {String} results.passwordHash
      * @apiSuccess {Object[]} [results.categoryPreferences] A list of categories the judge prefers to be matched with
      * @apiSuccess {Number} results.categoryPreferences.id
      * @apiSuccess {String} results.categoryPreferences.name

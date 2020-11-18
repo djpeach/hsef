@@ -1,6 +1,11 @@
 <template>
   <v-container>
     <v-row>
+      <v-col class="text-center">
+        <h1>Judging Schedule</h1>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col>
         <v-timeline
             align-top
