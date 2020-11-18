@@ -145,6 +145,9 @@ const actions = {
   async createStudent(ctx, data) {
     return Vue.http.post(`create/students`, data);
   },
+  async createCounty(ctx, data) {
+    return Vue.http.post(`create/counties`, data);
+  },
 
   // update
   async checkIn(ctx) {
@@ -188,6 +191,10 @@ const actions = {
   async updateStudent(ctx, data) {
     const { operatorId, ...rest } = data;
     return Vue.http.put(`update/students/${operatorId}`, rest);
+  },
+  async updateCounty(ctx, data) {
+    const { countyId, ...rest } = data;
+    return Vue.http.put(`update/counties/${countyId}`, rest);
   },
 
   async updateJudgingPreferences(ctx, data) {
