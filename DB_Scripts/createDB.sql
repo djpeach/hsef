@@ -132,7 +132,7 @@ CREATE TABLE Project (
     BoothId int unsigned NULL,
     CourseNetworkingId varchar(128) NULL,
     CategoryId int unsigned NULL,
-    UNIQUE INDEX ak_CourseNetworkingId (CourseNetworkingId),
+    UNIQUE INDEX ak_CourseNetworkingId (Name, Number, CourseNetworkingId),
     CONSTRAINT Project_pk PRIMARY KEY (ProjectId)
 );
 
