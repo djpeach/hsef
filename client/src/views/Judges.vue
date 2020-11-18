@@ -286,6 +286,8 @@ export default {
     pendingLoading: false,
     pendingLoadingMessage: 'Fetching Judges Pending Approval',
     formDialog: false,
+    scheduleDialog: false,
+
     editedIndex: -1,
     pendingJudgeUpdateError: "",
     pendingJudgeUpdateSuccess: "",
@@ -307,6 +309,7 @@ export default {
     ...mapState({
       judges: state => state.judges,
       pendingJudges: state => state.pendingJudges,
+      judgeSchedule: state => state.judgeSchedule
     }),
     formTitle() {
       return this.editedIndex === -1 ? 'New Judge' : 'Edit Judge'
@@ -334,6 +337,8 @@ export default {
       createJudge: 'createJudge',
       updateJudge: 'updateJudge',
       archiveJudge: 'archiveJudge',
+      getJudgeSchedule: 'refreshJudgeSchedule',
+      saveScore: 'saveScore',
     }),
     saveJudgeForm() {
       if (this.editedIndex >= 0) {
@@ -438,6 +443,7 @@ export default {
   mounted() {
     this.reloadJudgesTable();
     this.reloadPendingJudgesTable();
+    this.getJudgeSchedule()
   }
 }
 </script>

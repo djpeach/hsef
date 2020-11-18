@@ -47,6 +47,28 @@
                   </v-card-title>
                   <v-card-text>
                     <v-container>
+                      <v-row v-if="crudCountyError">
+                        <v-col>
+                          <v-alert
+                              dense
+                              outlined
+                              type="error"
+                          >
+                            {{ crudCountyError }}
+                          </v-alert>
+                        </v-col>
+                      </v-row>
+                      <v-row v-else-if="crudCountySuccess">
+                        <v-col>
+                          <v-alert
+                              dense
+                              outlined
+                              type="success"
+                          >
+                            {{ crudCountySuccess }}
+                          </v-alert>
+                        </v-col>
+                      </v-row>
                       <v-row>
                         <v-col
                             cols="12"
@@ -123,6 +145,8 @@ export default {
       name: '',
       countyId: '',
     },
+    crudCountyError: '',
+    crudCountySuccess: '',
     err: null
   }),
   computed: {
@@ -146,7 +170,32 @@ export default {
   methods: {
     ...mapActions({
       refreshCounties: 'refreshCounties',
+      createCounty: 'createCounty',
+      updateCounty: 'updateCounty',
     }),
+    saveCountyForm() {
+      if (this.editedIndex >= 0) {
+        // updating
+        this.updateCounty(this.editedCounty).then(res => {
+          this.crudCountyError = '';
+          this.crudCountySuccess = 'County updated';
+        }).catch(err => {
+          this.crudCountySuccess = '';
+          this.crudCountyError = 'Failed to update County';
+          console.log(err)
+        })
+      } else {
+        // create new
+        this.createCounty(this.editedCounty).then(res => {
+          this.crudCountyError = '';
+          this.crudCountySuccess = 'County created';
+        }).catch(err => {
+          this.crudCountySuccess = '';
+          this.crudCountyError = 'Failed to create County';
+          console.log(err)
+        })
+      }
+    },
     editCounty(item) {
       this.editedIndex = this.counties.indexOf(item)
       this.editedCounty = {name: item.name}
