@@ -359,10 +359,10 @@ INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (9, '9th Grade');
 INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (10, '10th Grade');
 INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (11, '11th Grade');
 INSERT INTO GradeLevel(GradeLevelId, Name) VALUES (12, '12th Grade');
-
-INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 1);
-INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 2);
-INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 3);
+#
+# INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 1);
+# INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 2);
+# INSERT INTO OperatorCategory(OperatorId, CategoryId) values (1, 3);
 INSERT INTO OperatorCategory(OperatorId, CategoryId) values (2, 2);
 INSERT INTO OperatorCategory(OperatorId, CategoryId) values (2, 3);
 INSERT INTO OperatorCategory(OperatorId, CategoryId) values (2, 4);

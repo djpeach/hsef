@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-11-17 03:24:06.013
+-- Last modification date: 2020-11-18 04:03:10.869
 
 -- tables
 -- Table: AuthAccount
@@ -132,6 +132,7 @@ CREATE TABLE Project (
     BoothId int unsigned NULL,
     CourseNetworkingId varchar(128) NULL,
     CategoryId int unsigned NULL,
+    UNIQUE INDEX ak_CourseNetworkingId (CourseNetworkingId),
     CONSTRAINT Project_pk PRIMARY KEY (ProjectId)
 );
 
@@ -175,6 +176,7 @@ CREATE TABLE User (
     CheckedIn bool NOT NULL DEFAULT false,
     Email char(128) NULL,
     UNIQUE INDEX ak_User_Email (Email),
+    UNIQUE INDEX ak_User_FirstName_LastName (FirstName,LastName),
     CONSTRAINT User_pk PRIMARY KEY (UserId)
 );
 

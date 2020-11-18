@@ -5,10 +5,7 @@ function uploadCSV(Slim\Slim $app) {
       $tmp_loc = $_FILES['csv']['tmp_name'];
       $file = fopen($tmp_loc, "r");
       $students = [];
-      $schools = [
-        "school1" => "county4",
-        "school2" => "county7"
-      ];
+      $schools = [];
       $users = [];
       $students = [];
       $counties = [];
@@ -24,12 +21,12 @@ function uploadCSV(Slim\Slim $app) {
         }
 
         // student + school + user + project + gradeLevel
-        $cnid = $row[10];
 
         // project + category + booth
         $projNum = $row[5];
         $projTitle = $row[6];
         $projAbstract = $row[7];
+        $cnid = $row[10];
 
         // user
         $firstName = $row[0];
@@ -51,109 +48,57 @@ function uploadCSV(Slim\Slim $app) {
         // county
         $county = $row[3];
 
-        $existingEntity = false;
-        foreach ($booths as $booth) {
-          if ($booth === $boothNum) {
-            $existingEntity = true;
-            break;
-          }
-        }
-        if (!$existingEntity) {
-          array_push($booths, $boothNum);
+        $sql = DB::get()->prepare("REPLACE INTO Booth(Number) VALUES (?)");
+        $sql->execute([$boothNum]);
+        $boothId = DB::get()->lastInsertId();
+
+        $sql = DB::get()->prepare("REPLACE INTO Category(Name) VALUES (?)");
+        $sql->execute([$catName]);
+        $categoryId = DB::get()->lastInsertId();
+
+        $sql = DB::get()->prepare("REPLACE INTO GradeLevel(Name) VALUES (?)");
+        $sql->execute([$gradeLvl]);
+        $gradeLevelId = DB::get()->lastInsertId();
+
+        $sql = DB::get()->prepare("REPLACE INTO County(Name) VALUES (?)");
+        $sql->execute([$county]);
+        $countyId = DB::get()->lastInsertId();
+
+        $sql = DB::get()->prepare("REPLACE INTO School(Name, CountyId) VALUES (?, ?)");
+        $sql->execute([$schoolName, $countyId]);
+        $schoolId = DB::get()->lastInsertId();
+
+        $sql = DB::get()->prepare("SELECT * FROM User WHERE FirstName = ? AND LastName = ? AND Gender = ?");
+        $sql->execute([$firstName, $lastName, $gender]);
+        $user = $sql->fetch();
+        $userId = null;
+
+        if ($user) {
+          $userId = $user["UserId"];
+        } else {
+          $sql = DB::get()->prepare("REPLACE INTO User(FirstName, LastName, Gender) VALUES (?, ?, ?)");
+          $sql->execute([$firstName, $lastName, $gender]);
+          $userId = DB::get()->lastInsertId();
         }
 
-        $existingEntity = false;
-        foreach($categories as $cat) {
-          if ($cat === $catName) {
-            $existingEntity = true;
-            break;
-          }
-        }
-        if (!$existingEntity) {
-          array_push($categories, $catName);
-        }
+        $sql = DB::get()->prepare("REPLACE INTO UserYear(Year, UserId) VALUES (YEAR(CURRENT_TIMESTAMP), ?)");
+        $sql->execute([$userId]);
+        $userYearId = DB::get()->lastInsertId();
 
-        $existingEntity = false;
-        foreach ($gradeLevels as $gl) {
-          if ($gl === $gradeLvl) {
-            $existingEntity = true;
-            break;
-          }
-        }
-        if (!$existingEntity) {
-          array_push($gradeLevels, $gradeLvl);
-        }
+        $sql = DB::get()->prepare("REPLACE INTO Project(Number, Name, Abstract, BoothId, CourseNetworkingId, CategoryId) 
+                                                VALUES (?, ?, ?, ?, ?, ?)");
+        $sql->execute([$projNum, $projTitle, $projAbstract, $boothId, $cnid, $categoryId]);
+        $projectId = DB::get()->lastInsertId();
 
-        $existingEntity = false;
-        foreach ($counties as $c) {
-          if ($c === $county) {
-            $existingEntity = true;
-            break;
-          }
-        }
-        if (!$existingEntity) {
-          array_push($counties, $county);
-        }
+        $sql = DB::get()->prepare("REPLACE INTO Student(SchoolId, UserId, ProjectId, GradeLevelId) VALUES (?, ?, ?, ?)");
+        $sql->execute([$schoolId, $userId, $projectId, $gradeLevelId]);
+        $projectId = DB::get()->lastInsertId();
 
-        $existingEntity = false;
-        foreach ($schools as $key => $value) {
-          if ($key === $schoolName) {
-            $existingEntity = true;
-            break;
-          }
-        }
-        if (!$existingEntity) {
-          $schools["$schoolName"] = $county;
-        }
-      }
-
-      $existingEntity = false;
-      foreach ($users as $key => $value) {
-        if ($key === $firstName." ".$lastName) {
-          $existingEntity = true;
-          break;
-        }
-      }
-      if (!$existingEntity) {
-        $users["$firstName $lastName"] = $gender;
-      }
-
-      $existingEntity = false;
-      foreach ($projects as $key => $value) {
-        if ($key === $projTitle) {
-          $existingEntity = true;
-          break;
-        }
-      }
-      if (!$existingEntity) {
-        $projects["$projTitle"] = [
-          "number" => $projNum,
-          "abstract" => $projAbstract,
-          "category" => $catName,
-          "booth" => $boothNum
-        ];
-      }
-
-      $existingEntity = false;
-      foreach ($students as $key => $value) {
-        if ($key === $firstName." ".$lastName) {
-          $existingEntity = true;
-          break;
-        }
-      }
-      if (!$existingEntity) {
-        $students["$firstName $lastName"] = [
-          "school" => $schoolName,
-          "user" => "$firstName $lastName",
-          "project" => $projTitle,
-          "gradeLevel" => $gradeLvl,
-          "cnid" => $cnid,
-        ];
       }
 
       fclose($file);
 
-      $app->res->json([
+      $data = [
         "users" => $users,
         "students" => $students,
         "counties" => $counties,
@@ -161,7 +106,9 @@ function uploadCSV(Slim\Slim $app) {
         "gradeLevels" => $gradeLevels,
         "categories" => $categories,
         "booths" => $booths,
-      ]);
+      ];
+
+      $app->res->json([]);
   };
 }
 
