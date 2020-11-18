@@ -244,6 +244,15 @@ function updateRouter($app) {
     $app->put('/pwdReset', resetPwdEmailSubmit($app));
 
     $app->put('/judges/:id/approve', approveJudge($app));
+    $app->put('/judges/:id/preferences', savePreferences($app));
+    $app->put('/judges/:id/checkIn', function($id) use ($app) {
+      $sql = DB::get()->prepare("UPDATE User SET CheckedIn = 1 WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+      $sql->execute([$id]);
+    });
+    $app->put('/judges/:id/checkOut', function($id) use ($app) {
+      $sql = DB::get()->prepare("UPDATE User SET CheckedIn = 0 WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+      $sql->execute([$id]);
+    });
     $app->put('/judges/:id/deny', denyJudge($app));
 
     /**

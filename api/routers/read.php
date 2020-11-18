@@ -57,6 +57,11 @@ function readRouter($app) {
      * @apiSuccess {String} result.gradeLevelPreferences.name
      */
     $app->get('/judges/:id', getJudgeByOpId($app));
+    $app->get('/judges/:id/checkedIn', function($opid) use ($app) {
+      $sql = DB::get()->prepare("SELECT CheckedIn FROM User WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+      $sql->execute([$opid]);
+      $app->res->json(["checkedIn" => $sql->fetch()["CheckedIn"]]);
+    });
 
     $app->get('/judges/:id/schedule', getJudgeScheduleByOpid($app));
 

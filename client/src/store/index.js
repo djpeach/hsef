@@ -15,6 +15,7 @@ const clearedState = {
   userId: undefined,
   operatorId: undefined,
   entitlements: [],
+  checkedIn: false,
 
   // tables
   students: [],
@@ -28,6 +29,10 @@ const clearedState = {
   booths: [],
   counties: [],
   gradeLevels: [],
+  categoryPreferences: [],
+  categoryPreferencesGlobal: [],
+  gradeLevelPreferences: [],
+  gradeLevelPreferencesGlobal: [],
 };
 
 const state = {};
@@ -88,6 +93,23 @@ const mutations = {
     state.userId = ids.userId;
     state.operatorId = ids.operatorId;
   },
+  UPDATE_PREFERENCES(state, prefs) {
+    state.categoryPreferences = prefs.categories;
+    state.gradeLevelPreferences = prefs.gradeLevels;
+  },
+  UPDATE_GLOBAL_PREFERENCES(state, prefs) {
+    state.categoryPreferencesGlobal = prefs.categories;
+    state.gradeLevelPreferencesGlobal = prefs.gradeLevels;
+  },
+  UPDATE_GL_PREFS(state, val) {
+    state.gradeLevelPreferences = val;
+  },
+  UPDATE_CAT_PREFS(state, val) {
+    state.categoryPreferences = val;
+  },
+  UPDATE_CHECKEDIN(state, val) {
+    state.checkedIn = val;
+  }
 };
 
 const actions = {
@@ -125,6 +147,15 @@ const actions = {
   },
 
   // update
+  async checkIn(ctx) {
+    return Vue.http.put(`update/judges/${ctx.state.operatorId}/checkIn`);
+  },
+  async checkOut(ctx) {
+    return Vue.http.put(`update/judges/${ctx.state.operatorId}/checkOut`);
+  },
+  async savePreferences({state}) {
+    return Vue.http.put(`update/judges/${state.operatorId}/preferences`, { categories: state.categoryPreferences, gradeLevels: state.gradeLevels})
+  },
   async approveJudge(ctx, { operatorId }) {
     return Vue.http.put(`update/judges/${operatorId}/approve`);
   },
@@ -159,9 +190,23 @@ const actions = {
     return Vue.http.put(`update/students/${operatorId}`, rest);
   },
 
+  async updateJudgingPreferences(ctx, data) {
+    const { operatorId, ...rest } = data;
+    return Vue.http.put(`update/judges/preferences/${operatorId}`, rest);
+  },
+
   // delete
   async archiveJudge(ctx, { operatorId }) {
     return Vue.http.delete(`delete/judges/${operatorId}`);
+  },
+
+  // get
+  async getCheckedIn(ctx) {
+    const {
+      body: res
+    } = await Vue.http.get(`read/judges/${ctx.state.operatorId}/checkedIn`);
+    console.log(res);
+    ctx.commit('UPDATE_CHECKEDIN', res.checkedIn === 1);
   },
 
   // lists
@@ -216,6 +261,26 @@ const actions = {
   },
   async generateSchedules(ctx) {
     return Vue.http.post('create/generate-schedules');
+  },
+  async refreshPreferences({ commit, state }) {
+    const {
+      body: { results: preferences },
+    } = await Vue.http.get(`list/judges/${state.operatorId}/preferences`);
+    if (preferences) {
+      commit('UPDATE_PREFERENCES', preferences);
+    } else {
+      throw new Error('No preferences found');
+    }
+  },
+  async getAllPreferences({ commit }) {
+    const {
+      body: { results: preferences },
+    } = await Vue.http.get(`list/preferences`);
+    if (preferences) {
+      commit('UPDATE_GLOBAL_PREFERENCES', preferences);
+    } else {
+      throw new Error('No preferences found');
+    }
   },
   async refreshPendingJudges({ commit }) {
     try {

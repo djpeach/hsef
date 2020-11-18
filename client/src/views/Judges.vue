@@ -144,6 +144,9 @@
               </v-dialog>
             </v-toolbar>
           </template>
+          <template v-slot:item.checkedIn="{ item }">
+            <p>{{ item.checkedIn ? 'yes' : 'no' }}</p>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
                 small
@@ -171,6 +174,12 @@
                   <v-col>
                     <span class="font-weight-bold">Judge Email:</span>
                     {{ item.email }}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <span class="font-weight-bold">Judge Password:</span>
+                    {{ item.passwordHash }}
                   </v-col>
                 </v-row>
               </v-container>

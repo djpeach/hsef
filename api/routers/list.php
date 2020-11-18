@@ -81,6 +81,9 @@ function listRouter($app) {
      */
     $app->get('/judges', listJudges($app));
 
+    $app->get('/judges/:id/preferences', listJudgePreferences($app));
+    $app->get('/preferences', listJudgePreferenceOptions($app));
+
     /**
      * @api {get} /list/judges/potential Potential Judges
      * @apiGroup List

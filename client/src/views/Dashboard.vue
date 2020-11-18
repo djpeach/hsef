@@ -188,6 +188,8 @@
             <v-select
                 v-model="projectsValue"
                 :items="projects"
+                item-text="name"
+                item-value="categoryId"
                 chips
                 label="Preferred Categories"
                 multiple
@@ -196,6 +198,8 @@
             <v-select
                 v-model="gradeLevelValue"
                 :items="gradeLevel"
+                item-text="name"
+                item-value="gradeLevelId"
                 chips
                 label="Preferred Grade Levels"
                 multiple
@@ -220,7 +224,7 @@
           class="px-4 pb-3 text-center"
         >
           <v-card-title class="mb-5">Judge Check In and Out</v-card-title>
-          <v-btn :color="checkedIn ? 'amber' : 'teal darken-4'" :class="checkedIn ? '' : 'white--text'" @click="checkedIn = !checkedIn">{{ checkedIn ? 'Check Out' : 'Check In' }}</v-btn>
+          <v-btn :color="checkedIn ? 'amber' : 'teal darken-4'" :class="checkedIn ? '' : 'white--text'" @click="checkInHandler">{{ checkedIn ? 'Check Out' : 'Check In' }}</v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -228,19 +232,42 @@
 </template>
 
 <script>
-
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Dashboard',
   data: () => ({
-    projects: ['Computer Science', 'Astrology', 'Physics', 'Geology','Forensics','Engineering'],
-    projectsValue: ['Computer Science', 'Astrology', 'Physics', 'Geology','Forensics','Engineering'],
-    gradeLevelValue: ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Freshman','Sophomore','Junior','Senior'],
-    gradeLevel: ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Freshman','Sophomore','Junior','Senior'],
     canSavePreferences: false,
-    checkedIn: false,
     showLinks: false,
   }),
+  mounted() {
+    this.refreshPreferences();
+    this.getAllPreferences();
+    this.getCheckedIn();
+  },
+  computed: {
+    ...mapState({
+      gradeLevel: state => state.gradeLevelPreferencesGlobal,
+      projects: state => state.categoryPreferencesGlobal,
+      checkedIn: state => state.checkedIn,
+    }),
+    gradeLevelValue: {
+      get() {
+        return this.$store.state.gradeLevelPreferences;
+      },
+      set(val) {
+        this.$store.commit('UPDATE_GL_PREFS', val);
+      }
+    },
+    projectsValue: {
+      get() {
+        return this.$store.state.categoryPreferences;
+      },
+      set(val) {
+        this.$store.commit('UPDATE_CAT_PREFS', val);
+      }
+    }
+  },
   watch: {
     projectsValue() {
       this.canSavePreferences = true;
@@ -250,8 +277,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      refreshPreferences: 'refreshPreferences',
+      getAllPreferences: 'getAllPreferences',
+      savePreferences: 'savePreferences',
+      getCheckedIn: 'getCheckedIn',
+      checkIn: 'checkIn',
+      checkOut: 'checkOut',
+    }),
     savePreferencesHandler() {
       this.canSavePreferences = false;
+      this.savePreferences();
+    },
+    checkInHandler() {
+      if (this.checkedIn) {
+        this.checkOut().finally(() => {
+          this.getCheckedIn();
+        })
+      } else {
+        this.checkIn().finally(() => {
+          this.getCheckedIn();
+        })
+      }
     }
   }
 }

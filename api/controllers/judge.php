@@ -183,10 +183,25 @@ function createPublicJudge(Slim\Slim $app) {
   };
 }
 
+function savePreferences(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    $reqBody = $app->req->jsonBody();
+
+    foreach ($reqBody['categories'] as $catId) {
+      $sql = DB::get()->prepare("REPLACE INTO OperatorCategory(OperatorId, CategoryId) VALUES (?, ?)");
+      $sql->execute([$opid, $catId]);
+    }
+
+    foreach ($reqBody['gradeLevels'] as $glId) {
+      $sql = DB::get()->prepare("REPLACE INTO OperatorGradeLevel(OperatorId, GradeLevelId) VALUES (?, ?)");
+      $sql->execute([$opid, $glId]);
+    }
+  };
+}
+
 function approveJudge(Slim\Slim $app) {
   return function($opid) use ($app) {
 
-    file_put_contents("php://stderr", "test");
     // get user for opid
     $sql = DB::get()->prepare("SELECT UserId, Email FROM User Where UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
     execOrError($sql->execute([$opid]), new DatabaseError("Error while getting user by operator id during judge approval"));
@@ -462,6 +477,67 @@ function deleteJudgeByOpId(Slim\Slim $app) {
 }
 
 // LIST
+function listJudgePreferences(Slim\Slim $app) {
+  return function($opid) use ($app) {
+    $reqBody = $app->req->jsonBody();
+
+    // get categoryPreferences
+    $sql = DB::get()->prepare("SELECT C.CategoryId, C.Name FROM Category C 
+    JOIN OperatorCategory OC on C.CategoryId = OC.CategoryId WHERE OC.OperatorId = ?");
+    execOrError($sql->execute([$opid]), new DatabaseError("Could not fetch category ids for judge with opid: $opid"));
+    $categories = $sql->fetchAll();
+    if ($categories) {
+      $resBody["categories"] = array_map(function($category) {
+        return filterNullCamelCaseKeys($category);
+      }, $categories);
+    }
+
+    // get gradeLevelPreferences
+    $sql = DB::get()->prepare("SELECT GL.GradeLevelId, GL.Name FROM GradeLevel GL
+    JOIN OperatorGradeLevel OGL on GL.GradeLevelId = OGL.GradeLevelId WHERE OGL.OperatorId = ?");
+    execOrError($sql->execute([$opid]), new DatabaseError("Could not fetch category ids for judge with opid: $opid"));
+    $gradeLevels = $sql->fetchAll();
+    if ($gradeLevels) {
+      $resBody["gradeLevels"] = array_map(function($gradeLevel) {
+        return filterNullCamelCaseKeys($gradeLevel);
+      }, $gradeLevels);
+    }
+
+    $app->res->json([
+      "results" => $resBody
+    ]);
+  };
+}
+
+function listJudgePreferenceOptions(Slim\Slim $app) {
+  return function() use ($app) {
+
+    // get categoryPreferences
+    $sql = DB::get()->prepare("SELECT C.CategoryId, C.Name FROM Category C");
+    $sql->execute([]);
+    $categories = $sql->fetchAll();
+    if ($categories) {
+      $resBody["categories"] = array_map(function($category) {
+        return filterNullCamelCaseKeys($category);
+      }, $categories);
+    }
+
+    // get gradeLevelPreferences
+    $sql = DB::get()->prepare("SELECT GL.GradeLevelId, GL.Name FROM GradeLevel GL");
+    $sql->execute([]);
+    $gradeLevels = $sql->fetchAll();
+    if ($gradeLevels) {
+      $resBody["gradeLevels"] = array_map(function($gradeLevel) {
+        return filterNullCamelCaseKeys($gradeLevel);
+      }, $gradeLevels);
+    }
+
+    $app->res->json([
+      "results" => $resBody
+    ]);
+  };
+}
+
 function listJudges(Slim\Slim $app) {
   return function() use ($app) {
     // initialize response and request parameters
