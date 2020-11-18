@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col class="text-center">
+        <h1>Bulk Upload Event Data</h1>
+      </v-col>
+    </v-row>
     <v-row align="center"
            justify="space-around">
       <v-col>
@@ -13,7 +18,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <a style="text-decoration-line: none" :href="studentBulkUpload" download="studentBulkUpload.xls">
+        <a style="text-decoration-line: none" :href="studentBulkUpload" download="eventDataBulkUploadTemplate.csv">
           <v-btn>Sample CSV Download</v-btn>
         </a>
       </v-col>

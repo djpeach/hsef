@@ -9,6 +9,7 @@ import VueResource from 'vue-resource';
 
 Vue.use(VueResource);
 
+// only for file upload
 axios.defaults.baseURL = process.env.NODE_ENV === 'production'
   ? "http://corsair.cs.iupui.edu:24631/hsef/api"
     : 'http://localhost:9000/api'

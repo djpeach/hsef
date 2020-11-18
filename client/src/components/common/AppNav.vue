@@ -42,7 +42,7 @@
             <v-list-item-title>Final Scores</v-list-item-title>
           </v-list-item>
           <v-list-item to="upload-csv">
-            <v-list-item-title>Upload Student Information</v-list-item-title>
+            <v-list-item-title>Bulk Upload Event Data</v-list-item-title>
           </v-list-item>
           <v-list-item @click="logout">
             <v-list-item-title>Logout</v-list-item-title>

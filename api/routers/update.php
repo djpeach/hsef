@@ -44,42 +44,27 @@ function updateRouter($app) {
     $app->put('/admins/:id', getAdminByOpId($app));
 
     /**
-     * @api {get} /update/judges/:id Judge by OpId
+     * @api {put} /update/judges/:id Judge by OpId
      * @apiGroup Update
      * @apiName Judge
      * @apiVersion 0.1.0
      * @apiDescription Update judge by OpId
      *
+     * @apiHeader {String} Content-Type=application/json
+     *
      * @apiParam {Number} id The operator id to find the judge with
-     * @apiParam {String} [title]
-     * @apiParam {String} [highestDegree]
-     * @apiParam {String} [employer]
-     * @apiParam {Object} [user]
+     * @apiParam {Object} operator
+     * @apiParam {String} [operator.title]
+     * @apiParam {String} [operator.highestDegree]
+     * @apiParam {String} [operator.employer]
+     * @apiParam {Object} user
      * @apiParam {String} [user.firstName]
      * @apiParam {String} [user.lastName]
-     * @apiParam {String} [user.suffix]
-     * @apiParam {String=male,female,other} [user.gender]
-     * @apiParam {String=active,registered,invited,archived} [user.status]
-     * @apiParam {Boolean} [user.checkedIn]
      * @apiParam {String} [user.email]
-     * @apiParam {Number[]} [categoryPreferenceIds]
-     * @apiParam {Number[]} [gradeLevelPreferenceIds]
-     *
-     * @apiSuccess {Object} result The judge object
-     * @apiSuccess {Number} result.operatorId
-     * @apiSuccess {String} [result.title]
-     * @apiSuccess {String} [result.highestDegree]
-     * @apiSuccess {String} [result.employer]
-     * @apiSuccess {Number} result.userId
-     * @apiSuccess {String} result.firstName
-     * @apiSuccess {String} result.lastName
-     * @apiSuccess {String} [result.suffix]
-     * @apiSuccess {String=male,female,other} [result.gender]
-     * @apiSuccess {String=active,registered,invited,archived} result.status
-     * @apiSuccess {Boolean} result.checkedIn This will return <code>0</code> for false and <code>1</code> for true
-     * @apiSuccess {String} result.email
+     * @apiParam {Object} authAccount
+     * @apiParam {String} [authAccount.passwordHash]
      */
-    $app->put('/judges/:id', getJudgeByOpId($app));
+    $app->put('/judges/:id', updateJudgeByOpId($app));
 
     /**
      * @api {get} /update/students/:id Student

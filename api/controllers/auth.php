@@ -43,17 +43,29 @@ function resetPwdEmail(Slim\Slim $app) {
 
     $reqBody = $app->req->jsonBody();
 
-    $sql = DB::get()->prepare("SELECT AuthAccountId FROM AuthAccount AA JOIN User U on AA.UserId = U.UserId WHERE U.Email = ?");
+    $sql = DB::get()->prepare("SELECT UserId FROM User WHERE Email = ? AND Status = 'active'");
     $sql->execute([$reqBody['email']]);
+    $userId = $sql->fetch(PDO::FETCH_OBJ)->UserId;
+
+    if (!$userId) {
+      throw new UserNotFound("Could not find a user with that email");
+    }
+
+    $sql = DB::get()->prepare("SELECT AuthAccountId FROM AuthAccount WHERE UserId = ?");
+    $sql->execute([$userId]);
     $authAccount = $sql->fetch(PDO::FETCH_OBJ);
 
     if (!$authAccount) {
-      throw new UserNotFound("Could not find a user with that email");
+      $sql = DB::get()->prepare("INSERT INTO AuthAccount(PasswordHash, UserId) VALUES (?, ?)");
+      $sql->execute([generateRandomString(), $userId]);
+      $authAccountId = DB::get()->lastInsertId();
+    } else {
+      $authAccountId = $authAccount->AuthAccountId;
     }
 
     $sql = DB::get()->prepare("INSERT INTO OneTimeToken(Token, AuthAccountId) VALUES (?, ?)");
     $randKey = generateRandomString(10);
-    $sql->execute([$randKey, $authAccount->AuthAccountId]);
+    $sql->execute([$randKey, $authAccountId]);
 
     $to = $reqBody['email']; // note the comma
     $subject = 'HSEF password reset';
