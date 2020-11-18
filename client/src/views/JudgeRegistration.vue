@@ -12,7 +12,7 @@
             outlined
             type="error"
         >
-          {{ pendingJudgeUpdateError }}
+          {{ registrationError }}
         </v-alert>
       </v-col>
     </v-row>
@@ -23,7 +23,7 @@
             outlined
             type="success"
         >
-          {{ pendingJudgeUpdateSuccess }}
+          {{ registrationSuccess }}
         </v-alert>
       </v-col>
     </v-row>
@@ -31,7 +31,6 @@
       <v-col cols="12" md="8">
         <v-form
             ref="form"
-            v-model="valid"
             lazy-validation
             @submit.prevent="submitForm"
         >
@@ -42,7 +41,6 @@
             >
               <v-text-field
                   v-model="form.firstName"
-                  :rules="nameRules"
                   label="First name"
                   required
               ></v-text-field>
@@ -53,7 +51,6 @@
             >
               <v-text-field
                   v-model="form.lastName"
-                  :rules="nameRules"
                   label="Last name"
                   required
               ></v-text-field>
@@ -112,18 +109,14 @@
             >
               <v-text-field
                   v-model="form.email"
-                  :rules="emailRules"
                   label="E-mail"
-                  required
               ></v-text-field>
             </v-col>
             <v-col>
               <v-btn
                   style="float:right"
-                  :disabled="!valid"
                   color="amber"
                   class="mr-4"
-                  @click="validate"
                   type="submit"
               >
                 Submit
@@ -145,7 +138,6 @@ export default {
     titles: ['Mr.', 'Mrs.', 'Miss', 'Dr.'],
     genders: ['male', 'female', 'other'],
     degrees: ['High School Diploma', 'Some College', 'Associates Degree', 'Bachelors Degree', 'Masters', 'PhD'],
-    valid: false,
     form: {
       firstName: '',
       lastName: '',
@@ -153,23 +145,12 @@ export default {
       gender: '',
       employer: '',
       highestDegree: '',
+      email: '',
     },
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => v.length <= 20 || 'Name must be less than 20 characters',
-    ],
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid',
-    ],
     registrationSuccess: '',
     registrationError: '',
   }),
   methods: {
-    validate() {
-      this.$refs.form.validate()
-    },
     submitForm() {
       const { firstName, lastName, title, highestDegree, email, gender, employer } = this.form;
       this.registerJudge({ firstName, lastName, title, highestDegree, email, gender, employer }).then(() => {
@@ -190,7 +171,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-
-</style>

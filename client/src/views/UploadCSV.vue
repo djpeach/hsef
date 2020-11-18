@@ -18,7 +18,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <a style="text-decoration-line: none" :href="studentBulkUpload" download="studentBulkUpload.xls">
+        <a style="text-decoration-line: none" :href="studentBulkUpload" download="eventDataBulkUploadTemplate.csv">
           <v-btn>Sample CSV Download</v-btn>
         </a>
       </v-col>

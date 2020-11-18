@@ -28,8 +28,10 @@ function deleteRouter($app) {
      *
      * @apiSuccess {Number} id The OpId of the deleted judge
      */
-    $app->delete('/judges', function() use ($app) {
-      echo 'Delete judge';
+    $app->delete('/judges/:id', function($id) use ($app) {
+      $sql = DB::get()->prepare("UPDATE User SET Status = 'archived' WHERE UserId = (SELECT UserId FROM UserYear WHERE UserYearId = (SELECT UserYearId FROM Operator WHERE OperatorId = ?))");
+      $sql->execute([$id]);
+      $app->res->json(["success" => true]);
     });
 
     /**

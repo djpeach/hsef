@@ -159,6 +159,11 @@ const actions = {
     return Vue.http.put(`update/students/${operatorId}`, rest);
   },
 
+  // delete
+  async archiveJudge(ctx, { operatorId }) {
+    return Vue.http.delete(`delete/judges/${operatorId}`);
+  },
+
   // lists
   async refreshAdmins({ commit }, { limit, offset }) {
     const {

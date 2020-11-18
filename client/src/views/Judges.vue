@@ -333,6 +333,7 @@ export default {
       approveJudge: 'approveJudge',
       createJudge: 'createJudge',
       updateJudge: 'updateJudge',
+      archiveJudge: 'archiveJudge',
     }),
     saveJudgeForm() {
       if (this.editedIndex >= 0) {
@@ -372,9 +373,14 @@ export default {
       this.formDialog = true
     },
     deleteJudge(item) {
-      this.editedIndex = this.judges.indexOf(item)
-      this.editedJudge = Object.assign({}, item)
-      this.dialogDelete = true
+      const { operatorId } = item;
+      this.archiveJudge({operatorId}).then(res => {
+        this.err = null;
+        this.reloadJudgesTable()
+      }).catch(err => {
+        console.log(err);
+        this.err = { body: { message: err.message }};
+      })
     },
     approveJudgeClicked(item) {
       this.pendingLoading = true;
